@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Customer;
 
 class ProductController extends Controller
 {
@@ -15,6 +16,16 @@ class ProductController extends Controller
     public function index()
     {
 
+
+    }
+
+    public function clients()
+    {
+      return Customer::all();
+    }
+
+    public function products()
+    {
         $file = database_path('seeds/test.csv');
 
         $customerArr = $this->csvToArray($file);
@@ -23,10 +34,8 @@ class ProductController extends Controller
         {
             Product::firstOrCreate($customerArr[$i]);
         }
-
         return Product::all();
     }
-
 
     function csvToArray($filename = '', $delimiter = ';')
     {

@@ -5,8 +5,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">The Contact Page</div>
 
-                    <div class="panel-body">
-                        I'm an example component!
+                    <div v-for="customer in customers">
+                        <div class="panel-body">
+                            <div>
+                                {{customer.prenom}} {{customer.nom}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -16,8 +20,16 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+
+        data() {
+            return {
+                customers: []
+            }
+        },
+
+        created() {
+            axios.get('/customers')
+                .then(({data}) => this.customers = data);
         }
     }
 </script>

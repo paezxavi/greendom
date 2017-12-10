@@ -31,6 +31,7 @@
         created() {
             axios.get('/products')
                 .then(({data}) => this.products = data);
+
         }
     }
 </script>
