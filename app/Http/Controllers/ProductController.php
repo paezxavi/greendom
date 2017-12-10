@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Customer;
+use App\Commande;
 
 class ProductController extends Controller
 {
@@ -22,6 +23,11 @@ class ProductController extends Controller
     public function clients()
     {
       return Customer::all();
+    }
+
+    public function commandes()
+    {
+      return Commande::all();
     }
 
     public function products()

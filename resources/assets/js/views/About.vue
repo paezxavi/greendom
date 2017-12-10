@@ -5,8 +5,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">The About Page</div>
 
-                    <div class="panel-body">
-                        I'm an example component!
+                    <div v-for="commande in commandes">
+                        <div class="panel-body">
+                            <div>
+                                {{commande.desc}} {{commande.statut}} {{commande.product_id}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -16,8 +20,16 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+
+        data() {
+            return {
+                commandes: []
+            }
+        },
+
+        created() {
+            axios.get('/commandes')
+                .then(({data}) => this.commandes = data);
         }
     }
 </script>
