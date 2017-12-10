@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Customer;
 use App\Commande;
+use App\Provider;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,11 @@ class ProductController extends Controller
     public function clients()
     {
       return Customer::all();
+    }
+
+    public function providers()
+    {
+      return Provider::all();
     }
 
     public function commandes()
