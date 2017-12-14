@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->string('categorie')->nullable();
             $table->string('prixVente')->nullable();
             $table->string('reference')->nullable();
-            $table->string('refSupplier')->nullable();
+            $table->string('refSupplier')->nullable(); // ID_PROVIDER
             $table->string('prixAchat')->nullable();
+            //Si produit privé ou pas
         });
     }
 

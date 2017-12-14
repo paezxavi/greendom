@@ -16,15 +16,15 @@ class CustomersTableSeeder extends Seeder
            'nom' => 'Rodriguez',
            'prenom' => 'Pedro',
            'adresse' => 'Rue de carouge',
-           'contact' => 'pedro_1202@hotmail.com',
+           'contact' => 'pedro_1202@hotmail.com'
         ],
 
         [
           'nom' => 'Cacciapaglia',
           'prenom' => 'Karen',
           'adresse' => 'Rue des bonnasse',
-          'contact' => 'kacci@gmail.com',
-         ],
+          'contact' => 'kacci@gmail.com'
+         ]
        ]);
     }
 }

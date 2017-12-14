@@ -16,9 +16,7 @@ class CreateCommandesTable extends Migration
       Schema::create('commandes', function (Blueprint $table) {
          $table->increments('id');
          $table->longText('desc');
-         $table->string('statut');
-         $table->integer('product_id')->unsigned()->index();
-         $table->foreign('product_id')->references('id')->on('products');
+         $table->string('statut'); //ID_STATUS
          $table->timestamps();
      });
     }
