@@ -15944,6 +15944,10 @@ var render = function() {
                         _vm._s(provider.adresse) +
                         " " +
                         _vm._s(provider.iban) +
+                        " " +
+                        _vm._s(provider.skype) +
+                        " " +
+                        _vm._s(provider.email) +
                         "\n                        "
                     )
                   ])
