@@ -17,6 +17,7 @@ class CreateCommandesProductsPivotTable extends Migration
             $table->increments('id');
             $table->integer('commande_id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();
+            $table->integer('quantity')->nullable();
 
             $table->foreign('commande_id')->references('id')->on("commandes")->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on("products")->onDelete('cascade')->onUpdate('cascade');
