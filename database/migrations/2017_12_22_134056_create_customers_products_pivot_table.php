@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommandesProductsPivotTable extends Migration
+class CreateCustomersProductsPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateCommandesProductsPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('commandes_products_pivot', function (Blueprint $table) {
+        Schema::create('customers_products_pivot', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('commande_id')->unsigned()->index();
+
+            $table->integer('customer_id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();
             $table->integer('quantity')->nullable();
 
-            $table->foreign('commande_id')->references('id')->on("commandes")->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('customer_id')->references('id')->on("customers")->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on("products")->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreateCommandesProductsPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commandes_products_pivot');
+        Schema::dropIfExists('customers_products_pivot');
     }
 }

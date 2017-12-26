@@ -15,15 +15,17 @@ class ProvidersTableSeeder extends Seeder
         [
            'nom' => 'Lampe SA',
            'adresse' => 'rue des lampes',
-           'contact' => 'lampe@hotmail.com',
-           'iban' => '1234 4564 2313 4564 4',
+           'email' => 'lampe@hotmail.com',
+           'skype' => 'lampe_skype',
+           'iban' => '1234 4564 2313 4564 4'
         ],
 
         [
           'nom' => 'Ampoule SA',
           'adresse' => 'rue des Ampoule',
-          'contact' => 'Ampoule@hotmail.com',
-          'iban' => '54654654654654645 4',
+          'email' => 'Ampoule@hotmail.com',
+          'skype' => 'Ampoule_skype',
+          'iban' => '54654654654654645 4'
          ],
        ]);
     }

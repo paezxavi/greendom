@@ -15,7 +15,7 @@
                     <div v-for="provider in providers">
                         <div class="panel-body">
                             <div>
-                                {{provider.nom}} {{provider.adresse}} {{provider.iban}}
+                                {{provider.nom}} {{provider.adresse}} {{provider.iban}} {{provider.skype}} {{provider.email}}
                             </div>
                         </div>
                     </div>
