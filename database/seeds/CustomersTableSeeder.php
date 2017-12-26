@@ -17,9 +17,9 @@ class CustomersTableSeeder extends Seeder
            'prenom' => 'Pedro',
            'adresse' => 'Rue de carouge',
            'contact' => 'pedro_1202@hotmail.com',
-           'login' =>'pedro1202',
-           'motdepasse' =>'pedro1',
-           'company_id'=>'0'
+           'login' => 'pedro1202',
+           'motdepasse' => 'pedro1',
+           'company_id'=> '1'
         ],
 
         [
@@ -27,9 +27,9 @@ class CustomersTableSeeder extends Seeder
           'prenom' => 'Karen',
           'adresse' => 'Rue des bonnasse',
           'contact' => 'kacci@gmail.com',
-          'login' =>'karen1213',
-          'motdepasse' =>'frank',
-          'company_id'=>'1'
+          'login' => 'karen1213',
+          'motdepasse' => 'frank',
+          'company_id'=> '2'
          ]
        ]);
     }

@@ -16,7 +16,12 @@ class CompaniesTableSeeder extends Seeder
            'nom' => 'Rodriguez',
            'adresse' => 'Rue de la Jonction',
            'email' => 'rodriguez02@hotmail.com'
-        ]
+       ],
+       [
+           'nom' => 'Bla',
+           'adresse' => "Rue companies",
+           'email' => 'comp@mail.com'
+       ]
       ]);
     }
 }
