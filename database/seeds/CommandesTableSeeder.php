@@ -13,10 +13,18 @@ class CommandesTableSeeder extends Seeder
     {
       DB::table('commandes')->insert([
         [
+          'num_commande' => 1,
           'num_devis' => 1,
           'num_offre' => 1,
-          'status_id' => 1,
-          'user_id' => 1
+          'user_id' => 1,
+          'status_id' => 1
+        ],
+        [
+          'num_commande' => 2,
+          'num_devis' => 1,
+          'num_offre' => 1,
+          'user_id' => 1,
+          'status_id' => 1
         ],
        ]);
     }

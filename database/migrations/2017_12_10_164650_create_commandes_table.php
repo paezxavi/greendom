@@ -32,6 +32,8 @@ class CreateCommandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commandes');
+      DB::statement('SET FOREIGN_KEY_CHECKS=0');
+      Schema::dropIfExists('commandes');
+      DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }

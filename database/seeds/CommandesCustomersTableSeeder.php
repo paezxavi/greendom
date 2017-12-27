@@ -11,9 +11,9 @@ class CommandesCustomersTableSeeder extends Seeder
      */
     public function run()
     {
-     DB::table('commandes_products_pivot')->insert([
-      'start_date' => '01.01.2018',
-      'end_date' => '31.01.2018',
+     DB::table('commandes_customers_pivot')->insert([
+      'start_date' => '2018-01-01 16:32:22',
+      'end_date' => '2018-01-31 16:32:22',
       'commande_id' => 1,
       'customer_id' => 1
       ]);
