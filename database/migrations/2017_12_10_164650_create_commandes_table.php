@@ -15,9 +15,13 @@ class CreateCommandesTable extends Migration
     {
       Schema::create('commandes', function (Blueprint $table) {
          $table->increments('id');
-         $table->longText('desc');
-         $table->string('statut'); //ID_STATUS
+         $table->String('num_commande');
+         $table->String('num_devis');
+         $table->String('num_offre');
+         $table->integer('user_id')->unsigned()->index();
          $table->timestamps();
+
+         $table->foreign('user_id')->references('id')->on("users")->onDelete('cascade')->onUpdate('cascade');
      });
     }
 

@@ -13,7 +13,7 @@ class CustomersTableSeeder extends Seeder
     {
       DB::table('customers')->insert([
         [
-           'nom' => 'Rodriguez',
+           'nom' => 'Ramirez',
            'prenom' => 'Pedro',
            'adresse' => 'Rue de carouge',
            'contact' => 'pedro_1202@hotmail.com'

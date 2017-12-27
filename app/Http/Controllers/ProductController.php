@@ -7,6 +7,7 @@ use App\Product;
 use App\Customer;
 use App\Commande;
 use App\Provider;
+use App\Greendom;
 
 class ProductController extends Controller
 {
@@ -34,6 +35,11 @@ class ProductController extends Controller
     public function commandes()
     {
       return Commande::all();
+    }
+
+    public function greendom()
+    {
+      return Greendom::all();
     }
 
     public function products()

@@ -13,14 +13,11 @@ class CommandesTableSeeder extends Seeder
     {
       DB::table('commandes')->insert([
         [
-           'desc' => 'salut je veux cette ampoule',
-           'statut' => 'Devis'
+          'num_devis' => 1,
+          'num_offre' => 1,
+          'status_id' => 1,
+          'user_id' => 1
         ],
-
-        [
-          'desc' => 'salut fdsagvfdbgfshbsfhbsgfe',
-          'statut' => 'Devis'
-         ],
        ]);
     }
 }
