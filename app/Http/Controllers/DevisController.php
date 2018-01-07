@@ -88,7 +88,7 @@ class DevisController extends Controller
     public function devisPdf()
     {
         $customer = Customer::findOrFail(1);
-        $pdf = PDF::loadView('pdf/devis_pdf', compact('customer'))->setPaper('a3', 'landscape');
+        $pdf = PDF::loadView('pdf/devis_pdf', compact('customer'))->setPaper('a3', 'portrait');
         $name = "Customer-".$customer->nom.".pdf";
         return $pdf->download($name);
     }

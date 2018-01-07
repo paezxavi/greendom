@@ -22,3 +22,5 @@ Route::get('/providers', 'ProductController@providers');
 
 /* Call PDF */
 Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
+//Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');
+//Route::get('/commande/pdf', 'CommandeController@commandePdf')->name('commande.pdf');
