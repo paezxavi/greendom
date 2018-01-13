@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="hero is-success">
+        <!--<section class="hero is-success">
           <div class="hero-body">
             <div class="container">
               <h1 class="title">
@@ -11,7 +11,7 @@
               </h2>
             </div>
           </div>
-        </section>
+        </section>-->
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
             <div class="field">
@@ -41,7 +41,7 @@
             <div class="field">
               <label class="label">Adresse</label>
               <div class="control">
-                <input class="input" type="text" placeholder="Text input">
+                <input class="input" type="text" placeholder="Text input" :value="adresseString">
               </div>
             </div>
 
@@ -98,14 +98,14 @@
             <div class="field">
               <label class="label">Message</label>
               <div class="control">
-                <textarea class="textarea" placeholder="Textarea"></textarea>
+                <textarea class="textarea" placeholder="Textarea" :value="descriptionString"></textarea>
               </div>
             </div>
 
             <div class="field">
               <div class="buttons has-addons is-centered">
-                  <a class="button is-success">Submit</a>
-                  <a class="button is-danger">Cancel</a>
+                  <a class="button is-success" style="margin-right:2px">Submit</a>
+                  <a class="button is-danger" style="margin-left:2px">Cancel</a>
               </div>
             </div>
           </div>
@@ -119,16 +119,27 @@
 
         data() {
             return {
-                customer: []
+                customer: [],
+                commande: []
             }
         },
 
-        created() {
-            axios.get('/1')
+        mounted() {
+            axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
+            axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
+                .then(({data}) => this.commande = data);
         },
 
         computed:{
+          descriptionString(){
+            return `${this.commande.descriptionDevis}`
+          },
+
+          adresseString(){
+            return `${this.customer.adresse}`
+          },
+
           contactString(){
             return `${this.customer.contact}`
           },

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PDF;
 use App\Customer;
+use App\User;
+use App\Commande;
 
 
 class DevisController extends Controller
@@ -87,9 +89,21 @@ class DevisController extends Controller
 
     public function devisPdf()
     {
-        $customer = Customer::findOrFail(1);
+        $customer = User::findOrFail(1);
         $pdf = PDF::loadView('pdf/devis_pdf', compact('customer'))->setPaper('a3', 'portrait');
         $name = "Customer-".$customer->nom.".pdf";
         return $pdf->download($name);
+    }
+
+    public function clientDevis(User $user)
+    {
+      $customer = User::find($user->id);
+      return $customer;
+    }
+
+    public function devisClientDevis(User $user, Commande $commande)
+    {
+      $customerDevis = Commande::find($commande->id)->where('user_id',$user->id)->get()->first();
+      return $customerDevis;
     }
 }

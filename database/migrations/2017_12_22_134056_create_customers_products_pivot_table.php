@@ -16,11 +16,11 @@ class CreateCustomersProductsPivotTable extends Migration
         Schema::create('customers_products_pivot', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('customer_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned()->index();
             $table->integer('product_id')->unsigned()->index();
             $table->integer('quantity')->nullable();
 
-            $table->foreign('customer_id')->references('id')->on("customers")->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on("users")->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on("products")->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

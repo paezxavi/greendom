@@ -13,17 +13,17 @@ class CustomersProductsTableSeeder extends Seeder
     {
       DB::table('customers_products_pivot')->insert([
               [
-                  'customer_id' => 1,
+                  'user_id' => 1,
                   'product_id' => 1,
                   'quantity' => 10
               ],
               [
-                  'customer_id' => 2,
+                  'user_id' => 2,
                   'product_id' => 1,
                   'quantity' => 12
               ],
               [
-                  'customer_id' => 2,
+                  'user_id' => 2,
                   'product_id' => 1,
                   'quantity' => 11
               ],

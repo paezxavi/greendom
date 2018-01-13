@@ -8,6 +8,7 @@ use App\Customer;
 use App\Commande;
 use App\Provider;
 use App\Greendom;
+use App\User;
 
 class ProductController extends Controller
 {
@@ -24,7 +25,7 @@ class ProductController extends Controller
 
     public function clients()
     {
-      return Customer::all();
+      return User::all();
     }
 
     public function providers()
@@ -52,6 +53,12 @@ class ProductController extends Controller
         {
             Product::firstOrCreate($customerArr[$i]);
         }
+
+        /*$prods = Customer::find(2)->products()->get();
+        dd($prods);
+        foreach ($prods as $prod) {
+            dd($prod);
+        }*/
         return Product::all();
     }
 

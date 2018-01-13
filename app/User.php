@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany('App\Product','customers_products_pivot','user_id','product_id')->withPivot('quantity');
+    }
+
+
+
+    public function devis()
+    {
+        return $this->hasMany('App\Commande');
+    }
 }

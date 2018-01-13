@@ -14,6 +14,6 @@ class Product extends Model
 
     public function customers()
     {
-        return $this->belongsToMany('App\Customer','customers_products_pivot','product_id','customer_id')->withPivot('quantity');
+        return $this->belongsToMany('App\User','customers_products_pivot','product_id','user_id')->withPivot('quantity');
     }
 }

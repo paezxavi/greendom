@@ -17,6 +17,7 @@ class CommandesTableSeeder extends Seeder
           'num_devis' => 1,
           'num_offre' => 1,
           'user_id' => 1,
+          'descriptionDevis' => 'Je suis du texte ... jsfjaklsdjdfkljsdjflasjfkljasdfjklasdjfhh',
           'status_id' => 1
         ],
         [
@@ -24,6 +25,7 @@ class CommandesTableSeeder extends Seeder
           'num_devis' => 1,
           'num_offre' => 1,
           'user_id' => 1,
+          'descriptionDevis' => 'Je suis du texte ... jsfjaklsdjdfkljsdjflasjfkljasdfjklasdjfhh',
           'status_id' => 1
         ],
        ]);

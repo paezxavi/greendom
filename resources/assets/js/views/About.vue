@@ -19,6 +19,13 @@
                             </div>
                         </div>
                     </div>
+                    <div v-for="customer in customers">
+                        <div class="panel-body">
+                            <div>
+                                {{customer.name}} {{customer.email}} {{customer.contact}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,7 +38,8 @@
         data() {
             return {
                 commandes: [],
-                providers: []
+                providers: [],
+                customers: []
             }
         },
 
@@ -40,6 +48,8 @@
                 .then(({data}) => this.commandes = data);
             axios.get('/providers')
                 .then(({data}) => this.providers = data);
+            axios.get('/customers')
+                .then(({data}) => this.customers = data);
         }
     }
 </script>

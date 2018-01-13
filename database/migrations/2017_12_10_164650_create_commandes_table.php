@@ -19,6 +19,7 @@ class CreateCommandesTable extends Migration
          $table->String('num_devis');
          $table->String('num_offre');
          $table->integer('user_id')->unsigned()->index();
+         $table->longText('descriptionDevis');
          $table->timestamps();
 
          $table->foreign('user_id')->references('id')->on("users")->onDelete('cascade')->onUpdate('cascade');

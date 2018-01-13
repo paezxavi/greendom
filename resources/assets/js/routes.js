@@ -19,12 +19,21 @@ let routes = [
         component: require('./views/Contact')
 
     },
+    /*
+      C'est ici qu'il faut rajouter la nouvelle page pour le tableau de bord
+    */
+    {
+
+        path:'/devis/:user/:commande',
+        component: require('./views/Devis')
+
+    },
 ];
 
 export default new VueRouter({
 
     routes,
 
-    linkActiveClass: 'active'
+    linkActiveClass: 'is-active'
 
 });

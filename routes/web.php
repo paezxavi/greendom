@@ -20,6 +20,8 @@ Route::get('/customers', 'ProductController@clients');
 Route::get('/commandes', 'ProductController@commandes');
 Route::get('/providers', 'ProductController@providers');
 
+Route::get('/{user}', 'DevisController@clientDevis');
+Route::get('/{user}/{commande}', 'DevisController@devisClientDevis');
 /* Call PDF */
 Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
 //Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');

@@ -13,7 +13,7 @@ class AddCustomersToCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->integer('company_id')->unsigned()->index()->nullable();
             $table->foreign('company_id')->references('id')->on("companies")->onDelete('cascade')->onUpdate('cascade');
         });
@@ -26,7 +26,7 @@ class AddCustomersToCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
         });
     }
 }
