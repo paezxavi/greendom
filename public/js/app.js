@@ -16627,6 +16627,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var data = _ref3.data;
       return _this.company = data;
     });
+    axios.get('/devis/pdf').then(console.log("hel"));
   },
 
 
@@ -16964,7 +16965,8 @@ var staticRenderFns = [
           "a",
           {
             staticClass: "button is-success",
-            staticStyle: { "margin-right": "2px" }
+            staticStyle: { "margin-right": "2px" },
+            attrs: { href: "/devis/pdf" }
           },
           [_vm._v("Submit")]
         ),

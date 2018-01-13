@@ -22,7 +22,6 @@ table#t01 th {
     color: white;
 }
 </style>
-<h1>{{$customer->name}}</h1>
 <body>
     <div class="container">
      <div class="row">

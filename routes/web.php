@@ -14,6 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+/* Call PDF */
+Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
 
 Route::get('/products', 'ProductController@products');
 Route::get('/customers', 'ProductController@clients');
@@ -23,7 +25,7 @@ Route::get('/providers', 'ProductController@providers');
 Route::get('/company/{user}', 'DevisController@companieClientDevis');
 Route::get('/{user}', 'DevisController@clientDevis');
 Route::get('/{user}/{commande}', 'DevisController@clientInfoDevis');
-/* Call PDF */
-Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
+
+
 //Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');
 //Route::get('/commande/pdf', 'CommandeController@commandePdf')->name('commande.pdf');

@@ -123,7 +123,7 @@
 
             <div class="field">
               <div class="buttons has-addons is-centered">
-                  <a class="button is-success" style="margin-right:2px">Submit</a>
+                  <a class="button is-success" style="margin-right:2px" href="/devis/pdf">Submit</a>
                   <a class="button is-danger" style="margin-left:2px">Cancel</a>
               </div>
             </div>
@@ -150,8 +150,10 @@
                 .then(({data}) => this.customer = data);
             axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
                 .then(({data}) => this.commande = data);
-                axios.get('/company/'+this.$route.params.user)
-                    .then(({data}) => this.company = data);
+            axios.get('/company/'+this.$route.params.user)
+                .then(({data}) => this.company = data);
+            axios.get('/devis/pdf')
+                .then(console.log("hel"));
         },
 
         computed:{
