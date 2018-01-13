@@ -7,6 +7,7 @@ use PDF;
 use App\Customer;
 use App\User;
 use App\Commande;
+use App\Company;
 
 
 class DevisController extends Controller
@@ -101,9 +102,17 @@ class DevisController extends Controller
       return $customer;
     }
 
-    public function devisClientDevis(User $user, Commande $commande)
+    public function clientInfoDevis(User $user, Commande $commande)
     {
-      $customerDevis = Commande::find($commande->id)->where('user_id',$user->id)->get()->first();
+      $customerDevis = Commande::find($commande->id)->where([
+          ['user_id',$user->id],
+          ['id',$commande->id]
+          ])->get()->first();
       return $customerDevis;
+    }
+
+    public function companieClientDevis(User $user){
+        $companie = Company::find($user->company_id);
+        return $companie;
     }
 }

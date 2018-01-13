@@ -32,6 +32,16 @@ class UsersTableSeeder extends Seeder
           'employee' => false,
           'company_id'=> '1'
         ],
+        [
+          'name' => 'Park',
+          'forename' => 'John',
+          'adresse' => 'Rue de Trois',
+          'contact' => 'JeSuisSkype.com',
+          'email' => 'Troisieme.bnbnb@hhgf.com',
+          'password' => '41236',
+          'employee' => false,
+          'company_id'=> null
+        ],
        ]);
     }
 }

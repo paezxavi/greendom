@@ -16583,15 +16583,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      customer: [],
-      commande: []
+      customer: "",
+      commande: "",
+      company: "",
+      active: false
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     axios.get('/' + this.$route.params.user).then(function (_ref) {
@@ -16602,27 +16623,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var data = _ref2.data;
       return _this.commande = data;
     });
+    axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
+      var data = _ref3.data;
+      return _this.company = data;
+    });
   },
 
 
   computed: {
     descriptionString: function descriptionString() {
-      return '' + this.commande.descriptionDevis;
+      return "" + this.commande.descriptionDevis;
     },
     adresseString: function adresseString() {
-      return '' + this.customer.adresse;
+      return "" + this.customer.adresse;
     },
     contactString: function contactString() {
-      return '' + this.customer.contact;
+      return "" + this.customer.contact;
     },
     emailString: function emailString() {
-      return '' + this.customer.email;
+      return "" + this.customer.email;
     },
     nomString: function nomString() {
-      return '' + this.customer.name;
+      return "" + this.customer.name;
     },
     prenomString: function prenomString() {
-      return '' + this.customer.forename;
+      return "" + this.customer.forename;
+    },
+    nomSocieteString: function nomSocieteString() {
+      return "" + this.company.nom;
+    },
+    adresseSocieteString: function adresseSocieteString() {
+      return "" + this.company.adresse;
+    },
+    emailSocieteString: function emailSocieteString() {
+      return "" + this.company.email;
     }
   }
 });
@@ -16739,9 +16773,93 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(4, false, false),
+            _vm.customer.company_id != null
+              ? _c("div", { staticClass: "field" }, [
+                  _c("div", { staticClass: "control" }, [
+                    _c("label", { staticClass: "checkbox" }, [
+                      _c("input", {
+                        attrs: { type: "checkbox" },
+                        on: {
+                          click: function($event) {
+                            _vm.active = !_vm.active
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n              Concerne la société pour laquelle je travaille\n            "
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _vm._m(5, false, false),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.active,
+                    expression: "active"
+                  }
+                ],
+                staticClass: "field"
+              },
+              [
+                _c("div", { staticClass: "columns is-mobile" }, [
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [_vm._v("Société")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "control" }, [
+                      _c("input", {
+                        staticClass: "input",
+                        attrs: { type: "text", placeholder: "Text input" },
+                        domProps: { value: _vm.nomSocieteString }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "control has-icons-left has-icons-right" },
+                      [
+                        _c("input", {
+                          staticClass: "input is-success",
+                          attrs: { type: "text", placeholder: "Text input" },
+                          domProps: { value: _vm.adresseSocieteString }
+                        }),
+                        _vm._v(" "),
+                        _vm._m(4, false, false),
+                        _vm._v(" "),
+                        _vm._m(5, false, false)
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "help is-success" }, [
+                      _vm._v("This username is available")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "control" }, [
+                      _c("input", {
+                        staticClass: "input",
+                        attrs: { type: "text", placeholder: "Text input" },
+                        domProps: { value: _vm.emailSocieteString }
+                      })
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(6, false, false),
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
               _c("label", { staticClass: "label" }, [_vm._v("Message")]),
@@ -16755,7 +16873,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(6, false, false)
+            _vm._m(7, false, false)
           ]
         )
       ]
@@ -16799,15 +16917,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control" }, [
-        _c("label", { staticClass: "checkbox" }, [
-          _c("input", { attrs: { type: "checkbox" } }),
-          _vm._v(
-            "\n              Concerne la société pour laquelle je travaille\n            "
-          )
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-small is-left" }, [
+      _c("i", { staticClass: "fas fa-user" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon is-small is-right" }, [
+      _c("i", { staticClass: "fas fa-check" })
     ])
   },
   function() {
@@ -16828,7 +16947,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "file-label" }, [
-              _vm._v("\n                  Choose a file…\n                ")
+              _vm._v("\n                  Choose a File…\n                ")
             ])
           ])
         ])

@@ -1,19 +1,8 @@
 <template>
     <div>
-        <!--<section class="hero is-success">
-          <div class="hero-body">
-            <div class="container">
-              <h1 class="title">
-                Devis
-              </h1>
-              <h2 class="subtitle">
-                Mandant
-              </h2>
-            </div>
-          </div>
-        </section>-->
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
+
             <div class="field">
               <div class="columns is-mobile">
                 <div class="column">
@@ -70,12 +59,42 @@
               </div>
             </div>
 
-            <div class="field">
+            <div class="field" v-if="customer.company_id != null">
               <div class="control">
                 <label class="checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" @click="active = !active">
                   Concerne la société pour laquelle je travaille
                 </label>
+              </div>
+            </div>
+
+            <div class="field" v-show="active">
+              <div class="columns is-mobile">
+                <div class="column">
+                  <label class="label">Société</label>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Text input" :value="nomSocieteString">
+                  </div>
+                </div>
+                <div class="column">
+                  <label class="label">Adresse</label>
+                  <div class="control has-icons-left has-icons-right">
+                    <input class="input is-success" type="text" placeholder="Text input" :value="adresseSocieteString">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                    <span class="icon is-small is-right">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </div>
+                  <p class="help is-success">This username is available</p>
+                </div>
+                <div class="column">
+                  <label class="label">Email</label>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Text input" :value="emailSocieteString">
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -88,7 +107,7 @@
                       <i class="fas fa-upload"></i>
                     </span>
                     <span class="file-label">
-                      Choose a file…
+                      Choose a File…
                     </span>
                   </span>
                 </label>
@@ -119,16 +138,20 @@
 
         data() {
             return {
-                customer: [],
-                commande: []
+                customer: "",
+                commande: "",
+                company: "",
+                active : false
             }
         },
 
-        mounted() {
+        created() {
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
             axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
                 .then(({data}) => this.commande = data);
+                axios.get('/company/'+this.$route.params.user)
+                    .then(({data}) => this.company = data);
         },
 
         computed:{
@@ -156,6 +179,17 @@
             return `${this.customer.forename}`
           },
 
+          nomSocieteString(){
+            return `${this.company.nom}`
+          },
+
+          adresseSocieteString(){
+            return `${this.company.adresse}`
+          },
+
+          emailSocieteString(){
+            return `${this.company.email}`
+          },
         }
     }
 </script>
