@@ -1,17 +1,5 @@
 <template>
     <div>
-        <section class="hero is-success">
-          <div class="hero-body">
-            <div class="container">
-              <h1 class="title">
-                Devis
-              </h1>
-              <h2 class="subtitle">
-                Mandant
-              </h2>
-            </div>
-          </div>
-        </section>
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
             <div class="field">

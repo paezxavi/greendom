@@ -19,84 +19,50 @@
     <body>
 
           <div id="app">
-            <section class="hero is-success is-medium">
-              <!-- Hero head: will stick at the top -->
-              <div class="hero-head">
-                <nav class="navbar">
-                  <div class="container">
-                    <div class="navbar-brand">
-                      <a class="navbar-item">
-                        <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Logo">
-                      </a>
-                      <span class="navbar-burger burger" data-target="navbarMenuHeroA">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </span>
-                    </div>
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                      <div class="navbar-end">
-                        <a class="navbar-item is-active">
-                          Home
-                        </a>
-                        <a class="navbar-item">
-                          Examples
-                        </a>
-                        <a class="navbar-item">
-                          Documentation
-                        </a>
-                        <span class="navbar-item">
-                          <a class="button is-primary is-inverted">
-                            <span class="icon">
-                              <i class="fab fa-github"></i>
-                            </span>
-                            <span>Download</span>
-                          </a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </nav>
-              </div>
+              <div id="navMenu" style="max-width: 1344px; margin-left: auto; margin-right: auto">
+                  <div id="topNav" style="1px solid #E6EAEE; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(0, 170, 0);">
+                      <nav class="navbar is-transparent">
+                          <div class="navbar-brand">
+                              <router-link class="navbar-item" tag="a" to="/">
+                                  <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="100" height="40">
+                              </router-link>
+                          </div>
 
-              <!-- Hero content: will be in the middle -->
-              <div class="hero-body">
-                <div class="container has-text-centered">
-                  <h1 class="title">
-                    GreenDom
-                  </h1>
-                  <h2 class="subtitle">
-                    Smart LED Systems
-                  </h2>
+                          <div id="navbarExampleTransparentExample" class="navbar-menu">
+                            <div class="navbar-start">
+                              <router-link class="navbar-item" tag="a" to="/">
+                                  Home
+                              </router-link>
+                            </div>
+                          </div>
+                        </nav>
+                    </div>
+                    <div id="bottomNav">
+                        <nav class="navbar is-white">
+                        <div class="container">
+                          <div class="navbar-menu">
+                            <div class="navbar-start">
+                              <router-link class="navbar-item" tag="a" to="/about">
+                                  About
+                              </router-link>
+
+                              <router-link class="navbar-item" tag="a" to="/contact">
+                                  Contact
+                              </router-link>
+                              <router-link class="navbar-item" tag="a" to="/devis">
+                                  Tableau de bord
+                              </router-link>
+                            </div>
+                            <div class="navbar-end">
+                              <div class="navbar-item">
+                                <input class="input" type="text" placeholder="Search ...">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </nav>
                 </div>
-              </div>
-
-              <!-- Hero footer: will stick at the bottom -->
-              <div class="hero-foot">
-                <nav class="tabs is-boxed">
-                  <div class="container">
-                    <ul>
-                        <router-link tag="li" to="/" exact>
-                            <a>Home</a>
-                        </router-link>
-
-                        <router-link tag="li" to="/about">
-                            <a>About</a>
-                        </router-link>
-
-                        <router-link tag="li" to="/contact">
-                            <a class="nav-link">Contact</a>
-                        </router-link>
-
-                        <router-link tag="li" to="/devis">
-                            <a class="nav-link">Tableau de bord</a>
-                            <!--Il faut créer la page du tableau de bord-->
-                        </router-link>
-                    </ul>
-                  </div>
-                </nav>
-              </div>
-            </section>
+            </div>
 
             <section class="section">
                 <div class="container">
