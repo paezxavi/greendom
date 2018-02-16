@@ -15834,6 +15834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -15866,7 +15867,9 @@ var render = function() {
           "div",
           { staticClass: "panel panel-default" },
           [
-            _c("div", { staticClass: "panel-heading" }, [_vm._v("Home Page")]),
+            _c("h2", { staticClass: "title is-2 has-text-centered" }, [
+              _vm._v("Home")
+            ]),
             _vm._v(" "),
             _vm._l(_vm.products, function(product) {
               return _c("div", [
@@ -16692,6 +16695,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c("h2", { staticClass: "title is-2 has-text-centered" }, [
+      _vm._v("Tableau de bord")
+    ]),
+    _vm._v(" "),
     _c(
       "section",
       [

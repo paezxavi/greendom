@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-
+      <h2 class="title is-2 has-text-centered">Tableau de bord</h2>
       <section>
         <b-field grouped group-multiline>
             <b-select v-model="defaultSortDirection">

@@ -17,32 +17,37 @@
     <body>
 
           <div id="app">
-            <div id="navMenu" style="max-width: 1344px; margin-left: auto; margin-right: auto">
-                <div id="topNav" style="1px solid #E6EAEE; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(0, 170, 0);">
-                    <nav class="navbar is-white">
-                        <div id="navbarExampleTransparentExample" class="navbar-menu">
-                          <div class="navbar-start">
-                            <router-link class="navbar-item" tag="a" to="/home" style="background-color:white">
-                                <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="100" height="40">
-                            </router-link>
-                            <router-link class="navbar-item" tag="a" to="/home">
-                                Home
-                            </router-link>
-                            <router-link class="navbar-item" tag="a" to="/about">
-                                About
-                            </router-link>
 
-                            <router-link class="navbar-item" tag="a" to="/contact">
-                                Contact
-                            </router-link>
-                            <router-link class="navbar-item" tag="a" to="/devis/{{ $user }}">
-                                Tableau de bord
-                            </router-link>
-                          </div>
-                        </div>
-                      </nav>
-                  </div>
-            </div>
+            <nav class="navbar is-transparent" style="1px solid #E6EAEE; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(0, 170, 0);">
+              <div class="navbar-brand">
+                <a class="navbar-item" href="{{ route('home') }}">
+                  <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+                </a>
+                <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+
+              <div id="navbarExampleTransparentExample" class="navbar-menu">
+                <div class="navbar-start">
+                  <router-link class="navbar-item" tag="a" to="/home">
+                      Home
+                  </router-link>
+                  <router-link class="navbar-item" tag="a" to="/about">
+                      About
+                  </router-link>
+
+                  <router-link class="navbar-item" tag="a" to="/contact">
+                      Contact
+                  </router-link>
+                  <router-link class="navbar-item" tag="a" to="/devis/{{ $user }}">
+                      Tableau de bord
+                  </router-link>
+                </div>
+              </div>
+            </nav>
 
             <section class="section">
                 <div class="container">
