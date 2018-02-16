@@ -122,12 +122,15 @@ class DevisController extends Controller
     public function clientDevis(User $user)
     {
       if($user->employee == true){
-        $devis = Commande::all();
+        $devis = Commande::with('status')
+                    ->get()
+                    ->sortBy('commandes.dateDebut');
       } else {
-        $devis = Commande::where('user_id', $user->id)
-                    ->join('status', 'status.id', '=', 'commandes.status_id')
-                    ->join('users','users.id', '=', 'commandes.user_id')
-                    ->select('commandes.*','status.nom','users.employee')
+        $devis = Commande::with('status','users')
+                    ->where('user_id', $user->id)
+                    //->join('status', 'status.id', '=', 'commandes.status_id')
+                    //->join('users','users.id', '=', 'commandes.user_id')
+                    //->select('commandes.*','status.nom','users.employee')
                     ->get();
       }
       return $devis;
