@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 let routes = [
     {
 
-        path:'/',
+        path:'/home',
         component: require('./views/Home')
 
     },
@@ -19,9 +19,12 @@ let routes = [
         component: require('./views/Contact')
 
     },
-    /*
-      C'est ici qu'il faut rajouter la nouvelle page pour le tableau de bord
-    */
+    {
+
+        path:'/devis/:user',
+        component: require('./views/TableauDeBord')
+
+    },
     {
 
         path:'/devis/:user/:commande',

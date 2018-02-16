@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'skype.com',
           'email' => 'seb.bnbnb@hhgf.com',
           'password' => '234',
-          'employee' => false,
+          'employee' => true,
           'company_id'=> '1'
         ],
         [

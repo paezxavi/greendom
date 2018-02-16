@@ -19,7 +19,10 @@ class DevisController extends Controller
      */
     public function index()
     {
-        //
+      return view('welcome', [
+          'user' => 1
+      ]);
+
     }
 
     /**
@@ -96,7 +99,7 @@ class DevisController extends Controller
         return $pdf->download($name);
     }
 
-    public function clientDevis(User $user)
+    public function infoClient(User $user)
     {
       $customer = User::find($user->id);
       return $customer;
@@ -115,4 +118,19 @@ class DevisController extends Controller
         $companie = Company::find($user->company_id);
         return $companie;
     }
+
+    public function clientDevis(User $user)
+    {
+      if($user->employee == true){
+        $devis = Commande::all();
+      } else {
+        $devis = Commande::where('user_id', $user->id)
+                    ->join('status', 'status.id', '=', 'commandes.status_id')
+                    ->join('users','users.id', '=', 'commandes.user_id')
+                    ->select('commandes.*','status.nom','users.employee')
+                    ->get();
+      }
+      return $devis;
+    }
+
 }

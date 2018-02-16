@@ -15,6 +15,8 @@ class CreateCommandesTable extends Migration
     {
       Schema::create('commandes', function (Blueprint $table) {
          $table->increments('id');
+         $table->dateTime('dateDebut');
+         $table->String('concerne');
          $table->String('num_commande');
          $table->String('num_devis');
          $table->String('num_offre');

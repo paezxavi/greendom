@@ -11,57 +11,37 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
         <script src="/js/jquery-3.2.1.min.js"></script>
 
-
-
         <title>GreenDom</title>
 
     </head>
     <body>
 
           <div id="app">
-              <div id="navMenu" style="max-width: 1344px; margin-left: auto; margin-right: auto">
-                  <div id="topNav" style="1px solid #E6EAEE; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(0, 170, 0);">
-                      <nav class="navbar is-transparent">
-                          <div class="navbar-brand">
-                              <router-link class="navbar-item" tag="a" to="/">
-                                  <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="100" height="40">
-                              </router-link>
-                          </div>
+            <div id="navMenu" style="max-width: 1344px; margin-left: auto; margin-right: auto">
+                <div id="topNav" style="1px solid #E6EAEE; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(0, 170, 0);">
+                    <nav class="navbar is-white">
+                        <div id="navbarExampleTransparentExample" class="navbar-menu">
+                          <div class="navbar-start">
+                            <router-link class="navbar-item" tag="a" to="/home" style="background-color:white">
+                                <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="100" height="40">
+                            </router-link>
+                            <router-link class="navbar-item" tag="a" to="/home">
+                                Home
+                            </router-link>
+                            <router-link class="navbar-item" tag="a" to="/about">
+                                About
+                            </router-link>
 
-                          <div id="navbarExampleTransparentExample" class="navbar-menu">
-                            <div class="navbar-start">
-                              <router-link class="navbar-item" tag="a" to="/">
-                                  Home
-                              </router-link>
-                            </div>
-                          </div>
-                        </nav>
-                    </div>
-                    <div id="bottomNav">
-                        <nav class="navbar is-white">
-                        <div class="container">
-                          <div class="navbar-menu">
-                            <div class="navbar-start">
-                              <router-link class="navbar-item" tag="a" to="/about">
-                                  About
-                              </router-link>
-
-                              <router-link class="navbar-item" tag="a" to="/contact">
-                                  Contact
-                              </router-link>
-                              <router-link class="navbar-item" tag="a" to="/devis">
-                                  Tableau de bord
-                              </router-link>
-                            </div>
-                            <div class="navbar-end">
-                              <div class="navbar-item">
-                                <input class="input" type="text" placeholder="Search ...">
-                              </div>
-                            </div>
+                            <router-link class="navbar-item" tag="a" to="/contact">
+                                Contact
+                            </router-link>
+                            <router-link class="navbar-item" tag="a" to="/devis/{{ $user }}">
+                                Tableau de bord
+                            </router-link>
                           </div>
                         </div>
                       </nav>
-                </div>
+                  </div>
             </div>
 
             <section class="section">

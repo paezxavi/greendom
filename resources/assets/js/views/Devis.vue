@@ -3,6 +3,8 @@
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
 
+            <h1 class="title">Devis N°{{ devisString }}</h1>
+
             <div class="field">
               <div class="columns is-mobile">
                 <div class="column">
@@ -153,10 +155,14 @@
             axios.get('/company/'+this.$route.params.user)
                 .then(({data}) => this.company = data);
             axios.get('/devis/pdf')
-                .then(console.log("hel"));
+                .then(console.log(""));
         },
 
         computed:{
+          devisString(){
+            return `${this.commande.num_devis}`
+          },
+
           descriptionString(){
             return `${this.commande.descriptionDevis}`
           },
