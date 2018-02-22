@@ -11,9 +11,6 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
 Route::get('/', 'DevisController@index')->name('home');
 
 /* Call PDF */
@@ -36,3 +33,8 @@ Route::put('/storeDevis/{user}/{commande}', 'DevisController@store')->name('stor
 
 //Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');
 //Route::get('/commande/pdf', 'CommandeController@commandePdf')->name('commande.pdf');
+
+/*Route::any('{all}', function () {
+    return view('welcome');
+})
+->where(['all' => '.*']);*/

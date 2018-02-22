@@ -42,7 +42,10 @@
                   <router-link class="navbar-item" tag="a" to="/contact">
                       Contact
                   </router-link>
-                  <router-link class="navbar-item" tag="a" to="/devis/{{ $user }}">
+                  <router-link class="navbar-item" tag="a" to="/devis/1">
+                    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                    <!--Il faut definir comment faire la route-->
+                    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                       Tableau de bord
                   </router-link>
                 </div>
@@ -50,7 +53,10 @@
                   <div class="navbar-item">
                     <div class="field is-grouped">
                       <p class="control">
-                        <router-link class="button is-success" tag="a" to="/devis/{{ $user }}"> <!--Il faut definir comment faire la route-->
+                        <router-link class="button is-success" tag="a" to="/devis/1">
+                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                          <!--Il faut definir comment faire la route-->
+                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                             Devis
                         </router-link>
                       </p>

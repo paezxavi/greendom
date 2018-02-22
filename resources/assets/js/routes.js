@@ -35,6 +35,10 @@ let routes = [
 
 export default new VueRouter({
 
+    /*hashbang: false,
+
+    mode:'history',*/
+
     routes,
 
     linkActiveClass: 'is-active'
