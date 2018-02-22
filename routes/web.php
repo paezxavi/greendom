@@ -24,10 +24,10 @@ Route::get('/customers', 'ProductController@clients');
 Route::get('/commandes', 'ProductController@commandes');
 Route::get('/providers', 'ProductController@providers');
 
-Route::get('/devis/{user}', 'DevisController@clientDevis');
+Route::get('/devisList/{user}', 'DevisController@clientDevis');
 Route::get('/company/{user}', 'DevisController@companieClientDevis');
 Route::get('/{user}', 'DevisController@infoClient');
-Route::get('/{user}/{commande}', 'DevisController@clientInfoDevis');
+Route::get('/infoDevis/{user}/{commande}', 'DevisController@clientInfoDevis');
 
 Route::put('/storeDevis/{user}/{commande}', 'DevisController@store')->name('storeDevis');
 

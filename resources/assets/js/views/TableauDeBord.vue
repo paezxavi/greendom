@@ -74,7 +74,7 @@
         },
 
         created() {
-            axios.get('/devis/'+this.$route.params.user)
+            axios.get('/devisList/'+this.$route.params.user)
                 .then(({data}) => this.arrayDevis = data);
         },
 

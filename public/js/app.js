@@ -16672,7 +16672,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        axios.get('/devis/' + this.$route.params.user).then(function (_ref) {
+        axios.get('/devisList/' + this.$route.params.user).then(function (_ref) {
             var data = _ref.data;
             return _this.arrayDevis = data;
         });
@@ -17142,7 +17142,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return _this.customer = data;
         });
         //commande
-        axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
+        axios.get('/infoDevis/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
             var data = _ref2.data;
             return _this.commande = data;
         });
@@ -17161,7 +17161,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         enregistrer: function enregistrer() {
             var id = this.customer.id;
             axios.put('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
-                window.location.href = '#/devis/' + id;
+                window.location.href = '/#/devis/' + id;
             }).catch(function (error) {
                 if (error.response && error.response.status === 400) {
                     this.errors.setMessages(error.response.data.messages);

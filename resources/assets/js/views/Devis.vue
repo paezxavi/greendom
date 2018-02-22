@@ -153,7 +153,7 @@
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
             //commande
-            axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
+            axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
                 .then(({data}) => this.commande = data);
             //company
             axios.get('/company/'+this.$route.params.user)
@@ -169,7 +169,7 @@
             var id = this.customer.id;
             axios.put('/storeDevis/'+this.customer.id+"/"+this.commande.id, {commande: this.commande, company:this.company, customer:this.customer})
                     .then(function (response) {
-                      window.location.href='#/devis/'+id;
+                      window.location.href='/#/devis/'+id;
                      })
                      .catch(function (error) {
                         if (error.response && error.response.status === 400) {
