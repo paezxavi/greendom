@@ -17122,67 +17122,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      customer: "",
-      commande: "",
-      company: "",
-      active: false
-    };
-  },
-  created: function created() {
-    var _this = this;
+    data: function data() {
+        return {
+            customer: "",
+            commande: "",
+            company: "",
+            active: false
+        };
+    },
+    created: function created() {
+        var _this = this;
 
-    axios.get('/' + this.$route.params.user).then(function (_ref) {
-      var data = _ref.data;
-      return _this.customer = data;
-    });
-    axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
-      var data = _ref2.data;
-      return _this.commande = data;
-    });
-    axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
-      var data = _ref3.data;
-      return _this.company = data;
-    });
-    axios.get('/devis/pdf').then(console.log(""));
-  },
+        //user
+        axios.get('/' + this.$route.params.user).then(function (_ref) {
+            var data = _ref.data;
+            return _this.customer = data;
+        });
+        //commande
+        axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
+            var data = _ref2.data;
+            return _this.commande = data;
+        });
+        //company
+        axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
+            var data = _ref3.data;
+            return _this.company = data;
+        });
+        //pdf
+        axios.get('/devis/pdf').then(console.log(""));
+    },
 
 
-  computed: {
-    devisString: function devisString() {
-      return "" + this.commande.num_devis;
-    },
-    descriptionString: function descriptionString() {
-      return "" + this.commande.descriptionDevis;
-    },
-    adresseString: function adresseString() {
-      return "" + this.customer.adresse;
-    },
-    contactString: function contactString() {
-      return "" + this.customer.contact;
-    },
-    emailString: function emailString() {
-      return "" + this.customer.email;
-    },
-    nomString: function nomString() {
-      return "" + this.customer.name;
-    },
-    prenomString: function prenomString() {
-      return "" + this.customer.forename;
-    },
-    nomSocieteString: function nomSocieteString() {
-      return "" + this.company.nom;
-    },
-    adresseSocieteString: function adresseSocieteString() {
-      return "" + this.company.adresse;
-    },
-    emailSocieteString: function emailSocieteString() {
-      return "" + this.company.email;
+    methods: {
+        //enregistrer modif devis
+        enregistrer: function enregistrer() {
+            var id = this.customer.id;
+            axios.put('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+                window.location.href = '#/devis/' + id;
+            }).catch(function (error) {
+                if (error.response && error.response.status === 400) {
+                    this.errors.setMessages(error.response.data.messages);
+                }
+            }.bind(this));
+        }
     }
-  }
 });
 
 /***/ }),
@@ -17205,203 +17191,414 @@ var render = function() {
           "div",
           { staticClass: "column is-three-fifths is-offset-one-fifth" },
           [
-            _c("h1", { staticClass: "title" }, [
-              _vm._v("Devis N°" + _vm._s(_vm.devisString))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      staticClass: "input",
-                      attrs: { type: "text", placeholder: "Text input" },
-                      domProps: { value: _vm.nomString }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Forename")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
-                      _c("input", {
-                        staticClass: "input is-success",
-                        attrs: { type: "text", placeholder: "Text input" },
-                        domProps: { value: _vm.prenomString }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "help is-success" }, [
-                    _vm._v("This username is available")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("input", {
-                  staticClass: "input",
-                  attrs: { type: "text", placeholder: "Text input" },
-                  domProps: { value: _vm.adresseString }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Email")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
-                      _c("input", {
-                        staticClass: "input is-danger",
-                        attrs: { type: "email", placeholder: "Email input" },
-                        domProps: { value: _vm.emailString }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._m(3)
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "help is-danger" }, [
-                    _vm._v("This email is invalid")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Contact")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      staticClass: "input",
-                      attrs: { type: "text", placeholder: "Text input" },
-                      domProps: { value: _vm.contactString }
-                    })
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.customer.company_id != null
-              ? _c("div", { staticClass: "field" }, [
-                  _c("div", { staticClass: "control" }, [
-                    _c("label", { staticClass: "checkbox" }, [
-                      _c("input", {
-                        attrs: { type: "checkbox" },
-                        on: {
-                          click: function($event) {
-                            _vm.active = !_vm.active
-                          }
-                        }
-                      }),
-                      _vm._v(
-                        "\n              Concerne la société pour laquelle je travaille\n            "
-                      )
-                    ])
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
             _c(
-              "div",
+              "form",
               {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.active,
-                    expression: "active"
+                attrs: { method: "PUT" },
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    _vm.enregistrer($event)
                   }
-                ],
-                staticClass: "field"
+                }
               },
               [
-                _c("div", { staticClass: "columns is-mobile" }, [
-                  _c("div", { staticClass: "column" }, [
-                    _c("label", { staticClass: "label" }, [_vm._v("Société")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "control" }, [
-                      _c("input", {
-                        staticClass: "input",
-                        attrs: { type: "text", placeholder: "Text input" },
-                        domProps: { value: _vm.nomSocieteString }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "column" }, [
-                    _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "control has-icons-left has-icons-right" },
-                      [
+                _c("h1", { staticClass: "title" }, [
+                  _vm._v("Devis N°" + _vm._s(this.commande.num_devis))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("div", { staticClass: "columns is-mobile" }, [
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [_vm._v("Nom")]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "control" }, [
                         _c("input", {
-                          staticClass: "input is-success",
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.customer.name,
+                              expression: "customer.name"
+                            }
+                          ],
+                          staticClass: "input",
                           attrs: { type: "text", placeholder: "Text input" },
-                          domProps: { value: _vm.adresseSocieteString }
-                        }),
-                        _vm._v(" "),
-                        _vm._m(4),
-                        _vm._v(" "),
-                        _vm._m(5)
-                      ]
-                    ),
+                          domProps: { value: _vm.customer.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.customer,
+                                "name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "help is-success" }, [
-                      _vm._v("This username is available")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "column" }, [
-                    _c("label", { staticClass: "label" }, [_vm._v("Email")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "control" }, [
-                      _c("input", {
-                        staticClass: "input",
-                        attrs: { type: "text", placeholder: "Text input" },
-                        domProps: { value: _vm.emailSocieteString }
-                      })
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [_vm._v("Prenom")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "control has-icons-left has-icons-right"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.customer.forename,
+                                expression: "customer.forename"
+                              }
+                            ],
+                            staticClass: "input is-success",
+                            attrs: { type: "text", placeholder: "Text input" },
+                            domProps: { value: _vm.customer.forename },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.customer,
+                                  "forename",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "help is-success" }, [
+                        _vm._v("This username is available")
+                      ])
                     ])
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "control" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.customer.adresse,
+                          expression: "customer.adresse"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: { type: "text", placeholder: "Text input" },
+                      domProps: { value: _vm.customer.adresse },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.customer, "adresse", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("div", { staticClass: "columns is-mobile" }, [
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "control has-icons-left has-icons-right"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.customer.email,
+                                expression: "customer.email"
+                              }
+                            ],
+                            staticClass: "input is-danger",
+                            attrs: {
+                              type: "email",
+                              placeholder: "Email input"
+                            },
+                            domProps: { value: _vm.customer.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.customer,
+                                  "email",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3)
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "help is-danger" }, [
+                        _vm._v("This email is invalid")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Contact")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "control" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.customer.contact,
+                              expression: "customer.contact"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: { type: "text", placeholder: "Text input" },
+                          domProps: { value: _vm.customer.contact },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.customer,
+                                "contact",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.customer.company_id != null
+                  ? _c("div", { staticClass: "field" }, [
+                      _c("div", { staticClass: "control" }, [
+                        _c("label", { staticClass: "checkbox" }, [
+                          _c("input", {
+                            attrs: { type: "checkbox" },
+                            on: {
+                              click: function($event) {
+                                _vm.active = !_vm.active
+                              }
+                            }
+                          }),
+                          _vm._v(
+                            "\n                Concerne la société pour laquelle je travaille\n              "
+                          )
+                        ])
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.active,
+                        expression: "active"
+                      }
+                    ],
+                    staticClass: "field"
+                  },
+                  [
+                    _c("div", { staticClass: "columns is-mobile" }, [
+                      _c("div", { staticClass: "column" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Société")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "control" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.nom,
+                                expression: "company.nom"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: { type: "text", placeholder: "Text input" },
+                            domProps: { value: _vm.company.nom },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "nom",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "column" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Adresse")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "control has-icons-left has-icons-right"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.company.adresse,
+                                  expression: "company.adresse"
+                                }
+                              ],
+                              staticClass: "input is-success",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Text input"
+                              },
+                              domProps: { value: _vm.company.adresse },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.company,
+                                    "adresse",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _vm._m(5)
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "help is-success" }, [
+                          _vm._v("This username is available")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "column" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Email")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "control" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.company.email,
+                                expression: "company.email"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: { type: "text", placeholder: "Text input" },
+                            domProps: { value: _vm.company.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.company,
+                                  "email",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", { staticClass: "label" }, [_vm._v("Message")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "control" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.commande.descriptionDevis,
+                          expression: "commande.descriptionDevis"
+                        }
+                      ],
+                      staticClass: "textarea",
+                      attrs: { placeholder: "Textarea" },
+                      domProps: { value: _vm.commande.descriptionDevis },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.commande,
+                            "descriptionDevis",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(7)
               ]
-            ),
-            _vm._v(" "),
-            _vm._m(6),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Message")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("textarea", {
-                  staticClass: "textarea",
-                  attrs: { placeholder: "Textarea" },
-                  domProps: { value: _vm.descriptionString }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(7)
+            )
           ]
         )
       ]
@@ -17475,7 +17672,7 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "file-label" }, [
-              _vm._v("\n                  Choose a File…\n                ")
+              _vm._v("\n                    Choose a File…\n                  ")
             ])
           ])
         ])
@@ -17489,22 +17686,22 @@ var staticRenderFns = [
     return _c("div", { staticClass: "field" }, [
       _c("div", { staticClass: "buttons has-addons is-centered" }, [
         _c(
-          "a",
+          "button",
           {
             staticClass: "button is-success",
             staticStyle: { "margin-right": "2px" },
-            attrs: { href: "/devis/pdf" }
+            attrs: { type: "submit" }
           },
-          [_vm._v("Submit")]
+          [_vm._v("Enregistrer")]
         ),
         _vm._v(" "),
         _c(
-          "a",
+          "button",
           {
             staticClass: "button is-danger",
             staticStyle: { "margin-left": "2px" }
           },
-          [_vm._v("Cancel")]
+          [_vm._v("Annuler")]
         )
       ])
     ])

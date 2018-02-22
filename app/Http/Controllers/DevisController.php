@@ -8,7 +8,7 @@ use App\Customer;
 use App\User;
 use App\Commande;
 use App\Company;
-
+use Carbon\Carbon;
 
 class DevisController extends Controller
 {
@@ -32,7 +32,17 @@ class DevisController extends Controller
      */
     public function create()
     {
-        //
+      dd("hello");
+      $customerDevis = new Commande();
+      $customerDevis->dateDebut = Carbon::now();
+      $customerDevis->concerne = "";
+      $customerDevis->num_devis = Carbon::now()->format('Y-m-d');
+      $customerDevis->num_offre = Carbon::now()->format('Y-m-d');
+      $customerDevis->num_commande = Carbon::now()->format('Y-m-d');
+      $customerDevis->user_id = 1; //A changer dans le futur avec le AuthId()
+      $customerDevis->descriptionDevis = "";
+      $customerDevis->status_id = 1;
+      $customerDevis->save();
     }
 
     /**
@@ -43,7 +53,19 @@ class DevisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      /*$commandes = $request->commande['id'];
+      return $commandes;
+      foreach($commandes as $commande){
+          echo $commande;
+      }
+      return $commande;*/
+      $customerDevis = Commande::find($request->commande['id'])->where([
+                          ['user_id',$request->customer['id']],
+                          ['id',$request->commande['id']]
+                          ])->get()->first();
+      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->save();
+      //return $customerDevis;
     }
 
     /**
@@ -108,9 +130,19 @@ class DevisController extends Controller
     public function clientInfoDevis(User $user, Commande $commande)
     {
       $customerDevis = Commande::find($commande->id)->where([
-          ['user_id',$user->id],
-          ['id',$commande->id]
-          ])->get()->first();
+            ['user_id',$user->id],
+            ['id',$commande->id]
+            ])->get()->first();
+      /*$customerDevisCr = new Commande();
+      $customerDevisCr->dateDebut = Carbon::now();
+      $customerDevisCr->concerne = "";
+      $customerDevisCr->num_devis = Carbon::now()->format('Y-m-d');
+      $customerDevisCr->num_offre = Carbon::now()->format('Y-m-d');
+      $customerDevisCr->num_commande = Carbon::now()->format('Y-m-d');
+      $customerDevisCr->user_id = 1; //A changer dans le futur avec le AuthId()
+      $customerDevisCr->descriptionDevis = "";
+      $customerDevisCr->status_id = 1;
+      $customerDevisCr->save();*/
       return $customerDevis;
     }
 

@@ -13409,4 +13409,21 @@ html.route-index .hero.is-primary a.column:hover .title strong {
   width: 150px;
 }
 
+.greendom-navbar {
+  border-bottom: 1px solid #E6EAEE;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(0, 170, 0);
+}
+
+.greendom-background {
+  background-color: #e6ffe6 !important;
+}
+
+/*a.navbar-item router-link-exact-active a.is-active*/
+a.navbar-item {
+  background-color: transparents !important;
+}
+
+
 /*# sourceMappingURL=bulma-docs.css.map */
