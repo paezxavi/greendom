@@ -129,10 +129,11 @@
             //user
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
+
+            //commande
             if (!this.$route.params.commande){
               self.commande = "";
             } else {
-              //commande
               axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
                   .then(({data}) => this.commande = data)
                   .catch(function (error) {
@@ -163,7 +164,13 @@
                         window.location.href='/#/listOrder/'+id;
                       });
             }
+          },
+
+          envoyer() {
+            var id = this.customer.id;
+
           }
+
         }
     }
 </script>

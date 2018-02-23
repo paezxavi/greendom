@@ -17126,10 +17126,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var data = _ref.data;
       return _this.customer = data;
     });
+
+    //commande
     if (!this.$route.params.commande) {
       self.commande = "";
     } else {
-      //commande
       axios.get('/infoDevis/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
         var data = _ref2.data;
         return _this.commande = data;
@@ -17161,6 +17162,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           window.location.href = '/#/listOrder/' + id;
         });
       }
+    },
+    envoyer: function envoyer() {
+      var id = this.customer.id;
     }
   }
 });

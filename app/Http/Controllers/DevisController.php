@@ -64,7 +64,7 @@ class DevisController extends Controller
         $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
         $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
         $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
-        $customerDevis->user_id = 1; //A changer dans le futur avec le AuthId()
+        $customerDevis->user_id = $request->customer['id'];
         $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
         $customerDevis->status_id = 1;
         $customerDevis->save();
