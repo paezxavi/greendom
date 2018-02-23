@@ -54,6 +54,9 @@
                     <div class="field is-grouped">
                       <p class="control">
                         <router-link class="button is-info" tag="button" to="/devis/1">
+                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                          <!--Il faut definir comment faire la route-->
+                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                             Devis
                         </router-link>
                       </p>
