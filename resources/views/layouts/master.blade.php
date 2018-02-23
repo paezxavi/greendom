@@ -42,18 +42,18 @@
                   <router-link class="navbar-item" tag="a" to="/contact">
                       Contact
                   </router-link>
-                  <router-link class="navbar-item" tag="a" to="/devis/1">
+                  <router-link class="navbar-item" tag="a" to="/listOrder/1">
                     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
                     <!--Il faut definir comment faire la route-->
                     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                      Tableau de bord
+                      Liste des commandes
                   </router-link>
                 </div>
                 <div class="navbar-end">
                   <div class="navbar-item">
                     <div class="field is-grouped">
                       <p class="control">
-                        <router-link class="navbar-item" tag="a" to="/createDevis">
+                        <router-link class="button is-info" tag="button" to="/devis/1">
                             Devis
                         </router-link>
                       </p>
