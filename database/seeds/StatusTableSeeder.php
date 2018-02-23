@@ -12,10 +12,12 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         DB::table('status')->insert([
-             ['nom' => 'Devis'],
-             ['nom' => 'Offre'],
-             ['nom' => 'Commande'],
-             ['nom' => 'Terminé'],
+             ['nom' => 'Devis - En cours'],
+             ['nom' => 'Devis - Envoyé'],
+             ['nom' => 'Offre - En cours'],
+             ['nom' => 'Offre - Validé'],
+             ['nom' => 'Commande - En cours'],
+             ['nom' => 'Commande - Terminé'],
         ]);
     }
 }

@@ -2,61 +2,45 @@
     <div>
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
-            <form method="PUT" @submit.prevent="enregistrer">
+            <form method="PUT">
+
               <h1 class="title">Devis N°{{ this.commande.num_devis }}</h1>
 
-              <div class="field">
-                <div class="columns is-mobile">
-                  <div class="column">
-                    <label class="label">Nom</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="Text input" v-model="customer.name">
-                    </div>
-                  </div>
-                  <div class="column">
-                    <label class="label">Prenom</label>
-                    <div class="control has-icons-left has-icons-right">
-                      <input class="input is-success" type="text" placeholder="Text input" v-model="customer.forename">
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                      </span>
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
-                      </span>
-                    </div>
-                    <p class="help is-success">This username is available</p>
-                  </div>
-                </div>
-              </div>
+              <div class="card" style="margin-bottom:15px">
+                <header class="card-header">
+                  <p class="card-header-title">
+                    Données personnelles
+                  </p>
+                </header>
+                <div class="card-content">
+                  <div class="content">
 
-              <div class="field">
-                <label class="label">Adresse</label>
-                <div class="control">
-                  <input class="input" type="text" placeholder="Text input" v-model="customer.adresse">
-                </div>
-              </div>
-
-
-              <div class="field">
-                <div class="columns is-mobile">
-                  <div class="column">
-                    <label class="label">Email</label>
-                    <div class="control has-icons-left has-icons-right">
-                      <input class="input is-danger" type="email" placeholder="Email input" v-model="customer.email">
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                      </span>
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-exclamation-triangle"></i>
-                      </span>
+                    <div class="field">
+                      <div class="columns is-mobile">
+                        <div class="column">
+                          <label class="label">Nom : {{ customer.name }}</label>
+                        </div>
+                        <div class="column">
+                          <label class="label">Prenom : {{ customer.forename }}</label>
+                        </div>
+                      </div>
                     </div>
-                    <p class="help is-danger">This email is invalid</p>
-                  </div>
-                  <div class="column">
-                    <label class="label">Contact</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="Text input" v-model="customer.contact">
+
+                    <div class="field">
+                      <label class="label">Adresse : {{ customer.adresse }}</label>
                     </div>
+
+                    <div class="field">
+                      <div class="columns is-mobile">
+                        <div class="column">
+                          <label class="label">Email : {{ customer.email }}</label>
+                        </div>
+                        <div class="column">
+                          <label class="label">Contact : {{ customer.contact }}</label>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -73,30 +57,25 @@
               <div class="field" v-show="active">
                 <div class="columns is-mobile">
                   <div class="column">
-                    <label class="label">Société</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="Text input" v-model="company.nom">
-                    </div>
+                    <label class="label">Société : {{ company.nom }}</label>
                   </div>
                   <div class="column">
-                    <label class="label">Adresse</label>
-                    <div class="control has-icons-left has-icons-right">
-                      <input class="input is-success" type="text" placeholder="Text input" v-model="company.adresse">
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                      </span>
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
-                      </span>
-                    </div>
-                    <p class="help is-success">This username is available</p>
+                    <label class="label">Adresse : {{ company.adresse }}</label>
                   </div>
                   <div class="column">
-                    <label class="label">Email</label>
-                    <div class="control">
-                      <input class="input" type="text" placeholder="Text input" v-model="company.email">
-                    </div>
+                    <label class="label">Email : {{ company.email }}</label>
                   </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Concerne</label>
+                <div class="control">
+                  <input class="input" type="text" placeholder="Text input" v-model="commande.concerne">
+                </div>
+                <label class="label">Message</label>
+                <div class="control">
+                  <textarea class="textarea" placeholder="Textarea" v-model="commande.descriptionDevis"></textarea>
                 </div>
               </div>
 
@@ -117,15 +96,9 @@
               </div>
 
               <div class="field">
-                <label class="label">Message</label>
-                <div class="control">
-                  <textarea class="textarea" placeholder="Textarea" v-model="commande.descriptionDevis"></textarea>
-                </div>
-              </div>
-
-              <div class="field">
                 <div class="buttons has-addons is-centered">
-                    <button type="submit" class="button is-success" style="margin-right:2px">Enregistrer</button>
+                    <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
+                    <button class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
                     <button class="button is-danger" style="margin-left:2px">Annuler</button>
                 </div>
               </div>

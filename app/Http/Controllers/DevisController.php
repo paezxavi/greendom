@@ -61,6 +61,7 @@ class DevisController extends Controller
                           ['user_id',$request->customer['id']],
                           ['id',$request->commande['id']]
                           ])->get()->first();
+      $customerDevis->concerne = $request->commande['concerne'];
       $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
       $customerDevis->save();
       //return $customerDevis;

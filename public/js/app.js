@@ -17099,33 +17099,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -17194,414 +17167,224 @@ var render = function() {
           "div",
           { staticClass: "column is-three-fifths is-offset-one-fifth" },
           [
-            _c(
-              "form",
-              {
-                attrs: { method: "PUT" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    _vm.enregistrer($event)
-                  }
-                }
-              },
-              [
-                _c("h1", { staticClass: "title" }, [
-                  _vm._v("Devis N°" + _vm._s(this.commande.num_devis))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("div", { staticClass: "columns is-mobile" }, [
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [_vm._v("Nom")]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "control" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.customer.name,
-                              expression: "customer.name"
-                            }
-                          ],
-                          staticClass: "input",
-                          attrs: { type: "text", placeholder: "Text input" },
-                          domProps: { value: _vm.customer.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.customer,
-                                "name",
-                                $event.target.value
+            _c("form", { attrs: { method: "PUT" } }, [
+              _c("h1", { staticClass: "title" }, [
+                _vm._v("Devis N°" + _vm._s(this.commande.num_devis))
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "card",
+                  staticStyle: { "margin-bottom": "15px" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-content" }, [
+                    _c("div", { staticClass: "content" }, [
+                      _c("div", { staticClass: "field" }, [
+                        _c("div", { staticClass: "columns is-mobile" }, [
+                          _c("div", { staticClass: "column" }, [
+                            _c("label", { staticClass: "label" }, [
+                              _vm._v("Nom : " + _vm._s(_vm.customer.name))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "column" }, [
+                            _c("label", { staticClass: "label" }, [
+                              _vm._v(
+                                "Prenom : " + _vm._s(_vm.customer.forename)
                               )
-                            }
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [_vm._v("Prenom")]),
+                            ])
+                          ])
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "control has-icons-left has-icons-right"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.customer.forename,
-                                expression: "customer.forename"
-                              }
-                            ],
-                            staticClass: "input is-success",
-                            attrs: { type: "text", placeholder: "Text input" },
-                            domProps: { value: _vm.customer.forename },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.customer,
-                                  "forename",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _vm._m(1)
-                        ]
-                      ),
+                      _c("div", { staticClass: "field" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Adresse : " + _vm._s(_vm.customer.adresse))
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "help is-success" }, [
-                        _vm._v("This username is available")
+                      _c("div", { staticClass: "field" }, [
+                        _c("div", { staticClass: "columns is-mobile" }, [
+                          _c("div", { staticClass: "column" }, [
+                            _c("label", { staticClass: "label" }, [
+                              _vm._v("Email : " + _vm._s(_vm.customer.email))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "column" }, [
+                            _c("label", { staticClass: "label" }, [
+                              _vm._v(
+                                "Contact : " + _vm._s(_vm.customer.contact)
+                              )
+                            ])
+                          ])
+                        ])
                       ])
                     ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.customer.adresse,
-                          expression: "customer.adresse"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: { type: "text", placeholder: "Text input" },
-                      domProps: { value: _vm.customer.adresse },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                ]
+              ),
+              _vm._v(" "),
+              _vm.customer.company_id != null
+                ? _c("div", { staticClass: "field" }, [
+                    _c("div", { staticClass: "control" }, [
+                      _c("label", { staticClass: "checkbox" }, [
+                        _c("input", {
+                          attrs: { type: "checkbox" },
+                          on: {
+                            click: function($event) {
+                              _vm.active = !_vm.active
+                            }
                           }
-                          _vm.$set(_vm.customer, "adresse", $event.target.value)
-                        }
-                      }
-                    })
+                        }),
+                        _vm._v(
+                          "\n                Concerne la société pour laquelle je travaille\n              "
+                        )
+                      ])
+                    ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.active,
+                      expression: "active"
+                    }
+                  ],
+                  staticClass: "field"
+                },
+                [
                   _c("div", { staticClass: "columns is-mobile" }, [
                     _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [_vm._v("Email")]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "control has-icons-left has-icons-right"
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.customer.email,
-                                expression: "customer.email"
-                              }
-                            ],
-                            staticClass: "input is-danger",
-                            attrs: {
-                              type: "email",
-                              placeholder: "Email input"
-                            },
-                            domProps: { value: _vm.customer.email },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.customer,
-                                  "email",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(2),
-                          _vm._v(" "),
-                          _vm._m(3)
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "help is-danger" }, [
-                        _vm._v("This email is invalid")
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Société : " + _vm._s(_vm.company.nom))
                       ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "column" }, [
                       _c("label", { staticClass: "label" }, [
-                        _vm._v("Contact")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "control" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.customer.contact,
-                              expression: "customer.contact"
-                            }
-                          ],
-                          staticClass: "input",
-                          attrs: { type: "text", placeholder: "Text input" },
-                          domProps: { value: _vm.customer.contact },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.customer,
-                                "contact",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
+                        _vm._v("Adresse : " + _vm._s(_vm.company.adresse))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Email : " + _vm._s(_vm.company.email))
                       ])
                     ])
                   ])
-                ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Concerne")]),
                 _vm._v(" "),
-                _vm.customer.company_id != null
-                  ? _c("div", { staticClass: "field" }, [
-                      _c("div", { staticClass: "control" }, [
-                        _c("label", { staticClass: "checkbox" }, [
-                          _c("input", {
-                            attrs: { type: "checkbox" },
-                            on: {
-                              click: function($event) {
-                                _vm.active = !_vm.active
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            "\n                Concerne la société pour laquelle je travaille\n              "
-                          )
-                        ])
-                      ])
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
                     directives: [
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.active,
-                        expression: "active"
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.commande.concerne,
+                        expression: "commande.concerne"
                       }
                     ],
-                    staticClass: "field"
-                  },
-                  [
-                    _c("div", { staticClass: "columns is-mobile" }, [
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Société")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "control" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.company.nom,
-                                expression: "company.nom"
-                              }
-                            ],
-                            staticClass: "input",
-                            attrs: { type: "text", placeholder: "Text input" },
-                            domProps: { value: _vm.company.nom },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.company,
-                                  "nom",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Adresse")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "control has-icons-left has-icons-right"
-                          },
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.company.adresse,
-                                  expression: "company.adresse"
-                                }
-                              ],
-                              staticClass: "input is-success",
-                              attrs: {
-                                type: "text",
-                                placeholder: "Text input"
-                              },
-                              domProps: { value: _vm.company.adresse },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.company,
-                                    "adresse",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm._m(4),
-                            _vm._v(" "),
-                            _vm._m(5)
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "help is-success" }, [
-                          _vm._v("This username is available")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Email")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "control" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.company.email,
-                                expression: "company.email"
-                              }
-                            ],
-                            staticClass: "input",
-                            attrs: { type: "text", placeholder: "Text input" },
-                            domProps: { value: _vm.company.email },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.company,
-                                  "email",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(6),
-                _vm._v(" "),
-                _c("div", { staticClass: "field" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Message")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.commande.descriptionDevis,
-                          expression: "commande.descriptionDevis"
+                    staticClass: "input",
+                    attrs: { type: "text", placeholder: "Text input" },
+                    domProps: { value: _vm.commande.concerne },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      ],
-                      staticClass: "textarea",
-                      attrs: { placeholder: "Textarea" },
-                      domProps: { value: _vm.commande.descriptionDevis },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.commande,
-                            "descriptionDevis",
-                            $event.target.value
-                          )
-                        }
+                        _vm.$set(_vm.commande, "concerne", $event.target.value)
                       }
-                    })
-                  ])
+                    }
+                  })
                 ]),
                 _vm._v(" "),
-                _vm._m(7)
-              ]
-            )
+                _c("label", { staticClass: "label" }, [_vm._v("Message")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.commande.descriptionDevis,
+                        expression: "commande.descriptionDevis"
+                      }
+                    ],
+                    staticClass: "textarea",
+                    attrs: { placeholder: "Textarea" },
+                    domProps: { value: _vm.commande.descriptionDevis },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.commande,
+                          "descriptionDevis",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "buttons has-addons is-centered" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-info",
+                      staticStyle: { "margin-right": "2px" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.enregistrer($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Enregistrer")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-success",
+                      staticStyle: {
+                        "margin-left": "2px",
+                        "margin-right": "2px"
+                      }
+                    },
+                    [_vm._v("Envoyer")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger",
+                      staticStyle: { "margin-left": "2px" }
+                    },
+                    [_vm._v("Annuler")]
+                  )
+                ])
+              ])
+            ])
           ]
         )
       ]
@@ -17613,48 +17396,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-user" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-right" }, [
-      _c("i", { staticClass: "fas fa-check" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-envelope" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-right" }, [
-      _c("i", { staticClass: "fas fa-exclamation-triangle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-user" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-right" }, [
-      _c("i", { staticClass: "fas fa-check" })
+    return _c("header", { staticClass: "card-header" }, [
+      _c("p", { staticClass: "card-header-title" }, [
+        _vm._v("\n                Données personnelles\n              ")
+      ])
     ])
   },
   function() {
@@ -17679,33 +17424,6 @@ var staticRenderFns = [
             ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "buttons has-addons is-centered" }, [
-        _c(
-          "button",
-          {
-            staticClass: "button is-success",
-            staticStyle: { "margin-right": "2px" },
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Enregistrer")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button is-danger",
-            staticStyle: { "margin-left": "2px" }
-          },
-          [_vm._v("Annuler")]
-        )
       ])
     ])
   }
