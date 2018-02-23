@@ -2,7 +2,7 @@
     <div>
         <div style="padding-top:40px" class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
-            <form method="PUT">
+            <form method="POST">
 
               <h1 class="title">Devis N°{{ this.commande.num_devis }}</h1>
 
@@ -71,11 +71,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Text input" v-model="commande.concerne">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Textarea" v-model="commande.descriptionDevis"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis"></textarea>
                 </div>
               </div>
 
@@ -115,7 +115,11 @@
         data() {
             return {
                 customer: "",
-                commande: "",
+                commande: {
+                  id: "",
+                  concerne: "",
+                  descriptionDevis: ""
+                },
                 company: "",
                 active : false
             }
@@ -125,9 +129,17 @@
             //user
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
-            //commande
-            axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
-                .then(({data}) => this.commande = data);
+            if (!this.$route.params.commande){
+              self.commande = "";
+            } else {
+              //commande
+              axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
+                  .then(({data}) => this.commande = data)
+                  .catch(function (error) {
+                    console.log(error.response);
+                  });
+            }
+
             //company
             axios.get('/company/'+this.$route.params.user)
                 .then(({data}) => this.company = data);
@@ -140,15 +152,17 @@
           //enregistrer modif devis
           enregistrer() {
             var id = this.customer.id;
-            axios.put('/storeDevis/'+this.customer.id+"/"+this.commande.id, {commande: this.commande, company:this.company, customer:this.customer})
-                    .then(function (response) {
-                      window.location.href='/#/devis/'+id;
-                     })
-                     .catch(function (error) {
-                        if (error.response && error.response.status === 400) {
-                            this.errors.setMessages(error.response.data.messages);
-                        }
-                     }.bind(this));
+            if (!this.commande.id){
+              axios.post('/storeDevis/'+this.customer.id, {commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            } else {
+              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            }
           }
         }
     }

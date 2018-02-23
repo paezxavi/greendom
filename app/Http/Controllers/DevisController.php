@@ -57,14 +57,26 @@ class DevisController extends Controller
           echo $commande;
       }
       return $commande;*/
-      $customerDevis = Commande::find($request->commande['id'])->where([
-                          ['user_id',$request->customer['id']],
-                          ['id',$request->commande['id']]
-                          ])->get()->first();
-      $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      if (empty($request->commande['id'])){
+        $customerDevis = new Commande();
+        $customerDevis->dateDebut = Carbon::now();
+        $customerDevis->concerne = $request->commande['concerne'];
+        $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
+        $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
+        $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
+        $customerDevis->user_id = 1; //A changer dans le futur avec le AuthId()
+        $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+        $customerDevis->status_id = 1;
+        $customerDevis->save();
+      } else {
+        $customerDevis = Commande::find($request->commande['id'])->where([
+                            ['user_id',$request->customer['id']],
+                            ['id',$request->commande['id']]
+                            ])->get()->first();
+        $customerDevis->concerne = $request->commande['concerne'];
+        $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      }
       $customerDevis->save();
-      //return $customerDevis;
     }
 
     /**

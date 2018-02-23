@@ -53,10 +53,7 @@
                   <div class="navbar-item">
                     <div class="field is-grouped">
                       <p class="control">
-                        <router-link class="button is-success" tag="a" to="/devis/1">
-                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                          <!--Il faut definir comment faire la route-->
-                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                        <router-link class="navbar-item" tag="a" to="/createDevis">
                             Devis
                         </router-link>
                       </p>

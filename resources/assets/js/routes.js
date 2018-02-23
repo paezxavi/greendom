@@ -21,13 +21,19 @@ let routes = [
     },
     {
 
-        path:'/devis/:user',
+        path:'/listOrder/:user',
         component: require('./views/TableauDeBord')
 
     },
     {
 
         path:'/devis/:user/:commande',
+        component: require('./views/Devis')
+
+    },
+    {
+
+        path:'/devis/:user',
         component: require('./views/Devis')
 
     },

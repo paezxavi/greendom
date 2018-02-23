@@ -15742,12 +15742,17 @@ var routes = [{
 
 }, {
 
-    path: '/devis/:user',
+    path: '/listOrder/:user',
     component: __webpack_require__(46)
 
 }, {
 
     path: '/devis/:user/:commande',
+    component: __webpack_require__(49)
+
+}, {
+
+    path: '/devis/:user',
     component: __webpack_require__(49)
 
 }];
@@ -17101,50 +17106,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            customer: "",
-            commande: "",
-            company: "",
-            active: false
-        };
-    },
-    created: function created() {
-        var _this = this;
+  data: function data() {
+    return {
+      customer: "",
+      commande: {
+        id: "",
+        concerne: "",
+        descriptionDevis: ""
+      },
+      company: "",
+      active: false
+    };
+  },
+  created: function created() {
+    var _this = this;
 
-        //user
-        axios.get('/' + this.$route.params.user).then(function (_ref) {
-            var data = _ref.data;
-            return _this.customer = data;
-        });
-        //commande
-        axios.get('/infoDevis/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
-            var data = _ref2.data;
-            return _this.commande = data;
-        });
-        //company
-        axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
-            var data = _ref3.data;
-            return _this.company = data;
-        });
-        //pdf
-        axios.get('/devis/pdf').then(console.log(""));
-    },
-
-
-    methods: {
-        //enregistrer modif devis
-        enregistrer: function enregistrer() {
-            var id = this.customer.id;
-            axios.put('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
-                window.location.href = '/#/devis/' + id;
-            }).catch(function (error) {
-                if (error.response && error.response.status === 400) {
-                    this.errors.setMessages(error.response.data.messages);
-                }
-            }.bind(this));
-        }
+    //user
+    axios.get('/' + this.$route.params.user).then(function (_ref) {
+      var data = _ref.data;
+      return _this.customer = data;
+    });
+    if (!this.$route.params.commande) {
+      self.commande = "";
+    } else {
+      //commande
+      axios.get('/infoDevis/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
+        var data = _ref2.data;
+        return _this.commande = data;
+      }).catch(function (error) {
+        console.log(error.response);
+      });
     }
+
+    //company
+    axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
+      var data = _ref3.data;
+      return _this.company = data;
+    });
+    //pdf
+    axios.get('/devis/pdf').then(console.log(""));
+  },
+
+
+  methods: {
+    //enregistrer modif devis
+    enregistrer: function enregistrer() {
+      var id = this.customer.id;
+      if (!this.commande.id) {
+        axios.post('/storeDevis/' + this.customer.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      } else {
+        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -17167,7 +17185,7 @@ var render = function() {
           "div",
           { staticClass: "column is-three-fifths is-offset-one-fifth" },
           [
-            _c("form", { attrs: { method: "PUT" } }, [
+            _c("form", { attrs: { method: "POST" } }, [
               _c("h1", { staticClass: "title" }, [
                 _vm._v("Devis N°" + _vm._s(this.commande.num_devis))
               ]),
@@ -17299,7 +17317,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "input",
-                    attrs: { type: "text", placeholder: "Text input" },
+                    attrs: { type: "text", placeholder: "Objet" },
                     domProps: { value: _vm.commande.concerne },
                     on: {
                       input: function($event) {
@@ -17325,7 +17343,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "textarea",
-                    attrs: { placeholder: "Textarea" },
+                    attrs: { placeholder: "Décrivez ici votre cas ..." },
                     domProps: { value: _vm.commande.descriptionDevis },
                     on: {
                       input: function($event) {

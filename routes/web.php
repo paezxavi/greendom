@@ -26,7 +26,9 @@ Route::get('/company/{user}', 'DevisController@companieClientDevis');
 Route::get('/{user}', 'DevisController@infoClient');
 Route::get('/infoDevis/{user}/{commande}', 'DevisController@clientInfoDevis');
 
-Route::put('/storeDevis/{user}/{commande}', 'DevisController@store')->name('storeDevis');
+Route::post('/storeDevis/{user}/{commande}', 'DevisController@store')->name('storeDevis');
+Route::post('/storeDevis/{user}', 'DevisController@store')->name('storeDevis');
+
 
 //Faire un chemin /devis pour pouvoir faire les devis vide et faire des post depuis la!
 
