@@ -98,7 +98,7 @@
               <div class="field">
                 <div class="buttons has-addons is-centered">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                    <button class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
+                    <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
                     <button class="button is-danger" style="margin-left:2px">Annuler</button>
                 </div>
               </div>
@@ -154,12 +154,12 @@
           enregistrer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
-              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -168,7 +168,17 @@
 
           envoyer() {
             var id = this.customer.id;
-
+            if (!this.commande.id){
+              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            } else {
+              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            }
           }
 
         }

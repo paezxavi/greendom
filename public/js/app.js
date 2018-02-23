@@ -17154,17 +17154,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     enregistrer: function enregistrer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/storeDevis/' + this.customer.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
     },
     envoyer: function envoyer() {
       var id = this.customer.id;
+      if (!this.commande.id) {
+        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      } else {
+        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
     }
   }
 });
@@ -17391,6 +17400,12 @@ var render = function() {
                       staticStyle: {
                         "margin-left": "2px",
                         "margin-right": "2px"
+                      },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.envoyer($event)
+                        }
                       }
                     },
                     [_vm._v("Envoyer")]

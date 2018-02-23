@@ -57,6 +57,15 @@ class DevisController extends Controller
           echo $commande;
       }
       return $commande;*/
+      if ($request->typeSubmit === 'Enregistrer'){
+        $this->enregistrerCommande($request, 0);
+      } elseif ($request->typeSubmit === 'Envoyer') {
+        $this->enregistrerCommande($request, 1);
+      }
+
+    }
+
+    public function enregistrerCommande(Request $request, $typeSubmit){
       if (empty($request->commande['id'])){
         $customerDevis = new Commande();
         $customerDevis->dateDebut = Carbon::now();
@@ -66,7 +75,7 @@ class DevisController extends Controller
         $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
         $customerDevis->user_id = $request->customer['id'];
         $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
-        $customerDevis->status_id = 1;
+        $customerDevis->status_id = 1 + $typeSubmit;
         $customerDevis->save();
       } else {
         $customerDevis = Commande::find($request->commande['id'])->where([
@@ -75,6 +84,8 @@ class DevisController extends Controller
                             ])->get()->first();
         $customerDevis->concerne = $request->commande['concerne'];
         $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+        $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
+
       }
       $customerDevis->save();
     }
