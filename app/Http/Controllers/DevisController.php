@@ -77,7 +77,6 @@ class DevisController extends Controller
         $customerDevis->save();
       } else {
         $customerDevis = Commande::find($request->commande['id'])->where([
-                            ['user_id',$request->customer['id']],
                             ['id',$request->commande['id']]
                             ])->get()->first();
         $customerDevis->concerne = $request->commande['concerne'];
