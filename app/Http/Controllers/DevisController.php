@@ -149,10 +149,7 @@ class DevisController extends Controller
 
     public function clientInfoDevis(User $user, Commande $commande)
     {
-      $customerDevis = Commande::find($commande->id)->where([
-            ['user_id',$user->id],
-            ['id',$commande->id]
-            ])->get()->first();
+      $customerDevis = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
       /*$customerDevisCr = new Commande();
       $customerDevisCr->dateDebut = Carbon::now();
       $customerDevisCr->concerne = "";
