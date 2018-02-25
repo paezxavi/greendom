@@ -80,11 +80,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.customer.employee">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.currentUser.employee">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.customer.employee"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.currentUser.employee"></textarea>
                 </div>
               </div>
 
@@ -204,7 +204,8 @@
                   status_id: ""
                 },
                 company: "",
-                active : false
+                active : false,
+                currentUser: ""
             }
         },
 
@@ -225,6 +226,9 @@
                   .then(({data}) => this.company = data);
 
             } else {
+              //utilisateur courant
+              axios.get('/'+this.$route.params.user)
+                  .then(({data}) => this.currentUser = data);
               //user
               axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
                   .then(({data}) => this.customer = data);
@@ -286,7 +290,7 @@
 
         computed:{
           visibiliteActionDevisEnvoye(){
-            if (this.commande.status_id > 1 && !this.customer.employee){
+            if (this.commande.status_id > 1 && !this.currentUser.employee){
               return true;
             }
             return false;

@@ -17222,7 +17222,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         status_id: ""
       },
       company: "",
-      active: false
+      active: false,
+      currentUser: ""
     };
   },
   created: function created() {
@@ -17248,21 +17249,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return _this.company = data;
       });
     } else {
-      //user
-      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref4) {
+      //utilisateur courant
+      axios.get('/' + this.$route.params.user).then(function (_ref4) {
         var data = _ref4.data;
+        return _this.currentUser = data;
+      });
+      //user
+      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref5) {
+        var data = _ref5.data;
         return _this.customer = data;
       });
       //commande
-      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref5) {
-        var data = _ref5.data;
+      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref6) {
+        var data = _ref6.data;
         return _this.commande = data;
       }).catch(function (error) {
         console.log(error.response);
       });
       //company
-      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref6) {
-        var data = _ref6.data;
+      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref7) {
+        var data = _ref7.data;
         return _this.company = data;
       });
     }
@@ -17306,7 +17312,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
-      if (this.commande.status_id > 1 && !this.customer.employee) {
+      if (this.commande.status_id > 1 && !this.currentUser.employee) {
         return true;
       }
       return false;
@@ -17506,7 +17512,8 @@ var render = function() {
                       type: "text",
                       placeholder: "Objet",
                       disabled:
-                        this.commande.status_id > 1 && !this.customer.employee
+                        this.commande.status_id > 1 &&
+                        !this.currentUser.employee
                     },
                     domProps: { value: _vm.commande.concerne },
                     on: {
@@ -17536,7 +17543,8 @@ var render = function() {
                     attrs: {
                       placeholder: "Décrivez ici votre cas ...",
                       disabled:
-                        this.commande.status_id > 1 && !this.customer.employee
+                        this.commande.status_id > 1 &&
+                        !this.currentUser.employee
                     },
                     domProps: { value: _vm.commande.descriptionDevis },
                     on: {
