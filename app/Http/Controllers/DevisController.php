@@ -51,12 +51,6 @@ class DevisController extends Controller
      */
     public function store(Request $request)
     {
-      /*$commandes = $request->commande['id'];
-      return $commandes;
-      foreach($commandes as $commande){
-          echo $commande;
-      }
-      return $commande;*/
       if ($request->typeSubmit === 'Enregistrer'){
         $this->enregistrerCommande($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {

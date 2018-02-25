@@ -17103,7 +17103,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -17174,6 +17173,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           window.location.href = '/#/listOrder/' + id;
         });
       }
+    }
+  },
+
+  computed: {
+    visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
+      if (this.commande.status_id > 1 && !this.customer.employee) {
+        return true;
+      }
+      return false;
     }
   }
 });
@@ -17330,7 +17338,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "input",
-                    attrs: { type: "text", placeholder: "Objet" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Objet",
+                      disabled:
+                        this.commande.status_id > 1 && !this.customer.employee
+                    },
                     domProps: { value: _vm.commande.concerne },
                     on: {
                       input: function($event) {
@@ -17356,7 +17369,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "textarea",
-                    attrs: { placeholder: "Décrivez ici votre cas ..." },
+                    attrs: {
+                      placeholder: "Décrivez ici votre cas ...",
+                      disabled:
+                        this.commande.status_id > 1 && !this.customer.employee
+                    },
                     domProps: { value: _vm.commande.descriptionDevis },
                     on: {
                       input: function($event) {
@@ -17377,49 +17394,55 @@ var render = function() {
               _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "field" }, [
-                _c("div", { staticClass: "buttons has-addons is-centered" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-info",
-                      staticStyle: { "margin-right": "2px" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.enregistrer($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Enregistrer")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-success",
-                      staticStyle: {
-                        "margin-left": "2px",
-                        "margin-right": "2px"
-                      },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.envoyer($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Envoyer")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-danger",
-                      staticStyle: { "margin-left": "2px" }
-                    },
-                    [_vm._v("Annuler")]
-                  )
-                ])
+                !_vm.visibiliteActionDevisEnvoye
+                  ? _c(
+                      "div",
+                      { staticClass: "buttons has-addons is-centered" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-info",
+                            staticStyle: { "margin-right": "2px" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.enregistrer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Enregistrer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-success",
+                            staticStyle: {
+                              "margin-left": "2px",
+                              "margin-right": "2px"
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.envoyer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Envoyer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-danger",
+                            staticStyle: { "margin-left": "2px" }
+                          },
+                          [_vm._v("Annuler")]
+                        )
+                      ]
+                    )
+                  : _vm._e()
               ])
             ])
           ]

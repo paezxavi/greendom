@@ -71,11 +71,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.customer.employee">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.customer.employee"></textarea>
                 </div>
               </div>
 
@@ -94,9 +94,8 @@
                   </label>
                 </div>
               </div>
-
               <div class="field">
-                <div class="buttons has-addons is-centered">
+                <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
                     <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
                     <button class="button is-danger" style="margin-left:2px">Annuler</button>
@@ -181,6 +180,15 @@
             }
           }
 
+        },
+
+        computed:{
+          visibiliteActionDevisEnvoye(){
+            if (this.commande.status_id > 1 && !this.customer.employee){
+              return true;
+            }
+            return false;
+          }
         }
     }
 </script>
