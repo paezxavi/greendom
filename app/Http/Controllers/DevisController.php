@@ -83,12 +83,8 @@ class DevisController extends Controller
                             ])->get()->first();
         $customerDevis->concerne = $request->commande['concerne'];
         $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
-<<<<<<< HEAD
-        $customerDevis->status_id = $request->commande['status_id'];
-=======
         $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
 
->>>>>>> a316bd134971c55a9c46945dab8d561b1fc7c67b
       }
       $customerDevis->save();
     }
