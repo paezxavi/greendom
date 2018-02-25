@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'skype.com',
           'email' => 'seb.bnbnb@hhgf.com',
           'password' => '234',
-          'employee' => true,
+          'employee' => false,
           'company_id'=> '1'
         ],
         [
@@ -38,6 +38,36 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
           'email' => 'Troisieme.bnbnb@hhgf.com',
+          'password' => '41236',
+          'employee' => false,
+          'company_id'=> null
+        ],
+        [
+          'name' => 'Cespedes',
+          'forename' => 'Frank',
+          'adresse' => 'Rue de Trois',
+          'contact' => 'JeSuisSkype.com',
+          'email' => 'Test.bnbnb@hhgf.com',
+          'password' => '41236',
+          'employee' => false,
+          'company_id'=> null
+        ],
+        [
+          'name' => 'Paez',
+          'forename' => 'Xavie',
+          'adresse' => 'Rue de Trois',
+          'contact' => 'JeSuisSkype.com',
+          'email' => 'paezxavie@gmail.com',
+          'password' => '41236',
+          'employee' => true,
+          'company_id'=> null
+        ],
+        [
+          'name' => 'Cacciapaglia',
+          'forename' => 'Kevin',
+          'adresse' => 'Rue de Trois',
+          'contact' => 'JeSuisSkype.com',
+          'email' => 'TestKev.bnbnb@hhgf.com',
           'password' => '41236',
           'employee' => false,
           'company_id'=> null

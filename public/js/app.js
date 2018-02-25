@@ -34577,6 +34577,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -34635,11 +34641,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     enregistrer: function enregistrer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/storeDevis/' + this.customer.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
@@ -34650,6 +34656,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     selectionProduit: function selectionProduit() {},
     envoyer: function envoyer() {
       var id = this.customer.id;
+      if (!this.commande.id) {
+        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      } else {
+        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
+    }
+  },
+
+  computed: {
+    visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
+      if (this.commande.status_id > 1 && !this.customer.employee) {
+        return true;
+      }
+      return false;
     }
   }
 });
@@ -34806,22 +34830,22 @@ var render = function() {
                   staticClass: "field"
                 },
                 [
-                  _c("div", { staticClass: "columns is-mobile" }, [
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Société : " + _vm._s(_vm.company.nom))
-                      ])
-                    ]),
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Adresse : " + _vm._s(_vm.company.adresse))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Email : " + _vm._s(_vm.company.email))
+                    _c("div", { staticClass: "card-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Société : " + _vm._s(_vm.company.nom))
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Adresse : " + _vm._s(_vm.company.adresse))
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Email : " + _vm._s(_vm.company.email))
+                        ])
                       ])
                     ])
                   ])
@@ -34842,7 +34866,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "input",
-                    attrs: { type: "text", placeholder: "Objet" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Objet",
+                      disabled:
+                        this.commande.status_id > 1 && !this.customer.employee
+                    },
                     domProps: { value: _vm.commande.concerne },
                     on: {
                       input: function($event) {
@@ -34868,7 +34897,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "textarea",
-                    attrs: { placeholder: "Décrivez ici votre cas ..." },
+                    attrs: {
+                      placeholder: "Décrivez ici votre cas ...",
+                      disabled:
+                        this.commande.status_id > 1 && !this.customer.employee
+                    },
                     domProps: { value: _vm.commande.descriptionDevis },
                     on: {
                       input: function($event) {
@@ -34886,9 +34919,11 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              !_vm.visibiliteActionDevisEnvoye
+                ? _c("div", { staticClass: "field" }, [_vm._m(2)])
+                : _vm._e(),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c(
                 "div",
@@ -34908,7 +34943,7 @@ var render = function() {
                   staticStyle: { "margin-bottom": "15px" }
                 },
                 [
-                  _vm._m(3),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-content" }, [
                     _c("div", { staticClass: "content" }, [
@@ -34947,43 +34982,55 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "field" }, [
-                _c("div", { staticClass: "buttons has-addons is-centered" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-info",
-                      staticStyle: { "margin-right": "2px" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.enregistrer($event)
-                        }
-                      }
-                    },
-                    [_vm._v("Enregistrer")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-success",
-                      staticStyle: {
-                        "margin-left": "2px",
-                        "margin-right": "2px"
-                      }
-                    },
-                    [_vm._v("Envoyer")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-danger",
-                      staticStyle: { "margin-left": "2px" }
-                    },
-                    [_vm._v("Annuler")]
-                  )
-                ])
+                !_vm.visibiliteActionDevisEnvoye
+                  ? _c(
+                      "div",
+                      { staticClass: "buttons has-addons is-centered" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-info",
+                            staticStyle: { "margin-right": "2px" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.enregistrer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Enregistrer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-success",
+                            staticStyle: {
+                              "margin-left": "2px",
+                              "margin-right": "2px"
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.envoyer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Envoyer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-danger",
+                            staticStyle: { "margin-left": "2px" }
+                          },
+                          [_vm._v("Annuler")]
+                        )
+                      ]
+                    )
+                  : _vm._e()
               ])
             ])
           ]
@@ -35007,22 +35054,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "file" }, [
-        _c("label", { staticClass: "file-label" }, [
-          _c("input", {
-            staticClass: "file-input",
-            attrs: { type: "file", name: "resume" }
-          }),
+    return _c("header", { staticClass: "card-header" }, [
+      _c("p", { staticClass: "card-header-title" }, [
+        _vm._v("\n                  Données Société\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "file" }, [
+      _c("label", { staticClass: "file-label" }, [
+        _c("input", {
+          staticClass: "file-input",
+          attrs: { type: "file", name: "resume" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "file-cta" }, [
+          _c("span", { staticClass: "file-icon" }, [
+            _c("i", { staticClass: "fas fa-upload" })
+          ]),
           _vm._v(" "),
-          _c("span", { staticClass: "file-cta" }, [
-            _c("span", { staticClass: "file-icon" }, [
-              _c("i", { staticClass: "fas fa-upload" })
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "file-label" }, [
-              _vm._v("\n                    Choose a File…\n                  ")
-            ])
+          _c("span", { staticClass: "file-label" }, [
+            _vm._v("\n                    Choose a File…\n                  ")
           ])
         ])
       ])

@@ -58,15 +58,21 @@
               </div>
 
               <div class="field" v-show="active">
-                <div class="columns is-mobile">
-                  <div class="column">
-                    <label class="label">Société : {{ company.nom }}</label>
-                  </div>
-                  <div class="column">
-                    <label class="label">Adresse : {{ company.adresse }}</label>
-                  </div>
-                  <div class="column">
-                    <label class="label">Email : {{ company.email }}</label>
+                <div class="card">
+                  <header class="card-header">
+                    <p class="card-header-title">
+                      Données Société
+                    </p>
+                  </header>
+                  <div class="card-content">
+                    <div class="content">
+
+                          <label class="label">Société : {{ company.nom }}</label>
+
+                          <label class="label">Adresse : {{ company.adresse }}</label>
+
+                          <label class="label">Email : {{ company.email }}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -74,15 +80,15 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.customer.employee">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.customer.employee"></textarea>
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field" v-if="!visibiliteActionDevisEnvoye">
                 <div class="file">
                   <label class="file-label">
                     <input class="file-input" type="file" name="resume">
@@ -171,9 +177,9 @@
               <!-- FIN TRAVAILLE KEVIN/FRANK -->
 
               <div class="field">
-                <div class="buttons has-addons is-centered">
+                <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                    <button class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
+                    <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
                     <button class="button is-danger" style="margin-left:2px">Annuler</button>
                 </div>
               </div>
@@ -198,7 +204,7 @@
                   status_id: ""
                 },
                 company: "",
-                active : false
+                active : false,
             }
         },
 
@@ -235,12 +241,12 @@
           enregistrer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
-              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -254,9 +260,28 @@
 
           envoyer() {
             var id = this.customer.id;
-
+            if (!this.commande.id){
+              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            } else {
+              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+                      .then(function (response) {
+                        window.location.href='/#/listOrder/'+id;
+                      });
+            }
           }
 
+        },
+
+        computed:{
+          visibiliteActionDevisEnvoye(){
+            if (this.commande.status_id > 1 && !this.customer.employee){
+              return true;
+            }
+            return false;
+          }
         }
     }
 </script>
