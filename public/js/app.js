@@ -34246,6 +34246,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -34260,35 +34264,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       company: "",
       active: false,
-      showModal: false //Fenêtre
+      currentUser: "",
+      showModal: false
     };
   },
   created: function created() {
     var _this = this;
 
-    //user
-    axios.get('/' + this.$route.params.user).then(function (_ref) {
-      var data = _ref.data;
-      return _this.customer = data;
-    });
-
-    //commande
     if (!this.$route.params.commande) {
+      //commande inexistante
       self.commande = "";
-    } else {
-      axios.get('/infoDevis/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref2) {
+      //user
+      axios.get('/' + this.$route.params.user).then(function (_ref) {
+        var data = _ref.data;
+        return _this.customer = data;
+      });
+      //company
+      axios.get('/company/' + this.$route.params.user).then(function (_ref2) {
         var data = _ref2.data;
+        return _this.company = data;
+      });
+    } else {
+      //utilisateur courant
+      axios.get('/' + this.$route.params.user).then(function (_ref3) {
+        var data = _ref3.data;
+        return _this.currentUser = data;
+      });
+      //user
+      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref4) {
+        var data = _ref4.data;
+        return _this.customer = data;
+      });
+      //commande
+      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref5) {
+        var data = _ref5.data;
         return _this.commande = data;
       }).catch(function (error) {
         console.log(error.response);
       });
+      //company
+      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref6) {
+        var data = _ref6.data;
+        return _this.company = data;
+      });
     }
 
-    //company
-    axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
-      var data = _ref3.data;
-      return _this.company = data;
-    });
     //pdf
     axios.get('/devis/pdf').then(console.log(""));
   },
@@ -34299,7 +34319,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     enregistrer: function enregistrer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
@@ -34323,7 +34343,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     envoyer: function envoyer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/storeDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
@@ -34331,12 +34351,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           window.location.href = '/#/listOrder/' + id;
         });
       }
+    },
+    passerEnOffre: function passerEnOffre() {
+      var id = this.customer.id;
+      axios.post('/validerDevis/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
+      });
     }
   },
 
   computed: {
     visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
-      if (this.commande.status_id > 1 && !this.customer.employee) {
+      if (this.commande.status_id > 1 && !this.currentUser.employee) {
+        return true;
+      }
+      return false;
+    },
+    enabledBtnEnvoyer: function enabledBtnEnvoyer() {
+      if (this.commande.status_id == 3 && this.currentUser.employee) {
+        return true;
+      }
+      return false;
+    },
+    enabledBtnPasserEncours: function enabledBtnPasserEncours() {
+      if (this.commande.status_id == 2 && this.currentUser.employee) {
         return true;
       }
       return false;
@@ -34361,8 +34399,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var _this2 = this;
 
     //Liste des listeProduits
-    axios.get('/produitsOffre').then(function (_ref4) {
-      var data = _ref4.data;
+    axios.get('/produitsOffre').then(function (_ref7) {
+      var data = _ref7.data;
       return _this2.produits = data;
     });
   }
@@ -34397,16 +34435,17 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value:
-                          _vm.commande.status_id == 1 ||
-                          _vm.commande.status_id == 2,
-                        expression:
-                          "commande.status_id == 1 || commande.status_id == 2"
+                        value: _vm.commande.status_id == 1,
+                        expression: "commande.status_id == 1"
                       }
                     ],
                     staticClass: "title"
                   },
-                  [_vm._v("Devis N°" + _vm._s(this.commande.num_devis))]
+                  [
+                    _vm._v(
+                      "Devis - En cours N°" + _vm._s(this.commande.num_devis)
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -34416,16 +34455,37 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value:
-                          _vm.commande.status_id == 3 ||
-                          _vm.commande.status_id == 4,
-                        expression:
-                          "commande.status_id == 3 || commande.status_id == 4"
+                        value: _vm.commande.status_id == 2,
+                        expression: "commande.status_id == 2"
                       }
                     ],
                     staticClass: "title"
                   },
-                  [_vm._v("Offre N°" + _vm._s(this.commande.num_offre))]
+                  [
+                    _vm._v(
+                      "Devis - Envoyé N°" + _vm._s(this.commande.num_devis)
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h1",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.commande.status_id == 3,
+                        expression: "commande.status_id == 3"
+                      }
+                    ],
+                    staticClass: "title"
+                  },
+                  [
+                    _vm._v(
+                      "Offre - En cours N°" + _vm._s(this.commande.num_offre)
+                    )
+                  ]
                 )
               ]),
               _vm._v(" "),
@@ -34560,7 +34620,8 @@ var render = function() {
                       type: "text",
                       placeholder: "Objet",
                       disabled:
-                        this.commande.status_id > 1 && !this.customer.employee
+                        this.commande.status_id > 1 &&
+                        !this.currentUser.employee
                     },
                     domProps: { value: _vm.commande.concerne },
                     on: {
@@ -34590,7 +34651,8 @@ var render = function() {
                     attrs: {
                       placeholder: "Décrivez ici votre cas ...",
                       disabled:
-                        this.commande.status_id > 1 && !this.customer.employee
+                        this.commande.status_id > 1 &&
+                        !this.currentUser.employee
                     },
                     domProps: { value: _vm.commande.descriptionDevis },
                     on: {
@@ -34682,57 +34744,147 @@ var render = function() {
                       ])
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  !_vm.visibiliteActionDevisEnvoye
+                    ? _c(
+                        "div",
+                        { staticClass: "buttons has-addons is-centered" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-info",
+                              staticStyle: { "margin-right": "2px" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.enregistrer($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Enregistrer")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.enabledBtnEnvoyer,
+                                  expression: "!enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyer($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Envoyer")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnPasserEncours,
+                                  expression: "enabledBtnPasserEncours"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.passerEnOffre($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Valider devis")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnEnvoyer,
+                                  expression: "enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyerFournisseur($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Envoyer au fournisseur")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnEnvoyer,
+                                  expression: "enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyerClient($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Envoyer au Client")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-danger",
+                              staticStyle: { "margin-left": "2px" }
+                            },
+                            [_vm._v("Annuler")]
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
               ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              !_vm.visibiliteActionDevisEnvoye
-                ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-info",
-                        staticStyle: { "margin-right": "2px" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.enregistrer($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Enregistrer")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.envoyer($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Envoyer")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-danger",
-                        staticStyle: { "margin-left": "2px" }
-                      },
-                      [_vm._v("Annuler")]
-                    )
-                  ])
-                : _vm._e()
-            ])
+            )
           ]
         )
       ]

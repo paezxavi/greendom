@@ -5,8 +5,10 @@
             <form method="POST">
 
               <div>
-                <h1 class="title" v-show="commande.status_id == 1 || commande.status_id == 2">Devis N°{{ this.commande.num_devis }}</h1>
-                <h1 class="title" v-show="commande.status_id == 3 || commande.status_id == 4">Offre N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 1">Devis - En cours N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 2">Devis - Envoyé N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
+
               </div>
 
               <div class="card" style="margin-bottom:15px">
@@ -80,11 +82,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.customer.employee">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.currentUser.employee">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.customer.employee"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.currentUser.employee"></textarea>
                 </div>
               </div>
 
@@ -133,15 +135,17 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- FIN TRAVAILLE KEVIN/FRANK -->
+              <!-- FIN TRAVAILLE KEVIN/FRANK -->
 
-            <!-- Boutons -->
-            <div class="field">
-              <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
+              <div class="field">
+                <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                   <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                  <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
+                  <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="!enabledBtnEnvoyer">Envoyer</button>
+                  <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
+                  <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
+                  <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
                   <button class="button is-danger" style="margin-left:2px">Annuler</button>
+                </div>
               </div>
             </div>
 
@@ -165,30 +169,43 @@
                   status_id: ""
                 },
                 company: "",
-                active: false,
-                showModal: false  //Fenêtre
+                active : false,
+                currentUser: "",
+                showModal: false
             }
         },
 
         created() {
-            //user
-            axios.get('/'+this.$route.params.user)
-                .then(({data}) => this.customer = data);
 
-            //commande
             if (!this.$route.params.commande){
+              //commande inexistante
               self.commande = "";
+              //user
+              axios.get('/'+this.$route.params.user)
+                  .then(({data}) => this.customer = data);
+              //company
+              axios.get('/company/'+this.$route.params.user)
+                  .then(({data}) => this.company = data);
+
             } else {
-              axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
+              //utilisateur courant
+              axios.get('/'+this.$route.params.user)
+                  .then(({data}) => this.currentUser = data);
+              //user
+              axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
+                  .then(({data}) => this.customer = data);
+              //commande
+              axios.get('/infoDevis/'+this.$route.params.commande)
                   .then(({data}) => this.commande = data)
                   .catch(function (error) {
                     console.log(error.response);
                   });
+              //company
+              axios.get('/company/'+this.$route.params.user+'/'+this.$route.params.commande)
+                  .then(({data}) => this.company = data);
             }
 
-            //company
-            axios.get('/company/'+this.$route.params.user)
-                .then(({data}) => this.company = data);
+
             //pdf
             axios.get('/devis/pdf')
                 .then(console.log(""));
@@ -199,7 +216,7 @@
           enregistrer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -226,7 +243,7 @@
           envoyer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -236,13 +253,34 @@
                         window.location.href='/#/listOrder/'+id;
                       });
             }
-          }
+          },
 
+          passerEnOffre(){
+            var id = this.customer.id;
+            axios.post('/validerDevis/'+this.commande.id,{commande:this.commande})
+              .then(function(response){
+                window.location.href='/#/listOrder/'+id;
+            });
+          }
         },
 
         computed:{
           visibiliteActionDevisEnvoye(){
-            if (this.commande.status_id > 1 && !this.customer.employee){
+            if (this.commande.status_id > 1 && !this.currentUser.employee){
+              return true;
+            }
+            return false;
+          },
+
+          enabledBtnEnvoyer(){
+            if (this.commande.status_id == 3 && this.currentUser.employee){
+              return true;
+            }
+            return false;
+          },
+
+          enabledBtnPasserEncours(){
+            if (this.commande.status_id == 2 && this.currentUser.employee){
               return true;
             }
             return false;
