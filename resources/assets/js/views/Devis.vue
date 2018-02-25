@@ -105,72 +105,31 @@
                   </label>
                 </div>
               </div>
+            </form>
+
+            <!-- TRAVAILLE KEVIN/FRANK // Pour tester-->
+            <!-- http://192.168.10.10/#/devis/2/4 -->
+            <!-- Ajout d'articles -->
 
 
-              <!-- TRAVAILLE KEVIN/FRANK // Pour tester-->
-              <!-- Fenêtre modale -->
-              <div id="modal" class="modal">
-                <div class="modal-background"></div>
-                <div class="modal-content">
-                  <div class="box">
-                    <article class="media">
-                      <div class="media-left">
-                        <figure class="image is-64x64">
-                          <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-                        </figure>
-                      </div>
-                      <div class="media-content">
-                        <div class="content">
-                          <p>
-                            <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-                            <br>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-                          </p>
-                        </div>
-                        <nav class="level is-mobile">
-                          <div class="level-left">
-                            <a class="level-item">
-                              <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                            </a>
-                            <a class="level-item">
-                              <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                            </a>
-                            <a class="level-item">
-                              <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                            </a>
-                          </div>
-                        </nav>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-                <button class="modal-close is-large"> Fermer </button>
-              </div>
+            <div class="card" style="margin-bottom:15px" v-show="commande.status_id == 3 || commande.status_id == 4"> <!-- Si la commande est une offre (3) on montre -->
+              <header class="card-header">
+                <p class="card-header-title">
+                  Articles
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  <div class="field">
+                    <div class="columns is-mobile">
+                      <div class="column">
 
-              <!-- http://192.168.10.10/#/devis/2/4 -->
-              <!-- Ajout d'articles -->
-              <div class="card" style="margin-bottom:15px" v-show="commande.status_id == 3 || commande.status_id == 4"> <!-- Si la commande est une offre (3) on montre -->
-                <header class="card-header">
-                  <p class="card-header-title">
-                    Articles
-                  </p>
-                </header>
-                <div class="card-content">
-                  <div class="content">
-                    <div class="field">
-                      <div class="columns is-mobile">
-                        <div class="column">
                           <!-- Bouton + -->
-                          <ul id="liste_produits">
-                            <!--<li v-for="produit in produits">
-                              {{produit.nom}}
-                            </li> -->
-                          </ul>
-                          <div class="buttons has-addons is-left">
-                              <button @click.prevent="showModal = true" class="button is-primary modal-button" style="margin-right:2px">+</button>
-                              <!-- use the modal component, pass in the prop -->
+                          <div class="buttons has-addons is-left" id="boutonAjout">
+                              <modal v-show="showModal" @close="showModal = false"></modal>
+                              <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px">+</button>
                           </div>
-                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -188,7 +147,8 @@
                   <button class="button is-danger" style="margin-left:2px">Annuler</button>
                 </div>
               </div>
-            </form>
+            </div>
+
           </div>
         </div>
     </div>
@@ -196,12 +156,12 @@
 
 
 <script>
-    export default {
 
+
+    export default {
         data() {
             return {
                 customer: "",
-                produits: "",
                 commande: {
                   id: "",
                   concerne: "",
@@ -210,15 +170,12 @@
                 },
                 company: "",
                 active : false,
-                currentUser: ""
+                currentUser: "",
+                showModal: false
             }
         },
 
         created() {
-            //Liste des listeProduits
-            axios.get('/produitsOffre')
-              .then(({data}) => this.produits = data);
-
 
             if (!this.$route.params.commande){
               //commande inexistante
@@ -272,8 +229,15 @@
           },
 
           //Travaille
-          selectionProduit() {
+          ajoutProduit() {
+            //Show modal
 
+            //ajout bouton
+
+          },
+
+          supprimerProduit() {
+            //this.inputs.splice(index, 1)
           },
 
           envoyer() {
@@ -323,71 +287,58 @@
           }
         }
     }
+
+    /*Fenêtre composant
+    Vue.component('modal', {
+      template: '#modal-template'
+    })
+    */
+    Vue.component('modal', {
+    template:
+    `
+     <div id="modal" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <div class="box">
+          <article class="media"  v-for="produit in produits">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <img :src="produit.image" alt="Image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> réf : {{produit.reference}} </small>
+                  <br>
+                  {{produit.description}}
+                <div class="is-pulled-right">
+                  <button> Seléctionner </button>
+                  <button @click="$emit('close')"> Fermer </button>
+                </div>
+                </p>
+              </div>
+              <button class="modal-close" @click="$emit('close')"></button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </div>
+    `,
+
+    data() {
+      return {
+        test: 'test',
+        produits: ''
+      }
+    },
+
+    created() {
+        //Liste des listeProduits
+        axios.get('/produitsOffre')
+          .then(({data}) => this.produits = data);
+    }
+  })
+
 </script>
-
-<style>
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
-  display: table;
-  transition: opacity .3s ease;
-}
-
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
-.modal-enter .modal-container,
-.modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-</style>

@@ -20046,10 +20046,13 @@ return zhTw;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+<<<<<<< HEAD
 function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(178)
 }
+=======
+>>>>>>> c788ec792646f5e1a58605f6f2f627c4c2976afe
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(182)
@@ -20058,7 +20061,7 @@ var __vue_template__ = __webpack_require__(183)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -34579,52 +34582,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       customer: "",
-      produits: "",
       commande: {
         id: "",
         concerne: "",
@@ -34633,52 +34596,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       },
       company: "",
       active: false,
-      currentUser: ""
+      currentUser: "",
+      showModal: false
     };
   },
   created: function created() {
     var _this = this;
 
-    //Liste des listeProduits
-    axios.get('/produitsOffre').then(function (_ref) {
-      var data = _ref.data;
-      return _this.produits = data;
-    });
-
     if (!this.$route.params.commande) {
       //commande inexistante
       self.commande = "";
       //user
-      axios.get('/' + this.$route.params.user).then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get('/' + this.$route.params.user).then(function (_ref) {
+        var data = _ref.data;
         return _this.customer = data;
       });
       //company
-      axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
-        var data = _ref3.data;
+      axios.get('/company/' + this.$route.params.user).then(function (_ref2) {
+        var data = _ref2.data;
         return _this.company = data;
       });
     } else {
       //utilisateur courant
-      axios.get('/' + this.$route.params.user).then(function (_ref4) {
-        var data = _ref4.data;
+      axios.get('/' + this.$route.params.user).then(function (_ref3) {
+        var data = _ref3.data;
         return _this.currentUser = data;
       });
       //user
-      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref5) {
-        var data = _ref5.data;
+      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref4) {
+        var data = _ref4.data;
         return _this.customer = data;
       });
       //commande
-      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref6) {
-        var data = _ref6.data;
+      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref5) {
+        var data = _ref5.data;
         return _this.commande = data;
       }).catch(function (error) {
         console.log(error.response);
       });
       //company
-      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref7) {
-        var data = _ref7.data;
+      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref6) {
+        var data = _ref6.data;
         return _this.company = data;
       });
     }
@@ -34705,7 +34663,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     //Travaille
-    selectionProduit: function selectionProduit() {},
+    ajoutProduit: function ajoutProduit() {
+      //Show modal
+
+      //ajout bouton
+
+    },
+    supprimerProduit: function supprimerProduit() {
+      //this.inputs.splice(index, 1)
+    },
     envoyer: function envoyer() {
       var id = this.customer.id;
       if (!this.commande.id) {
@@ -34745,6 +34711,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
       return false;
     }
+  }
+
+  /*Fenêtre composant
+  Vue.component('modal', {
+    template: '#modal-template'
+  })
+  */
+});Vue.component('modal', {
+  template: "\n   <div id=\"modal\" class=\"modal is-active\">\n    <div class=\"modal-background\"></div>\n    <div class=\"modal-card\">\n      <div class=\"box\">\n        <article class=\"media\"  v-for=\"produit in produits\">\n          <div class=\"media-left\">\n            <figure class=\"image is-64x64\">\n              <img :src=\"produit.image\" alt=\"Image\">\n            </figure>\n          </div>\n          <div class=\"media-content\">\n            <div class=\"content\">\n              <p>\n                <strong> {{produit.nom}} </strong> <small class=\"is-pulled-right\"> r\xE9f : {{produit.reference}} </small>\n                <br>\n                {{produit.description}}\n              <div class=\"is-pulled-right\">\n                <button> Sel\xE9ctionner </button>\n                <button @click=\"$emit('close')\"> Fermer </button>\n              </div>\n              </p>\n            </div>\n            <button class=\"modal-close\" @click=\"$emit('close')\"></button>\n          </div>\n        </article>\n      </div>\n    </div>\n\n  </div>\n  ",
+
+  data: function data() {
+    return {
+      test: 'test',
+      produits: ''
+    };
+  },
+  created: function created() {
+    var _this2 = this;
+
+    //Liste des listeProduits
+    axios.get('/produitsOffre').then(function (_ref7) {
+      var data = _ref7.data;
+      return _this2.produits = data;
+    });
   }
 });
 
@@ -35015,204 +35005,218 @@ var render = function() {
               _vm._v(" "),
               !_vm.visibiliteActionDevisEnvoye
                 ? _c("div", { staticClass: "field" }, [_vm._m(2)])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.commande.status_id == 3 ||
-                        _vm.commande.status_id == 4,
-                      expression:
-                        "commande.status_id == 3 || commande.status_id == 4"
-                    }
-                  ],
-                  staticClass: "card",
-                  staticStyle: { "margin-bottom": "15px" }
-                },
-                [
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("div", { staticClass: "field" }, [
-                        _c("div", { staticClass: "columns is-mobile" }, [
-                          _c("div", { staticClass: "column" }, [
-                            _c("ul", { attrs: { id: "liste_produits" } }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "buttons has-addons is-left" },
-                              [
-                                _c(
-                                  "button",
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.commande.status_id == 3 ||
+                      _vm.commande.status_id == 4,
+                    expression:
+                      "commande.status_id == 3 || commande.status_id == 4"
+                  }
+                ],
+                staticClass: "card",
+                staticStyle: { "margin-bottom": "15px" }
+              },
+              [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("div", { staticClass: "field" }, [
+                      _c("div", { staticClass: "columns is-mobile" }, [
+                        _c("div", { staticClass: "column" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "buttons has-addons is-left",
+                              attrs: { id: "boutonAjout" }
+                            },
+                            [
+                              _c("modal", {
+                                directives: [
                                   {
-                                    staticClass:
-                                      "button is-primary modal-button",
-                                    staticStyle: { "margin-right": "2px" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        _vm.showModal = true
-                                      }
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.showModal,
+                                    expression: "showModal"
+                                  }
+                                ],
+                                on: {
+                                  close: function($event) {
+                                    _vm.showModal = false
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "button is-primary modal-button",
+                                  staticStyle: { "margin-right": "2px" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.showModal = true
                                     }
-                                  },
-                                  [_vm._v("+")]
-                                )
-                              ]
-                            )
-                          ])
+                                  }
+                                },
+                                [_vm._v("+")]
+                              )
+                            ],
+                            1
+                          )
                         ])
                       ])
                     ])
                   ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "field" }, [
-                !_vm.visibiliteActionDevisEnvoye
-                  ? _c(
-                      "div",
-                      { staticClass: "buttons has-addons is-centered" },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button is-info",
-                            staticStyle: { "margin-right": "2px" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.enregistrer($event)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  !_vm.visibiliteActionDevisEnvoye
+                    ? _c(
+                        "div",
+                        { staticClass: "buttons has-addons is-centered" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-info",
+                              staticStyle: { "margin-right": "2px" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.enregistrer($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Enregistrer")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: !_vm.enabledBtnEnvoyer,
-                                expression: "!enabledBtnEnvoyer"
-                              }
-                            ],
-                            staticClass: "button is-success",
-                            staticStyle: {
-                              "margin-left": "2px",
-                              "margin-right": "2px"
                             },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.envoyer($event)
+                            [_vm._v("Enregistrer")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.enabledBtnEnvoyer,
+                                  expression: "!enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyer($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Envoyer")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.enabledBtnPasserEncours,
-                                expression: "enabledBtnPasserEncours"
-                              }
-                            ],
-                            staticClass: "button is-success",
-                            staticStyle: {
-                              "margin-left": "2px",
-                              "margin-right": "2px"
                             },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.passerEnOffre($event)
+                            [_vm._v("Envoyer")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnPasserEncours,
+                                  expression: "enabledBtnPasserEncours"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.passerEnOffre($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Valider devis")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.enabledBtnEnvoyer,
-                                expression: "enabledBtnEnvoyer"
-                              }
-                            ],
-                            staticClass: "button is-success",
-                            staticStyle: {
-                              "margin-left": "2px",
-                              "margin-right": "2px"
                             },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.envoyerFournisseur($event)
+                            [_vm._v("Valider devis")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnEnvoyer,
+                                  expression: "enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyerFournisseur($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Envoyer au fournisseur")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.enabledBtnEnvoyer,
-                                expression: "enabledBtnEnvoyer"
-                              }
-                            ],
-                            staticClass: "button is-success",
-                            staticStyle: {
-                              "margin-left": "2px",
-                              "margin-right": "2px"
                             },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.envoyerClient($event)
+                            [_vm._v("Envoyer au fournisseur")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.enabledBtnEnvoyer,
+                                  expression: "enabledBtnEnvoyer"
+                                }
+                              ],
+                              staticClass: "button is-success",
+                              staticStyle: {
+                                "margin-left": "2px",
+                                "margin-right": "2px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.envoyerClient($event)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("Envoyer au Client")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button is-danger",
-                            staticStyle: { "margin-left": "2px" }
-                          },
-                          [_vm._v("Annuler")]
-                        )
-                      ]
-                    )
-                  : _vm._e()
-              ])
-            ])
+                            },
+                            [_vm._v("Envoyer au Client")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-danger",
+                              staticStyle: { "margin-left": "2px" }
+                            },
+                            [_vm._v("Annuler")]
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              ]
+            )
           ]
         )
       ]
@@ -35267,77 +35271,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal", attrs: { id: "modal" } }, [
-      _c("div", { staticClass: "modal-background" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "modal-content" }, [
-        _c("div", { staticClass: "box" }, [
-          _c("article", { staticClass: "media" }, [
-            _c("div", { staticClass: "media-left" }, [
-              _c("figure", { staticClass: "image is-64x64" }, [
-                _c("img", {
-                  attrs: {
-                    src: "https://bulma.io/images/placeholders/128x128.png",
-                    alt: "Image"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "media-content" }, [
-              _c("div", { staticClass: "content" }, [
-                _c("p", [
-                  _c("strong", [_vm._v("John Smith")]),
-                  _vm._v(" "),
-                  _c("small", [_vm._v("@johnsmith")]),
-                  _vm._v(" "),
-                  _c("small", [_vm._v("31m")]),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(
-                    "\n                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.\n                      "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("nav", { staticClass: "level is-mobile" }, [
-                _c("div", { staticClass: "level-left" }, [
-                  _c("a", { staticClass: "level-item" }, [
-                    _c("span", { staticClass: "icon is-small" }, [
-                      _c("i", { staticClass: "fas fa-reply" })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("a", { staticClass: "level-item" }, [
-                    _c("span", { staticClass: "icon is-small" }, [
-                      _c("i", { staticClass: "fas fa-retweet" })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("a", { staticClass: "level-item" }, [
-                    _c("span", { staticClass: "icon is-small" }, [
-                      _c("i", { staticClass: "fas fa-heart" })
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "modal-close is-large" }, [
-        _vm._v(" Fermer ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("header", { staticClass: "card-header" }, [
       _c("p", { staticClass: "card-header-title" }, [
-        _vm._v("\n                Articles\n              ")
+        _vm._v("\n              Articles\n            ")
       ])
     ])
   }
@@ -35352,7 +35288,11 @@ if (false) {
 }
 
 /***/ }),
+<<<<<<< HEAD
 /* 184 */
+=======
+/* 180 */
+>>>>>>> c788ec792646f5e1a58605f6f2f627c4c2976afe
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
