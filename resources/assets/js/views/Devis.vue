@@ -204,7 +204,7 @@
                   status_id: ""
                 },
                 company: "",
-                active : false,
+                active : false
             }
         },
 
@@ -213,24 +213,33 @@
             axios.get('/produitsOffre')
               .then(({data}) => this.produits = data);
 
-            //user
-            axios.get('/'+this.$route.params.user)
-                .then(({data}) => this.customer = data);
 
-            //commande
             if (!this.$route.params.commande){
+              //commande inexistante
               self.commande = "";
+              //user
+              axios.get('/'+this.$route.params.user)
+                  .then(({data}) => this.customer = data);
+              //company
+              axios.get('/company/'+this.$route.params.user)
+                  .then(({data}) => this.company = data);
+
             } else {
-              axios.get('/infoDevis/'+this.$route.params.user+'/'+this.$route.params.commande)
+              //user
+              axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
+                  .then(({data}) => this.customer = data);
+              //commande
+              axios.get('/infoDevis/'+this.$route.params.commande)
                   .then(({data}) => this.commande = data)
                   .catch(function (error) {
                     console.log(error.response);
                   });
+              //company
+              axios.get('/company/'+this.$route.params.user+'/'+this.$route.params.commande)
+                  .then(({data}) => this.company = data);
             }
 
-            //company
-            axios.get('/company/'+this.$route.params.user)
-                .then(({data}) => this.company = data);
+
             //pdf
             axios.get('/devis/pdf')
                 .then(console.log(""));
@@ -241,7 +250,7 @@
           enregistrer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -261,7 +270,7 @@
           envoyer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/storeDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });

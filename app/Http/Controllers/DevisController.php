@@ -31,18 +31,29 @@ class DevisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-      dd("hello");
+      if ($request->typeSubmit === 'Enregistrer'){
+        $this->insertNewDevis($request, 0);
+      } elseif ($request->typeSubmit === 'Envoyer') {
+        $this->insertNewDevis($request, 1);
+        $user = User::where('employee', true)->get();
+        Mail::to($user)->send(new DevisEnvoye($request));
+      }
+
+    }
+
+    public function insertNewDevis(Request $request, $typeSubmit)
+    {
       $customerDevis = new Commande();
       $customerDevis->dateDebut = Carbon::now();
-      $customerDevis->concerne = "";
-      $customerDevis->num_devis = Carbon::now()->format('Y-m-d');
-      $customerDevis->num_offre = Carbon::now()->format('Y-m-d');
-      $customerDevis->num_commande = Carbon::now()->format('Y-m-d');
-      $customerDevis->user_id = 1; //A changer dans le futur avec le AuthId()
-      $customerDevis->descriptionDevis = "";
-      $customerDevis->status_id = 1;
+      $customerDevis->concerne = $request->commande['concerne'];
+      $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
+      $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
+      $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
+      $customerDevis->user_id = $request->customer['id'];
+      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->status_id = 1 + $typeSubmit;
       $customerDevis->save();
     }
 
@@ -65,26 +76,12 @@ class DevisController extends Controller
     }
 
     public function enregistrerCommande(Request $request, $typeSubmit){
-      if (empty($request->commande['id'])){
-        $customerDevis = new Commande();
-        $customerDevis->dateDebut = Carbon::now();
-        $customerDevis->concerne = $request->commande['concerne'];
-        $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
-        $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
-        $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
-        $customerDevis->user_id = $request->customer['id'];
-        $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
-        $customerDevis->status_id = 1 + $typeSubmit;
-        $customerDevis->save();
-      } else {
-        $customerDevis = Commande::find($request->commande['id'])->where([
-                            ['id',$request->commande['id']]
-                            ])->get()->first();
-        $customerDevis->concerne = $request->commande['concerne'];
-        $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
-        $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
-
-      }
+      $customerDevis = Commande::find($request->commande['id'])->where([
+                          ['id',$request->commande['id']]
+                          ])->get()->first();
+      $customerDevis->concerne = $request->commande['concerne'];
+      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
     }
 
@@ -141,30 +138,32 @@ class DevisController extends Controller
         return $pdf->download($name);
     }
 
-    public function infoClient(User $user)
+    public function infoClient(User $user, Commande $commande)
     {
-      $customer = User::find($user->id);
+      if (!Commande::find($commande->id)){
+        $customer = User::find($user->id);
+      } else {
+        $clientCommande = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
+        $customer = User::where("id", $clientCommande->user_id)->get()->first();
+      }
+
       return $customer;
     }
 
-    public function clientInfoDevis(User $user, Commande $commande)
+    public function clientInfoDevis(Commande $commande)
     {
       $customerDevis = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
-      /*$customerDevisCr = new Commande();
-      $customerDevisCr->dateDebut = Carbon::now();
-      $customerDevisCr->concerne = "";
-      $customerDevisCr->num_devis = Carbon::now()->format('Y-m-d');
-      $customerDevisCr->num_offre = Carbon::now()->format('Y-m-d');
-      $customerDevisCr->num_commande = Carbon::now()->format('Y-m-d');
-      $customerDevisCr->user_id = 1; //A changer dans le futur avec le AuthId()
-      $customerDevisCr->descriptionDevis = "";
-      $customerDevisCr->status_id = 1;
-      $customerDevisCr->save();*/
       return $customerDevis;
     }
 
-    public function companieClientDevis(User $user){
-        $companie = Company::find($user->company_id);
+    public function companieClientDevis(User $user, Commande $commande){
+        if (!Commande::find($commande->id)){
+          $companie = Company::find($user->company_id);
+        } else {
+          $clientCommande = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
+          $customer = User::where("id", $clientCommande->user_id)->get()->first();
+          $companie = Company::find($customer->company_id);
+        }
         return $companie;
     }
 
