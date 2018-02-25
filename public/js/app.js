@@ -17104,6 +17104,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -17303,22 +17309,22 @@ var render = function() {
                   staticClass: "field"
                 },
                 [
-                  _c("div", { staticClass: "columns is-mobile" }, [
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Société : " + _vm._s(_vm.company.nom))
-                      ])
-                    ]),
+                  _c("div", { staticClass: "card" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Adresse : " + _vm._s(_vm.company.adresse))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "column" }, [
-                      _c("label", { staticClass: "label" }, [
-                        _vm._v("Email : " + _vm._s(_vm.company.email))
+                    _c("div", { staticClass: "card-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Société : " + _vm._s(_vm.company.nom))
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Adresse : " + _vm._s(_vm.company.adresse))
+                        ]),
+                        _vm._v(" "),
+                        _c("label", { staticClass: "label" }, [
+                          _vm._v("Email : " + _vm._s(_vm.company.email))
+                        ])
                       ])
                     ])
                   ])
@@ -17393,7 +17399,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.visibiliteActionDevisEnvoye
-                ? _c("div", { staticClass: "field" }, [_vm._m(1)])
+                ? _c("div", { staticClass: "field" }, [_vm._m(2)])
                 : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "field" }, [
@@ -17462,6 +17468,16 @@ var staticRenderFns = [
     return _c("header", { staticClass: "card-header" }, [
       _c("p", { staticClass: "card-header-title" }, [
         _vm._v("\n                Données personnelles\n              ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "card-header" }, [
+      _c("p", { staticClass: "card-header-title" }, [
+        _vm._v("\n                  Données Société\n                ")
       ])
     ])
   },

@@ -55,15 +55,21 @@
               </div>
 
               <div class="field" v-show="active">
-                <div class="columns is-mobile">
-                  <div class="column">
-                    <label class="label">Société : {{ company.nom }}</label>
-                  </div>
-                  <div class="column">
-                    <label class="label">Adresse : {{ company.adresse }}</label>
-                  </div>
-                  <div class="column">
-                    <label class="label">Email : {{ company.email }}</label>
+                <div class="card">
+                  <header class="card-header">
+                    <p class="card-header-title">
+                      Données Société
+                    </p>
+                  </header>
+                  <div class="card-content">
+                    <div class="content">
+
+                          <label class="label">Société : {{ company.nom }}</label>
+
+                          <label class="label">Adresse : {{ company.adresse }}</label>
+
+                          <label class="label">Email : {{ company.email }}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -94,7 +100,7 @@
                   </label>
                 </div>
               </div>
-              
+
               <div class="field">
                 <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
@@ -121,7 +127,7 @@
                   descriptionDevis: ""
                 },
                 company: "",
-                active : false
+                active : false,
             }
         },
 
