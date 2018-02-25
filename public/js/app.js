@@ -17103,6 +17103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -17391,7 +17392,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              !_vm.visibiliteActionDevisEnvoye
+                ? _c("div", { staticClass: "field" }, [_vm._m(1)])
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "field" }, [
                 !_vm.visibiliteActionDevisEnvoye
@@ -17466,22 +17469,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "file" }, [
-        _c("label", { staticClass: "file-label" }, [
-          _c("input", {
-            staticClass: "file-input",
-            attrs: { type: "file", name: "resume" }
-          }),
+    return _c("div", { staticClass: "file" }, [
+      _c("label", { staticClass: "file-label" }, [
+        _c("input", {
+          staticClass: "file-input",
+          attrs: { type: "file", name: "resume" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "file-cta" }, [
+          _c("span", { staticClass: "file-icon" }, [
+            _c("i", { staticClass: "fas fa-upload" })
+          ]),
           _vm._v(" "),
-          _c("span", { staticClass: "file-cta" }, [
-            _c("span", { staticClass: "file-icon" }, [
-              _c("i", { staticClass: "fas fa-upload" })
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "file-label" }, [
-              _vm._v("\n                    Choose a File…\n                  ")
-            ])
+          _c("span", { staticClass: "file-label" }, [
+            _vm._v("\n                    Choose a File…\n                  ")
           ])
         ])
       ])

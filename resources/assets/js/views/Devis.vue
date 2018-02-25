@@ -79,7 +79,7 @@
                 </div>
               </div>
 
-              <div class="field">
+              <div class="field" v-if="!visibiliteActionDevisEnvoye">
                 <div class="file">
                   <label class="file-label">
                     <input class="file-input" type="file" name="resume">
@@ -94,6 +94,7 @@
                   </label>
                 </div>
               </div>
+              
               <div class="field">
                 <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
