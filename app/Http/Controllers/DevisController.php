@@ -8,6 +8,7 @@ use App\Customer;
 use App\User;
 use App\Commande;
 use App\Company;
+use App\Product;
 use Carbon\Carbon;
 
 class DevisController extends Controller
@@ -75,6 +76,7 @@ class DevisController extends Controller
                             ])->get()->first();
         $customerDevis->concerne = $request->commande['concerne'];
         $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+        $customerDevis->status_id = $request->commande['status_id'];
       }
       $customerDevis->save();
     }
@@ -177,6 +179,12 @@ class DevisController extends Controller
                     ->get();
       }
       return $devis;
+    }
+
+    public function produits()
+    {
+      $result = Product::all();
+      return $result;
     }
 
 }

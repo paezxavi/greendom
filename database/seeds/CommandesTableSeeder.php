@@ -42,6 +42,16 @@ class CommandesTableSeeder extends Seeder
           'descriptionDevis' => 'Test pour tableau de bord',
           'status_id' => 2
         ],
+        [
+          'num_commande' => '20180217_C',
+          'dateDebut' => '2008-01-03 01:27:24',
+          'concerne' => 'Offre',
+          'num_devis' => '20180217_D',
+          'num_offre' => '20180217_O',
+          'user_id' => 2,
+          'descriptionDevis' => 'Test pour offre',
+          'status_id' => 3
+        ],
        ]);
     }
 }

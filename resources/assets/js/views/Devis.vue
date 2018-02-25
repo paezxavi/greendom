@@ -4,7 +4,10 @@
           <div class="column is-three-fifths is-offset-one-fifth">
             <form method="POST">
 
-              <h1 class="title">Devis N°{{ this.commande.num_devis }}</h1>
+              <div>
+                <h1 class="title" v-show="commande.status_id == 1 || commande.status_id == 2">Devis N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 3 || commande.status_id == 4">Offre N°{{ this.commande.num_offre }}</h1>
+              </div>
 
               <div class="card" style="margin-bottom:15px">
                 <header class="card-header">
@@ -95,6 +98,78 @@
                 </div>
               </div>
 
+
+              <!-- TRAVAILLE KEVIN/FRANK // Pour tester-->
+              <!-- Fenêtre modale -->
+              <div id="modal" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                  <div class="box">
+                    <article class="media">
+                      <div class="media-left">
+                        <figure class="image is-64x64">
+                          <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+                            <br>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+                          </p>
+                        </div>
+                        <nav class="level is-mobile">
+                          <div class="level-left">
+                            <a class="level-item">
+                              <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                            </a>
+                            <a class="level-item">
+                              <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                            </a>
+                            <a class="level-item">
+                              <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                            </a>
+                          </div>
+                        </nav>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <button class="modal-close is-large"> Fermer </button>
+              </div>
+
+              <!-- http://192.168.10.10/#/devis/2/4 -->
+              <!-- Ajout d'articles -->
+              <div class="card" style="margin-bottom:15px" v-show="commande.status_id == 3 || commande.status_id == 4"> <!-- Si la commande est une offre (3) on montre -->
+                <header class="card-header">
+                  <p class="card-header-title">
+                    Articles
+                  </p>
+                </header>
+                <div class="card-content">
+                  <div class="content">
+                    <div class="field">
+                      <div class="columns is-mobile">
+                        <div class="column">
+                          <!-- Bouton + -->
+                          <ul id="liste_produits">
+                            <!--<li v-for="produit in produits">
+                              {{produit.nom}}
+                            </li> -->
+                          </ul>
+                          <div class="buttons has-addons is-left">
+                              <button @click.prevent="showModal = true" class="button is-primary modal-button" style="margin-right:2px">+</button>
+                              <!-- use the modal component, pass in the prop -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- FIN TRAVAILLE KEVIN/FRANK -->
+
               <div class="field">
                 <div class="buttons has-addons is-centered">
                     <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
@@ -115,10 +190,12 @@
         data() {
             return {
                 customer: "",
+                produits: "",
                 commande: {
                   id: "",
                   concerne: "",
-                  descriptionDevis: ""
+                  descriptionDevis: "",
+                  status_id: ""
                 },
                 company: "",
                 active : false
@@ -126,6 +203,10 @@
         },
 
         created() {
+            //Liste des listeProduits
+            axios.get('/produitsOffre')
+              .then(({data}) => this.produits = data);
+
             //user
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.customer = data);
@@ -166,6 +247,11 @@
             }
           },
 
+          //Travaille
+          selectionProduit() {
+
+          },
+
           envoyer() {
             var id = this.customer.id;
 
@@ -174,3 +260,70 @@
         }
     }
 </script>
+
+<style>
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+</style>

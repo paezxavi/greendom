@@ -16,11 +16,12 @@ Route::get('/', 'DevisController@index')->name('home');
 /* Call PDF */
 Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
 
-Route::get('/products', 'ProductController@products');
+Route::get('/products', ' ProductController@products');
 Route::get('/customers', 'ProductController@clients');
 Route::get('/commandes', 'ProductController@commandes');
 Route::get('/providers', 'ProductController@providers');
 
+Route::get('/produitsOffre', 'DevisController@produits');
 Route::get('/devisList/{user}', 'DevisController@clientDevis');
 Route::get('/company/{user}', 'DevisController@companieClientDevis');
 Route::get('/{user}', 'DevisController@infoClient');

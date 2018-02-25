@@ -1,22 +1,27 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                  <h2 class="title is-2 has-text-centered">Home</h2>
+  <div class="container">
 
+    <router-link to="/devis">
+      <button class="btn btn-success">
+          Devis
+      </button>
+    </router-link>
 
-                    <div v-for="product in products">
-                        <div class="panel-body">
-                            <div>
-                                {{product.prixVente}} {{product.nom}}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+    <div class="col-md-2 column produitBox"  v-for="produit in produits" :key="produit.id">
+        <img :src="produit.image">
+        <div class="produitTitre">
+            <h4> {{ produit.nom }} </h4>
+            <p> {{produit.categorie}} </p>
         </div>
+        <div class="produitPrix">
+            CHF {{produit.prixVente}}.-
+        </div>
+            <button
+                class="btn btn-success"
+                @click="ajoutPanier(produit)">
+                Ajouter au panier
+            </button>
+      </div>
     </div>
 </template>
 
