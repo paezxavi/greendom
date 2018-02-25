@@ -41,6 +41,10 @@
                     {{ props.row.update_at }}
                 </b-table-column>
 
+                <b-table-column v-if="currentUser.employee" field="nomClient" label="Nom du client" sortable>
+                    {{ props.row.name }} {{ props.row.forename }}
+                </b-table-column>
+
                 <b-table-column field="concerne" label="Concerne" sortable>
                     {{ props.row.concerne }}
                 </b-table-column>
@@ -69,20 +73,23 @@
                 isPaginationSimple: false,
                 defaultSortDirection: 'asc',
                 currentPage: 1,
-                perPage: 5
+                perPage: 5,
+                currentUser: ""
             }
         },
 
         created() {
             axios.get('/devisList/'+this.$route.params.user)
                 .then(({data}) => this.arrayDevis = data);
+            axios.get('/'+this.$route.params.user)
+                .then(({data}) => this.currentUser = data);
         },
 
 
         methods: {
           dateDebutDevis(devis){
             return moment(devis.dateDebut).format('DD/MM/YYYY');
-          },
+          }
         }
     }
 </script>
