@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PDF;
+use Mail;
 use App\Customer;
 use App\User;
 use App\Commande;
 use App\Company;
 use Carbon\Carbon;
+use App\Mail\DevisEnvoye;
 
 class DevisController extends Controller
 {
@@ -55,6 +57,13 @@ class DevisController extends Controller
         $this->enregistrerCommande($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->enregistrerCommande($request, 1);
+        $user = User::where('employee', true)->get();
+        Mail::to($user)->send(new DevisEnvoye($request));
+        /*Mail::send('mails.devisEnvoye', ['user' => $user], function ($m) use ($user) {
+                   $m->from('hello@app.com', 'Your Application');
+
+                   $m->to($user->email, $user->name)->subject('Your Reminder!');
+               });      }*/
       }
 
     }
