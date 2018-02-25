@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->string('nom')->nullable();
             $table->string('categorie')->nullable();
+            $table->string('description')->nullable();
             $table->string('prixVente')->nullable();
             $table->string('reference')->nullable();
             $table->string('refSupplier')->nullable(); // ID_PROVIDER
