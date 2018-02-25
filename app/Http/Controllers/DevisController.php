@@ -59,11 +59,6 @@ class DevisController extends Controller
         $this->enregistrerCommande($request, 1);
         $user = User::where('employee', true)->get();
         Mail::to($user)->send(new DevisEnvoye($request));
-        /*Mail::send('mails.devisEnvoye', ['user' => $user], function ($m) use ($user) {
-                   $m->from('hello@app.com', 'Your Application');
-
-                   $m->to($user->email, $user->name)->subject('Your Reminder!');
-               });      }*/
       }
 
     }
