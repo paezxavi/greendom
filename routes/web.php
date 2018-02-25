@@ -29,6 +29,7 @@ Route::get('/company/{user}/{commande}', 'DevisController@companieClientDevis');
 Route::get('/{user}', 'DevisController@infoClient');
 Route::get('/{user}/{commande}', 'DevisController@infoClient');
 
+Route::post('/validerDevis/{commande}', 'DevisController@validerDevis');
 Route::post('/storeDevis/{user}/{commande}', 'DevisController@store')->name('storeDevis');
 Route::post('/insertNewDevis/{user}', 'DevisController@create')->name('storeDevis');
 

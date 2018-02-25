@@ -190,4 +190,12 @@ class DevisController extends Controller
       return $result;
     }
 
+    public function validerDevis(Commande $commande)
+    {
+      $com = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
+      $com->status_id = $com->status_id+1;
+      $com->save();
+      return $com;
+    }
+
 }

@@ -5,8 +5,10 @@
             <form method="POST">
 
               <div>
-                <h1 class="title" v-show="commande.status_id == 1 || commande.status_id == 2">Devis N°{{ this.commande.num_devis }}</h1>
-                <h1 class="title" v-show="commande.status_id == 3 || commande.status_id == 4">Offre N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 1">Devis - En cours N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 2">Devis - Envoyé N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
+
               </div>
 
               <div class="card" style="margin-bottom:15px">
@@ -178,9 +180,12 @@
 
               <div class="field">
                 <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
-                    <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                    <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px">Envoyer</button>
-                    <button class="button is-danger" style="margin-left:2px">Annuler</button>
+                  <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
+                  <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="!enabledBtnEnvoyer">Envoyer</button>
+                  <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
+                  <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
+                  <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
+                  <button class="button is-danger" style="margin-left:2px">Annuler</button>
                 </div>
               </div>
             </form>
@@ -284,13 +289,34 @@
                         window.location.href='/#/listOrder/'+id;
                       });
             }
-          }
+          },
 
+          passerEnOffre(){
+            var id = this.customer.id;
+            axios.post('/validerDevis/'+this.commande.id,{commande:this.commande})
+              .then(function(response){
+                window.location.href='/#/listOrder/'+id;
+            });
+          }
         },
 
         computed:{
           visibiliteActionDevisEnvoye(){
             if (this.commande.status_id > 1 && !this.currentUser.employee){
+              return true;
+            }
+            return false;
+          },
+
+          enabledBtnEnvoyer(){
+            if (this.commande.status_id == 3 && this.currentUser.employee){
+              return true;
+            }
+            return false;
+          },
+
+          enabledBtnPasserEncours(){
+            if (this.commande.status_id == 2 && this.currentUser.employee){
               return true;
             }
             return false;
