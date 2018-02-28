@@ -30,7 +30,11 @@
             :current-page.sync="currentPage"
             :pagination-simple="isPaginationSimple"
             :default-sort-direction="defaultSortDirection"
-            default-sort="dateDebut">
+            default-sort="dateDebut"
+            :opened-detailed="defaultOpenedDetails"
+            detailed
+            detail-key="id"
+            @details-open="(row, index) => $toast.open(`Expanded ${row.status_nom}`)">
 
             <template slot-scope="props">
                 <b-table-column field="dateDebut" label="Date début" sortable>
@@ -49,6 +53,21 @@
                     {{ props.row.status.nom }}
                 </b-table-column>
             </template>
+            <template slot="detail" slot-scope="props">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ props.row.concerne }} {{ props.row.status_nom }}</strong>
+                            <small>@{{ props.row.concerne }}</small>
+                            <small>31m</small>
+                            <br>
+                            {{ props.row.descriptionDevis }}
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </template>
         </b-table>
       </section>
     </div>
@@ -69,7 +88,8 @@
                 isPaginationSimple: false,
                 defaultSortDirection: 'asc',
                 currentPage: 1,
-                perPage: 5
+                perPage: 5,
+                defaultOpenedDetails: [1]
             }
         },
 

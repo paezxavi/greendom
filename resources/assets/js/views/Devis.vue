@@ -129,7 +129,6 @@
                               <modal v-show="showModal" @close="showModal = false"></modal>
                               <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px">+</button>
                           </div>
-
                       </div>
                     </div>
                   </div>
@@ -137,15 +136,17 @@
               </div>
               <!-- FIN TRAVAILLE KEVIN/FRANK -->
 
-              <div class="field">
-                <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
-                  <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                  <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="!enabledBtnEnvoyer">Envoyer</button>
-                  <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
-                  <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
-                  <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
-                  <button class="button is-danger" style="margin-left:2px">Annuler</button>
-                </div>
+
+            </div>
+
+            <div class="field">
+              <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
+                <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
+                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="!enabledBtnEnvoyer">Envoyer</button>
+                <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
+                <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
+                <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
+                <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
 

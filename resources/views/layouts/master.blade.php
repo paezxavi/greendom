@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/css/bulma.css">
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 
         <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
         <script src="/js/jquery-3.2.1.min.js"></script>
