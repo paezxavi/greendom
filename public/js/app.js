@@ -16699,6 +16699,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -16714,7 +16718,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             defaultSortDirection: 'asc',
             currentPage: 1,
             perPage: 5,
-            defaultOpenedDetails: [1]
+            defaultOpenedDetails: [1],
+            currentUser: ""
         };
     },
     created: function created() {
@@ -16723,6 +16728,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         axios.get('/devisList/' + this.$route.params.user).then(function (_ref) {
             var data = _ref.data;
             return _this.arrayDevis = data;
+        });
+        axios.get('/' + this.$route.params.user).then(function (_ref2) {
+            var data = _ref2.data;
+            return _this.currentUser = data;
         });
     },
 
@@ -16930,6 +16939,28 @@ var render = function() {
                       )
                     ]
                   ),
+                  _vm._v(" "),
+                  _vm.currentUser.employee
+                    ? _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "nomClient",
+                            label: "Nom du client",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(props.row.name) +
+                              " " +
+                              _vm._s(props.row.forename) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "b-table-column",
