@@ -33,7 +33,7 @@
             default-sort="dateDebut"
             detailed
             detail-key="id"
-            @details-open="(row, index) => $toast.open(`Expanded ${row.status_nom}`)">
+            @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
 
             <template slot-scope="props">
                 <b-table-column field="dateDebut" label="Date début" sortable>

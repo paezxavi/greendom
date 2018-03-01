@@ -16889,7 +16889,7 @@ var render = function() {
               _vm.currentPage = $event
             },
             "details-open": function(row, index) {
-              return _vm.$toast.open("Expanded " + row.status_nom)
+              return _vm.$toast.open("Expanded " + row.users.name)
             }
           },
           scopedSlots: _vm._u([
