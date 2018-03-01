@@ -31,7 +31,6 @@
             :pagination-simple="isPaginationSimple"
             :default-sort-direction="defaultSortDirection"
             default-sort="dateDebut"
-            :opened-detailed="defaultOpenedDetails"
             detailed
             detail-key="id"
             @details-open="(row, index) => $toast.open(`Expanded ${row.status_nom}`)">
@@ -46,7 +45,7 @@
                 </b-table-column>
 
                 <b-table-column v-if="currentUser.employee" field="nomClient" label="Nom du client" sortable>
-                    {{ props.row.name }} {{ props.row.forename }}
+                    {{ props.row.users.name }} {{ props.row.users.forename }}
                 </b-table-column>
 
                 <b-table-column field="concerne" label="Concerne" sortable>
@@ -62,9 +61,9 @@
                 <div class="media-content">
                     <div class="content">
                         <p>
-                            <strong>{{ props.row.concerne }} {{ props.row.status_nom }}</strong>
-                            <small>@{{ props.row.concerne }}</small>
-                            <small>31m</small>
+                            <strong>{{ props.row.users.name }} {{ props.row.users.forename }}</strong>
+                            <br>
+                            <small>@Concerne: {{ props.row.concerne }}</small>
                             <br>
                             {{ props.row.descriptionDevis }}
                         </p>
@@ -83,8 +82,6 @@
 
     export default {
 
-        //Problème avec l'icone de "sort", il faut trouver comment l'afficher correctement
-
         data() {
             return {
                 arrayDevis: [],
@@ -93,8 +90,8 @@
                 defaultSortDirection: 'asc',
                 currentPage: 1,
                 perPage: 5,
-                defaultOpenedDetails: [1],
-                currentUser: ""         
+                //defaultOpenedDetails: [1],
+                currentUser: ""
             }
         },
 

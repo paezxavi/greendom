@@ -171,8 +171,8 @@ class DevisController extends Controller
     {
       if($user->employee == true){
         $devis = Commande::with('status','users')
-                    ->join('users','users.id', '=', 'commandes.user_id')
-                    ->select('commandes.*','users.*')
+                    //->join('users','users.id', '=', 'commandes.user_id')
+                    //->select('commandes.*','users.*')
                     ->get()
                     ->sortBy('commandes.dateDebut');
       } else {
@@ -182,6 +182,14 @@ class DevisController extends Controller
                     //->join('users','users.id', '=', 'commandes.user_id')
                     //->select('commandes.*','status.nom','users.employee')
                     ->get();
+        //Essaie de merge deux query.
+        /*$curUser = User::where('id',$user->id)->first();
+
+        $merged = $curUser->toBase()->merge($devis);
+        return $merged;*/
+        /*$currendUser = User::with('devis')
+                          ->get();
+        return $currendUser;*/
       }
       return $devis;
     }

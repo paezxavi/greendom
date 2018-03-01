@@ -16702,14 +16702,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-    //Problème avec l'icone de "sort", il faut trouver comment l'afficher correctement
-
     data: function data() {
         return {
             arrayDevis: [],
@@ -16718,7 +16714,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             defaultSortDirection: 'asc',
             currentPage: 1,
             perPage: 5,
-            defaultOpenedDetails: [1],
+            //defaultOpenedDetails: [1],
             currentUser: ""
         };
     },
@@ -16885,7 +16881,6 @@ var render = function() {
             "pagination-simple": _vm.isPaginationSimple,
             "default-sort-direction": _vm.defaultSortDirection,
             "default-sort": "dateDebut",
-            "opened-detailed": _vm.defaultOpenedDetails,
             detailed: "",
             "detail-key": "id"
           },
@@ -16953,9 +16948,9 @@ var render = function() {
                         [
                           _vm._v(
                             "\n                " +
-                              _vm._s(props.row.name) +
+                              _vm._s(props.row.users.name) +
                               " " +
-                              _vm._s(props.row.forename) +
+                              _vm._s(props.row.users.forename) +
                               "\n            "
                           )
                         ]
@@ -17010,17 +17005,17 @@ var render = function() {
                         _c("p", [
                           _c("strong", [
                             _vm._v(
-                              _vm._s(props.row.concerne) +
+                              _vm._s(props.row.users.name) +
                                 " " +
-                                _vm._s(props.row.status_nom)
+                                _vm._s(props.row.users.forename)
                             )
                           ]),
                           _vm._v(" "),
-                          _c("small", [
-                            _vm._v("@" + _vm._s(props.row.concerne))
-                          ]),
+                          _c("br"),
                           _vm._v(" "),
-                          _c("small", [_vm._v("31m")]),
+                          _c("small", [
+                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
+                          ]),
                           _vm._v(" "),
                           _c("br"),
                           _vm._v(
