@@ -15828,41 +15828,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            products: []
+            //products: []
         };
     },
-    created: function created() {
-        var _this = this;
-
-        axios.get('/products').then(function (_ref) {
-            var data = _ref.data;
-            return _this.products = data;
-        });
-    }
+    created: function created() {}
 });
 
 /***/ }),
@@ -15873,55 +15846,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("router-link", { attrs: { to: "/devis" } }, [
-        _c("button", { staticClass: "btn btn-success" }, [
-          _vm._v("\n        Devis\n    ")
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.produits, function(produit) {
-        return _c(
-          "div",
-          { key: produit.id, staticClass: "col-md-2 column produitBox" },
-          [
-            _c("img", { attrs: { src: produit.image } }),
-            _vm._v(" "),
-            _c("div", { staticClass: "produitTitre" }, [
-              _c("h4", [_vm._v(" " + _vm._s(produit.nom) + " ")]),
-              _vm._v(" "),
-              _c("p", [_vm._v(" " + _vm._s(produit.categorie) + " ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "produitPrix" }, [
-              _vm._v(
-                "\n          CHF " + _vm._s(produit.prixVente) + ".-\n      "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: {
-                  click: function($event) {
-                    _vm.ajoutPanier(produit)
-                  }
-                }
-              },
-              [_vm._v("\n              Ajouter au panier\n          ")]
-            )
-          ]
-        )
-      })
-    ],
-    2
-  )
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [_c("h2", [_vm._v("Home")])])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -17375,14 +17309,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }
       return false;
     },
+    enabledBtnEnvoyerDevis: function enabledBtnEnvoyerDevis() {
+      if (this.commande.status_id == 1) {
+        return true;
+      }
+      return false;
+    },
     enabledBtnEnvoyer: function enabledBtnEnvoyer() {
-      if (this.commande.status_id == 3 && this.currentUser.employee) {
+      if (this.commande.status_id == 3) {
         return true;
       }
       return false;
     },
     enabledBtnPasserEncours: function enabledBtnPasserEncours() {
-      if (this.commande.status_id == 2 && this.currentUser.employee) {
+      if (this.commande.status_id == 2) {
         return true;
       }
       return false;
@@ -17781,8 +17721,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: !_vm.enabledBtnEnvoyer,
-                            expression: "!enabledBtnEnvoyer"
+                            value: _vm.enabledBtnEnvoyerDevis,
+                            expression: "enabledBtnEnvoyerDevis"
                           }
                         ],
                         staticClass: "button is-success",

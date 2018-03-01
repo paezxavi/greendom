@@ -142,7 +142,7 @@
             <div class="field">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="!enabledBtnEnvoyer">Envoyer</button>
+                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyerDevis">Envoyer</button>
                 <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
                 <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
                 <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
@@ -273,15 +273,22 @@
             return false;
           },
 
+          enabledBtnEnvoyerDevis(){
+            if (this.commande.status_id == 1){
+              return true;
+            }
+            return false;
+          },
+
           enabledBtnEnvoyer(){
-            if (this.commande.status_id == 3 && this.currentUser.employee){
+            if (this.commande.status_id == 3){
               return true;
             }
             return false;
           },
 
           enabledBtnPasserEncours(){
-            if (this.commande.status_id == 2 && this.currentUser.employee){
+            if (this.commande.status_id == 2){
               return true;
             }
             return false;

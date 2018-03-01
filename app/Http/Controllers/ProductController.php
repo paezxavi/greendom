@@ -45,20 +45,15 @@ class ProductController extends Controller
 
     public function products()
     {
-        $file = database_path('seeds/test.csv');
+        /*$file = database_path('seeds/test.csv');
 
         $customerArr = $this->csvToArray($file);
 
         for ($i = 0; $i < count($customerArr); $i ++)
         {
             Product::firstOrCreate($customerArr[$i]);
-        }
-
-        /*$prods = Customer::find(2)->products()->get();
-        dd($prods);
-        foreach ($prods as $prod) {
-            dd($prod);
         }*/
+
         return Product::all();
     }
 
