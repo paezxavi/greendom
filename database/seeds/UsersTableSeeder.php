@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de carouge',
           'contact' => 'skype.com',
           'email' => 'seb.bnbnb@hhgf.com',
-          'password' => '234',
+          'password' => Hash::make('234'),
           'employee' => false,
           'company_id'=> '1'
         ],
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Test',
           'contact' => 'skype.com',
           'email' => 'test2.bnbnb@hhgf.com',
-          'password' => '147',
+          'password' => Hash::make('147'),
           'employee' => false,
           'company_id'=> '1'
         ],
@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
           'email' => 'Troisieme.bnbnb@hhgf.com',
-          'password' => '41236',
+          'password' => Hash::make('41236'),
           'employee' => false,
           'company_id'=> null
         ],
@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
           'email' => 'Test.bnbnb@hhgf.com',
-          'password' => '41236',
+          'password' => Hash::make('41236'),
           'employee' => false,
           'company_id'=> null
         ],
@@ -58,7 +58,7 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
           'email' => 'paezxavie@gmail.com',
-          'password' => '41236',
+          'password' => Hash::make('41236'),
           'employee' => true,
           'company_id'=> null
         ],
@@ -68,8 +68,18 @@ class UsersTableSeeder extends Seeder
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
           'email' => 'TestKev.bnbnb@hhgf.com',
-          'password' => '41236',
+          'password' => Hash::make('41236'),
           'employee' => false,
+          'company_id'=> null
+        ],
+        [
+          'name' => 'TestLog',
+          'forename' => 'TestLog',
+          'adresse' => 'Rue de Log',
+          'contact' => 'JeSuisSkype.com',
+          'email' => 'a@a',
+          'password' => Hash::make('123'),
+          'employee' => true,
           'company_id'=> null
         ],
        ]);

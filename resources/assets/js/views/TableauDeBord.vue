@@ -79,9 +79,9 @@
 
 <script>
     import moment from 'moment';
-
+    //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
+    
     export default {
-
         data() {
             return {
                 arrayDevis: [],
@@ -91,11 +91,21 @@
                 currentPage: 1,
                 perPage: 5,
                 //defaultOpenedDetails: [1],
-                currentUser: ""
+                currentUser: "",
+                user: false
             }
         },
+        
+        //mixins:[LoggedMixin],
+
 
         created() {
+            this.checkIfLogged()
+            .then(response => {
+                    this.user = response ? response : window.location = '/#/login';
+                    console.log(this.user);
+                })                    
+            .catch(error => console.log(error));
             axios.get('/devisList/'+this.$route.params.user)
                 .then(({data}) => this.arrayDevis = data);
             axios.get('/'+this.$route.params.user)

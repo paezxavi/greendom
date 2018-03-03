@@ -12,9 +12,15 @@ use App\Company;
 use App\Product;
 use Carbon\Carbon;
 use App\Mail\DevisEnvoye;
+use Illuminate\Auth\AuthenticationException;
 
 class DevisController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
     /**
      * Display a listing of the resource.
      *
