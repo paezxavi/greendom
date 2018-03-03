@@ -177,7 +177,12 @@
         },
 
         created() {
-
+            this.checkIfLogged()
+            .then(response => {
+                    this.user = response ? response : window.location = '/#/login';
+                    console.log(this.user);
+                })                    
+            .catch(error => console.log(error));
             if (!this.$route.params.commande){
               //commande inexistante
               self.commande = "";

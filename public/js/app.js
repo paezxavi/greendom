@@ -34600,6 +34600,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     var _this = this;
 
+    this.checkIfLogged().then(function (response) {
+      _this.user = response ? response : window.location = '/#/login';
+      console.log(_this.user);
+    }).catch(function (error) {
+      return console.log(error);
+    });
     if (!this.$route.params.commande) {
       //commande inexistante
       self.commande = "";
