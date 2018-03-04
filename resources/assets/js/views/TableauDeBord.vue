@@ -30,7 +30,10 @@
             :current-page.sync="currentPage"
             :pagination-simple="isPaginationSimple"
             :default-sort-direction="defaultSortDirection"
-            default-sort="dateDebut">
+            default-sort="dateDebut"
+            detailed
+            detail-key="id"
+            @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
 
             <template slot-scope="props">
                 <b-table-column field="dateDebut" label="Date début" sortable>
@@ -41,6 +44,10 @@
                     {{ props.row.update_at }}
                 </b-table-column>
 
+                <b-table-column v-if="currentUser.employee" field="nomClient" label="Nom du client" sortable>
+                    {{ props.row.users.name }} {{ props.row.users.forename }}
+                </b-table-column>
+
                 <b-table-column field="concerne" label="Concerne" sortable>
                     {{ props.row.concerne }}
                 </b-table-column>
@@ -49,6 +56,21 @@
                     {{ props.row.status.nom }}
                 </b-table-column>
             </template>
+            <template slot="detail" slot-scope="props">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ props.row.users.name }} {{ props.row.users.forename }}</strong>
+                            <br>
+                            <small>@Concerne: {{ props.row.concerne }}</small>
+                            <br>
+                            {{ props.row.descriptionDevis }}
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </template>
         </b-table>
       </section>
     </div>
@@ -57,11 +79,9 @@
 
 <script>
     import moment from 'moment';
-
+    //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
+    
     export default {
-
-        //Problème avec l'icone de "sort", il faut trouver comment l'afficher correctement
-
         data() {
             return {
                 arrayDevis: [],
@@ -69,20 +89,34 @@
                 isPaginationSimple: false,
                 defaultSortDirection: 'asc',
                 currentPage: 1,
-                perPage: 5
+                perPage: 5,
+                //defaultOpenedDetails: [1],
+                currentUser: "",
+                user: false
             }
         },
+        
+        //mixins:[LoggedMixin],
+
 
         created() {
+            this.checkIfLogged()
+            .then(response => {
+                    this.user = response ? response : window.location = '/#/login';
+                    console.log(this.user);
+                })                    
+            .catch(error => console.log(error));
             axios.get('/devisList/'+this.$route.params.user)
                 .then(({data}) => this.arrayDevis = data);
+            axios.get('/'+this.$route.params.user)
+                .then(({data}) => this.currentUser = data);
         },
 
 
         methods: {
           dateDebutDevis(devis){
             return moment(devis.dateDebut).format('DD/MM/YYYY');
-          },
+          }
         }
     }
 </script>

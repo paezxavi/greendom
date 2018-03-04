@@ -7,6 +7,7 @@
 
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="/css/bulma.css">
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 
         <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
         <script src="/js/jquery-3.2.1.min.js"></script>
@@ -42,23 +43,25 @@
                   <router-link class="navbar-item" tag="a" to="/contact">
                       Contact
                   </router-link>
-                  <router-link class="navbar-item" tag="a" to="/listOrder/1">
-                    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                    <!--Il faut definir comment faire la route-->
-                    <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                      Liste des commandes
-                  </router-link>
+                  @if (Auth::check())
+                    <router-link class="navbar-item" tag="a" to="/listOrder/{{ Auth::id() }}">
+                        Liste des commandes
+                    </router-link>
+                  @endif
                 </div>
                 <div class="navbar-end">
                   <div class="navbar-item">
                     <div class="field is-grouped">
                       <p class="control">
-                        <router-link class="button is-info" tag="button" to="/devis/1">
-                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                          <!--Il faut definir comment faire la route-->
-                          <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-                            Devis
+                        <a class="button is-danger is-outlined" href="{{ route('logout') }}">Logout</a>
+                        <router-link class="button is-success is-outlined" tag="button" to="/login">
+                            Login
                         </router-link>
+                        @if (Auth::check())
+                          <router-link class="button is-info" tag="button" to="/devis/{{ Auth::id() }}">
+                              Devis
+                          </router-link>
+                        @endif
                       </p>
                     </div>
                   </div>

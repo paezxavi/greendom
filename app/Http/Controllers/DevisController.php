@@ -12,9 +12,15 @@ use App\Company;
 use App\Product;
 use Carbon\Carbon;
 use App\Mail\DevisEnvoye;
+use Illuminate\Auth\AuthenticationException;
 
 class DevisController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -170,7 +176,9 @@ class DevisController extends Controller
     public function clientDevis(User $user)
     {
       if($user->employee == true){
-        $devis = Commande::with('status')
+        $devis = Commande::with('status','users')
+                    //->join('users','users.id', '=', 'commandes.user_id')
+                    //->select('commandes.*','users.*')
                     ->get()
                     ->sortBy('commandes.dateDebut');
       } else {
@@ -180,6 +188,14 @@ class DevisController extends Controller
                     //->join('users','users.id', '=', 'commandes.user_id')
                     //->select('commandes.*','status.nom','users.employee')
                     ->get();
+        //Essaie de merge deux query.
+        /*$curUser = User::where('id',$user->id)->first();
+
+        $merged = $curUser->toBase()->merge($devis);
+        return $merged;*/
+        /*$currendUser = User::with('devis')
+                          ->get();
+        return $currendUser;*/
       }
       return $devis;
     }
