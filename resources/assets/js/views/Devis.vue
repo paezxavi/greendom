@@ -124,11 +124,35 @@
                     <div class="columns is-mobile">
                       <div class="column">
 
-                          <!-- Bouton + -->
-                          <div class="buttons has-addons is-left" id="boutonAjout">
-                              <modal v-show="showModal" @close="showModal = false"></modal>
-                              <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px">+</button>
+                        <!-- Liste produits choisis -->
+                        <article class="media"  v-for="(produit, index) in produits_choisis"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
+                          <div class="media-left">
+                            <figure class="image is-64x64">
+                              <img :src="produit.image" alt="Image">
+                            </figure>
                           </div>
+                          <div class="media-content">
+                            <div class="content">
+                              <p>
+                                <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
+                                <br>
+
+                                    <button class="is-pulled-left button is-danger" @click="diminueProduit(produit.quantite, index)"> - </button>
+                                    <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
+                                    <button class="is-pulled-left button is-success" @click="augmenteProduit(produit.quantite, index)"> + </button>
+
+                                <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                              </p>
+                            </div>
+                            <button class="modal-close" @click="$emit('close')"></button>
+                          </div>
+                        </article>
+
+                          <!-- Bouton + | Selection de produit -->
+                        <div class="buttons has-addons is-left" id="boutonAjout">
+                            <modal v-show="showModal" @close="showModal = false"></modal>
+                            <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px"> + </button>
+                        </div>
 
                       </div>
                     </div>
@@ -156,9 +180,10 @@
 
 
 <script>
-
+  import {Store} from './store'
 
     export default {
+
         data() {
             return {
                 customer: "",
@@ -171,7 +196,8 @@
                 company: "",
                 active : false,
                 currentUser: "",
-                showModal: false
+                showModal: false,
+                produits_choisis: Store.$data.panier  //liée au store
             }
         },
 
@@ -228,16 +254,20 @@
             }
           },
 
-          //Travaille
-          ajoutProduit() {
-            //Show modal
-
-            //ajout bouton
-
+          augmenteProduit(quantite, index) {
+            this.produits_choisis[index].quantite = quantite+1;
           },
 
-          supprimerProduit() {
-            //this.inputs.splice(index, 1)
+          diminueProduit(quantite, index) {
+            if (this.produits_choisis[index].quantite == 1) {
+              this.produits_choisis[index].quantite = quantite+0;
+            } else {
+              this.produits_choisis[index].quantite = quantite-1;
+            }
+          },
+
+          supprimerProduit(index) {
+            this.produits_choisis.splice(index,1);
           },
 
           envoyer() {
@@ -285,7 +315,7 @@
             }
             return false;
           }
-        }
+        },
     }
 
     /*Fenêtre composant
@@ -300,7 +330,7 @@
       <div class="modal-background"></div>
       <div class="modal-card">
         <div class="box">
-          <article class="media"  v-for="produit in produits">
+          <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
             <div class="media-left">
               <figure class="image is-64x64">
                 <img :src="produit.image" alt="Image">
@@ -309,12 +339,12 @@
             <div class="media-content">
               <div class="content">
                 <p>
-                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> réf : {{produit.reference}} </small>
+                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
                   <br>
                   {{produit.description}}
                 <div class="is-pulled-right">
-                  <button> Seléctionner </button>
-                  <button @click="$emit('close')"> Fermer </button>
+                  <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
+                  <button class="button is-danger" @click="$emit('close')"> Fermer </button>
                 </div>
                 </p>
               </div>
@@ -327,6 +357,7 @@
     </div>
     `,
 
+
     data() {
       return {
         test: 'test',
@@ -338,7 +369,15 @@
         //Liste des listeProduits
         axios.get('/produitsOffre')
           .then(({data}) => this.produits = data);
+    },
+
+    methods:{
+      //Travaille
+      ajoutProduit(produit, reference) {
+        Store.ajoutPanier(produit, reference);
+      },
     }
+
   })
 
 </script>
