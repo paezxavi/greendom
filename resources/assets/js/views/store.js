@@ -9,18 +9,20 @@ export const Store = new Vue({
 	},
 
 	methods: {
-		ajoutPanier(produit, reference) {
-      var nom = produit.nom;
+		ajoutPanier(produit, reference, fournisseurs) {
+			var nom = produit.nom;
       var image = produit.image;
       var description = produit.description;
+
 				this.panier.push({
           image,
           nom,
           reference,
           description,
-          quantite: 1
+          quantite: 1,
+					fournisseurs,
+					//fournisseurs []
         })
-        console.log("normal");
 		},
 
 		supprimerPanier(id) {

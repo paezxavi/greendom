@@ -18,4 +18,9 @@ class Product extends Model
     {
         return $this->belongsToMany('App\User','customers_products_pivot','product_id','user_id')->withPivot('quantity');
     }
+
+    public function providers()
+    {
+        return $this->belongsToMany('App\Provider','providers_products_pivot','product_id','provider_id');
+    }
 }

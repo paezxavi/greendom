@@ -30,10 +30,10 @@ Route::get('/customers', 'ProductController@clients');
 Route::get('/commandes', 'ProductController@commandes');
 Route::get('/providers', 'ProductController@providers');
 
-
 Route::get('/', 'DevisController@index')->name('home');
 /* Call PDF */
 Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
+Route::get('/fournisseurList/{product}', 'DevisController@fournisseurs');
 Route::get('/produitsOffre', 'DevisController@produits');
 Route::get('/infoDevis/{commande}', 'DevisController@clientInfoDevis');
 Route::get('/devisList/{user}', 'DevisController@clientDevis');

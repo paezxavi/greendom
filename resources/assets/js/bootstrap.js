@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import Buefy from 'buefy';
 import 'buefy/lib/buefy.css';
-import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
+import LoggedMixin from '/home/vagrant/grep/resources/assets/js/views/LoggedMixin.js';
 
 
 window.Vue = Vue;

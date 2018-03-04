@@ -7,6 +7,7 @@ use PDF;
 use Mail;
 use App\Customer;
 use App\User;
+use App\Provider;
 use App\Commande;
 use App\Company;
 use App\Product;
@@ -204,6 +205,12 @@ class DevisController extends Controller
     {
       $result = Product::all();
       return $result;
+    }
+
+    public function fournisseurs(Product $product)
+    {
+      $four = Product::find($product->id);
+      return $four->providers()->get();
     }
 
     public function validerDevis(Commande $commande)

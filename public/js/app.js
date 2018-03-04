@@ -18774,30 +18774,6 @@ VueRouter.prototype.forward = function forward () {
   this.go(1);
 };
 
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(182)
-/* template */
-var __vue_template__ = __webpack_require__(183)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/Devis.vue"
-
 VueRouter.prototype.getMatchedComponents = function getMatchedComponents (to) {
   var route = to
     ? to.matched
@@ -18839,9 +18815,6 @@ VueRouter.prototype.resolve = function resolve (
   }
 };
 
-__webpack_require__(134);
-module.exports = __webpack_require__(184);
-
 VueRouter.prototype.addRoutes = function addRoutes (routes) {
   this.matcher.addRoutes(routes);
   if (this.history.current !== START) {
@@ -18879,35 +18852,7 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(166);
 
-
-
-
-
-
-
-window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
-
-window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
-
-window.axios.defaults.headers.common = {
-
-    'X-Requested-With': 'XMLHttpRequest'
 
 module.exports = function bind(fn, thisArg) {
   return function wrap() {
@@ -30838,9 +30783,9 @@ return zhTw;
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(182)
 /* template */
-var __vue_template__ = __webpack_require__(180)
+var __vue_template__ = __webpack_require__(184)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -30883,7 +30828,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(135);
-module.exports = __webpack_require__(181);
+module.exports = __webpack_require__(185);
 
 
 /***/ }),
@@ -30893,7 +30838,7 @@ module.exports = __webpack_require__(181);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(164);
 
 
 
@@ -30918,6 +30863,8 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
+
 
 
 
@@ -30928,6 +30875,8 @@ window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 
@@ -32616,13 +32565,35 @@ module.exports = function (css) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+var isLoggedMixin = {
+   methods: {
+      checkIfLogged: function checkIfLogged() {
+         var vm = this;
+         return new Promise(function (resolve, reject) {
+            axios.get('/sessionStatus').then(function (response) {
+               resolve(response.data.user);
+            }).catch(function (error) {
+               reject(error.response.data);
+            });
+         });
+      }
+   }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (isLoggedMixin);
+
+/***/ }),
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(8);
 
 
 var routes = [{
 
     path: '/login',
-    component: __webpack_require__(164)
+    component: __webpack_require__(165)
 
 }, {
 
@@ -32668,13 +32639,13 @@ var routes = [{
 }));
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(165)
+var __vue_script__ = __webpack_require__(166)
 /* template */
 var __vue_template__ = __webpack_require__(167)
 /* template functional */
@@ -32715,7 +32686,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32797,28 +32768,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
 
 });
-
-/***/ }),
-/* 166 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var isLoggedMixin = {
-   methods: {
-      checkIfLogged: function checkIfLogged() {
-         var vm = this;
-         return new Promise(function (resolve, reject) {
-            axios.get('/sessionStatus').then(function (response) {
-               resolve(response.data.user);
-            }).catch(function (error) {
-               reject(error.response.data);
-            });
-         });
-      }
-   }
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (isLoggedMixin);
 
 /***/ }),
 /* 167 */
@@ -33798,13 +33747,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
+//import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-    //Problème avec l'icone de "sort", il faut trouver comment l'afficher correctement
-
     data: function data() {
         return {
             arrayDevis: [],
@@ -33883,244 +33852,244 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 13,
-	"./af.js": 13,
-	"./ar": 14,
-	"./ar-dz": 15,
-	"./ar-dz.js": 15,
-	"./ar-kw": 16,
-	"./ar-kw.js": 16,
-	"./ar-ly": 17,
-	"./ar-ly.js": 17,
-	"./ar-ma": 18,
-	"./ar-ma.js": 18,
-	"./ar-sa": 19,
-	"./ar-sa.js": 19,
-	"./ar-tn": 20,
-	"./ar-tn.js": 20,
-	"./ar.js": 14,
-	"./az": 21,
-	"./az.js": 21,
-	"./be": 22,
-	"./be.js": 22,
-	"./bg": 23,
-	"./bg.js": 23,
-	"./bm": 24,
-	"./bm.js": 24,
-	"./bn": 25,
-	"./bn.js": 25,
-	"./bo": 26,
-	"./bo.js": 26,
-	"./br": 27,
-	"./br.js": 27,
-	"./bs": 28,
-	"./bs.js": 28,
-	"./ca": 29,
-	"./ca.js": 29,
-	"./cs": 30,
-	"./cs.js": 30,
-	"./cv": 31,
-	"./cv.js": 31,
-	"./cy": 32,
-	"./cy.js": 32,
-	"./da": 33,
-	"./da.js": 33,
-	"./de": 34,
-	"./de-at": 35,
-	"./de-at.js": 35,
-	"./de-ch": 36,
-	"./de-ch.js": 36,
-	"./de.js": 34,
-	"./dv": 37,
-	"./dv.js": 37,
-	"./el": 38,
-	"./el.js": 38,
-	"./en-au": 39,
-	"./en-au.js": 39,
-	"./en-ca": 40,
-	"./en-ca.js": 40,
-	"./en-gb": 41,
-	"./en-gb.js": 41,
-	"./en-ie": 42,
-	"./en-ie.js": 42,
-	"./en-nz": 43,
-	"./en-nz.js": 43,
-	"./eo": 44,
-	"./eo.js": 44,
-	"./es": 45,
-	"./es-do": 46,
-	"./es-do.js": 46,
-	"./es-us": 47,
-	"./es-us.js": 47,
-	"./es.js": 45,
-	"./et": 48,
-	"./et.js": 48,
-	"./eu": 49,
-	"./eu.js": 49,
-	"./fa": 50,
-	"./fa.js": 50,
-	"./fi": 51,
-	"./fi.js": 51,
-	"./fo": 52,
-	"./fo.js": 52,
-	"./fr": 53,
-	"./fr-ca": 54,
-	"./fr-ca.js": 54,
-	"./fr-ch": 55,
-	"./fr-ch.js": 55,
-	"./fr.js": 53,
-	"./fy": 56,
-	"./fy.js": 56,
-	"./gd": 57,
-	"./gd.js": 57,
-	"./gl": 58,
-	"./gl.js": 58,
-	"./gom-latn": 59,
-	"./gom-latn.js": 59,
-	"./gu": 60,
-	"./gu.js": 60,
-	"./he": 61,
-	"./he.js": 61,
-	"./hi": 62,
-	"./hi.js": 62,
-	"./hr": 63,
-	"./hr.js": 63,
-	"./hu": 64,
-	"./hu.js": 64,
-	"./hy-am": 65,
-	"./hy-am.js": 65,
-	"./id": 66,
-	"./id.js": 66,
-	"./is": 67,
-	"./is.js": 67,
-	"./it": 68,
-	"./it.js": 68,
-	"./ja": 69,
-	"./ja.js": 69,
-	"./jv": 70,
-	"./jv.js": 70,
-	"./ka": 71,
-	"./ka.js": 71,
-	"./kk": 72,
-	"./kk.js": 72,
-	"./km": 73,
-	"./km.js": 73,
-	"./kn": 74,
-	"./kn.js": 74,
-	"./ko": 75,
-	"./ko.js": 75,
-	"./ky": 76,
-	"./ky.js": 76,
-	"./lb": 77,
-	"./lb.js": 77,
-	"./lo": 78,
-	"./lo.js": 78,
-	"./lt": 79,
-	"./lt.js": 79,
-	"./lv": 80,
-	"./lv.js": 80,
-	"./me": 81,
-	"./me.js": 81,
-	"./mi": 82,
-	"./mi.js": 82,
-	"./mk": 83,
-	"./mk.js": 83,
-	"./ml": 84,
-	"./ml.js": 84,
-	"./mr": 85,
-	"./mr.js": 85,
-	"./ms": 86,
-	"./ms-my": 87,
-	"./ms-my.js": 87,
-	"./ms.js": 86,
-	"./mt": 88,
-	"./mt.js": 88,
-	"./my": 89,
-	"./my.js": 89,
-	"./nb": 90,
-	"./nb.js": 90,
-	"./ne": 91,
-	"./ne.js": 91,
-	"./nl": 92,
-	"./nl-be": 93,
-	"./nl-be.js": 93,
-	"./nl.js": 92,
-	"./nn": 94,
-	"./nn.js": 94,
-	"./pa-in": 95,
-	"./pa-in.js": 95,
-	"./pl": 96,
-	"./pl.js": 96,
-	"./pt": 97,
-	"./pt-br": 98,
-	"./pt-br.js": 98,
-	"./pt.js": 97,
-	"./ro": 99,
-	"./ro.js": 99,
-	"./ru": 100,
-	"./ru.js": 100,
-	"./sd": 101,
-	"./sd.js": 101,
-	"./se": 102,
-	"./se.js": 102,
-	"./si": 103,
-	"./si.js": 103,
-	"./sk": 104,
-	"./sk.js": 104,
-	"./sl": 105,
-	"./sl.js": 105,
-	"./sq": 106,
-	"./sq.js": 106,
-	"./sr": 107,
-	"./sr-cyrl": 108,
-	"./sr-cyrl.js": 108,
-	"./sr.js": 107,
-	"./ss": 109,
-	"./ss.js": 109,
-	"./sv": 110,
-	"./sv.js": 110,
-	"./sw": 111,
-	"./sw.js": 111,
-	"./ta": 112,
-	"./ta.js": 112,
-	"./te": 113,
-	"./te.js": 113,
-	"./tet": 114,
-	"./tet.js": 114,
-	"./th": 115,
-	"./th.js": 115,
-	"./tl-ph": 116,
-	"./tl-ph.js": 116,
-	"./tlh": 117,
-	"./tlh.js": 117,
-	"./tr": 118,
-	"./tr.js": 118,
-	"./tzl": 119,
-	"./tzl.js": 119,
-	"./tzm": 120,
-	"./tzm-latn": 121,
-	"./tzm-latn.js": 121,
-	"./tzm.js": 120,
-	"./uk": 122,
-	"./uk.js": 122,
-	"./ur": 123,
-	"./ur.js": 123,
-	"./uz": 124,
-	"./uz-latn": 125,
-	"./uz-latn.js": 125,
-	"./uz.js": 124,
-	"./vi": 126,
-	"./vi.js": 126,
-	"./x-pseudo": 127,
-	"./x-pseudo.js": 127,
-	"./yo": 128,
-	"./yo.js": 128,
-	"./zh-cn": 129,
-	"./zh-cn.js": 129,
-	"./zh-hk": 130,
-	"./zh-hk.js": 130,
-	"./zh-tw": 131,
-	"./zh-tw.js": 131
+	"./af": 14,
+	"./af.js": 14,
+	"./ar": 15,
+	"./ar-dz": 16,
+	"./ar-dz.js": 16,
+	"./ar-kw": 17,
+	"./ar-kw.js": 17,
+	"./ar-ly": 18,
+	"./ar-ly.js": 18,
+	"./ar-ma": 19,
+	"./ar-ma.js": 19,
+	"./ar-sa": 20,
+	"./ar-sa.js": 20,
+	"./ar-tn": 21,
+	"./ar-tn.js": 21,
+	"./ar.js": 15,
+	"./az": 22,
+	"./az.js": 22,
+	"./be": 23,
+	"./be.js": 23,
+	"./bg": 24,
+	"./bg.js": 24,
+	"./bm": 25,
+	"./bm.js": 25,
+	"./bn": 26,
+	"./bn.js": 26,
+	"./bo": 27,
+	"./bo.js": 27,
+	"./br": 28,
+	"./br.js": 28,
+	"./bs": 29,
+	"./bs.js": 29,
+	"./ca": 30,
+	"./ca.js": 30,
+	"./cs": 31,
+	"./cs.js": 31,
+	"./cv": 32,
+	"./cv.js": 32,
+	"./cy": 33,
+	"./cy.js": 33,
+	"./da": 34,
+	"./da.js": 34,
+	"./de": 35,
+	"./de-at": 36,
+	"./de-at.js": 36,
+	"./de-ch": 37,
+	"./de-ch.js": 37,
+	"./de.js": 35,
+	"./dv": 38,
+	"./dv.js": 38,
+	"./el": 39,
+	"./el.js": 39,
+	"./en-au": 40,
+	"./en-au.js": 40,
+	"./en-ca": 41,
+	"./en-ca.js": 41,
+	"./en-gb": 42,
+	"./en-gb.js": 42,
+	"./en-ie": 43,
+	"./en-ie.js": 43,
+	"./en-nz": 44,
+	"./en-nz.js": 44,
+	"./eo": 45,
+	"./eo.js": 45,
+	"./es": 46,
+	"./es-do": 47,
+	"./es-do.js": 47,
+	"./es-us": 48,
+	"./es-us.js": 48,
+	"./es.js": 46,
+	"./et": 49,
+	"./et.js": 49,
+	"./eu": 50,
+	"./eu.js": 50,
+	"./fa": 51,
+	"./fa.js": 51,
+	"./fi": 52,
+	"./fi.js": 52,
+	"./fo": 53,
+	"./fo.js": 53,
+	"./fr": 54,
+	"./fr-ca": 55,
+	"./fr-ca.js": 55,
+	"./fr-ch": 56,
+	"./fr-ch.js": 56,
+	"./fr.js": 54,
+	"./fy": 57,
+	"./fy.js": 57,
+	"./gd": 58,
+	"./gd.js": 58,
+	"./gl": 59,
+	"./gl.js": 59,
+	"./gom-latn": 60,
+	"./gom-latn.js": 60,
+	"./gu": 61,
+	"./gu.js": 61,
+	"./he": 62,
+	"./he.js": 62,
+	"./hi": 63,
+	"./hi.js": 63,
+	"./hr": 64,
+	"./hr.js": 64,
+	"./hu": 65,
+	"./hu.js": 65,
+	"./hy-am": 66,
+	"./hy-am.js": 66,
+	"./id": 67,
+	"./id.js": 67,
+	"./is": 68,
+	"./is.js": 68,
+	"./it": 69,
+	"./it.js": 69,
+	"./ja": 70,
+	"./ja.js": 70,
+	"./jv": 71,
+	"./jv.js": 71,
+	"./ka": 72,
+	"./ka.js": 72,
+	"./kk": 73,
+	"./kk.js": 73,
+	"./km": 74,
+	"./km.js": 74,
+	"./kn": 75,
+	"./kn.js": 75,
+	"./ko": 76,
+	"./ko.js": 76,
+	"./ky": 77,
+	"./ky.js": 77,
+	"./lb": 78,
+	"./lb.js": 78,
+	"./lo": 79,
+	"./lo.js": 79,
+	"./lt": 80,
+	"./lt.js": 80,
+	"./lv": 81,
+	"./lv.js": 81,
+	"./me": 82,
+	"./me.js": 82,
+	"./mi": 83,
+	"./mi.js": 83,
+	"./mk": 84,
+	"./mk.js": 84,
+	"./ml": 85,
+	"./ml.js": 85,
+	"./mr": 86,
+	"./mr.js": 86,
+	"./ms": 87,
+	"./ms-my": 88,
+	"./ms-my.js": 88,
+	"./ms.js": 87,
+	"./mt": 89,
+	"./mt.js": 89,
+	"./my": 90,
+	"./my.js": 90,
+	"./nb": 91,
+	"./nb.js": 91,
+	"./ne": 92,
+	"./ne.js": 92,
+	"./nl": 93,
+	"./nl-be": 94,
+	"./nl-be.js": 94,
+	"./nl.js": 93,
+	"./nn": 95,
+	"./nn.js": 95,
+	"./pa-in": 96,
+	"./pa-in.js": 96,
+	"./pl": 97,
+	"./pl.js": 97,
+	"./pt": 98,
+	"./pt-br": 99,
+	"./pt-br.js": 99,
+	"./pt.js": 98,
+	"./ro": 100,
+	"./ro.js": 100,
+	"./ru": 101,
+	"./ru.js": 101,
+	"./sd": 102,
+	"./sd.js": 102,
+	"./se": 103,
+	"./se.js": 103,
+	"./si": 104,
+	"./si.js": 104,
+	"./sk": 105,
+	"./sk.js": 105,
+	"./sl": 106,
+	"./sl.js": 106,
+	"./sq": 107,
+	"./sq.js": 107,
+	"./sr": 108,
+	"./sr-cyrl": 109,
+	"./sr-cyrl.js": 109,
+	"./sr.js": 108,
+	"./ss": 110,
+	"./ss.js": 110,
+	"./sv": 111,
+	"./sv.js": 111,
+	"./sw": 112,
+	"./sw.js": 112,
+	"./ta": 113,
+	"./ta.js": 113,
+	"./te": 114,
+	"./te.js": 114,
+	"./tet": 115,
+	"./tet.js": 115,
+	"./th": 116,
+	"./th.js": 116,
+	"./tl-ph": 117,
+	"./tl-ph.js": 117,
+	"./tlh": 118,
+	"./tlh.js": 118,
+	"./tr": 119,
+	"./tr.js": 119,
+	"./tzl": 120,
+	"./tzl.js": 120,
+	"./tzm": 121,
+	"./tzm-latn": 122,
+	"./tzm-latn.js": 122,
+	"./tzm.js": 121,
+	"./uk": 123,
+	"./uk.js": 123,
+	"./ur": 124,
+	"./ur.js": 124,
+	"./uz": 125,
+	"./uz-latn": 126,
+	"./uz-latn.js": 126,
+	"./uz.js": 125,
+	"./vi": 127,
+	"./vi.js": 127,
+	"./x-pseudo": 128,
+	"./x-pseudo.js": 128,
+	"./yo": 129,
+	"./yo.js": 129,
+	"./zh-cn": 130,
+	"./zh-cn.js": 130,
+	"./zh-hk": 131,
+	"./zh-hk.js": 131,
+	"./zh-tw": 132,
+	"./zh-tw.js": 132
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -34452,7 +34421,11 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(183);
+//
+//
+//
+//
 //
 //
 //
@@ -34711,6 +34684,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //enregistrer modif devis
     enregistrer: function enregistrer() {
       var id = this.customer.id;
+      //IF offre SINON fournisseur
       if (!this.commande.id) {
         axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
@@ -34807,16 +34781,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
-    //Travaille
     ajoutProduit: function ajoutProduit(produit, reference) {
-      __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanier(produit, reference);
+      var _this3 = this;
+
+      axios.get('/fournisseurList/' + produit.id).then(function (response) {
+        _this3.fournisseurs = response.data;console.log(_this3.fournisseurs);__WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanier(produit, reference, _this3.fournisseurs);
+      });
     }
   }
 
 });
 
 /***/ }),
-/* 179 */
+/* 183 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34834,18 +34811,20 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 	methods: {
-		ajoutPanier: function ajoutPanier(produit, reference) {
+		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
 			var nom = produit.nom;
 			var image = produit.image;
 			var description = produit.description;
+
 			this.panier.push({
 				image: image,
 				nom: nom,
 				reference: reference,
 				description: description,
-				quantite: 1
+				quantite: 1,
+				fournisseurs: fournisseurs
+				//fournisseurs []
 			});
-			console.log("normal");
 		},
 		supprimerPanier: function supprimerPanier(id) {
 			return 0;
@@ -34857,7 +34836,7 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 180 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -35248,6 +35227,35 @@ var render = function() {
                                       ),
                                       _vm._v(" "),
                                       _c(
+                                        "select",
+                                        {
+                                          attrs: { name: "liste_fournisseur" }
+                                        },
+                                        _vm._l(produit.fournisseurs, function(
+                                          fournisseur
+                                        ) {
+                                          return _c("option", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(fournisseur.nom) +
+                                                " "
+                                            ),
+                                            _c(
+                                              "span",
+                                              { attrs: { hidden: "" } },
+                                              [
+                                                _vm._v(
+                                                  " " +
+                                                    _vm._s(fournisseur.id) +
+                                                    " "
+                                                )
+                                              ]
+                                            )
+                                          ])
+                                        })
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
                                         "button",
                                         {
                                           staticClass:
@@ -35529,7 +35537,7 @@ if (false) {
 }
 
 /***/ }),
-/* 181 */
+/* 185 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

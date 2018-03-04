@@ -136,10 +136,13 @@
                               <p>
                                 <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
                                 <br>
-
                                     <button class="is-pulled-left button is-danger" @click="diminueProduit(produit.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
                                     <button class="is-pulled-left button is-success" @click="augmenteProduit(produit.quantite, index)"> + </button>
+
+                                    <select name="liste_fournisseur">
+                                         <option v-for="fournisseur in produit.fournisseurs"> {{fournisseur.nom}} <span hidden> {{fournisseur.id}} </span> </option>
+                                    </select>
 
                                 <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
@@ -248,6 +251,7 @@
           //enregistrer modif devis
           enregistrer() {
             var id = this.customer.id;
+            //IF offre SINON fournisseur
             if (!this.commande.id){
               axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
@@ -386,9 +390,9 @@
     },
 
     methods:{
-      //Travaille
       ajoutProduit(produit, reference) {
-        Store.ajoutPanier(produit, reference);
+        axios.get('/fournisseurList/'+produit.id)
+              .then(response => {this.fournisseurs = response.data; console.log(this.fournisseurs); Store.ajoutPanier(produit, reference, this.fournisseurs)});
       },
     }
 
