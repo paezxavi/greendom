@@ -30777,53 +30777,7 @@ return zhTw;
 
 
 /***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(182)
-/* template */
-var __vue_template__ = __webpack_require__(184)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/Commande.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-ce22a366", Component.options)
-  } else {
-    hotAPI.reload("data-v-ce22a366", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 133 */,
 /* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32618,12 +32572,12 @@ var routes = [{
 }, {
 
     path: '/commande/:user/:commande',
-    component: __webpack_require__(133)
+    component: __webpack_require__(187)
 
 }, {
 
     path: '/commande/:user',
-    component: __webpack_require__(133)
+    component: __webpack_require__(187)
 
 }];
 
@@ -34416,12 +34370,112 @@ if (false) {
 }
 
 /***/ }),
-/* 182 */
+/* 182 */,
+/* 183 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Store; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+	data: function data() {
+		return {
+			panier: []
+		};
+	},
+
+
+	methods: {
+		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
+			var nom = produit.nom;
+			var image = produit.image;
+			var description = produit.description;
+
+			this.panier.push({
+				image: image,
+				nom: nom,
+				reference: reference,
+				description: description,
+				quantite: 1,
+				fournisseurs: fournisseurs
+				//fournisseurs []
+			});
+		},
+		supprimerPanier: function supprimerPanier(id) {
+			return 0;
+		},
+		viderPanier: function viderPanier() {
+			this.panier = [];
+		}
+	}
+});
+
+/***/ }),
+/* 184 */,
+/* 185 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 186 */,
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(188)
+/* template */
+var __vue_template__ = __webpack_require__(189)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/Commande.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ce22a366", Component.options)
+  } else {
+    hotAPI.reload("data-v-ce22a366", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 188 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(183);
+//
 //
 //
 //
@@ -34713,10 +34767,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
-    passerEnOffre: function passerEnOffre() {
+    passerEtapeSuivante: function passerEtapeSuivante() {
       var id = this.customer.id;
-      axios.post('/validerDemande/' + this.commande.id, { commande: this.commande }).then(function (response) {
+      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
         window.location.href = '/#/listOrder/' + id;
+      });
+    },
+    demandePrixFournisseur: function demandePrixFournisseur() {
+      axios.post('/fournisseurMailDemandePrix').then(function (response) {
+        console.log('mail Envoyé');
       });
     }
   },
@@ -34786,50 +34845,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 183 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-
-
-var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-	data: function data() {
-		return {
-			panier: []
-		};
-	},
-
-
-	methods: {
-		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
-			var nom = produit.nom;
-			var image = produit.image;
-			var description = produit.description;
-
-			this.panier.push({
-				image: image,
-				nom: nom,
-				reference: reference,
-				description: description,
-				quantite: 1,
-				fournisseurs: fournisseurs
-				//fournisseurs []
-			});
-		},
-		supprimerPanier: function supprimerPanier(id) {
-			return 0;
-		},
-		viderPanier: function viderPanier() {
-			this.panier = [];
-		}
-	}
-});
-
-/***/ }),
-/* 184 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -35402,7 +35418,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.passerEnOffre($event)
+                            _vm.passerEtapeSuivante($event)
                           }
                         }
                       },
@@ -35428,7 +35444,33 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.envoyerFournisseur($event)
+                            _vm.passerEtapeSuivante($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Valider Offre")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnEnvoyer,
+                            expression: "enabledBtnEnvoyer"
+                          }
+                        ],
+                        staticClass: "button is-success",
+                        staticStyle: {
+                          "margin-left": "2px",
+                          "margin-right": "2px"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.demandePrixFournisseur($event)
                           }
                         }
                       },
@@ -35518,12 +35560,6 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-ce22a366", module.exports)
   }
 }
-
-/***/ }),
-/* 185 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

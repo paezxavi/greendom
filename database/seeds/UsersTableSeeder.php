@@ -47,9 +47,9 @@ class UsersTableSeeder extends Seeder
           'forename' => 'Frank',
           'adresse' => 'Rue de Trois',
           'contact' => 'JeSuisSkype.com',
-          'email' => 'Test.bnbnb@hhgf.com',
+          'email' => 'frank_cespedes02@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => false,
+          'employee' => true,
           'company_id'=> null
         ],
         [

@@ -13,6 +13,7 @@ use App\Company;
 use App\Product;
 use Carbon\Carbon;
 use App\Mail\DevisEnvoye;
+use App\Mail\FournisseurMail;
 use Illuminate\Auth\AuthenticationException;
 
 class CommandeController extends Controller
@@ -213,12 +214,25 @@ class CommandeController extends Controller
       return $four->providers()->get();
     }
 
-    public function validerDevis(Commande $commande)
+    public function validerStatut(Commande $commande)
     {
       $com = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
       $com->status_id = $com->status_id+1;
       $com->save();
       return $com;
+    }
+
+    public function mailFournisseurDemandePrix()
+    {
+      //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur
+      $customer = User::findOrFail(1);
+      $pdf = PDF::loadView('pdf/devis_pdf', compact('user'))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/Test.pdf');
+      $pdf->save($path);
+      $user = User::where('employee',true)->get();
+      Mail::to($user)->send(new FournisseurMail('Hello test'));
+      return 'mail envoyé depuis le controleur';
     }
 
 }

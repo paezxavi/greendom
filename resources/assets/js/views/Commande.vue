@@ -95,7 +95,7 @@
                 <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
               </div>
               </div>
-              
+
 
             </form>
 
@@ -163,8 +163,9 @@
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
-                <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
-                <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Valider Offre</button>
+                <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
                 <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
@@ -288,11 +289,18 @@
             }
           },
 
-          passerEnOffre(){
+          passerEtapeSuivante(){
             var id = this.customer.id;
-            axios.post('/validerDemande/'+this.commande.id,{commande:this.commande})
+            axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
+            });
+          },
+
+          demandePrixFournisseur(){
+            axios.post('/fournisseurMailDemandePrix')
+            .then(function(response){
+              console.log('mail Envoyé');
             });
           }
         },

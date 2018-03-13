@@ -42,9 +42,11 @@ Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis
 Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
-Route::post('/validerDemande/{commande}', 'CommandeController@validerDevis');
+Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
 Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
+
+Route::post('/fournisseurMailDemandePrix','CommandeController@mailFournisseurDemandePrix');
 
 
 
