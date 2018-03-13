@@ -30802,7 +30802,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/Devis.vue"
+Component.options.__file = "resources/assets/js/views/Commande.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -30811,9 +30811,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c8144288", Component.options)
+    hotAPI.createRecord("data-v-ce22a366", Component.options)
   } else {
-    hotAPI.reload("data-v-c8144288", Component.options)
+    hotAPI.reload("data-v-ce22a366", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -30863,7 +30863,7 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
 
 
 
@@ -30876,7 +30876,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 
@@ -32617,12 +32617,12 @@ var routes = [{
 
 }, {
 
-    path: '/devis/:user/:commande',
+    path: '/commande/:user/:commande',
     component: __webpack_require__(133)
 
 }, {
 
-    path: '/devis/:user',
+    path: '/commande/:user',
     component: __webpack_require__(133)
 
 }];
@@ -33776,7 +33776,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            arrayDevis: [],
+            arrayCommande: [],
             isPaginated: true,
             isPaginationSimple: false,
             defaultSortDirection: 'asc',
@@ -33801,13 +33801,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).catch(function (error) {
             return console.log(error);
         });
-        axios.get('/devisList/' + this.$route.params.user).then(function (_ref) {
+        axios.get('/' + this.$route.params.user).then(function (_ref) {
             var data = _ref.data;
-            return _this.arrayDevis = data;
-        });
-        axios.get('/' + this.$route.params.user).then(function (_ref2) {
-            var data = _ref2.data;
             return _this.currentUser = data;
+        });
+        axios.get('/commandeList/' + this.$route.params.user).then(function (_ref2) {
+            var data = _ref2.data;
+            return _this.arrayCommande = data;
         });
     },
 
@@ -34242,7 +34242,7 @@ var render = function() {
         _vm._v(" "),
         _c("b-table", {
           attrs: {
-            data: _vm.arrayDevis,
+            data: _vm.arrayCommande,
             paginated: _vm.isPaginated,
             "per-page": _vm.perPage,
             "current-page": _vm.currentPage,
@@ -34600,14 +34600,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -34618,7 +34610,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       commande: {
         id: "",
         concerne: "",
-        descriptionDevis: "",
+        descriptionCommande: "",
         status_id: ""
       },
       company: "",
@@ -34662,7 +34654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return _this.customer = data;
       });
       //commande
-      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref5) {
+      axios.get('/infoCommande/' + this.$route.params.commande).then(function (_ref5) {
         var data = _ref5.data;
         return _this.commande = data;
       }).catch(function (error) {
@@ -34675,22 +34667,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
 
-    //pdf
-    axios.get('/devis/pdf').then(console.log(""));
+    /*//pdf
+    axios.get('/commande/pdf')
+        .then(console.log(""));*/
   },
 
 
   methods: {
-    //enregistrer modif devis
+    //enregistrer modif commande
     enregistrer: function enregistrer() {
       var id = this.customer.id;
       //IF offre SINON fournisseur
       if (!this.commande.id) {
-        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
@@ -34711,31 +34704,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     envoyer: function envoyer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
     },
     passerEnOffre: function passerEnOffre() {
       var id = this.customer.id;
-      axios.post('/validerDevis/' + this.commande.id, { commande: this.commande }).then(function (response) {
+      axios.post('/validerDemande/' + this.commande.id, { commande: this.commande }).then(function (response) {
         window.location.href = '/#/listOrder/' + id;
       });
     }
   },
 
   computed: {
-    visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
+    visibiliteActioncommandeEnvoye: function visibiliteActioncommandeEnvoye() {
       if (this.commande.status_id > 1 && !this.currentUser.employee) {
         return true;
       }
       return false;
     },
-    enabledBtnEnvoyerDevis: function enabledBtnEnvoyerDevis() {
+    enabledBtnEnvoyercommande: function enabledBtnEnvoyercommande() {
       if (this.commande.status_id == 1) {
         return true;
       }
@@ -34872,7 +34865,8 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "Devis - En cours N°" + _vm._s(this.commande.num_devis)
+                      "Demande - En cours N°" +
+                        _vm._s(this.commande.num_demande)
                     )
                   ]
                 ),
@@ -34892,7 +34886,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "Devis - Envoyé N°" + _vm._s(this.commande.num_devis)
+                      "Demande - Envoyé N°" + _vm._s(this.commande.num_demande)
                     )
                   ]
                 ),
@@ -35072,8 +35066,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.commande.descriptionDevis,
-                        expression: "commande.descriptionDevis"
+                        value: _vm.commande.descriptionCommande,
+                        expression: "commande.descriptionCommande"
                       }
                     ],
                     staticClass: "textarea",
@@ -35083,7 +35077,7 @@ var render = function() {
                         this.commande.status_id > 1 &&
                         !this.currentUser.employee
                     },
-                    domProps: { value: _vm.commande.descriptionDevis },
+                    domProps: { value: _vm.commande.descriptionCommande },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -35091,7 +35085,7 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.commande,
-                          "descriptionDevis",
+                          "descriptionCommande",
                           $event.target.value
                         )
                       }
@@ -35100,8 +35094,20 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              !_vm.visibiliteActionDevisEnvoye
-                ? _c("div", { staticClass: "field" }, [_vm._m(2)])
+              !_vm.visibiliteActioncommandeEnvoye
+                ? _c("div", { staticClass: "field" }, [
+                    _c("div", { staticClass: "field" }, [
+                      _c("input", {
+                        ref: "files",
+                        attrs: { type: "file", id: "files", multiple: "" },
+                        on: {
+                          change: function($event) {
+                            _vm.handleFileUploads()
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 : _vm._e()
             ]),
             _vm._v(" "),
@@ -35123,7 +35129,7 @@ var render = function() {
                 staticStyle: { "margin-bottom": "15px" }
               },
               [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [
                   _c("div", { staticClass: "content" }, [
@@ -35334,7 +35340,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
-              !_vm.visibiliteActionDevisEnvoye
+              !_vm.visibiliteActioncommandeEnvoye
                 ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
                     _c(
                       "button",
@@ -35358,8 +35364,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.enabledBtnEnvoyerDevis,
-                            expression: "enabledBtnEnvoyerDevis"
+                            value: _vm.enabledBtnEnvoyercommande,
+                            expression: "enabledBtnEnvoyercommande"
                           }
                         ],
                         staticClass: "button is-success",
@@ -35400,7 +35406,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Valider devis")]
+                      [_vm._v("Valider commande")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -35497,29 +35503,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "file" }, [
-      _c("label", { staticClass: "file-label" }, [
-        _c("input", {
-          staticClass: "file-input",
-          attrs: { type: "file", name: "resume" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "file-cta" }, [
-          _c("span", { staticClass: "file-icon" }, [
-            _c("i", { staticClass: "fas fa-upload" })
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "file-label" }, [
-            _vm._v("\n                    Choose a File…\n                  ")
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("header", { staticClass: "card-header" }, [
       _c("p", { staticClass: "card-header-title" }, [
         _vm._v("\n              Articles\n            ")
@@ -35532,7 +35515,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-c8144288", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-ce22a366", module.exports)
   }
 }
 

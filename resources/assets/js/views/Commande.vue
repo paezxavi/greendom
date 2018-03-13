@@ -5,8 +5,8 @@
             <form method="POST">
 
               <div>
-                <h1 class="title" v-show="commande.status_id == 1">Devis - En cours N°{{ this.commande.num_devis }}</h1>
-                <h1 class="title" v-show="commande.status_id == 2">Devis - Envoyé N°{{ this.commande.num_devis }}</h1>
+                <h1 class="title" v-show="commande.status_id == 1">Demande - En cours N°{{ this.commande.num_demande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 2">Demande - Envoyé N°{{ this.commande.num_demande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
 
               </div>
@@ -86,29 +86,21 @@
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionDevis" :disabled="this.commande.status_id > 1 && !this.currentUser.employee"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="this.commande.status_id > 1 && !this.currentUser.employee"></textarea>
                 </div>
               </div>
 
-              <div class="field" v-if="!visibiliteActionDevisEnvoye">
-                <div class="file">
-                  <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
-                    <span class="file-cta">
-                      <span class="file-icon">
-                        <i class="fas fa-upload"></i>
-                      </span>
-                      <span class="file-label">
-                        Choose a File…
-                      </span>
-                    </span>
-                  </label>
-                </div>
+              <div class="field" v-if="!visibiliteActioncommandeEnvoye">
+                <div class="field">
+                <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
               </div>
+              </div>
+              
+
             </form>
 
             <!-- TRAVAILLE KEVIN/FRANK // Pour tester-->
-            <!-- http://192.168.10.10/#/devis/2/4 -->
+            <!-- http://192.168.10.10/#/commande/2/4 -->
             <!-- Ajout d'articles -->
 
 
@@ -168,10 +160,10 @@
             </div>
 
             <div class="field">
-              <div class="buttons has-addons is-centered" v-if="!visibiliteActionDevisEnvoye">
+              <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyerDevis">Envoyer</button>
-                <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider devis</button>
+                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
+                <button @click.prevent="passerEnOffre" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button @click.prevent="envoyerFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
                 <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
@@ -195,7 +187,7 @@
                 commande: {
                   id: "",
                   concerne: "",
-                  descriptionDevis: "",
+                  descriptionCommande: "",
                   status_id: ""
                 },
                 company: "",
@@ -231,7 +223,7 @@
               axios.get('/'+this.$route.params.user+'/'+this.$route.params.commande)
                   .then(({data}) => this.customer = data);
               //commande
-              axios.get('/infoDevis/'+this.$route.params.commande)
+              axios.get('/infoCommande/'+this.$route.params.commande)
                   .then(({data}) => this.commande = data)
                   .catch(function (error) {
                     console.log(error.response);
@@ -242,23 +234,23 @@
             }
 
 
-            //pdf
-            axios.get('/devis/pdf')
-                .then(console.log(""));
+            /*//pdf
+            axios.get('/commande/pdf')
+                .then(console.log(""));*/
         },
 
         methods:{
-          //enregistrer modif devis
+          //enregistrer modif commande
           enregistrer() {
             var id = this.customer.id;
             //IF offre SINON fournisseur
             if (!this.commande.id){
-              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertDemande/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
-              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -284,12 +276,12 @@
           envoyer() {
             var id = this.customer.id;
             if (!this.commande.id){
-              axios.post('/insertNewDevis/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/insertDemande/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
-              axios.post('/storeDevis/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
@@ -298,7 +290,7 @@
 
           passerEnOffre(){
             var id = this.customer.id;
-            axios.post('/validerDevis/'+this.commande.id,{commande:this.commande})
+            axios.post('/validerDemande/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
             });
@@ -306,14 +298,14 @@
         },
 
         computed:{
-          visibiliteActionDevisEnvoye(){
+          visibiliteActioncommandeEnvoye(){
             if (this.commande.status_id > 1 && !this.currentUser.employee){
               return true;
             }
             return false;
           },
 
-          enabledBtnEnvoyerDevis(){
+          enabledBtnEnvoyercommande(){
             if (this.commande.status_id == 1){
               return true;
             }

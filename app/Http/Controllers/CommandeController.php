@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use App\Mail\DevisEnvoye;
 use Illuminate\Auth\AuthenticationException;
 
-class DevisController extends Controller
+class CommandeController extends Controller
 {
 
     public function __construct()
@@ -55,11 +55,11 @@ class DevisController extends Controller
       $customerDevis = new Commande();
       $customerDevis->dateDebut = Carbon::now();
       $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
+      $customerDevis->num_demande = Carbon::now()->format('Y-m-d')."_D";
       $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
       $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
       $customerDevis->user_id = $request->customer['id'];
-      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = 1 + $typeSubmit;
       $customerDevis->save();
     }
@@ -87,7 +87,7 @@ class DevisController extends Controller
                           ['id',$request->commande['id']]
                           ])->get()->first();
       $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
     }
