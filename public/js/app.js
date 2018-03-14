@@ -30873,13 +30873,10 @@ var app = new Vue({
 
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
-
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
-
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
-
 window.axios.defaults.headers.common = {
 
     'X-Requested-With': 'XMLHttpRequest'
@@ -32613,8 +32610,12 @@ var routes = [{
 }, {
 
     path: '/listOrder/:user',
-    component: __webpack_require__(177)
+    component: __webpack_require__(187)
 
+}, {
+
+    path: '/tableauDeBord/:user',
+    component: __webpack_require__(177)
 }, {
 
     path: '/commande/:user/:commande',
@@ -32624,6 +32625,13 @@ var routes = [{
 
     path: '/commande/:user',
     component: __webpack_require__(133)
+
+},
+//Page de welcome.. pas nécessaire mais ca tue le temps
+{
+
+    path: '/bonjour/:user',
+    component: __webpack_require__(193)
 
 }];
 
@@ -32691,6 +32699,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -33747,31 +33756,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
-//import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -33784,23 +33770,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             perPage: 5,
             //defaultOpenedDetails: [1],
             currentUser: "",
-            user: false
+            user: false,
+            show: true,
+            test: false
         };
     },
-
-
-    //mixins:[LoggedMixin],
-
-
     created: function created() {
         var _this = this;
 
         this.checkIfLogged().then(function (response) {
             _this.user = response ? response : window.location = '/#/login';
-            console.log(_this.user);
         }).catch(function (error) {
             return console.log(error);
         });
+
         axios.get('/' + this.$route.params.user).then(function (_ref) {
             var data = _ref.data;
             return _this.currentUser = data;
@@ -33809,6 +33792,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = _ref2.data;
             return _this.arrayCommande = data;
         });
+    },
+    mounted: function mounted() {
+        console.log(this.user);
     },
 
 
@@ -34123,123 +34109,6 @@ var render = function() {
     _c(
       "section",
       [
-        _c(
-          "b-field",
-          { attrs: { grouped: "", "group-multiline": "" } },
-          [
-            _c(
-              "b-select",
-              {
-                model: {
-                  value: _vm.defaultSortDirection,
-                  callback: function($$v) {
-                    _vm.defaultSortDirection = $$v
-                  },
-                  expression: "defaultSortDirection"
-                }
-              },
-              [
-                _c("option", { attrs: { value: "asc" } }, [
-                  _vm._v("Default sort direction: ASC")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "desc" } }, [
-                  _vm._v("Default sort direction: DESC")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "b-select",
-              {
-                attrs: { disabled: !_vm.isPaginated },
-                model: {
-                  value: _vm.perPage,
-                  callback: function($$v) {
-                    _vm.perPage = $$v
-                  },
-                  expression: "perPage"
-                }
-              },
-              [
-                _c("option", { attrs: { value: "5" } }, [_vm._v("5 per page")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "10" } }, [
-                  _vm._v("10 per page")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "15" } }, [
-                  _vm._v("15 per page")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "20" } }, [
-                  _vm._v("20 per page")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "control" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "button",
-                  attrs: { disabled: !_vm.isPaginated },
-                  on: {
-                    click: function($event) {
-                      _vm.currentPage = 2
-                    }
-                  }
-                },
-                [_vm._v("Set page to 2")]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "control is-flex" },
-              [
-                _c(
-                  "b-switch",
-                  {
-                    model: {
-                      value: _vm.isPaginated,
-                      callback: function($$v) {
-                        _vm.isPaginated = $$v
-                      },
-                      expression: "isPaginated"
-                    }
-                  },
-                  [_vm._v("Paginated")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "control is-flex" },
-              [
-                _c(
-                  "b-switch",
-                  {
-                    attrs: { disabled: !_vm.isPaginated },
-                    model: {
-                      value: _vm.isPaginationSimple,
-                      callback: function($$v) {
-                        _vm.isPaginationSimple = $$v
-                      },
-                      expression: "isPaginationSimple"
-                    }
-                  },
-                  [_vm._v("Simple pagination")]
-                )
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
         _c("b-table", {
           attrs: {
             data: _vm.arrayCommande,
@@ -34264,138 +34133,146 @@ var render = function() {
             {
               key: "default",
               fn: function(props) {
-                return [
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "dateDebut",
-                        label: "Date début",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(
-                            new Date(props.row.dateDebut).toLocaleDateString()
-                          ) +
-                          "\n            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "update_at",
-                        label: "Dernière modification",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(props.row.update_at) +
-                          "\n            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.currentUser.employee
-                    ? _c(
+                return props.row.status.id == 1
+                  ? [
+                      _c(
                         "b-table-column",
                         {
                           attrs: {
-                            field: "nomClient",
-                            label: "Nom du client",
+                            field: "dateDebut",
+                            label: "Date début",
                             sortable: ""
                           }
                         },
                         [
                           _vm._v(
-                            "\n                " +
-                              _vm._s(props.row.users.name) +
-                              " " +
-                              _vm._s(props.row.users.forename) +
-                              "\n            "
+                            "\n                    " +
+                              _vm._s(
+                                new Date(
+                                  props.row.dateDebut
+                                ).toLocaleDateString()
+                              ) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "update_at",
+                            label: "Dernière modification",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(props.row.update_at) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.currentUser.employee
+                        ? _c(
+                            "b-table-column",
+                            {
+                              attrs: {
+                                field: "nomClient",
+                                label: "Nom du client",
+                                sortable: ""
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(props.row.users.name) +
+                                  " " +
+                                  _vm._s(props.row.users.forename) +
+                                  "\n                "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "concerne",
+                            label: "Concerne",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(props.row.concerne) +
+                              "\n                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "status.nom",
+                            label: "Statut",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(props.row.status.nom) +
+                              "\n                "
                           )
                         ]
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "concerne",
-                        label: "Concerne",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(props.row.concerne) +
-                          "\n            "
-                      )
                     ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "status.nom",
-                        label: "Statut",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(props.row.status.nom) +
-                          "\n            "
-                      )
-                    ]
-                  )
-                ]
+                  : undefined
               }
             },
             {
               key: "detail",
               fn: function(props) {
-                return [
-                  _c("article", { staticClass: "media" }, [
-                    _c("div", { staticClass: "media-content" }, [
-                      _c("div", { staticClass: "content" }, [
-                        _c("p", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(props.row.users.name) +
-                                " " +
-                                _vm._s(props.row.users.forename)
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(props.row.descriptionDevis) +
-                              "\n                    "
-                          )
+                return props.row.status.id == 1
+                  ? [
+                      _c("article", { staticClass: "media" }, [
+                        _c("div", { staticClass: "media-content" }, [
+                          _c("div", { staticClass: "content" }, [
+                            _c("p", [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(props.row.users.name) +
+                                    " " +
+                                    _vm._s(props.row.users.forename)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("small", [
+                                _vm._v(
+                                  "@Concerne: " + _vm._s(props.row.concerne)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.row.descriptionDevis) +
+                                  "\n                        "
+                              )
+                            ])
+                          ])
                         ])
                       ])
-                    ])
-                  ])
-                ]
+                    ]
+                  : undefined
               }
             }
           ])
@@ -35524,6 +35401,545 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 186 */,
+/* 187 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(188)
+/* template */
+var __vue_template__ = __webpack_require__(189)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/ListeCommandes.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3424cdf6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3424cdf6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 188 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+//import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            arrayCommande: [],
+            isPaginated: true,
+            isPaginationSimple: false,
+            defaultSortDirection: 'asc',
+            currentPage: 1,
+            perPage: 5,
+            //defaultOpenedDetails: [1],
+            currentUser: "",
+            user: false
+        };
+    },
+
+
+    //mixins:[LoggedMixin],
+
+
+    created: function created() {
+        var _this = this;
+
+        this.checkIfLogged().then(function (response) {
+            _this.user = response ? response : window.location = '/#/login';
+            console.log(_this.user);
+        }).catch(function (error) {
+            return console.log(error);
+        });
+        axios.get('/' + this.$route.params.user).then(function (_ref) {
+            var data = _ref.data;
+            return _this.currentUser = data;
+        });
+        axios.get('/commandeList/' + this.$route.params.user).then(function (_ref2) {
+            var data = _ref2.data;
+            return _this.arrayCommande = data;
+        });
+    },
+
+
+    methods: {
+        dateDebutDevis: function dateDebutDevis(devis) {
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(devis.dateDebut).format('DD/MM/YYYY');
+        }
+    }
+});
+
+/***/ }),
+/* 189 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("h2", { staticClass: "title is-2 has-text-centered" }, [
+      _vm._v("Tableau des commandes")
+    ]),
+    _vm._v(" "),
+    _c(
+      "section",
+      [
+        _c("b-table", {
+          attrs: {
+            data: _vm.arrayCommande,
+            paginated: _vm.isPaginated,
+            "per-page": _vm.perPage,
+            "current-page": _vm.currentPage,
+            "pagination-simple": _vm.isPaginationSimple,
+            "default-sort-direction": _vm.defaultSortDirection,
+            "default-sort": "dateDebut",
+            detailed: "",
+            "detail-key": "id"
+          },
+          on: {
+            "update:currentPage": function($event) {
+              _vm.currentPage = $event
+            },
+            "details-open": function(row, index) {
+              return _vm.$toast.open("Expanded " + row.users.name)
+            }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(props) {
+                return [
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "dateDebut",
+                        label: "Date début",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(
+                            new Date(props.row.dateDebut).toLocaleDateString()
+                          ) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "update_at",
+                        label: "Dernière modification",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(props.row.update_at) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.currentUser.employee
+                    ? _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "nomClient",
+                            label: "Nom du client",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(props.row.users.name) +
+                              " " +
+                              _vm._s(props.row.users.forename) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "concerne",
+                        label: "Concerne",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(props.row.concerne) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "status.nom",
+                        label: "Statut",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(props.row.status.nom) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ]
+              }
+            },
+            {
+              key: "detail",
+              fn: function(props) {
+                return [
+                  _c("article", { staticClass: "media" }, [
+                    _c("div", { staticClass: "media-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("p", [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(props.row.users.name) +
+                                " " +
+                                _vm._s(props.row.users.forename)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(props.row.descriptionDevis) +
+                              "\n                    "
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              }
+            }
+          ])
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3424cdf6", module.exports)
+  }
+}
+
+/***/ }),
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(194)
+/* template */
+var __vue_template__ = __webpack_require__(195)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/Bonjour.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4202ab60", Component.options)
+  } else {
+    hotAPI.reload("data-v-4202ab60", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            arrayCommande: [],
+            isPaginated: true,
+            isPaginationSimple: false,
+            defaultSortDirection: 'asc',
+            currentPage: 1,
+            perPage: 5,
+            //defaultOpenedDetails: [1],
+            currentUser: "",
+            user: false,
+            show: true
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        this.checkIfLogged().then(function (response) {
+            _this.user = response ? response : window.location = '/#/login';
+        }).catch(function (error) {
+            return console.log(error);
+        });
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        var timer = 3;
+        var inter = window.setInterval(function () {
+            _this2.show = false;
+            if (timer == 0) {
+                clearInterval(inter);
+                _this2.$router.push('/tableauDeBord/' + _this2.$route.params.user);
+            } else {
+                timer--;
+            }
+            console.log(timer);
+        }, 1000);
+    }
+});
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.user
+      ? _c(
+          "div",
+          [
+            _c("transition", { attrs: { name: "slide-fade" } }, [
+              _vm.show
+                ? _c(
+                    "p",
+                    {
+                      staticClass: "test",
+                      staticStyle: { "font-size": "10vw" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                Bonjour Mr." +
+                          _vm._s(this.user.name) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ])
+          ],
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4202ab60", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

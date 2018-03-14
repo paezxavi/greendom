@@ -28,8 +28,13 @@ let routes = [
     {
 
         path:'/listOrder/:user',
-        component: require('./views/TableauDeBord')
+        component: require('./views/ListeCommandes')
 
+    },
+    {
+
+        path:'/tableauDeBord/:user',
+        component: require('./views/TableauDeBord')
     },
     {
 
@@ -41,6 +46,13 @@ let routes = [
 
         path:'/commande/:user',
         component: require('./views/Commande')
+
+    },
+    //Page de welcome.. pas nécessaire mais ca tue le temps
+    {
+
+        path:'/bonjour/:user',
+        component: require('./views/Bonjour')
 
     },
 ];

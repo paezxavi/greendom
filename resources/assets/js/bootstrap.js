@@ -8,14 +8,10 @@ import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/Logged
 
 window.Vue = Vue;
 Vue.use(VueRouter);
-
 Vue.use(Buefy);
-
 Vue.mixin(LoggedMixin);
 
-
 window.axios = axios;
-
 window.axios.defaults.headers.common = {
 
     'X-Requested-With': 'XMLHttpRequest'

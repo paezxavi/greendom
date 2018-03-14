@@ -47,6 +47,11 @@
                     <router-link class="navbar-item" tag="a" to="/listOrder/{{ Auth::id() }}">
                         Liste des commandes
                     </router-link>
+                    @if (Auth::user()->employee)
+                      <router-link class="navbar-item" tag="a" to="/tableauDeBord/{{ Auth::id() }}">
+                          Tableau de bord
+                      </router-link>
+                    @endif
                   @endif
                 </div>
                 <div class="navbar-end">

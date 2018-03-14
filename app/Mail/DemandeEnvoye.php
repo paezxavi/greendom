@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DevisEnvoye extends Mailable
+class DemandeEnvoye extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,8 +32,8 @@ class DevisEnvoye extends Mailable
      */
     public function build()
     {
-      return $this->view('mails.devisEnvoye')
-                  ->subject('Devis envoyé')
+      return $this->view('mails.demandeEnvoye')
+                  ->subject('Demande envoyé')
                   ->with([
                       'var' => $this->var,
                   ]);

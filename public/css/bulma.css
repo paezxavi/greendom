@@ -13409,6 +13409,8 @@ html.route-index .hero.is-primary a.column:hover .title strong {
   width: 150px;
 }
 
+/* On a rajouté à partir d'ici*/
+
 .greendom-navbar {
   border-bottom: 1px solid #E6EAEE;
   border-bottom-width: 1px;
@@ -13427,3 +13429,23 @@ a.navbar-item {
 
 
 /*# sourceMappingURL=bulma-docs.css.map */
+
+.slide-fade-enter-active {
+  transition: all 5.0s ease;
+}
+.slide-fade-leave-active {
+  transition: all 2.0s;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+.test {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:10vw;
+  font-family:Avantgarde, "TeX Gyre Adventor", "URW Gothic L", sans-serif;
+}

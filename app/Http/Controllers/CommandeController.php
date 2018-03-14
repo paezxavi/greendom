@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PDF;
 use Mail;
+use Auth;
 use App\Customer;
 use App\User;
 use App\Provider;
@@ -77,7 +78,7 @@ class CommandeController extends Controller
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->enregistrerCommande($request, 1);
         $user = User::where('employee', true)->get();
-        Mail::to($user)->send(new DevisEnvoye($request));
+        Mail::to($user)->send(new DemandeEnvoye($request));
       }
 
     }
@@ -148,7 +149,7 @@ class CommandeController extends Controller
     public function infoClient(User $user, Commande $commande)
     {
       if (!Commande::find($commande->id)){
-        $customer = User::find($user->id);
+        $customer = Auth::user();
       } else {
         $clientCommande = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
         $customer = User::where("id", $clientCommande->user_id)->get()->first();
