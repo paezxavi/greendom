@@ -71,26 +71,23 @@
                 //defaultOpenedDetails: [1],
                 currentUser: "",
                 user: false,
-                show: true,
-                test: false
             }
         },
 
         created() {
             this.checkIfLogged()
             .then(response => {
-                    this.user = response ? response : window.location = '/#/login';
-            })                    
+                    this.user = response ? response : this.$router.push('/login');
+                    if (!this.user.employee){
+                        this.$router.push('/home');
+                    }
+                })
             .catch(error => console.log(error));
             
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.currentUser = data);
             axios.get('/commandeList/'+this.$route.params.user)
                 .then(({data}) => this.arrayCommande = data);
-        },
-
-        mounted() {
-            console.log(this.user);
         },
 
         methods: {

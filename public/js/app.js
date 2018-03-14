@@ -33770,16 +33770,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             perPage: 5,
             //defaultOpenedDetails: [1],
             currentUser: "",
-            user: false,
-            show: true,
-            test: false
+            user: false
         };
     },
     created: function created() {
         var _this = this;
 
         this.checkIfLogged().then(function (response) {
-            _this.user = response ? response : window.location = '/#/login';
+            _this.user = response ? response : _this.$router.push('/login');
+            if (!_this.user.employee) {
+                _this.$router.push('/home');
+            }
         }).catch(function (error) {
             return console.log(error);
         });
@@ -33792,9 +33793,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = _ref2.data;
             return _this.arrayCommande = data;
         });
-    },
-    mounted: function mounted() {
-        console.log(this.user);
     },
 
 
