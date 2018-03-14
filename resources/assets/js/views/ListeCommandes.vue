@@ -65,7 +65,7 @@
                             <br>
                             <small>@Concerne: {{ props.row.concerne }}</small>
                             <br>
-                            {{ props.row.descriptionDevis }}
+                            {{ props.row.descriptionCommande }}
                         </p>
                     </div>
                 </div>
@@ -73,6 +73,7 @@
         </template>
         </b-table>
       </section>
+      <a @click="nouvelleDemande" class="button is-primary">Nouvelle demande</a>
     </div>
 </template>
 
@@ -116,6 +117,10 @@
         methods: {
           dateDebutDevis(devis){
             return moment(devis.dateDebut).format('DD/MM/YYYY');
+          },
+          nouvelleDemande(){
+                    this.$router.push('/commande/'+ this.$route.params.user);
+
           }
         }
     }

@@ -1,9 +1,10 @@
 <template>
     <div class="container">
         <h2 class="title is-2 has-text-centered">Tableau de bord</h2>
+        <h4 class="title is-4">Liste des demandes</h4>
         <section>
             <b-table
-                :data="arrayCommande"
+                :data="arrayDemande"
                 :paginated="isPaginated"
                 :per-page="perPage"
                 :current-page.sync="currentPage"
@@ -13,7 +14,7 @@
                 detailed
                 detail-key="id"
                 @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
-                <template slot-scope="props" v-if="props.row.status.id == 1">
+                <template slot-scope="props">
                     <b-table-column field="dateDebut" label="Date début" sortable>
                         {{ new Date(props.row.dateDebut).toLocaleDateString() }}
                     </b-table-column>
@@ -34,7 +35,7 @@
                         {{ props.row.status.nom }}
                     </b-table-column>
                 </template>
-                <template slot="detail" slot-scope="props" v-if="props.row.status.id == 1">
+                <template slot="detail" slot-scope="props">
                 <article class="media">
                     <div class="media-content">
                         <div class="content">
@@ -43,7 +44,109 @@
                                 <br>
                                 <small>@Concerne: {{ props.row.concerne }}</small>
                                 <br>
-                                {{ props.row.descriptionDevis }}
+                                {{ props.row.descriptionCommande }}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </template>
+            </b-table>
+        </section>
+        <h4 class="title is-4">Liste des offres</h4>
+        <section>
+            <b-table
+                :data="arrayOffre"
+                :paginated="isPaginated"
+                :per-page="perPage"
+                :current-page.sync="currentPage"
+                :pagination-simple="isPaginationSimple"
+                :default-sort-direction="defaultSortDirection"
+                default-sort="dateDebut"
+                detailed
+                detail-key="id"
+                @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
+                <template slot-scope="props">
+                    <b-table-column field="dateDebut" label="Date début" sortable>
+                        {{ new Date(props.row.dateDebut).toLocaleDateString() }}
+                    </b-table-column>
+
+                    <b-table-column field="update_at" label="Dernière modification" sortable>
+                        {{ props.row.update_at }}
+                    </b-table-column>
+
+                    <b-table-column v-if="currentUser.employee" field="nomClient" label="Nom du client" sortable>
+                        {{ props.row.users.name }} {{ props.row.users.forename }}
+                    </b-table-column>
+
+                    <b-table-column field="concerne" label="Concerne" sortable>
+                        {{ props.row.concerne }}
+                    </b-table-column>
+
+                    <b-table-column field="status.nom" label="Statut" sortable>
+                        {{ props.row.status.nom }}
+                    </b-table-column>
+                </template>
+                <template slot="detail" slot-scope="props" >
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{ props.row.users.name }} {{ props.row.users.forename }}</strong>
+                                <br>
+                                <small>@Concerne: {{ props.row.concerne }}</small>
+                                <br>
+                                {{ props.row.descriptionCommande }}
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </template>
+            </b-table>
+        </section>
+        <h4 class="title is-4">Liste des commandes</h4>
+        <section>
+            <b-table
+                :data="arrayCommande"
+                :paginated="isPaginated"
+                :per-page="perPage"
+                :current-page.sync="currentPage"
+                :pagination-simple="isPaginationSimple"
+                :default-sort-direction="defaultSortDirection"
+                default-sort="dateDebut"
+                detailed
+                detail-key="id"
+                @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
+                <template slot-scope="props">
+                    <b-table-column field="dateDebut" label="Date début" sortable>
+                        {{ new Date(props.row.dateDebut).toLocaleDateString() }}
+                    </b-table-column>
+
+                    <b-table-column field="update_at" label="Dernière modification" sortable>
+                        {{ props.row.update_at }}
+                    </b-table-column>
+
+                    <b-table-column v-if="currentUser.employee" field="nomClient" label="Nom du client" sortable>
+                        {{ props.row.users.name }} {{ props.row.users.forename }}
+                    </b-table-column>
+
+                    <b-table-column field="concerne" label="Concerne" sortable>
+                        {{ props.row.concerne }}
+                    </b-table-column>
+
+                    <b-table-column field="status.nom" label="Statut" sortable>
+                        {{ props.row.status.nom }}
+                    </b-table-column>
+                </template>
+                <template slot="detail" slot-scope="props" >
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{ props.row.users.name }} {{ props.row.users.forename }}</strong>
+                                <br>
+                                <small>@Concerne: {{ props.row.concerne }}</small>
+                                <br>
+                                {{ props.row.descriptionCommande }}
                             </p>
                         </div>
                     </div>
@@ -62,6 +165,8 @@
     export default {
         data() {
             return {
+                arrayDemande: [],
+                arrayOffre: [],
                 arrayCommande: [],
                 isPaginated: true,
                 isPaginationSimple: false,
@@ -86,7 +191,11 @@
             
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.currentUser = data);
-            axios.get('/commandeList/'+this.$route.params.user)
+            axios.get('/demandeList')
+                .then(({data}) => this.arrayDemande = data);
+            axios.get('/offreList')
+                .then(({data}) => this.arrayOffre = data);
+            axios.get('/commandeList')
                 .then(({data}) => this.arrayCommande = data);
         },
 

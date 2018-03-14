@@ -32,6 +32,9 @@ Route::get('/providers', 'ProductController@providers');
 
 Route::get('/', 'CommandeController@index')->name('home');
 /* Call PDF */
+Route::get('/demandeList', 'CommandeController@demandeList');
+Route::get('/offreList', 'CommandeController@offreList');
+Route::get('/commandeList', 'CommandeController@commandeList');
 Route::get('/offre/pdf', 'CommandeController@devisPdf')->name('devis.pdf');
 Route::get('/fournisseurList/{product}', 'CommandeController@fournisseurs');
 Route::get('/produitsOffre', 'CommandeController@produits');

@@ -33756,12 +33756,117 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            arrayDemande: [],
+            arrayOffre: [],
             arrayCommande: [],
             isPaginated: true,
             isPaginationSimple: false,
@@ -33789,8 +33894,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = _ref.data;
             return _this.currentUser = data;
         });
-        axios.get('/commandeList/' + this.$route.params.user).then(function (_ref2) {
+        axios.get('/demandeList').then(function (_ref2) {
             var data = _ref2.data;
+            return _this.arrayDemande = data;
+        });
+        axios.get('/offreList').then(function (_ref3) {
+            var data = _ref3.data;
+            return _this.arrayOffre = data;
+        });
+        axios.get('/commandeList').then(function (_ref4) {
+            var data = _ref4.data;
             return _this.arrayCommande = data;
         });
     },
@@ -34104,6 +34217,346 @@ var render = function() {
       _vm._v("Tableau de bord")
     ]),
     _vm._v(" "),
+    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des demandes")]),
+    _vm._v(" "),
+    _c(
+      "section",
+      [
+        _c("b-table", {
+          attrs: {
+            data: _vm.arrayDemande,
+            paginated: _vm.isPaginated,
+            "per-page": _vm.perPage,
+            "current-page": _vm.currentPage,
+            "pagination-simple": _vm.isPaginationSimple,
+            "default-sort-direction": _vm.defaultSortDirection,
+            "default-sort": "dateDebut",
+            detailed: "",
+            "detail-key": "id"
+          },
+          on: {
+            "update:currentPage": function($event) {
+              _vm.currentPage = $event
+            },
+            "details-open": function(row, index) {
+              return _vm.$toast.open("Expanded " + row.users.name)
+            }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(props) {
+                return [
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "dateDebut",
+                        label: "Date début",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(
+                            new Date(props.row.dateDebut).toLocaleDateString()
+                          ) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "update_at",
+                        label: "Dernière modification",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.update_at) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.currentUser.employee
+                    ? _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "nomClient",
+                            label: "Nom du client",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(props.row.users.name) +
+                              " " +
+                              _vm._s(props.row.users.forename) +
+                              "\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "concerne",
+                        label: "Concerne",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.concerne) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "status.nom",
+                        label: "Statut",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.status.nom) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ]
+              }
+            },
+            {
+              key: "detail",
+              fn: function(props) {
+                return [
+                  _c("article", { staticClass: "media" }, [
+                    _c("div", { staticClass: "media-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("p", [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(props.row.users.name) +
+                                " " +
+                                _vm._s(props.row.users.forename)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(props.row.descriptionCommande) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              }
+            }
+          ])
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des offres")]),
+    _vm._v(" "),
+    _c(
+      "section",
+      [
+        _c("b-table", {
+          attrs: {
+            data: _vm.arrayOffre,
+            paginated: _vm.isPaginated,
+            "per-page": _vm.perPage,
+            "current-page": _vm.currentPage,
+            "pagination-simple": _vm.isPaginationSimple,
+            "default-sort-direction": _vm.defaultSortDirection,
+            "default-sort": "dateDebut",
+            detailed: "",
+            "detail-key": "id"
+          },
+          on: {
+            "update:currentPage": function($event) {
+              _vm.currentPage = $event
+            },
+            "details-open": function(row, index) {
+              return _vm.$toast.open("Expanded " + row.users.name)
+            }
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "default",
+              fn: function(props) {
+                return [
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "dateDebut",
+                        label: "Date début",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(
+                            new Date(props.row.dateDebut).toLocaleDateString()
+                          ) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "update_at",
+                        label: "Dernière modification",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.update_at) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.currentUser.employee
+                    ? _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "nomClient",
+                            label: "Nom du client",
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(props.row.users.name) +
+                              " " +
+                              _vm._s(props.row.users.forename) +
+                              "\n                "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "concerne",
+                        label: "Concerne",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.concerne) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "status.nom",
+                        label: "Statut",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.status.nom) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ]
+              }
+            },
+            {
+              key: "detail",
+              fn: function(props) {
+                return [
+                  _c("article", { staticClass: "media" }, [
+                    _c("div", { staticClass: "media-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("p", [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(props.row.users.name) +
+                                " " +
+                                _vm._s(props.row.users.forename)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(props.row.descriptionCommande) +
+                              "\n                        "
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              }
+            }
+          ])
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des commandes")]),
+    _vm._v(" "),
     _c(
       "section",
       [
@@ -34131,146 +34584,138 @@ var render = function() {
             {
               key: "default",
               fn: function(props) {
-                return props.row.status.id == 1
-                  ? [
-                      _c(
+                return [
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "dateDebut",
+                        label: "Date début",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(
+                            new Date(props.row.dateDebut).toLocaleDateString()
+                          ) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "update_at",
+                        label: "Dernière modification",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.update_at) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.currentUser.employee
+                    ? _c(
                         "b-table-column",
                         {
                           attrs: {
-                            field: "dateDebut",
-                            label: "Date début",
+                            field: "nomClient",
+                            label: "Nom du client",
                             sortable: ""
                           }
                         },
                         [
                           _vm._v(
                             "\n                    " +
-                              _vm._s(
-                                new Date(
-                                  props.row.dateDebut
-                                ).toLocaleDateString()
-                              ) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "update_at",
-                            label: "Dernière modification",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.update_at) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.currentUser.employee
-                        ? _c(
-                            "b-table-column",
-                            {
-                              attrs: {
-                                field: "nomClient",
-                                label: "Nom du client",
-                                sortable: ""
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(props.row.users.name) +
-                                  " " +
-                                  _vm._s(props.row.users.forename) +
-                                  "\n                "
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "concerne",
-                            label: "Concerne",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.concerne) +
-                              "\n                "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "status.nom",
-                            label: "Statut",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.status.nom) +
+                              _vm._s(props.row.users.name) +
+                              " " +
+                              _vm._s(props.row.users.forename) +
                               "\n                "
                           )
                         ]
                       )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "concerne",
+                        label: "Concerne",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.concerne) +
+                          "\n                "
+                      )
                     ]
-                  : undefined
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    {
+                      attrs: {
+                        field: "status.nom",
+                        label: "Statut",
+                        sortable: ""
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(props.row.status.nom) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ]
               }
             },
             {
               key: "detail",
               fn: function(props) {
-                return props.row.status.id == 1
-                  ? [
-                      _c("article", { staticClass: "media" }, [
-                        _c("div", { staticClass: "media-content" }, [
-                          _c("div", { staticClass: "content" }, [
-                            _c("p", [
-                              _c("strong", [
-                                _vm._v(
-                                  _vm._s(props.row.users.name) +
-                                    " " +
-                                    _vm._s(props.row.users.forename)
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("small", [
-                                _vm._v(
-                                  "@Concerne: " + _vm._s(props.row.concerne)
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(props.row.descriptionDevis) +
-                                  "\n                        "
-                              )
-                            ])
-                          ])
+                return [
+                  _c("article", { staticClass: "media" }, [
+                    _c("div", { staticClass: "media-content" }, [
+                      _c("div", { staticClass: "content" }, [
+                        _c("p", [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(props.row.users.name) +
+                                " " +
+                                _vm._s(props.row.users.forename)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(props.row.descriptionCommande) +
+                              "\n                        "
+                          )
                         ])
                       ])
-                    ]
-                  : undefined
+                    ])
+                  ])
+                ]
               }
             }
           ])
@@ -35535,6 +35980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
@@ -35581,6 +36027,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         dateDebutDevis: function dateDebutDevis(devis) {
             return __WEBPACK_IMPORTED_MODULE_0_moment___default()(devis.dateDebut).format('DD/MM/YYYY');
+        },
+        nouvelleDemande: function nouvelleDemande() {
+            this.$router.push('/commande/' + this.$route.params.user);
         }
     }
 });
@@ -35749,7 +36198,7 @@ var render = function() {
                           _c("br"),
                           _vm._v(
                             "\n                        " +
-                              _vm._s(props.row.descriptionDevis) +
+                              _vm._s(props.row.descriptionCommande) +
                               "\n                    "
                           )
                         ])
@@ -35763,6 +36212,12 @@ var render = function() {
         })
       ],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      { staticClass: "button is-primary", on: { click: _vm.nouvelleDemande } },
+      [_vm._v("Nouvelle demande")]
     )
   ])
 }

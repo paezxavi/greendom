@@ -222,4 +222,34 @@ class CommandeController extends Controller
       return $com;
     }
 
+    public function demandeList()
+    {
+      $list = Commande::with('status','users')
+                    ->where('status_id', 1)
+                    ->orWhere('status_id', 2)
+                    ->get()
+                    ->sortBy('commandes.dateDebut');
+      return $list;
+    }
+
+    public function offreList()
+    {
+      $list = Commande::with('status','users')
+                    ->where('status_id', 2)
+                    ->get()
+                    ->sortBy('commandes.dateDebut');
+      return $list;
+
+    }
+
+    public function commandeList()
+    {
+      $list = Commande::with('status','users')
+                    ->where('status_id', 3)
+                    ->orWhere('status_id', 4)
+                    ->get()
+                    ->sortBy('commandes.dateDebut');
+      return $list;
+    }
+
 }

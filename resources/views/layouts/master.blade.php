@@ -58,13 +58,15 @@
                   <div class="navbar-item">
                     <div class="field is-grouped">
                       <p class="control">
-                        <a class="button is-danger is-outlined" href="{{ route('logout') }}">Logout</a>
-                        <router-link class="button is-success is-outlined" tag="button" to="/login">
-                            Login
-                        </router-link>
                         @if (Auth::check())
-                          <router-link class="button is-info" tag="button" to="/commande/{{ Auth::id() }}">
+                          <a class="button" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> {{Auth::user()->forename}} {{Auth::user()->name}}</a>
+                          <!--/*<router-link class="button is-info" tag="button" to="/commande/{{ Auth::id() }}">
                               Demande
+                          </router-link>*/-->
+                        @endif
+                        @if (!Auth::check())
+                          <router-link class="button is-success is-outlined" tag="button" to="/login">
+                              Login
                           </router-link>
                         @endif
                       </p>
