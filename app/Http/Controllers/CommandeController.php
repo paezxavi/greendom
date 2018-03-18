@@ -228,10 +228,10 @@ class CommandeController extends Controller
       $customer = User::findOrFail(1);
       $pdf = PDF::loadView('pdf/devis_pdf', compact('user'))
                   ->setPaper('a3', 'portrait');
-      $path = storage_path('/app/public/Test.pdf');
+      $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
       $user = User::where('employee',true)->get();
-      Mail::to($user)->send(new FournisseurMail('Hello test'));
+      Mail::to($user)->send(new FournisseurMail('Commande'));
       return 'mail envoyé depuis le controleur';
     }
 
