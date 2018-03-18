@@ -29,7 +29,7 @@
                     </form>
                 </div>
                 <p class="has-text-grey">
-                    <a href="../">Sign Up</a> &nbsp;·&nbsp;
+                    <router-link to="/signUp"><a>Sign Up</a></router-link>&nbsp;·&nbsp;
                     <a href="../">Forgot Password</a> &nbsp;·&nbsp;
                     <a href="../">Need Help?</a>
                 </p>
@@ -60,7 +60,7 @@
             .then(response => {
                     this.user = response ? response : false;
                     console.log(this.user);
-                })                    
+                })
             .catch(error => console.log(error));
 
         },
@@ -73,7 +73,7 @@
                         window.location = response.data.redirect;
                     });
             }
-            
+
         }
 
 

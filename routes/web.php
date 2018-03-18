@@ -24,6 +24,15 @@ Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
 
 Route::post('/login/{user}', 'Auth\LoginController@login');
 //-------------------------------------------------------------
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth');
+Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
+
+Route::post('/login/{user}', 'Auth\LoginController@login');
+//-------------------------------------------------------------
+
+//SignUpController
+Route::post('/saveUser', 'SignUpController@store');
+//-------------------------------------------------------------
 
 //A supprimer plus tard. Sert d'exemple
 Route::get('/customers', 'ProductController@clients');
@@ -45,9 +54,11 @@ Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis
 Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
-Route::post('/validerDemande/{commande}', 'CommandeController@validerDevis');
+Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
 Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
+
+Route::post('/fournisseurMailDemandePrix','CommandeController@mailFournisseurDemandePrix');
 
 
 
