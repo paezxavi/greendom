@@ -104,7 +104,7 @@
             <!-- Ajout d'articles -->
 
 
-            <div class="card" style="margin-bottom:15px" v-show="commande.status_id == 3 || commande.status_id == 4"> <!-- Si la commande est une offre (3) on montre -->
+            <div class="card" style="margin-bottom:15px" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
               <header class="card-header">
                 <p class="card-header-title">
                   Articles
@@ -127,15 +127,25 @@
                             <div class="content">
                               <p>
                                 <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                                <br>
+                                <br/>
                                     <button class="is-pulled-left button is-danger" @click="diminueProduit(produit.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
                                     <button class="is-pulled-left button is-success" @click="augmenteProduit(produit.quantite, index)"> + </button>
 
-                                    <select name="liste_fournisseur">
+                                    <select name="liste_fournisseur" style="margin-left:5px">
                                          <option v-for="fournisseur in produit.fournisseurs"> {{fournisseur.nom}} <span hidden> {{fournisseur.id}} </span> </option>
                                     </select>
-
+                                    <div>
+                                      Prix <input type="text" style="width:30px" v-on:keyup="miseAJourProduitPrix($event, index)"> .- <br/>
+                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemise(produit.remiseBoolean, index)"> Remise
+                                      <a v-show="produit.remiseBoolean">
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemise($event, index)"> % <br/>
+                                        Rabais : {{produit.remisePrix}}.-
+                                      </a>
+                                      <br/>
+                                      Total : {{produit.total}}.-
+                                      <button class="button is-info" @click="calculerPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                    </div>
                                 <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
                             </div>
@@ -258,6 +268,7 @@
             }
           },
 
+          //METHODES POUR L'OFFRE
           augmenteProduit(quantite, index) {
             this.produits_choisis[index].quantite = quantite+1;
           },
@@ -271,8 +282,39 @@
           },
 
           supprimerProduit(index) {
-            this.produits_choisis.splice(index,1);
+            this.produits_choisis.splice(index, 1);
           },
+
+          visibiliteRemise(remise, index) {
+            if (remise == false) {
+              this.produits_choisis[index].remiseBoolean = true;
+            } else {
+              this.produits_choisis[index].remiseBoolean = false;
+              this.produits_choisis[index].remisePourcent = 0;
+              this.produits_choisis[index].remisePrix = 0;
+            }
+          },
+
+          miseAJourProduitPrix(e, index) {
+            console.log("CHF"+e.target.value);
+            this.produits_choisis[index].prix = e.target.value;
+          },
+
+          miseAJourRemise(e, index) {
+            console.log("%"+e.target.value);
+            this.produits_choisis[index].remisePourcent = e.target.value;
+          },
+
+          calculerPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
+            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
+            console.log(remiseCalcul);
+            var prixTotal = prix * quantite;
+            this.produits_choisis[index].remisePourcent = txtRemisePourcent;
+            this.produits_choisis[index].remisePrix = remiseCalcul;
+            this.produits_choisis[index].total = prixTotal-remiseCalcul;
+          },
+          //FIN METHODES POUR OFFRE
 
           envoyer() {
             var id = this.customer.id;
@@ -303,6 +345,7 @@
               console.log('mail Envoyé');
             });
           }
+
         },
 
         computed:{
@@ -329,6 +372,13 @@
 
           enabledBtnPasserEncours(){
             if (this.commande.status_id == 2){
+              return true;
+            }
+            return false;
+          },
+
+          enableAjoutProduits() {
+            if (this.commande.status_id == 3 && this.currentUser.employee) {
               return true;
             }
             return false;
@@ -374,7 +424,6 @@
 
     </div>
     `,
-
 
     data() {
       return {
