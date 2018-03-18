@@ -30863,7 +30863,7 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
 
 
 
@@ -30876,7 +30876,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 
@@ -34600,6 +34600,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34688,6 +34698,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
     },
+
+
+    //METHODES POUR L'OFFRE
     augmenteProduit: function augmenteProduit(quantite, index) {
       this.produits_choisis[index].quantite = quantite + 1;
     },
@@ -34701,6 +34714,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     supprimerProduit: function supprimerProduit(index) {
       this.produits_choisis.splice(index, 1);
     },
+    visibiliteRemise: function visibiliteRemise(remise, index) {
+      if (remise == false) {
+        this.produits_choisis[index].remiseBoolean = true;
+      } else {
+        this.produits_choisis[index].remiseBoolean = false;
+        this.produits_choisis[index].remisePourcent = 0;
+        this.produits_choisis[index].remisePrix = 0;
+      }
+    },
+    miseAJourProduitPrix: function miseAJourProduitPrix(e, index) {
+      console.log("CHF" + e.target.value);
+      this.produits_choisis[index].prix = e.target.value;
+    },
+    miseAJourRemise: function miseAJourRemise(e, index) {
+      console.log("%" + e.target.value);
+      this.produits_choisis[index].remisePourcent = e.target.value;
+    },
+    calculerPrix: function calculerPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) {
+      //checker si remise, prix, remise, gain, total
+      console.log("remisePourcent" + txtRemisePourcent + " quantité " + quantite + " prix " + prix + " remise " + remise + " remisePrix " + remisePrix);
+      var remiseCalcul = quantite * prix * txtRemisePourcent / 100;
+      console.log(remiseCalcul);
+      var prixTotal = prix * quantite;
+      this.produits_choisis[index].remisePourcent = txtRemisePourcent;
+      this.produits_choisis[index].remisePrix = remiseCalcul;
+      this.produits_choisis[index].total = prixTotal - remiseCalcul;
+    },
+
+    //FIN METHODES POUR OFFRE
+
     envoyer: function envoyer() {
       var id = this.customer.id;
       if (!this.commande.id) {
@@ -34742,6 +34785,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     enabledBtnPasserEncours: function enabledBtnPasserEncours() {
       if (this.commande.status_id == 2) {
+        return true;
+      }
+      return false;
+    },
+    enableAjoutProduits: function enableAjoutProduits() {
+      if (this.commande.status_id == 3 && this.currentUser.employee) {
         return true;
       }
       return false;
@@ -34805,9 +34854,15 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 	methods: {
 		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
-			var nom = produit.nom;
 			var image = produit.image;
+			var nom = produit.nom;
 			var description = produit.description;
+			var prix = 0;
+			var remiseBoolean = false;
+			var remisePrix = 0;
+			var remisePourcent = 0;
+			var total = prix - remisePrix;
+			var fournisseur = fournisseurs[0];
 
 			this.panier.push({
 				image: image,
@@ -34815,6 +34870,12 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 				reference: reference,
 				description: description,
 				quantite: 1,
+				prix: prix,
+				remiseBoolean: remiseBoolean,
+				remisePrix: remisePrix,
+				remisePourcent: remisePourcent,
+				total: total,
+				fournisseur: fournisseur,
 				fournisseurs: fournisseurs
 				//fournisseurs []
 			});
@@ -35118,11 +35179,8 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value:
-                      _vm.commande.status_id == 3 ||
-                      _vm.commande.status_id == 4,
-                    expression:
-                      "commande.status_id == 3 || commande.status_id == 4"
+                    value: _vm.enableAjoutProduits,
+                    expression: "enableAjoutProduits"
                   }
                 ],
                 staticClass: "card",
@@ -35235,6 +35293,7 @@ var render = function() {
                                       _c(
                                         "select",
                                         {
+                                          staticStyle: { "margin-left": "5px" },
                                           attrs: { name: "liste_fournisseur" }
                                         },
                                         _vm._l(produit.fournisseurs, function(
@@ -35259,22 +35318,122 @@ var render = function() {
                                             )
                                           ])
                                         })
+                                      )
+                                    ]),
+                                    _c("div", [
+                                      _vm._v(
+                                        "\n                                  Prix "
+                                      ),
+                                      _c("input", {
+                                        staticStyle: { width: "30px" },
+                                        attrs: { type: "text" },
+                                        on: {
+                                          keyup: function($event) {
+                                            _vm.miseAJourProduitPrix(
+                                              $event,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" .- "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: {
+                                          id: "chkRemise",
+                                          type: "checkbox"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.visibiliteRemise(
+                                              produit.remiseBoolean,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " Remise\n                                  "
+                                      ),
+                                      _c(
+                                        "a",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: produit.remiseBoolean,
+                                              expression:
+                                                "produit.remiseBoolean"
+                                            }
+                                          ]
+                                        },
+                                        [
+                                          _c("input", {
+                                            staticStyle: { width: "30px" },
+                                            attrs: { type: "text" },
+                                            on: {
+                                              keyup: function($event) {
+                                                _vm.miseAJourRemise(
+                                                  $event,
+                                                  index
+                                                )
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" % "),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                                    Rabais : " +
+                                              _vm._s(produit.remisePrix) +
+                                              ".-\n                                  "
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                                  Total : " +
+                                          _vm._s(produit.total) +
+                                          ".-\n                                  "
+                                      ),
                                       _c(
                                         "button",
                                         {
-                                          staticClass:
-                                            "is-pulled-right button is-danger",
+                                          staticClass: "button is-info",
                                           on: {
                                             click: function($event) {
-                                              _vm.supprimerProduit(index)
+                                              _vm.calculerPrix(
+                                                produit.remisePourcent,
+                                                produit.quantite,
+                                                produit.prix,
+                                                produit.remiseBoolean,
+                                                produit.remisePrix,
+                                                index
+                                              )
                                             }
                                           }
                                         },
-                                        [_vm._v(" Supprimer ")]
+                                        [_vm._v(" Calculer ")]
                                       )
-                                    ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "is-pulled-right button is-danger",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.supprimerProduit(index)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" Supprimer ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p")
                                   ]),
                                   _vm._v(" "),
                                   _c("button", {
