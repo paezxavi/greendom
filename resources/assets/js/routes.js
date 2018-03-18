@@ -3,6 +3,12 @@ import VueRouter from 'vue-router';
 let routes = [
     {
 
+        path:'/signUp',
+        component: require('./views/SignUp')
+
+    },
+    {
+
         path:'/login',
         component: require('./views/Login')
 

@@ -43,6 +43,9 @@
                   <router-link class="navbar-item" tag="a" to="/contact">
                       Contact
                   </router-link>
+                  <router-link class="navbar-item" tag="a" to="/signUp">
+                      Sign Up
+                  </router-link>
                   @if (Auth::check())
                     <router-link class="navbar-item" tag="a" to="/listOrder/{{ Auth::id() }}">
                         Liste des commandes

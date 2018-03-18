@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,7 +16,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'toto',
           'forename' => 'tata',
-          'adresse' => 'Rue de carouge',
+          'address' => 'Rue de carouge',
+          'phone' => '022202020',
           'contact' => 'skype.com',
           'email' => 'seb.bnbnb@hhgf.com',
           'password' => Hash::make('234'),
@@ -25,7 +27,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'deux',
           'forename' => 'ieme',
-          'adresse' => 'Rue de Test',
+          'address' => 'Rue de Test',
+          'phone' => '022202020',
           'contact' => 'skype.com',
           'email' => 'test2.bnbnb@hhgf.com',
           'password' => Hash::make('147'),
@@ -35,7 +38,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'Park',
           'forename' => 'John',
-          'adresse' => 'Rue de Trois',
+          'address' => 'Rue de Trois',
+          'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
           'email' => 'Troisieme.bnbnb@hhgf.com',
           'password' => Hash::make('41236'),
@@ -45,7 +49,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'Cespedes',
           'forename' => 'Frank',
-          'adresse' => 'Rue de Trois',
+          'address' => 'Rue de Trois',
+          'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
           'email' => 'Test.bnbnb@hhgf.com',
           'password' => Hash::make('41236'),
@@ -55,7 +60,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'Paez',
           'forename' => 'Xavie',
-          'adresse' => 'Rue de Trois',
+          'address' => 'Rue de Trois',
+          'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
           'email' => 'paezxavie@gmail.com',
           'password' => Hash::make('41236'),
@@ -65,7 +71,8 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'Cacciapaglia',
           'forename' => 'Kevin',
-          'adresse' => 'Rue de Trois',
+          'address' => 'Rue de Trois',
+          'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
           'email' => 'TestKev.bnbnb@hhgf.com',
           'password' => Hash::make('41236'),
@@ -75,10 +82,22 @@ class UsersTableSeeder extends Seeder
         [
           'name' => 'TestLog',
           'forename' => 'TestLog',
-          'adresse' => 'Rue de Log',
+          'address' => 'Rue de Log',
+          'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
           'email' => 'a@a',
           'password' => Hash::make('123'),
+          'employee' => true,
+          'company_id'=> null
+        ],
+        [
+          'name' => 'Nicollin',
+          'forename' => 'Sébastien',
+          'address' => 'Rue de la tambourine 12',
+          'phone' => '022202020',
+          'contact' => 'Skype.com',
+          'email' => 'seb.nicollin@gmail.com',
+          'password' => Hash::make('seb1212'),
           'employee' => true,
           'company_id'=> null
         ],
