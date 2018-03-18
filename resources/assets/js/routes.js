@@ -39,14 +39,14 @@ let routes = [
     },
     {
 
-        path:'/devis/:user/:commande',
-        component: require('./views/Devis')
+        path:'/commande/:user/:commande',
+        component: require('./views/Commande')
 
     },
     {
 
-        path:'/devis/:user',
-        component: require('./views/Devis')
+        path:'/commande/:user',
+        component: require('./views/Commande')
 
     },
 ];

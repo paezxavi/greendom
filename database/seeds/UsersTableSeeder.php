@@ -52,9 +52,9 @@ class UsersTableSeeder extends Seeder
           'address' => 'Rue de Trois',
           'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
-          'email' => 'Test.bnbnb@hhgf.com',
+          'email' => 'frank_cespedes02@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => false,
+          'employee' => true,
           'company_id'=> null
         ],
         [

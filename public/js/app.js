@@ -30802,7 +30802,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/views/Devis.vue"
+Component.options.__file = "resources/assets/js/views/Commande.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -30811,9 +30811,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c8144288", Component.options)
+    hotAPI.createRecord("data-v-ce22a366", Component.options)
   } else {
-    hotAPI.reload("data-v-c8144288", Component.options)
+    hotAPI.reload("data-v-ce22a366", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -32622,12 +32622,12 @@ var routes = [{
 
 }, {
 
-    path: '/devis/:user/:commande',
+    path: '/commande/:user/:commande',
     component: __webpack_require__(133)
 
 }, {
 
-    path: '/devis/:user',
+    path: '/commande/:user',
     component: __webpack_require__(133)
 
 }];
@@ -34290,7 +34290,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            arrayDevis: [],
+            arrayCommande: [],
             isPaginated: true,
             isPaginationSimple: false,
             defaultSortDirection: 'asc',
@@ -34315,13 +34315,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).catch(function (error) {
             return console.log(error);
         });
-        axios.get('/devisList/' + this.$route.params.user).then(function (_ref) {
+        axios.get('/' + this.$route.params.user).then(function (_ref) {
             var data = _ref.data;
-            return _this.arrayDevis = data;
-        });
-        axios.get('/' + this.$route.params.user).then(function (_ref2) {
-            var data = _ref2.data;
             return _this.currentUser = data;
+        });
+        axios.get('/commandeList/' + this.$route.params.user).then(function (_ref2) {
+            var data = _ref2.data;
+            return _this.arrayCommande = data;
         });
     },
 
@@ -34756,7 +34756,7 @@ var render = function() {
         _vm._v(" "),
         _c("b-table", {
           attrs: {
-            data: _vm.arrayDevis,
+            data: _vm.arrayCommande,
             paginated: _vm.isPaginated,
             "per-page": _vm.perPage,
             "current-page": _vm.currentPage,
@@ -35119,6 +35119,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -35129,7 +35135,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       commande: {
         id: "",
         concerne: "",
-        descriptionDevis: "",
+        descriptionCommande: "",
         status_id: ""
       },
       company: "",
@@ -35173,7 +35179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return _this.customer = data;
       });
       //commande
-      axios.get('/infoDevis/' + this.$route.params.commande).then(function (_ref5) {
+      axios.get('/infoCommande/' + this.$route.params.commande).then(function (_ref5) {
         var data = _ref5.data;
         return _this.commande = data;
       }).catch(function (error) {
@@ -35186,25 +35192,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     }
 
-    //pdf
-    axios.get('/devis/pdf').then(console.log(""));
+    /*//pdf
+    axios.get('/commande/pdf')
+        .then(console.log(""));*/
   },
 
 
   methods: {
-    //enregistrer modif devis
+    //enregistrer modif commande
     enregistrer: function enregistrer() {
       var id = this.customer.id;
+      //IF offre SINON fournisseur
       if (!this.commande.id) {
-        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
     },
+
+
+    //METHODES POUR L'OFFRE
     augmenteProduit: function augmenteProduit(quantite, index) {
       this.produits_choisis[index].quantite = quantite + 1;
     },
@@ -35218,34 +35229,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     supprimerProduit: function supprimerProduit(index) {
       this.produits_choisis.splice(index, 1);
     },
+    visibiliteRemise: function visibiliteRemise(remise, index) {
+      if (remise == false) {
+        this.produits_choisis[index].remiseBoolean = true;
+      } else {
+        this.produits_choisis[index].remiseBoolean = false;
+        this.produits_choisis[index].remisePourcent = 0;
+        this.produits_choisis[index].remisePrix = 0;
+      }
+    },
+    miseAJourProduitPrix: function miseAJourProduitPrix(e, index) {
+      console.log("CHF" + e.target.value);
+      this.produits_choisis[index].prix = e.target.value;
+    },
+    miseAJourRemise: function miseAJourRemise(e, index) {
+      console.log("%" + e.target.value);
+      this.produits_choisis[index].remisePourcent = e.target.value;
+    },
+    calculerPrix: function calculerPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) {
+      //checker si remise, prix, remise, gain, total
+      console.log("remisePourcent" + txtRemisePourcent + " quantité " + quantite + " prix " + prix + " remise " + remise + " remisePrix " + remisePrix);
+      var remiseCalcul = quantite * prix * txtRemisePourcent / 100;
+      console.log(remiseCalcul);
+      var prixTotal = prix * quantite;
+      this.produits_choisis[index].remisePourcent = txtRemisePourcent;
+      this.produits_choisis[index].remisePrix = remiseCalcul;
+      this.produits_choisis[index].total = prixTotal - remiseCalcul;
+    },
+
+    //FIN METHODES POUR OFFRE
+
     envoyer: function envoyer() {
       var id = this.customer.id;
       if (!this.commande.id) {
-        axios.post('/insertNewDevis/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDevis/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       }
     },
-    passerEnOffre: function passerEnOffre() {
+    passerEtapeSuivante: function passerEtapeSuivante() {
       var id = this.customer.id;
-      axios.post('/validerDevis/' + this.commande.id, { commande: this.commande }).then(function (response) {
+      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
         window.location.href = '/#/listOrder/' + id;
+      });
+    },
+    demandePrixFournisseur: function demandePrixFournisseur() {
+      axios.post('/fournisseurMailDemandePrix').then(function (response) {
+        console.log('mail Envoyé');
       });
     }
   },
 
   computed: {
-    visibiliteActionDevisEnvoye: function visibiliteActionDevisEnvoye() {
+    visibiliteActioncommandeEnvoye: function visibiliteActioncommandeEnvoye() {
       if (this.commande.status_id > 1 && !this.currentUser.employee) {
         return true;
       }
       return false;
     },
-    enabledBtnEnvoyerDevis: function enabledBtnEnvoyerDevis() {
+    enabledBtnEnvoyercommande: function enabledBtnEnvoyercommande() {
       if (this.commande.status_id == 1) {
         return true;
       }
@@ -35259,6 +35305,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     enabledBtnPasserEncours: function enabledBtnPasserEncours() {
       if (this.commande.status_id == 2) {
+        return true;
+      }
+      return false;
+    },
+    enableAjoutProduits: function enableAjoutProduits() {
+      if (this.commande.status_id == 3 && this.currentUser.employee) {
         return true;
       }
       return false;
@@ -35291,9 +35343,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
-    //Travaille
     ajoutProduit: function ajoutProduit(produit, reference) {
-      __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanier(produit, reference);
+      var _this3 = this;
+
+      axios.get('/fournisseurList/' + produit.id).then(function (response) {
+        _this3.fournisseurs = response.data;console.log(_this3.fournisseurs);__WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanier(produit, reference, _this3.fournisseurs);
+      });
     }
   }
 
@@ -35318,18 +35373,32 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 	methods: {
-		ajoutPanier: function ajoutPanier(produit, reference) {
-			var nom = produit.nom;
+		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
 			var image = produit.image;
+			var nom = produit.nom;
 			var description = produit.description;
+			var prix = 0;
+			var remiseBoolean = false;
+			var remisePrix = 0;
+			var remisePourcent = 0;
+			var total = prix - remisePrix;
+			var fournisseur = fournisseurs[0];
+
 			this.panier.push({
 				image: image,
 				nom: nom,
 				reference: reference,
 				description: description,
-				quantite: 1
+				quantite: 1,
+				prix: prix,
+				remiseBoolean: remiseBoolean,
+				remisePrix: remisePrix,
+				remisePourcent: remisePourcent,
+				total: total,
+				fournisseur: fournisseur,
+				fournisseurs: fournisseurs
+				//fournisseurs []
 			});
-			console.log("normal");
 		},
 		supprimerPanier: function supprimerPanier(id) {
 			return 0;
@@ -35377,7 +35446,8 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "Devis - En cours N°" + _vm._s(this.commande.num_devis)
+                      "Demande - En cours N°" +
+                        _vm._s(this.commande.num_demande)
                     )
                   ]
                 ),
@@ -35397,7 +35467,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "Devis - Envoyé N°" + _vm._s(this.commande.num_devis)
+                      "Demande - Envoyé N°" + _vm._s(this.commande.num_demande)
                     )
                   ]
                 ),
@@ -35577,8 +35647,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.commande.descriptionDevis,
-                        expression: "commande.descriptionDevis"
+                        value: _vm.commande.descriptionCommande,
+                        expression: "commande.descriptionCommande"
                       }
                     ],
                     staticClass: "textarea",
@@ -35588,7 +35658,7 @@ var render = function() {
                         this.commande.status_id > 1 &&
                         !this.currentUser.employee
                     },
-                    domProps: { value: _vm.commande.descriptionDevis },
+                    domProps: { value: _vm.commande.descriptionCommande },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -35596,7 +35666,7 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.commande,
-                          "descriptionDevis",
+                          "descriptionCommande",
                           $event.target.value
                         )
                       }
@@ -35605,8 +35675,20 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              !_vm.visibiliteActionDevisEnvoye
-                ? _c("div", { staticClass: "field" }, [_vm._m(2)])
+              !_vm.visibiliteActioncommandeEnvoye
+                ? _c("div", { staticClass: "field" }, [
+                    _c("div", { staticClass: "field" }, [
+                      _c("input", {
+                        ref: "files",
+                        attrs: { type: "file", id: "files", multiple: "" },
+                        on: {
+                          change: function($event) {
+                            _vm.handleFileUploads()
+                          }
+                        }
+                      })
+                    ])
+                  ])
                 : _vm._e()
             ]),
             _vm._v(" "),
@@ -35617,18 +35699,15 @@ var render = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value:
-                      _vm.commande.status_id == 3 ||
-                      _vm.commande.status_id == 4,
-                    expression:
-                      "commande.status_id == 3 || commande.status_id == 4"
+                    value: _vm.enableAjoutProduits,
+                    expression: "enableAjoutProduits"
                   }
                 ],
                 staticClass: "card",
                 staticStyle: { "margin-bottom": "15px" }
               },
               [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [
                   _c("div", { staticClass: "content" }, [
@@ -35732,19 +35811,149 @@ var render = function() {
                                       ),
                                       _vm._v(" "),
                                       _c(
+                                        "select",
+                                        {
+                                          staticStyle: { "margin-left": "5px" },
+                                          attrs: { name: "liste_fournisseur" }
+                                        },
+                                        _vm._l(produit.fournisseurs, function(
+                                          fournisseur
+                                        ) {
+                                          return _c("option", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(fournisseur.nom) +
+                                                " "
+                                            ),
+                                            _c(
+                                              "span",
+                                              { attrs: { hidden: "" } },
+                                              [
+                                                _vm._v(
+                                                  " " +
+                                                    _vm._s(fournisseur.id) +
+                                                    " "
+                                                )
+                                              ]
+                                            )
+                                          ])
+                                        })
+                                      )
+                                    ]),
+                                    _c("div", [
+                                      _vm._v(
+                                        "\n                                  Prix "
+                                      ),
+                                      _c("input", {
+                                        staticStyle: { width: "30px" },
+                                        attrs: { type: "text" },
+                                        on: {
+                                          keyup: function($event) {
+                                            _vm.miseAJourProduitPrix(
+                                              $event,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" .- "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: {
+                                          id: "chkRemise",
+                                          type: "checkbox"
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.visibiliteRemise(
+                                              produit.remiseBoolean,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " Remise\n                                  "
+                                      ),
+                                      _c(
+                                        "a",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: produit.remiseBoolean,
+                                              expression:
+                                                "produit.remiseBoolean"
+                                            }
+                                          ]
+                                        },
+                                        [
+                                          _c("input", {
+                                            staticStyle: { width: "30px" },
+                                            attrs: { type: "text" },
+                                            on: {
+                                              keyup: function($event) {
+                                                _vm.miseAJourRemise(
+                                                  $event,
+                                                  index
+                                                )
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" % "),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                                    Rabais : " +
+                                              _vm._s(produit.remisePrix) +
+                                              ".-\n                                  "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                                  Total : " +
+                                          _vm._s(produit.total) +
+                                          ".-\n                                  "
+                                      ),
+                                      _c(
                                         "button",
                                         {
-                                          staticClass:
-                                            "is-pulled-right button is-danger",
+                                          staticClass: "button is-info",
                                           on: {
                                             click: function($event) {
-                                              _vm.supprimerProduit(index)
+                                              _vm.calculerPrix(
+                                                produit.remisePourcent,
+                                                produit.quantite,
+                                                produit.prix,
+                                                produit.remiseBoolean,
+                                                produit.remisePrix,
+                                                index
+                                              )
                                             }
                                           }
                                         },
-                                        [_vm._v(" Supprimer ")]
+                                        [_vm._v(" Calculer ")]
                                       )
-                                    ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "is-pulled-right button is-danger",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.supprimerProduit(index)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" Supprimer ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p")
                                   ]),
                                   _vm._v(" "),
                                   _c("button", {
@@ -35810,7 +36019,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
-              !_vm.visibiliteActionDevisEnvoye
+              !_vm.visibiliteActioncommandeEnvoye
                 ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
                     _c(
                       "button",
@@ -35834,8 +36043,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.enabledBtnEnvoyerDevis,
-                            expression: "enabledBtnEnvoyerDevis"
+                            value: _vm.enabledBtnEnvoyercommande,
+                            expression: "enabledBtnEnvoyercommande"
                           }
                         ],
                         staticClass: "button is-success",
@@ -35872,11 +36081,11 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.passerEnOffre($event)
+                            _vm.passerEtapeSuivante($event)
                           }
                         }
                       },
-                      [_vm._v("Valider devis")]
+                      [_vm._v("Valider commande")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -35898,7 +36107,33 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.envoyerFournisseur($event)
+                            _vm.passerEtapeSuivante($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Valider Offre")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnEnvoyer,
+                            expression: "enabledBtnEnvoyer"
+                          }
+                        ],
+                        staticClass: "button is-success",
+                        staticStyle: {
+                          "margin-left": "2px",
+                          "margin-right": "2px"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.demandePrixFournisseur($event)
                           }
                         }
                       },
@@ -35973,29 +36208,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "file" }, [
-      _c("label", { staticClass: "file-label" }, [
-        _c("input", {
-          staticClass: "file-input",
-          attrs: { type: "file", name: "resume" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "file-cta" }, [
-          _c("span", { staticClass: "file-icon" }, [
-            _c("i", { staticClass: "fas fa-upload" })
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "file-label" }, [
-            _vm._v("\n                    Choose a File…\n                  ")
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("header", { staticClass: "card-header" }, [
       _c("p", { staticClass: "card-header-title" }, [
         _vm._v("\n              Articles\n            ")
@@ -36008,7 +36220,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-c8144288", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-ce22a366", module.exports)
   }
 }
 

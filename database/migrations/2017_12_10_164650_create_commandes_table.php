@@ -18,10 +18,10 @@ class CreateCommandesTable extends Migration
          $table->dateTime('dateDebut');
          $table->String('concerne');
          $table->String('num_commande');
-         $table->String('num_devis');
+         $table->String('num_demande');
          $table->String('num_offre');
          $table->integer('user_id')->unsigned()->index();
-         $table->longText('descriptionDevis');
+         $table->longText('descriptionCommande');
          $table->timestamps();
 
          $table->foreign('user_id')->references('id')->on("users")->onDelete('cascade')->onUpdate('cascade');

@@ -7,14 +7,16 @@ use PDF;
 use Mail;
 use App\Customer;
 use App\User;
+use App\Provider;
 use App\Commande;
 use App\Company;
 use App\Product;
 use Carbon\Carbon;
 use App\Mail\DevisEnvoye;
+use App\Mail\FournisseurMail;
 use Illuminate\Auth\AuthenticationException;
 
-class DevisController extends Controller
+class CommandeController extends Controller
 {
 
     public function __construct()
@@ -54,11 +56,11 @@ class DevisController extends Controller
       $customerDevis = new Commande();
       $customerDevis->dateDebut = Carbon::now();
       $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->num_devis = Carbon::now()->format('Y-m-d')."_D";
+      $customerDevis->num_demande = Carbon::now()->format('Y-m-d')."_D";
       $customerDevis->num_offre = Carbon::now()->format('Y-m-d')."_O";
       $customerDevis->num_commande = Carbon::now()->format('Y-m-d')."_C";
       $customerDevis->user_id = $request->customer['id'];
-      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = 1 + $typeSubmit;
       $customerDevis->save();
     }
@@ -86,7 +88,7 @@ class DevisController extends Controller
                           ['id',$request->commande['id']]
                           ])->get()->first();
       $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->descriptionDevis = $request->commande['descriptionDevis'];
+      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
     }
@@ -206,12 +208,31 @@ class DevisController extends Controller
       return $result;
     }
 
-    public function validerDevis(Commande $commande)
+    public function fournisseurs(Product $product)
+    {
+      $four = Product::find($product->id);
+      return $four->providers()->get();
+    }
+
+    public function validerStatut(Commande $commande)
     {
       $com = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
       $com->status_id = $com->status_id+1;
       $com->save();
       return $com;
+    }
+
+    public function mailFournisseurDemandePrix()
+    {
+      //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur
+      $customer = User::findOrFail(1);
+      $pdf = PDF::loadView('pdf/devis_pdf', compact('user'))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/pdf/Test.pdf');
+      $pdf->save($path);
+      $user = User::where('employee',true)->get();
+      Mail::to($user)->send(new FournisseurMail('Commande'));
+      return 'mail envoyé depuis le controleur';
     }
 
 }

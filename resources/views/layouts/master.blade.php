@@ -61,8 +61,8 @@
                             Login
                         </router-link>
                         @if (Auth::check())
-                          <router-link class="button is-info" tag="button" to="/devis/{{ Auth::id() }}">
-                              Devis
+                          <router-link class="button is-info" tag="button" to="/commande/{{ Auth::id() }}">
+                              Demande
                           </router-link>
                         @endif
                       </p>

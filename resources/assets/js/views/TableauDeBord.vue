@@ -24,7 +24,7 @@
             </div>
         </b-field>
         <b-table
-            :data="arrayDevis"
+            :data="arrayCommande"
             :paginated="isPaginated"
             :per-page="perPage"
             :current-page.sync="currentPage"
@@ -84,7 +84,7 @@
     export default {
         data() {
             return {
-                arrayDevis: [],
+                arrayCommande: [],
                 isPaginated: true,
                 isPaginationSimple: false,
                 defaultSortDirection: 'asc',
@@ -106,10 +106,10 @@
                     console.log(this.user);
                 })                    
             .catch(error => console.log(error));
-            axios.get('/devisList/'+this.$route.params.user)
-                .then(({data}) => this.arrayDevis = data);
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.currentUser = data);
+            axios.get('/commandeList/'+this.$route.params.user)
+                .then(({data}) => this.arrayCommande = data);
         },
 
 

@@ -39,21 +39,23 @@ Route::get('/customers', 'ProductController@clients');
 Route::get('/commandes', 'ProductController@commandes');
 Route::get('/providers', 'ProductController@providers');
 
-
-Route::get('/', 'DevisController@index')->name('home');
+Route::get('/', 'CommandeController@index')->name('home');
 /* Call PDF */
-Route::get('/devis/pdf', 'DevisController@devisPdf')->name('devis.pdf');
-Route::get('/produitsOffre', 'DevisController@produits');
-Route::get('/infoDevis/{commande}', 'DevisController@clientInfoDevis');
-Route::get('/devisList/{user}', 'DevisController@clientDevis');
-Route::get('/company/{user}', 'DevisController@companieClientDevis');
-Route::get('/company/{user}/{commande}', 'DevisController@companieClientDevis');
-Route::get('/{user}', 'DevisController@infoClient');
-Route::get('/{user}/{commande}', 'DevisController@infoClient');
+Route::get('/offre/pdf', 'CommandeController@devisPdf')->name('devis.pdf');
+Route::get('/fournisseurList/{product}', 'CommandeController@fournisseurs');
+Route::get('/produitsOffre', 'CommandeController@produits');
+Route::get('/infoCommande/{commande}', 'CommandeController@clientInfoDevis');
+Route::get('/commandeList/{user}', 'CommandeController@clientDevis');
+Route::get('/company/{user}', 'CommandeController@companieClientDevis');
+Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis');
+Route::get('/{user}', 'CommandeController@infoClient');
+Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
-Route::post('/validerDevis/{commande}', 'DevisController@validerDevis');
-Route::post('/storeDevis/{user}/{commande}', 'DevisController@store')->name('storeDevis');
-Route::post('/insertNewDevis/{user}', 'DevisController@create')->name('storeDevis');
+Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
+Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
+Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
+
+Route::post('/fournisseurMailDemandePrix','CommandeController@mailFournisseurDemandePrix');
 
 
 
