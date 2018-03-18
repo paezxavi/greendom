@@ -235,7 +235,7 @@ class CommandeController extends Controller
     public function offreList()
     {
       $list = Commande::with('status','users')
-                    ->where('status_id', 2)
+                    ->where('status_id', 3)
                     ->get()
                     ->sortBy('commandes.dateDebut');
       return $list;
@@ -245,8 +245,8 @@ class CommandeController extends Controller
     public function commandeList()
     {
       $list = Commande::with('status','users')
-                    ->where('status_id', 3)
-                    ->orWhere('status_id', 4)
+                    ->where('status_id', 4)
+                    ->orWhere('status_id', 5)
                     ->get()
                     ->sortBy('commandes.dateDebut');
       return $list;
