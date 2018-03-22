@@ -13,7 +13,7 @@ use App\Commande;
 use App\Company;
 use App\Product;
 use Carbon\Carbon;
-use App\Mail\DevisEnvoye;
+use App\Mail\DemandeEnvoye;
 use App\Mail\FournisseurMail;
 use Illuminate\Auth\AuthenticationException;
 
@@ -47,7 +47,7 @@ class CommandeController extends Controller
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->insertNewDevis($request, 1);
         $user = User::where('employee', true)->get();
-        Mail::to($user)->send(new DevisEnvoye($request));
+        Mail::to($user)->send(new DemandeEnvoye($request));
       }
 
     }

@@ -180,7 +180,8 @@
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
-
+            {{ enabledBtnEnvoyercommande }}
+            {{ this.commande.status_id == "" }}
           </div>
         </div>
     </div>
@@ -357,7 +358,7 @@
           },
 
           enabledBtnEnvoyercommande(){
-            if (this.commande.status_id == 1){
+            if (this.commande.status_id == 1 || this.commande.status_id == ""){
               return true;
             }
             return false;
