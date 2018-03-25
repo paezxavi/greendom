@@ -255,6 +255,7 @@
           //enregistrer modif commande
           enregistrer() {
             var id = this.customer.id;
+            var commandId = this.commande.id;
             //IF offre SINON fournisseur
             if (!this.commande.id){
               axios.post('/insertDemande/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
@@ -262,9 +263,10 @@
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
-              axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
+              axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
-                        window.location.href='/#/listOrder/'+id;
+                        location.reload();
+                        window.location.href='/#/commande/'+id+'/'+commandId;
                       });
             }
           },
