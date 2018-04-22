@@ -17,7 +17,7 @@
                   </div>
                   <div class="column">
                     <label class="label">Prénom*</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control">
                       <input type="text" name="forename" id="forename" class="input" value="" v-model="forename">
                     </div>
                   </div>
@@ -37,7 +37,7 @@
                   </div>
                   <div class="column">
                     <label class="label">Compte Skype</label>
-                    <div class="control has-icons-left has-icons-right">
+                    <div class="control">
                       <input type="text" name="contact" id="contact" class="input"  value="" v-model="contact">
                     </div>
                   </div>

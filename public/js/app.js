@@ -32887,38 +32887,34 @@ var render = function() {
                   _c("div", { staticClass: "column" }, [
                     _c("label", { staticClass: "label" }, [_vm._v("Prénom*")]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "control has-icons-left has-icons-right" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.forename,
-                              expression: "forename"
-                            }
-                          ],
-                          staticClass: "input",
-                          attrs: {
-                            type: "text",
-                            name: "forename",
-                            id: "forename",
-                            value: ""
-                          },
-                          domProps: { value: _vm.forename },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.forename = $event.target.value
-                            }
+                    _c("div", { staticClass: "control" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.forename,
+                            expression: "forename"
                           }
-                        })
-                      ]
-                    )
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          type: "text",
+                          name: "forename",
+                          id: "forename",
+                          value: ""
+                        },
+                        domProps: { value: _vm.forename },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.forename = $event.target.value
+                          }
+                        }
+                      })
+                    ])
                   ])
                 ])
               ]),
@@ -32996,38 +32992,34 @@ var render = function() {
                       _vm._v("Compte Skype")
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "control has-icons-left has-icons-right" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contact,
-                              expression: "contact"
-                            }
-                          ],
-                          staticClass: "input",
-                          attrs: {
-                            type: "text",
-                            name: "contact",
-                            id: "contact",
-                            value: ""
-                          },
-                          domProps: { value: _vm.contact },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.contact = $event.target.value
-                            }
+                    _c("div", { staticClass: "control" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.contact,
+                            expression: "contact"
                           }
-                        })
-                      ]
-                    )
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          type: "text",
+                          name: "contact",
+                          id: "contact",
+                          value: ""
+                        },
+                        domProps: { value: _vm.contact },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.contact = $event.target.value
+                          }
+                        }
+                      })
+                    ])
                   ])
                 ])
               ]),
