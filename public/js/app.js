@@ -32777,9 +32777,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      username: "",
+      forename: "",
+      address: "",
+      phone: "",
+      contact: "",
+      email: "",
+      company: "",
+      pwd: ""
+    };
+  },
+
 
   methods: {
     /** enregistrement dans la base de données du nouvel utilisateur si les champs obligatoires sont remplis
@@ -32790,10 +32808,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       if (username.value == "" || forename.value == "" || address.value == "" || phone.value == "" || email.value == "" || pwd.value == "") {
-        window.alert("Merci de remplir tous les champs sauf company si vous en avez pas");
+        window.alert("Merci de remplir tous les champs obligatoires (*) !");
       } else {
+        if (contact.value == "") {
+          contact.value = "-";
+        }
         axios.post('/saveUser', { name: username.value, forename: forename.value, address: address.value, phone: phone.value, skype: contact.value, email: email.value, company: company.value, pwd: pwd.value }).then(function (response) {
-          //  console.log('saved successfully' + " name : " +  username.value + " pre: " + forename.value + " phone: " + phone.value + " Skype: " + contact.value + " address: " + address.value +" email: " + email.value + " pwd: " + pwd.value);
+          //console.log('saved successfully' + " name : " +  username.value + " pre: " + forename.value + " phone: " + phone.value + " Skype: " + contact.value + " address: " + address.value +" email: " + email.value + " pwd: " + pwd.value);
           console.log(response);
           window.alert("Votre compte a bien été créé !");
           _this.$router.push('login');
@@ -32827,48 +32848,46 @@ var render = function() {
           [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Name")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.username,
-                          expression: "username"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        type: "text",
-                        name: "username",
-                        id: "username",
-                        value: ""
-                      },
-                      domProps: { value: _vm.username },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+            _c("div", { staticClass: "box" }, [
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "columns is-mobile" }, [
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [_vm._v("Nom*")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "control" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.username,
+                            expression: "username"
                           }
-                          _vm.username = $event.target.value
+                        ],
+                        staticClass: "input",
+                        attrs: {
+                          type: "text",
+                          name: "username",
+                          id: "username",
+                          value: ""
+                        },
+                        domProps: { value: _vm.username },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.username = $event.target.value
+                          }
                         }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Forename")]),
+                      })
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [_vm._v("Prénom*")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "control" }, [
                       _c("input", {
                         directives: [
                           {
@@ -32895,85 +32914,85 @@ var render = function() {
                           }
                         }
                       })
-                    ]
-                  )
+                    ])
+                  ])
                 ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Address")]),
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.address,
-                      expression: "address"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: {
-                    type: "text",
-                    name: "address",
-                    id: "address",
-                    value: ""
-                  },
-                  domProps: { value: _vm.address },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.address = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Phone")]),
-                  _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Adresse*")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.phone,
-                        expression: "phone"
+                        value: _vm.address,
+                        expression: "address"
                       }
                     ],
                     staticClass: "input",
                     attrs: {
-                      type: "tel",
-                      name: "phone",
-                      id: "phone",
+                      type: "text",
+                      name: "address",
+                      id: "address",
                       value: ""
                     },
-                    domProps: { value: _vm.phone },
+                    domProps: { value: _vm.address },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.phone = $event.target.value
+                        _vm.address = $event.target.value
                       }
                     }
                   })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Skype Name")]),
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "columns is-mobile" }, [
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [
+                      _vm._v("Téléphone*")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.phone,
+                          expression: "phone"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: {
+                        type: "tel",
+                        name: "phone",
+                        id: "phone",
+                        value: ""
+                      },
+                      domProps: { value: _vm.phone },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.phone = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
+                  _c("div", { staticClass: "column" }, [
+                    _c("label", { staticClass: "label" }, [
+                      _vm._v("Compte Skype")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "control" }, [
                       _c("input", {
                         directives: [
                           {
@@ -33000,108 +33019,128 @@ var render = function() {
                           }
                         }
                       })
-                    ]
-                  )
+                    ])
+                  ])
                 ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.email,
-                      expression: "email"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: {
-                    type: "email",
-                    name: "email",
-                    id: "email",
-                    value: ""
-                  },
-                  domProps: { value: _vm.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Email*")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
                       }
-                      _vm.email = $event.target.value
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "email",
+                      name: "email",
+                      id: "email",
+                      value: ""
+                    },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.email = $event.target.value
+                      }
                     }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Company")]),
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.company,
-                      expression: "company"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: {
-                    type: "text",
-                    name: "company",
-                    id: "company",
-                    value: ""
-                  },
-                  domProps: { value: _vm.company },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Société")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.company,
+                        expression: "company"
                       }
-                      _vm.company = $event.target.value
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "company",
+                      id: "company",
+                      value: ""
+                    },
+                    domProps: { value: _vm.company },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.company = $event.target.value
+                      }
                     }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("label", { staticClass: "label" }, [_vm._v("Password")]),
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "control" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.pwd,
-                      expression: "pwd"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: {
-                    type: "password",
-                    name: "pwd",
-                    id: "pwd",
-                    value: ""
-                  },
-                  domProps: { value: _vm.pwd },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("div", { staticClass: "field" }, [
+                _c("label", { staticClass: "label" }, [
+                  _vm._v("Mot de passe*")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.pwd,
+                        expression: "pwd"
                       }
-                      _vm.pwd = $event.target.value
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "password",
+                      name: "pwd",
+                      id: "pwd",
+                      value: ""
+                    },
+                    domProps: { value: _vm.pwd },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.pwd = $event.target.value
+                      }
                     }
-                  }
-                })
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "column" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "button is-block is-info is-large is-fullwidth",
+                    on: {
+                      click: function($event) {
+                        _vm.save()
+                      }
+                    }
+                  },
+                  [_vm._v("Valider")]
+                )
               ])
             ]),
             _vm._v(" "),
@@ -33110,26 +33149,11 @@ var render = function() {
               { staticClass: "has-text-centered" },
               [
                 _c("router-link", { attrs: { to: "/login" } }, [
-                  _c("a", [_vm._v("Login")])
+                  _c("a", [_vm._v("Se connecter")])
                 ])
               ],
               1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "column" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "button is-block is-info is-large is-fullwidth",
-                  on: {
-                    click: function($event) {
-                      _vm.save()
-                    }
-                  }
-                },
-                [_vm._v("Save")]
-              )
-            ])
+            )
           ]
         )
       ]
@@ -33143,10 +33167,20 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "has-text-centered" }, [
       _c("h3", { staticClass: "title has-text-grey" }, [
-        _vm._v("Create your personal account")
+        _vm._v("Créer votre espace client")
       ]),
       _vm._v(" "),
       _c("br")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "column" }, [
+      _c("p", { staticClass: "has-text-grey" }, [
+        _vm._v("* champs obligatoires")
+      ])
     ])
   }
 ]
@@ -33252,6 +33286,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
@@ -33302,16 +33338,18 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "container has-text-centered" }, [
       _c("div", { staticClass: "column is-4 is-offset-4" }, [
-        _c("h3", { staticClass: "title has-text-grey" }, [_vm._v("Login")]),
+        _c("h3", { staticClass: "title has-text-grey" }, [_vm._v("Connexion")]),
         _vm._v(" "),
         _c("p", { staticClass: "subtitle has-text-grey" }, [
-          _vm._v("Veuillez procéder au login.")
+          _vm._v("Identifiez-vous")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "box" }, [
           _c("form", { attrs: { method: "POST" } }, [
             _c("div", { staticClass: "field" }, [
               _c("div", { staticClass: "control" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -33322,7 +33360,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "input is-large",
-                  attrs: { type: "email", placeholder: "Email", autofocus: "" },
+                  attrs: {
+                    type: "email",
+                    placeholder: "exemple@greendom.ch",
+                    autofocus: ""
+                  },
                   domProps: { value: _vm.currentLogger.email },
                   on: {
                     input: function($event) {
@@ -33338,6 +33380,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
               _c("div", { staticClass: "control" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Mot de passe")]),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -33348,7 +33392,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "input is-large",
-                  attrs: { type: "password", placeholder: "Mot de passe" },
+                  attrs: { type: "password", placeholder: "xxxxx" },
                   domProps: { value: _vm.currentLogger.mdp },
                   on: {
                     input: function($event) {
@@ -33369,7 +33413,8 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "button is-block is-info is-large is-fullwidth",
+                staticClass:
+                  "button is-block is-info is-large is-fullwidth is-success",
                 on: {
                   click: function($event) {
                     $event.preventDefault()
@@ -33377,7 +33422,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Login")]
+              [_vm._v("Se connecter")]
             )
           ])
         ]),
@@ -33387,12 +33432,14 @@ var render = function() {
           { staticClass: "has-text-grey" },
           [
             _c("router-link", { attrs: { to: "/signUp" } }, [
-              _c("a", [_vm._v("Sign Up")])
+              _c("a", [_vm._v("S'inscrire")])
             ]),
             _vm._v(" · \n                "),
-            _c("a", { attrs: { href: "../" } }, [_vm._v("Forgot Password")]),
+            _c("a", { attrs: { href: "../" } }, [
+              _vm._v("Mot de passe oublié")
+            ]),
             _vm._v("  · \n                "),
-            _c("a", { attrs: { href: "../" } }, [_vm._v("Need Help?")])
+            _c("a", { attrs: { href: "../" } }, [_vm._v("Besoin d'aide ?")])
           ],
           1
         )
@@ -33409,7 +33456,7 @@ var staticRenderFns = [
       _c("label", { staticClass: "checkbox" }, [
         _c("input", { attrs: { type: "checkbox" } }),
         _vm._v(
-          "\n                        Remember me\n                        "
+          "\n                        Se souvenir de moi\n                        "
         )
       ])
     ])
@@ -33571,7 +33618,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h2", [_vm._v("Home")]),
+    _c("h2", [_vm._v("Accueil")]),
     _vm._v(" "),
     _c(
       "div",
@@ -34124,7 +34171,7 @@ var render = function() {
           { staticClass: "panel panel-default" },
           [
             _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("The About Page")
+              _vm._v("A propos de nous")
             ]),
             _vm._v(" "),
             _vm._l(_vm.commandes, function(commande) {
@@ -34414,19 +34461,19 @@ var render = function() {
             _c("div", { staticClass: "field" }, [
               _c("div", { staticClass: "columns is-mobile" }, [
                 _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Name")]),
+                  _c("label", { staticClass: "label" }, [_vm._v("Nom")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "control" }, [
                     _c("input", {
                       staticClass: "input",
-                      attrs: { type: "text", placeholder: "Text input" },
+                      attrs: { type: "text", placeholder: "" },
                       domProps: { value: _vm.nomString }
                     })
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Forename")]),
+                  _c("label", { staticClass: "label" }, [_vm._v("Prénom")]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -34434,7 +34481,7 @@ var render = function() {
                     [
                       _c("input", {
                         staticClass: "input is-success",
-                        attrs: { type: "text", placeholder: "Text input" },
+                        attrs: { type: "text", placeholder: "" },
                         domProps: { value: _vm.prenomString }
                       }),
                       _vm._v(" "),
@@ -34445,7 +34492,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "help is-success" }, [
-                    _vm._v("This username is available")
+                    _vm._v("Ce nom d'utilisateur est valide")
                   ])
                 ])
               ])
@@ -34464,7 +34511,7 @@ var render = function() {
                     [
                       _c("input", {
                         staticClass: "input is-danger",
-                        attrs: { type: "email", placeholder: "Email input" },
+                        attrs: { type: "email", placeholder: "" },
                         domProps: { value: _vm.emailString }
                       }),
                       _vm._v(" "),
@@ -34475,7 +34522,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "help is-danger" }, [
-                    _vm._v("This email is invalid")
+                    _vm._v("Cet email est invalide")
                   ])
                 ]),
                 _vm._v(" "),
@@ -34485,7 +34532,7 @@ var render = function() {
                   _c("div", { staticClass: "control" }, [
                     _c("input", {
                       staticClass: "input",
-                      attrs: { type: "text", placeholder: "Text input" },
+                      attrs: { type: "text", placeholder: "" },
                       domProps: { value: _vm.contactString }
                     })
                   ])
@@ -34531,10 +34578,7 @@ var staticRenderFns = [
       _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
       _vm._v(" "),
       _c("div", { staticClass: "control" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Text input" }
-        })
+        _c("input", { staticClass: "input", attrs: { type: "text" } })
       ])
     ])
   },
@@ -34587,7 +34631,9 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("span", { staticClass: "file-label" }, [
-              _vm._v("\n                  Choose a file…\n                ")
+              _vm._v(
+                "\n                  Choisir un fichier…\n                "
+              )
             ])
           ])
         ])
@@ -34602,10 +34648,7 @@ var staticRenderFns = [
       _c("label", { staticClass: "label" }, [_vm._v("Message")]),
       _vm._v(" "),
       _c("div", { staticClass: "control" }, [
-        _c("textarea", {
-          staticClass: "textarea",
-          attrs: { placeholder: "Textarea" }
-        })
+        _c("textarea", { staticClass: "textarea" })
       ])
     ])
   },
@@ -34615,9 +34658,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "field" }, [
       _c("div", { staticClass: "buttons has-addons is-centered" }, [
-        _c("a", { staticClass: "button is-success" }, [_vm._v("Submit")]),
+        _c("a", { staticClass: "button is-success" }, [_vm._v("Soumettre")]),
         _vm._v(" "),
-        _c("a", { staticClass: "button is-danger" }, [_vm._v("Cancel")])
+        _c("a", { staticClass: "button is-danger" }, [_vm._v("Annuler")])
       ])
     ])
   }

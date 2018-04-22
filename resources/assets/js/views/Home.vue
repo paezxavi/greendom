@@ -1,14 +1,14 @@
 <template>
     <div class="container">
-        <h2>Home</h2>
+        <h2>Accueil</h2>
 
             <div class="container">
-                <transition name="slide-fade"> 
+                <transition name="slide-fade">
                     <p style="display: block;margin-left: auto;margin-right: 34%;width: 40%;" class="test" v-if="active">
                         Je suis un test 1
                     </p>
-                </transition> 
-                
+                </transition>
+
                 <div style="display: block;margin-left: auto;margin-right: auto;" v-on:mouseover="active = !active">
                 <transition name="slide-fade">
                     <span v-if="active">Je suis un test 2</span>
@@ -18,13 +18,13 @@
                     <span v-if="active">Je suis un test 3</span>
                 </transition>
                 </div>
-                
+
                 <transition name="slide-fade">
                     <p style="display: block;margin-left: auto;margin-right: 34%;width: 40%;" class="test" v-if="active">
                         Je suis un test 4
                     </p>
                 </transition>
-            </div>                
+            </div>
         <div class="container">
             <img style="width:100%" src="http://www.aviatourstunisia.com/agence-voyage-tunisie/images/beautiful_new_zealand_desktop_16_wallpaper_hd.jpg">
 
@@ -82,7 +82,7 @@
         },
 
         created() {
-            
+
         },
     }
 </script>
