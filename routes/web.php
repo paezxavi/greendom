@@ -44,6 +44,7 @@ Route::get('/', 'CommandeController@index')->name('home');
 Route::get('/demandeList', 'CommandeController@demandeList');
 Route::get('/offreList', 'CommandeController@offreList');
 Route::get('/commandeList', 'CommandeController@commandeList');
+Route::get('/produitsCommande/{commande}','CommandeController@produitsEnregistres');
 Route::get('/offre/pdf', 'CommandeController@devisPdf')->name('devis.pdf');
 Route::get('/fournisseurList/{product}', 'CommandeController@fournisseurs');
 Route::get('/produitsOffre', 'CommandeController@produits');
@@ -53,6 +54,7 @@ Route::get('/company/{user}', 'CommandeController@companieClientDevis');
 Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis');
 Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
+
 
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');

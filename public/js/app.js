@@ -30863,7 +30863,7 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
 
 
 
@@ -30874,7 +30874,7 @@ var app = new Vue({
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 window.axios.defaults.headers.common = {
@@ -36304,6 +36304,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -36321,7 +36362,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       active: false,
       currentUser: "",
       showModal: false,
-      produits_choisis: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].$data.panier //liée au store
+      produits_choisis: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].$data.panier,
+      produits_enregistres: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].$data.panierEnregistres,
+      produits_recuperes: ""
     };
   },
   created: function created() {
@@ -36369,7 +36412,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var data = _ref6.data;
         return _this.company = data;
       });
+
+      //Produits enregistrés dans la commande
+      axios.get('/produitsCommande/' + this.$route.params.commande)
+      //.then(({data}) => this.produits_enregistres = data);
+      .then(function (response) {
+        _this.produits_recuperes = response.data;
+        __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanierProduitEnregistrer(_this.produits_recuperes);
+      });
     }
+
+    /*
+    axios.get('/fournisseurList/'+1)
+        .then(response => {this.fournisseurs = response.data; Store.ajoutPanierProduitEnregistrer(this.produits_recuperes, this.fournisseurs)});
+    }
+    */
 
     /*//pdf
     axios.get('/commande/pdf')
@@ -36504,7 +36561,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   })
   */
 });Vue.component('modal', {
-  template: "\n   <div id=\"modal\" class=\"modal is-active\">\n    <div class=\"modal-background\"></div>\n    <div class=\"modal-card\">\n      <div class=\"box\">\n        <article class=\"media\"  v-for=\"(produit, index) in produits\" :key=\"produit.reference\">\n          <div class=\"media-left\">\n            <figure class=\"image is-64x64\">\n              <img :src=\"produit.image\" alt=\"Image\">\n            </figure>\n          </div>\n          <div class=\"media-content\">\n            <div class=\"content\">\n              <p>\n                <strong> {{produit.nom}} </strong> <small class=\"is-pulled-right\"> R\xE9f : {{produit.reference}} </small>\n                <br>\n                {{produit.description}}\n              <div class=\"is-pulled-right\">\n                <button class=\"button is-info\" @click=\"ajoutProduit(produit, produit.reference)\"> Sel\xE9ctionner </button>\n                <button class=\"button is-danger\" @click=\"$emit('close')\"> Fermer </button>\n              </div>\n              </p>\n            </div>\n            <button class=\"modal-close\" @click=\"$emit('close')\"></button>\n          </div>\n        </article>\n      </div>\n    </div>\n\n  </div>\n  ",
+  template: "\n   <div id=\"modal\" class=\"modal is-active\">\n    <div class=\"modal-background\"></div>\n    <div class=\"modal-card\">\n      <div class=\"box\">\n        <article class=\"media\"  v-for=\"(produit, index) in produits\" :key=\"produit.reference\">\n          <div class=\"media-left\">\n            <figure class=\"image is-64x64\">\n              <img :src=\"produit.image\" alt=\"Image\">\n            </figure>\n          </div>\n          <div class=\"media-content\">\n            <div class=\"content\">\n              <p>\n                <strong> {{produit.nom}} </strong> <small class=\"is-pulled-right\"> R\xE9f : {{produit.reference}} </small>\n                <br>\n                {{produit.description}}\n              <div class=\"is-pulled-right\">\n                <button class=\"button is-info\" @click=\"ajoutProduit(produit, produit.reference)\"> Sel\xE9ctionner </button>\n              </div>\n              </p>\n            </div>\n          </div>\n        </article>\n        <button class=\"modal-close\" @click=\"$emit('close')\"></button>\n        <button class=\"button is-danger\" @click=\"$emit('close')\"> Fermer </button>\n      </div>\n    </div>\n\n  </div>\n  ",
 
   data: function data() {
     return {
@@ -36548,7 +36605,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 	data: function data() {
 		return {
-			panier: []
+			panier: [],
+			panierEnregistres: []
 		};
 	},
 
@@ -36580,6 +36638,42 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 				fournisseurs: fournisseurs
 				//fournisseurs []
 			});
+		},
+		ajoutPanierProduitEnregistrer: function ajoutPanierProduitEnregistrer(produits_recuperes) {
+			console.log(produits_recuperes);
+			for (var i = 0; i < produits_recuperes.length; i++) {
+				var image = produits_recuperes[i].image;
+				var nom = produits_recuperes[i].nom;
+				var description = produits_recuperes[i].pivot.description;
+
+				var prix = produits_recuperes[i].pivot.prix;
+				var quantite = produits_recuperes[i].pivot.quantity;
+
+				var remiseBoolean = produits_recuperes[i].pivot.remiseBoolean;
+				var remisePrix = produits_recuperes[i].pivot.remisePrix;
+				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
+				var total = produits_recuperes[i].pivot.total;
+				//var fournisseur = fournisseurs[0];
+
+				console.log("quantite" + quantite);
+				console.log("prix" + prix);
+
+				this.panierEnregistres.push({
+					image: image,
+					nom: nom,
+					//reference,
+					description: description,
+					prix: prix,
+					quantite: quantite,
+					remiseBoolean: remiseBoolean,
+					remisePrix: remisePrix,
+					remisePourcent: remisePourcent,
+					total: total
+					//fournisseur,
+					//fournisseurs
+					//fournisseurs []
+				});
+			}
 		},
 		supprimerPanier: function supprimerPanier(id) {
 			return 0;
@@ -36898,6 +36992,271 @@ var render = function() {
                           "div",
                           { staticClass: "column" },
                           [
+                            _c("h4", [_vm._v(" Produits enregistrés : ")]),
+                            _vm._v(" "),
+                            _vm._l(_vm.produits_enregistres, function(
+                              produit_enregistre
+                            ) {
+                              return _c("article", { staticClass: "media" }, [
+                                _c("div", { staticClass: "media-left" }, [
+                                  _c(
+                                    "figure",
+                                    { staticClass: "image is-64x64" },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src: produit_enregistre.image,
+                                          alt: "Image"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-content" }, [
+                                  _c("div", { staticClass: "content" }, [
+                                    _c("p", [
+                                      _c("strong", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(produit_enregistre.nom) +
+                                            " "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "is-pulled-left button is-danger",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.diminueProduit(
+                                                produit_enregistre.quantite,
+                                                _vm.index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(" - ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "is-pulled-left",
+                                          staticStyle: {
+                                            "margin-left": "5px",
+                                            "margin-right": "5px"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "  " +
+                                              _vm._s(
+                                                produit_enregistre.quantite
+                                              ) +
+                                              "  "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "is-pulled-left button is-success",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.augmenteProduit(
+                                                produit_enregistre.quantite,
+                                                _vm.index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(" + ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          staticStyle: { "margin-left": "5px" },
+                                          attrs: { name: "liste_fournisseur" }
+                                        },
+                                        _vm._l(
+                                          produit_enregistre.fournisseurs,
+                                          function(fournisseur) {
+                                            return _c("option", [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(fournisseur.nom) +
+                                                  " "
+                                              ),
+                                              _c(
+                                                "span",
+                                                { attrs: { hidden: "" } },
+                                                [
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(fournisseur.id) +
+                                                      " "
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          }
+                                        )
+                                      )
+                                    ]),
+                                    _c("div", [
+                                      _vm._v(
+                                        "\n                                  Prix "
+                                      ),
+                                      _c("input", {
+                                        staticStyle: { width: "30px" },
+                                        attrs: { type: "text" },
+                                        domProps: {
+                                          value: produit_enregistre.prix
+                                        },
+                                        on: {
+                                          keyup: function($event) {
+                                            _vm.miseAJourProduitPrix(
+                                              $event,
+                                              _vm.index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" .- "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: {
+                                          id: "chkRemise",
+                                          type: "checkbox"
+                                        },
+                                        domProps: {
+                                          checked:
+                                            produit_enregistre.remiseBoolean
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.visibiliteRemise(
+                                              produit_enregistre.remiseBoolean,
+                                              _vm.index
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        " Remise\n                                  "
+                                      ),
+                                      _c(
+                                        "a",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value:
+                                                produit_enregistre.remiseBoolean,
+                                              expression:
+                                                "produit_enregistre.remiseBoolean"
+                                            }
+                                          ]
+                                        },
+                                        [
+                                          _c("input", {
+                                            staticStyle: { width: "30px" },
+                                            attrs: { type: "text" },
+                                            domProps: {
+                                              value:
+                                                produit_enregistre.remisePourcent
+                                            },
+                                            on: {
+                                              keyup: function($event) {
+                                                _vm.miseAJourRemise(
+                                                  $event,
+                                                  _vm.index
+                                                )
+                                              }
+                                            }
+                                          }),
+                                          _vm._v(" % "),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                                    Rabais : " +
+                                              _vm._s(
+                                                produit_enregistre.remisePrix
+                                              ) +
+                                              ".-\n                                  "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                                  Total : " +
+                                          _vm._s(produit_enregistre.total) +
+                                          ".-\n                                  "
+                                      ),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "button is-info",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.calculerPrix(
+                                                produit_enregistre.remisePourcent,
+                                                produit_enregistre.quantite,
+                                                produit_enregistre.prix,
+                                                produit_enregistre.remiseBoolean,
+                                                produit_enregistre.remisePrix,
+                                                _vm.index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(" Calculer ")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "is-pulled-right button is-danger",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.supprimerProduit(_vm.index)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(" Supprimer ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("button", {
+                                    staticClass: "modal-close",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.$emit("close")
+                                      }
+                                    }
+                                  })
+                                ])
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _c("hr"),
+                            _vm._v(" "),
+                            _c("h4", [_vm._v(" Nouveaux produits : ")]),
+                            _vm._v(" "),
                             _vm._l(_vm.produits_choisis, function(
                               produit,
                               index
@@ -37004,7 +37363,7 @@ var render = function() {
                                             _vm._v(
                                               " " +
                                                 _vm._s(fournisseur.nom) +
-                                                " "
+                                                "\n                                       "
                                             ),
                                             _c(
                                               "span",
@@ -37397,9 +37756,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("header", { staticClass: "card-header" }, [
-      _c("p", { staticClass: "card-header-title" }, [
-        _vm._v("\n              Articles\n            ")
-      ])
+      _c("h2", { staticClass: "card-header-title" }, [_vm._v(" Articles ")])
     ])
   }
 ]

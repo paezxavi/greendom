@@ -106,9 +106,7 @@
 
             <div class="card" style="margin-bottom:15px" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
               <header class="card-header">
-                <p class="card-header-title">
-                  Articles
-                </p>
+                  <h2 class="card-header-title"> Articles </h2>
               </header>
               <div class="card-content">
                 <div class="content">
@@ -116,7 +114,48 @@
                     <div class="columns is-mobile">
                       <div class="column">
 
+                        <!-- Liste produits enregistrés -->
+                        <h4> Produits enregistrés : </h4>
+                        <article class="media"  v-for="produit_enregistre in produits_enregistres"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
+                          <div class="media-left">
+                            <figure class="image is-64x64">
+                              <img :src="produit_enregistre.image" alt="Image">
+                            </figure>
+                          </div>
+                          <div class="media-content">
+                            <div class="content">
+                              <p>
+                                <strong> {{produit_enregistre.nom}} </strong>
+                                <br/>
+                                    <button class="is-pulled-left button is-danger" @click="diminueProduit(produit_enregistre.quantite, index)"> - </button>
+                                    <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
+                                    <button class="is-pulled-left button is-success" @click="augmenteProduit(produit_enregistre.quantite, index)"> + </button>
+
+                                    <select name="liste_fournisseur" style="margin-left:5px">
+                                         <option v-for="fournisseur in produit_enregistre.fournisseurs"> {{fournisseur.nom}} <span hidden> {{fournisseur.id}} </span> </option>
+                                    </select>
+                                    <div>
+                                      Prix <input :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrix($event, index)"> .- <br/>
+                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemise(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
+                                      <a v-show="produit_enregistre.remiseBoolean">
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemise($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
+                                        Rabais : {{produit_enregistre.remisePrix}}.-
+                                      </a>
+                                      <br/>
+                                      Total : {{produit_enregistre.total}}.-
+                                      <button class="button is-info" @click="calculerPrix(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
+                                    </div>
+                                <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                              </p>
+                            </div>
+                            <button class="modal-close" @click="$emit('close')"></button>
+                          </div>
+                        </article>
+
+                        <hr/>
+
                         <!-- Liste produits choisis -->
+                        <h4> Nouveaux produits : </h4>
                         <article class="media"  v-for="(produit, index) in produits_choisis"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
                           <div class="media-left">
                             <figure class="image is-64x64">
@@ -133,7 +172,9 @@
                                     <button class="is-pulled-left button is-success" @click="augmenteProduit(produit.quantite, index)"> + </button>
 
                                     <select name="liste_fournisseur" style="margin-left:5px">
-                                         <option v-for="fournisseur in produit.fournisseurs"> {{fournisseur.nom}} <span hidden> {{fournisseur.id}} </span> </option>
+                                         <option v-for="fournisseur in produit.fournisseurs"> {{fournisseur.nom}}
+                                           <span hidden> {{fournisseur.id}} </span>
+                                         </option>
                                     </select>
                                     <div>
                                       Prix <input type="text" style="width:30px" v-on:keyup="miseAJourProduitPrix($event, index)"> .- <br/>
@@ -206,7 +247,9 @@
                 active : false,
                 currentUser: "",
                 showModal: false,
-                produits_choisis: Store.$data.panier  //liée au store
+                produits_choisis: Store.$data.panier,
+                produits_enregistres: Store.$data.panierEnregistres,
+                produits_recuperes: ""
             }
         },
 
@@ -243,8 +286,21 @@
               //company
               axios.get('/company/'+this.$route.params.user+'/'+this.$route.params.commande)
                   .then(({data}) => this.company = data);
-            }
 
+              //Produits enregistrés dans la commande
+              axios.get('/produitsCommande/'+this.$route.params.commande)
+                  //.then(({data}) => this.produits_enregistres = data);
+                  .then(response => {
+                    this.produits_recuperes = response.data;
+                    Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
+              });
+          }
+
+              /*
+              axios.get('/fournisseurList/'+1)
+                  .then(response => {this.fournisseurs = response.data; Store.ajoutPanierProduitEnregistrer(this.produits_recuperes, this.fournisseurs)});
+              }
+              */
 
             /*//pdf
             axios.get('/commande/pdf')
@@ -415,13 +471,13 @@
                   {{produit.description}}
                 <div class="is-pulled-right">
                   <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
-                  <button class="button is-danger" @click="$emit('close')"> Fermer </button>
                 </div>
                 </p>
               </div>
-              <button class="modal-close" @click="$emit('close')"></button>
             </div>
           </article>
+          <button class="modal-close" @click="$emit('close')"></button>
+          <button class="button is-danger" @click="$emit('close')"> Fermer </button>
         </div>
       </div>
 

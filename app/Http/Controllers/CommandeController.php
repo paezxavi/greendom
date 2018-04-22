@@ -118,11 +118,15 @@ class CommandeController extends Controller
                                                     'remisePourcent' => $product['remisePourcent'],
                                                     'total' => $product['total']
                                                   ]));
-         echo "insert"; 
+         echo "insert";
         }
       }
     }
 
+    public function produitsEnregistres(Commande $commande) {
+      $commandeProduits = Commande::find($commande->id)->where('id',$commande->id)->get()->first();
+      return $commandeProduits->products()->get();
+    }
     /**
      * Display the specified resource.
      *
@@ -281,7 +285,7 @@ class CommandeController extends Controller
                     ->sortBy('commandes.dateDebut');
       return $list;
     }
-    
+
     public function mailFournisseurDemandePrix()
     {
       //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur

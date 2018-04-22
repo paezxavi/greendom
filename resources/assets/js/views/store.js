@@ -4,7 +4,8 @@ export const Store = new Vue({
 
 	data() {
 	    return {
-	    	panier: []
+	    	panier: [],
+				panierEnregistres: []
 	    };
 	},
 
@@ -34,7 +35,44 @@ export const Store = new Vue({
 				fournisseur,
 				fournisseurs
 					//fournisseurs []
-        	})
+      })
+		},
+
+		ajoutPanierProduitEnregistrer(produits_recuperes) {
+			console.log(produits_recuperes);
+			for (var i = 0; i < produits_recuperes.length; i++) {
+				var image = produits_recuperes[i].image;
+				var nom = produits_recuperes[i].nom;
+				var description = produits_recuperes[i].pivot.description;
+
+				var prix = produits_recuperes[i].pivot.prix;
+				var quantite = produits_recuperes[i].pivot.quantity;
+
+				var remiseBoolean = produits_recuperes[i].pivot.remiseBoolean;
+				var remisePrix = produits_recuperes[i].pivot.remisePrix;
+				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
+				var total = produits_recuperes[i].pivot.total;
+				//var fournisseur = fournisseurs[0];
+
+				console.log("quantite"+quantite);
+				console.log("prix"+prix);
+
+				this.panierEnregistres.push({
+					image,
+					nom,
+					//reference,
+					description,
+					prix,
+					quantite,
+					remiseBoolean,
+					remisePrix,
+					remisePourcent,
+					total
+					//fournisseur,
+					//fournisseurs
+						//fournisseurs []
+	    	})
+			}
 		},
 
 		supprimerPanier(id) {
