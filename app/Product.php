@@ -23,4 +23,8 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Provider','providers_products_pivot','product_id','provider_id');
     }
+
+    public function commandes() {
+        return $this->belongsToMany('App\Commandes','commandes_products_pivot','product_id','commande_id');
+    }
 }

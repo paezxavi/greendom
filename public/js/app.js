@@ -36354,6 +36354,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -36431,14 +36432,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //enregistrer modif commande
     enregistrer: function enregistrer() {
       var id = this.customer.id;
+      var commandId = this.commande.id;
       //IF offre SINON fournisseur
       if (!this.commande.id) {
         axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
-        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
-          window.location.href = '/#/listOrder/' + id;
+        axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
+          location.reload();
+          window.location.href = '/#/commande/' + id + '/' + commandId;
         });
       }
     },
@@ -36521,7 +36524,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return false;
     },
     enabledBtnEnvoyercommande: function enabledBtnEnvoyercommande() {
-      if (this.commande.status_id == 1) {
+      if (this.commande.status_id == 1 || this.commande.status_id == "") {
         return true;
       }
       return false;
@@ -37405,7 +37408,14 @@ var render = function() {
                     )
                   ])
                 : _vm._e()
-            ])
+            ]),
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.enabledBtnEnvoyercommande) +
+                "\n        " +
+                _vm._s(this.commande.status_id == "") +
+                "\n      "
+            )
           ]
         )
       ]
