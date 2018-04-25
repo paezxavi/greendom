@@ -8,6 +8,10 @@
                 <h1 class="title" v-show="commande.status_id == 1">Demande - En cours N°{{ this.commande.num_demande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 2">Demande - Envoyé N°{{ this.commande.num_demande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyé fournisseur N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyé client N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_offre }}</h1>
+
 
               </div>
 
@@ -168,15 +172,16 @@
 
 
             </div>
-
+            <!--{{this.commande.status_id}}
+            <div>Hello</div>-->
             <div class="field">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Valider Offre</button>
                 <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
-                <button @click.prevent="envoyerClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
+                <button @click.prevent="envoieClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" :disabled="this.commande.status_id !=5" v-show="enabledBtnEnvoyer" >Valider Offre</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
@@ -344,6 +349,19 @@
             .then(function(response){
               console.log('mail Envoyé');
             });
+            var id = this.customer.id;
+            axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+              .then(function(response){
+                window.location.href='/#/listOrder/'+id;
+            });
+          },
+
+          envoieClient(){
+            var id = this.customer.id;
+            axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
+              .then(function(response){
+                window.location.href='/#/listOrder/'+id;
+            });
           }
 
         },
@@ -364,7 +382,7 @@
           },
 
           enabledBtnEnvoyer(){
-            if (this.commande.status_id == 3){
+            if (this.commande.status_id >= 3||this.commande.status_id <= 5){
               return true;
             }
             return false;
@@ -378,7 +396,7 @@
           },
 
           enableAjoutProduits() {
-            if (this.commande.status_id == 3 && this.currentUser.employee) {
+            if (this.commande.status_id >= 3 && this.currentUser.employee) {
               return true;
             }
             return false;

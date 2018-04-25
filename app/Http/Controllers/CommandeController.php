@@ -223,6 +223,19 @@ class CommandeController extends Controller
       return $com;
     }
 
+    public function validerClient(Commande $commande)
+    {
+      $com = Commande::find($commande->id)->where('id', $commande->id)->get()->first();
+      if($com->status_id == 4){
+        $com->status_id = $com->status_id+1;
+      }else if($com->status_id == 3){
+        $com->status_id = $com->status_id+2;
+      }
+
+      $com->save();
+      return $com;
+    }
+
     public function demandeList()
     {
       $list = Commande::with('status','users')
@@ -252,7 +265,7 @@ class CommandeController extends Controller
                     ->sortBy('commandes.dateDebut');
       return $list;
     }
-    
+
     public function mailFournisseurDemandePrix()
     {
       //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur

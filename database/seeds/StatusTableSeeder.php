@@ -15,6 +15,8 @@ class StatusTableSeeder extends Seeder
              ['nom' => 'Demande - En cours'],
              ['nom' => 'Demande - Envoyé'],
              ['nom' => 'Offre - En cours'],
+             ['nom' => 'Offre - Envoyé fournisseur'],
+             ['nom' => 'Offre - Envoyé Client'],
              ['nom' => 'Commande - En cours'],
              ['nom' => 'Commande - Terminé'],
         ]);
