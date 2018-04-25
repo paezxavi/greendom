@@ -62,7 +62,8 @@ Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name
 Route::post('/updateDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
 Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
 
-Route::post('/fournisseurMailDemandePrix','CommandeController@mailFournisseurDemandePrix');
+Route::post('/fournisseurMailDemandePrix/{commande}','CommandeController@mailFournisseurDemandePrix');
+Route::post('/clientMailOffre/{commande}','CommandeController@mailClientOffre');
 
 Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supprimerProduit');
 

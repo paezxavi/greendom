@@ -26,7 +26,7 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-        <h1> Devis </h1>
+        <h1> Offre </h1>
       </div>
         Chemin du Pré-Fleuri 5 <br/>
         1228 Plan-Les-Ouates <br/>
@@ -42,7 +42,7 @@ table#t01 th {
         <br/>
         <br/>
 
-        <center> <b> À l'attention de </b> </center>
+        <center> <b> À l"'"attention de </b> </center>
         <p align="right">
           <b> Cacciapaglia Kevin </b> <br/>
           Chemin François-Chavaz 123 <br/>
@@ -59,18 +59,25 @@ table#t01 th {
 
         <br/>
         <table class="table table-hover table-condensed">
-       <thead>
-        <tr>
-         <th style="width:50%">Produit</th>
-         <th style="width:10%">Prix</th>
-         <th style="width:8%">Quantité</th>
-         <th style="width:22%">Total</th>
-         <th style="width:10%"></th>
-        </tr>
-       </thead>
-
-      </table>
-        <h4> Total : XXXXX </h4>
+            <thead>
+                <tr>
+                    <th style="width:25%">Produit</th>
+                    <th style="width:25%">Prix</th>
+                    <th style="width:25%">Quantité</th>
+                    <th style="width:25%">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($products as $product)
+                    <tr>
+                        <td>{{$product->nom}}</td>
+                        <td>CHF {{$product->pivot->prix}}.-</td>
+                        <td>{{$product->pivot->quantity}}</td>
+                        <td>CHF {{$product->pivot->total}}.-</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         <br/> <br/>
 
         <center> Merci d'effectuer le versement de votre acompte à: <br/>

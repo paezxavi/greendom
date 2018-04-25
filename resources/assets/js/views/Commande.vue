@@ -469,23 +469,28 @@
           },
 
           demandePrixFournisseur(){
-            axios.post('/fournisseurMailDemandePrix')
+            axios.post('/fournisseurMailDemandePrix/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
             });
+            /*
             var id = this.customer.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
-            });
+            });*/
           },
 
           envoieClient(){
-            var id = this.customer.id;
+            axios.post('/clientMailOffre/'+this.commande.id)
+            .then(function(response){
+              console.log('mail Envoyé');
+            });
+            /*var id = this.customer.id;
             axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
-            });
+            });*/
           }
 
         },
