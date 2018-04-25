@@ -17,7 +17,7 @@ class Commande extends Model
   }
 
   public function products() {
-    return $this->belongsToMany('App\Product','commandes_products_pivot','commande_id','product_id')->withPivot("quantity","prix","remisePrix","remiseBoolean","remisePourcent","total");
+    return $this->belongsToMany('App\Product','commandes_products_pivot','commande_id','product_id')->withPivot("quantity","prix","remisePrix","remiseBoolean","remisePourcent","total","fournisseur");
   }
 
 }

@@ -27,6 +27,13 @@ class ProvidersTableSeeder extends Seeder
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'
          ],
+         [
+          'nom' => 'Kevin SA',
+          'adresse' => 'rue Kevin',
+          'email' => 'Ampoule@hotmail.com',
+          'skype' => 'Ampoule_skype',
+          'iban' => '54654654654654645 4'
+         ],
        ]);
     }
 }

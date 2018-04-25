@@ -59,9 +59,12 @@ Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/validerClient/{commande}', 'CommandeController@validerClient');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
+Route::post('/updateDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
 Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
 
 Route::post('/fournisseurMailDemandePrix','CommandeController@mailFournisseurDemandePrix');
+
+Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supprimerProduit');
 
 
 
