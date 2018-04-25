@@ -13,7 +13,7 @@ use App\Commande;
 use App\Company;
 use App\Product;
 use Carbon\Carbon;
-use App\Mail\DevisEnvoye;
+use App\Mail\DemandeEnvoye;
 use App\Mail\FournisseurMail;
 use Illuminate\Auth\AuthenticationException;
 
@@ -47,7 +47,7 @@ class CommandeController extends Controller
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->insertNewDevis($request, 1);
         $user = User::where('employee', true)->get();
-        Mail::to($user)->send(new DevisEnvoye($request));
+        Mail::to($user)->send(new DemandeEnvoye($request));
       }
 
     }
@@ -92,8 +92,41 @@ class CommandeController extends Controller
       $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
+      foreach($request->products as $product){
+        $x = $customerDevis->products()
+                ->wherePivot('product_id', $product['fournisseur']['pivot']['product_id'])->first();
+        if ($x){
+          $customerDevis->products()->updateExistingPivot($product['fournisseur']['pivot']['product_id'] , ([
+                                                    'commande_id' => $request->commande['id'],
+                                                    'product_id' => $product['fournisseur']['pivot']['product_id'],
+                                                    'quantity' => $product['quantite'],
+                                                    'prix' => $product['prix'],
+                                                    'remiseBoolean' => $product['remiseBoolean'],
+                                                    'remisePrix' => $product['remisePrix'],
+                                                    'remisePourcent' => $product['remisePourcent'],
+                                                    'total' => $product['total']
+                                                  ]));
+          echo "update";
+        } else {
+          $customerDevis->products()->attach(1 , ([
+                                                    'commande_id' => $request->commande['id'],
+                                                    'product_id' => $product['fournisseur']['pivot']['product_id'],
+                                                    'quantity' => $product['quantite'],
+                                                    'prix' => $product['prix'],
+                                                    'remiseBoolean' => $product['remiseBoolean'],
+                                                    'remisePrix' => $product['remisePrix'],
+                                                    'remisePourcent' => $product['remisePourcent'],
+                                                    'total' => $product['total']
+                                                  ]));
+         echo "insert";
+        }
+      }
     }
 
+    public function produitsEnregistres(Commande $commande) {
+      $commandeProduits = Commande::find($commande->id)->where('id',$commande->id)->get()->first();
+      return $commandeProduits->products()->get();
+    }
     /**
      * Display the specified resource.
      *
