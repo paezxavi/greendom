@@ -76,6 +76,8 @@ class CommandeController extends Controller
     {
       if ($request->typeSubmit === 'Enregistrer'){
         $this->enregistrerCommande($request, 0);
+      } elseif ($request->typeSubmit === 'Update') {
+        $this->updateCommande($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->enregistrerCommande($request, 1);
         $user = User::where('employee', true)->get();
@@ -93,12 +95,36 @@ class CommandeController extends Controller
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
       foreach($request->products as $product){
-        $x = $customerDevis->products()
-                ->wherePivot('product_id', $product['fournisseur']['pivot']['product_id'])->first();
-        if ($x){
-          $customerDevis->products()->updateExistingPivot($product['fournisseur']['pivot']['product_id'] , ([
+          $customerDevis->products()->attach(1 , ([
                                                     'commande_id' => $request->commande['id'],
-                                                    'product_id' => $product['fournisseur']['pivot']['product_id'],
+                                                    'product_id' => $product['id'],
+                                                    'quantity' => $product['quantite'],
+                                                    'prix' => $product['prix'],
+                                                    'remiseBoolean' => $product['remiseBoolean'],
+                                                    'remisePrix' => $product['remisePrix'],
+                                                    'remisePourcent' => $product['remisePourcent'],
+                                                    'total' => $product['total'],
+                                                    'fournisseur' => $product['fournisseurChoisi']
+                                                  ]));
+         echo "insert";
+      }
+    }
+
+    public function updateCommande(Request $request, $typeSubmit){
+      $customerDevis = Commande::find($request->commande['id'])->where([
+                          ['id',$request->commande['id']]
+                          ])->get()->first();
+      $customerDevis->concerne = $request->commande['concerne'];
+      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
+      $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
+      $customerDevis->save();
+      $x = $customerDevis->products()->get(); //tous les produits
+      //dd($x);
+      
+      foreach($request->products as $product) {
+          $customerDevis->products()->updateExistingPivot($product['id'] , ([
+                                                    'commande_id' => $request->commande['id'],
+                                                    'product_id' => $product['id'],
                                                     'quantity' => $product['quantite'],
                                                     'prix' => $product['prix'],
                                                     'remiseBoolean' => $product['remiseBoolean'],
@@ -107,26 +133,28 @@ class CommandeController extends Controller
                                                     'total' => $product['total']
                                                   ]));
           echo "update";
-        } else {
-          $customerDevis->products()->attach(1 , ([
-                                                    'commande_id' => $request->commande['id'],
-                                                    'product_id' => $product['fournisseur']['pivot']['product_id'],
-                                                    'quantity' => $product['quantite'],
-                                                    'prix' => $product['prix'],
-                                                    'remiseBoolean' => $product['remiseBoolean'],
-                                                    'remisePrix' => $product['remisePrix'],
-                                                    'remisePourcent' => $product['remisePourcent'],
-                                                    'total' => $product['total']
-                                                  ]));
-         echo "insert";
-        }
       }
+      
     }
+    
 
     public function produitsEnregistres(Commande $commande) {
       $commandeProduits = Commande::find($commande->id)->where('id',$commande->id)->get()->first();
       return $commandeProduits->products()->get();
     }
+
+    public function supprimerProduit(Product $produit, Commande $commande) {
+      $getCommandeId = Commande::find($commande->id)->where('id',$commande->id)->get()->first();
+      $idCommande = $getCommandeId->id;
+
+      $getProduitId = Product::find($produit->id)->where('id',$produit->id)->get()->first();
+      $idProduit = $getProduitId->id;
+
+      $x = $getCommandeId->products()->wherePivot('product_id', $idProduit)->detach(); //le produit
+      //dd($x);
+    }
+
+
     /**
      * Display the specified resource.
      *

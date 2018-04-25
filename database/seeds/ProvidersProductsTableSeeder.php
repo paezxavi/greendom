@@ -17,6 +17,10 @@ class ProvidersProductsTableSeeder extends Seeder
                   'product_id' => 1
               ],
               [
+                'provider_id' => 3,
+                'product_id' => 1
+              ],
+              [
                   'provider_id' => 1,
                   'product_id' => 2
               ],

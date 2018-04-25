@@ -116,7 +116,7 @@
 
                         <!-- Liste produits enregistrés -->
                         <h4> Produits enregistrés : </h4>
-                        <article class="media"  v-for="produit_enregistre in produits_enregistres"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
+                        <article class="media"  v-for="(produit_enregistre, index) in produits_enregistres"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
                           <div class="media-left">
                             <figure class="image is-64x64">
                               <img :src="produit_enregistre.image" alt="Image">
@@ -127,25 +127,26 @@
                               <p>
                                 <strong> {{produit_enregistre.nom}} </strong>
                                 <br/>
-                                    <button class="is-pulled-left button is-danger" @click="diminueProduit(produit_enregistre.quantite, index)"> - </button>
+                                    <button class="is-pulled-left button is-danger" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
-                                    <button class="is-pulled-left button is-success" @click="augmenteProduit(produit_enregistre.quantite, index)"> + </button>
+                                    <button class="is-pulled-left button is-success" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
 
-                                    <select name="liste_fournisseur" style="margin-left:5px">
-                                         <option v-for="fournisseur in produit_enregistre.fournisseurs"> {{fournisseur.nom}} <span hidden> {{fournisseur.id}} </span> </option>
+                                    <select style="margin-left:5px" v-on:change="miseAJourFournisseurEnregistre($event, index)">
+                                         <option> {{produit_enregistre.fournisseurChoisi}} </option>
                                     </select>
+
                                     <div>
-                                      Prix <input :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrix($event, index)"> .- <br/>
-                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemise(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
+                                      Prix <input :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
+                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
                                       <a v-show="produit_enregistre.remiseBoolean">
-                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemise($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemiseEnregistre($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
                                         Rabais : {{produit_enregistre.remisePrix}}.-
                                       </a>
                                       <br/>
                                       Total : {{produit_enregistre.total}}.-
-                                      <button class="button is-info" @click="calculerPrix(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
+                                      <button class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
                                     </div>
-                                <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                <button @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
                             </div>
                             <button class="modal-close" @click="$emit('close')"></button>
@@ -167,27 +168,27 @@
                               <p>
                                 <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
                                 <br/>
-                                    <button class="is-pulled-left button is-danger" @click="diminueProduit(produit.quantite, index)"> - </button>
+                                    <button class="is-pulled-left button is-danger" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
-                                    <button class="is-pulled-left button is-success" @click="augmenteProduit(produit.quantite, index)"> + </button>
+                                    <button class="is-pulled-left button is-success" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
 
-                                    <select name="liste_fournisseur" style="margin-left:5px">
-                                         <option v-for="fournisseur in produit.fournisseurs"> {{fournisseur.nom}}
+                                    <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
+                                         <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
                                            <span hidden> {{fournisseur.id}} </span>
                                          </option>
                                     </select>
                                     <div>
-                                      Prix <input type="text" style="width:30px" v-on:keyup="miseAJourProduitPrix($event, index)"> .- <br/>
-                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemise(produit.remiseBoolean, index)"> Remise
+                                      Prix <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
+                                      <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)"> Remise
                                       <a v-show="produit.remiseBoolean">
-                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemise($event, index)"> % <br/>
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
                                         Rabais : {{produit.remisePrix}}.-
                                       </a>
                                       <br/>
                                       Total : {{produit.total}}.-
-                                      <button class="button is-info" @click="calculerPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                      <button class="button is-info" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
                                     </div>
-                                <button @click="supprimerProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
                             </div>
                             <button class="modal-close" @click="$emit('close')"></button>
@@ -295,16 +296,6 @@
                     Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
               });
           }
-
-              /*
-              axios.get('/fournisseurList/'+1)
-                  .then(response => {this.fournisseurs = response.data; Store.ajoutPanierProduitEnregistrer(this.produits_recuperes, this.fournisseurs)});
-              }
-              */
-
-            /*//pdf
-            axios.get('/commande/pdf')
-                .then(console.log(""));*/
         },
 
         methods:{
@@ -319,20 +310,30 @@
                         window.location.href='/#/listOrder/'+id;
                       });
             } else {
+              //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
                         location.reload();
                         window.location.href='/#/commande/'+id+'/'+commandId;
                       });
+              //Produits enregistres
+              axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
+                    .then(function (response) {
+                      location.reload();
+                      window.location.href='/#/commande/'+id+'/'+commandId;
+                    });
+                    
+                    
             }
           },
 
           //METHODES POUR L'OFFRE
-          augmenteProduit(quantite, index) {
+          //Nouveaux Produits
+          augmenteNouveauProduit(quantite, index) {
             this.produits_choisis[index].quantite = quantite+1;
           },
 
-          diminueProduit(quantite, index) {
+          diminueNouveauProduit(quantite, index) {
             if (this.produits_choisis[index].quantite == 1) {
               this.produits_choisis[index].quantite = quantite+0;
             } else {
@@ -340,11 +341,17 @@
             }
           },
 
-          supprimerProduit(index) {
+          supprimerNouveauProduit(index) {
             this.produits_choisis.splice(index, 1);
           },
 
-          visibiliteRemise(remise, index) {
+          miseAJourNouveauFournisseur(e, index) {
+            var fournisseur = e.target.value;
+            this.produits_choisis[index].fournisseurChoisi = fournisseur; //id,nom
+            console.log("Fournisseur : "+fournisseur);
+          },
+
+          visibiliteNouveauRemise(remise, index) {
             if (remise == false) {
               this.produits_choisis[index].remiseBoolean = true;
             } else {
@@ -354,17 +361,17 @@
             }
           },
 
-          miseAJourProduitPrix(e, index) {
+          miseAJourNouveauProduitPrix(e, index) {
             console.log("CHF"+e.target.value);
             this.produits_choisis[index].prix = e.target.value;
           },
 
-          miseAJourRemise(e, index) {
+          miseAJourNouveauRemise(e, index) {
             console.log("%"+e.target.value);
             this.produits_choisis[index].remisePourcent = e.target.value;
           },
 
-          calculerPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
+          calculerNouveauPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
             console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
             var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
             console.log(remiseCalcul);
@@ -372,6 +379,64 @@
             this.produits_choisis[index].remisePourcent = txtRemisePourcent;
             this.produits_choisis[index].remisePrix = remiseCalcul;
             this.produits_choisis[index].total = prixTotal-remiseCalcul;
+          },
+
+          //Produits Enregistres
+          augmenteProduitEnregistre(quantite, index) {
+            this.produits_enregistres[index].quantite = quantite+1;
+          },
+
+          diminueProduitEnregistre(quantite, index) {
+            if (this.produits_enregistres[index].quantite == 1) {
+              this.produits_enregistres[index].quantite = quantite+0;
+            } else {
+              this.produits_enregistres[index].quantite = quantite-1;
+            }
+          },
+
+          supprimerProduitEnregistre(index) {
+            var idProduit = this.produits_enregistres[index].id;
+            console.log(idProduit);
+            axios.delete('/supprimerProduit/'+idProduit+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
+              .then(function (response) {
+                //location.reload();
+                //window.location.href='/#/commande/'+id+'/'+commandId;
+            });
+            this.produits_enregistres.splice(index, 1);
+          },
+
+          miseAJourFournisseurEnregistre(e, index) {
+            //this.produits_enregistres[index].fournisseurChoisi = e.target.value;
+            console.log("Fournisseur : "+e.target.value);
+          },
+
+          visibiliteRemiseEnregistre(remise, index) {
+            if (remise == false) {
+              this.produits_enregistres[index].remiseBoolean = true;
+            } else {
+              this.produits_enregistres[index].remiseBoolean = false;
+              this.produits_enregistres[index].remisePourcent = 0;
+              this.produits_enregistres[index].remisePrix = 0;
+            }
+          },
+
+          miseAJourProduitPrixEnregistre(e, index) {
+            console.log("CHF"+e.target.value);
+            this.produits_enregistres[index].prix = e.target.value;
+          },
+
+          miseAJourRemiseEnregistre(e, index) {
+            console.log("%"+e.target.value);
+            this.produits_enregistres[index].remisePourcent = e.target.value;
+          },
+
+          calculerPrixEnregistre(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
+            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
+            var prixTotal = prix * quantite;
+            this.produits_enregistres[index].remisePourcent = txtRemisePourcent;
+            this.produits_enregistres[index].remisePrix = remiseCalcul;
+            this.produits_enregistres[index].total = prixTotal-remiseCalcul;
           },
           //FIN METHODES POUR OFFRE
 
