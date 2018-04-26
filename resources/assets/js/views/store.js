@@ -11,6 +11,7 @@ export const Store = new Vue({
 
 	methods: {
 		ajoutPanier(produit, reference, fournisseurs) {
+			var id = produit.id;
 			var image = produit.image;
 			var nom = produit.nom;
 			var description = produit.description;
@@ -19,10 +20,12 @@ export const Store = new Vue({
 			var remisePrix = 0;
 			var remisePourcent = 0;
 			var total = prix - remisePrix;
-			var fournisseur = fournisseurs[0];
+			var fournisseurChoisi = fournisseurs[0].nom;
+			console.log(fournisseurs);
 
 			this.panier.push({
 				image,
+				id,
 				nom,
 				reference,
 				description,
@@ -32,16 +35,18 @@ export const Store = new Vue({
 				remisePrix,
 				remisePourcent,
 				total,
-				fournisseur,
+				fournisseurChoisi,
 				fournisseurs
-					//fournisseurs []
-      })
+					
+      		})
 		},
 
 		ajoutPanierProduitEnregistrer(produits_recuperes) {
 			console.log(produits_recuperes);
 			for (var i = 0; i < produits_recuperes.length; i++) {
 				var image = produits_recuperes[i].image;
+				var reference = produits_recuperes[i].reference;
+				var id = produits_recuperes[i].id;
 				var nom = produits_recuperes[i].nom;
 				var description = produits_recuperes[i].pivot.description;
 
@@ -52,26 +57,54 @@ export const Store = new Vue({
 				var remisePrix = produits_recuperes[i].pivot.remisePrix;
 				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
 				var total = produits_recuperes[i].pivot.total;
-				//var fournisseur = fournisseurs[0];
-
-				console.log("quantite"+quantite);
-				console.log("prix"+prix);
-
-				this.panierEnregistres.push({
-					image,
-					nom,
-					//reference,
-					description,
-					prix,
-					quantite,
-					remiseBoolean,
-					remisePrix,
-					remisePourcent,
-					total
-					//fournisseur,
-					//fournisseurs
-						//fournisseurs []
-	    	})
+				var fournisseurChoisi = produits_recuperes[i].pivot.fournisseur;
+				if(this.panierEnregistres.length == 0){
+					console.log("panier vide");
+						this.panierEnregistres.push({
+							image,
+							id,
+							nom,
+							reference,
+							description,
+							prix,
+							quantite,
+							remiseBoolean,
+							remisePrix,
+							remisePourcent,
+							total,
+							fournisseurChoisi
+							//fournisseurs
+								//fournisseurs []
+						})
+				} else {
+					console.log("pas vide");
+					var count = 0;
+					for(var k = 0; k < this.panierEnregistres.length; k++){
+						console.log(this.panierEnregistres[k]);
+						if(this.panierEnregistres[k].id != id){
+							count = count + 1;
+						}
+					}
+					if(count == this.panierEnregistres.length){
+						this.panierEnregistres.push({
+							image,
+							id,
+							nom,
+							reference,
+							description,
+							prix,
+							quantite,
+							remiseBoolean,
+							remisePrix,
+							remisePourcent,
+							total,
+							fournisseurChoisi
+							//fournisseurs
+								//fournisseurs []
+						})
+					}
+				}
+				
 			}
 		},
 

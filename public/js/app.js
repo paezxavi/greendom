@@ -32643,7 +32643,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
@@ -36388,6 +36388,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -36464,16 +36470,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanierProduitEnregistrer(_this.produits_recuperes);
       });
     }
-
-    /*
-    axios.get('/fournisseurList/'+1)
-        .then(response => {this.fournisseurs = response.data; Store.ajoutPanierProduitEnregistrer(this.produits_recuperes, this.fournisseurs)});
-    }
-    */
-
-    /*//pdf
-    axios.get('/commande/pdf')
-        .then(console.log(""));*/
   },
 
 
@@ -36488,7 +36484,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           window.location.href = '/#/listOrder/' + id;
         });
       } else {
+        //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
+          location.reload();
+          window.location.href = '/#/commande/' + id + '/' + commandId;
+        });
+        //Produits enregistres
+        axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
           location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
@@ -36497,20 +36499,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     //METHODES POUR L'OFFRE
-    augmenteProduit: function augmenteProduit(quantite, index) {
+    //Nouveaux Produits
+    augmenteNouveauProduit: function augmenteNouveauProduit(quantite, index) {
       this.produits_choisis[index].quantite = quantite + 1;
     },
-    diminueProduit: function diminueProduit(quantite, index) {
+    diminueNouveauProduit: function diminueNouveauProduit(quantite, index) {
       if (this.produits_choisis[index].quantite == 1) {
         this.produits_choisis[index].quantite = quantite + 0;
       } else {
         this.produits_choisis[index].quantite = quantite - 1;
       }
     },
-    supprimerProduit: function supprimerProduit(index) {
+    supprimerNouveauProduit: function supprimerNouveauProduit(index) {
       this.produits_choisis.splice(index, 1);
     },
-    visibiliteRemise: function visibiliteRemise(remise, index) {
+    miseAJourNouveauFournisseur: function miseAJourNouveauFournisseur(e, index) {
+      var fournisseur = e.target.value;
+      this.produits_choisis[index].fournisseurChoisi = fournisseur; //id,nom
+      console.log("Fournisseur : " + fournisseur);
+    },
+    visibiliteNouveauRemise: function visibiliteNouveauRemise(remise, index) {
       if (remise == false) {
         this.produits_choisis[index].remiseBoolean = true;
       } else {
@@ -36519,15 +36527,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.produits_choisis[index].remisePrix = 0;
       }
     },
-    miseAJourProduitPrix: function miseAJourProduitPrix(e, index) {
+    miseAJourNouveauProduitPrix: function miseAJourNouveauProduitPrix(e, index) {
       console.log("CHF" + e.target.value);
       this.produits_choisis[index].prix = e.target.value;
     },
-    miseAJourRemise: function miseAJourRemise(e, index) {
+    miseAJourNouveauRemise: function miseAJourNouveauRemise(e, index) {
       console.log("%" + e.target.value);
       this.produits_choisis[index].remisePourcent = e.target.value;
     },
-    calculerPrix: function calculerPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) {
+    calculerNouveauPrix: function calculerNouveauPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) {
       //checker si remise, prix, remise, gain, total
       console.log("remisePourcent" + txtRemisePourcent + " quantité " + quantite + " prix " + prix + " remise " + remise + " remisePrix " + remisePrix);
       var remiseCalcul = quantite * prix * txtRemisePourcent / 100;
@@ -36536,6 +36544,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.produits_choisis[index].remisePourcent = txtRemisePourcent;
       this.produits_choisis[index].remisePrix = remiseCalcul;
       this.produits_choisis[index].total = prixTotal - remiseCalcul;
+    },
+
+
+    //Produits Enregistres
+    augmenteProduitEnregistre: function augmenteProduitEnregistre(quantite, index) {
+      this.produits_enregistres[index].quantite = quantite + 1;
+    },
+    diminueProduitEnregistre: function diminueProduitEnregistre(quantite, index) {
+      if (this.produits_enregistres[index].quantite == 1) {
+        this.produits_enregistres[index].quantite = quantite + 0;
+      } else {
+        this.produits_enregistres[index].quantite = quantite - 1;
+      }
+    },
+    supprimerProduitEnregistre: function supprimerProduitEnregistre(index) {
+      var idProduit = this.produits_enregistres[index].id;
+      console.log(idProduit);
+      axios.delete('/supprimerProduit/' + idProduit + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        //location.reload();
+        //window.location.href='/#/commande/'+id+'/'+commandId;
+      });
+      this.produits_enregistres.splice(index, 1);
+    },
+    miseAJourFournisseurEnregistre: function miseAJourFournisseurEnregistre(e, index) {
+      //this.produits_enregistres[index].fournisseurChoisi = e.target.value;
+      console.log("Fournisseur : " + e.target.value);
+    },
+    visibiliteRemiseEnregistre: function visibiliteRemiseEnregistre(remise, index) {
+      if (remise == false) {
+        this.produits_enregistres[index].remiseBoolean = true;
+      } else {
+        this.produits_enregistres[index].remiseBoolean = false;
+        this.produits_enregistres[index].remisePourcent = 0;
+        this.produits_enregistres[index].remisePrix = 0;
+      }
+    },
+    miseAJourProduitPrixEnregistre: function miseAJourProduitPrixEnregistre(e, index) {
+      console.log("CHF" + e.target.value);
+      this.produits_enregistres[index].prix = e.target.value;
+    },
+    miseAJourRemiseEnregistre: function miseAJourRemiseEnregistre(e, index) {
+      console.log("%" + e.target.value);
+      this.produits_enregistres[index].remisePourcent = e.target.value;
+    },
+    calculerPrixEnregistre: function calculerPrixEnregistre(txtRemisePourcent, quantite, prix, remise, remisePrix, index) {
+      //checker si remise, prix, remise, gain, total
+      console.log("remisePourcent" + txtRemisePourcent + " quantité " + quantite + " prix " + prix + " remise " + remise + " remisePrix " + remisePrix);
+      var remiseCalcul = quantite * prix * txtRemisePourcent / 100;
+      var prixTotal = prix * quantite;
+      this.produits_enregistres[index].remisePourcent = txtRemisePourcent;
+      this.produits_enregistres[index].remisePrix = remiseCalcul;
+      this.produits_enregistres[index].total = prixTotal - remiseCalcul;
     },
 
     //FIN METHODES POUR OFFRE
@@ -36559,8 +36619,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     demandePrixFournisseur: function demandePrixFournisseur() {
-      axios.post('/fournisseurMailDemandePrix').then(function (response) {
+      axios.post('/fournisseurMailDemandePrix/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
+      });
+      var id = this.customer.id;
+      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
+      });
+    },
+    envoieClient: function envoieClient() {
+      axios.post('/clientMailOffre/' + this.commande.id).then(function (response) {
+        console.log('mail Envoyé');
+      });
+      var id = this.customer.id;
+      axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
       });
     }
   },
@@ -36579,7 +36652,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return false;
     },
     enabledBtnEnvoyer: function enabledBtnEnvoyer() {
-      if (this.commande.status_id == 3) {
+      if (this.commande.status_id >= 3 || this.commande.status_id <= 5) {
         return true;
       }
       return false;
@@ -36591,7 +36664,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return false;
     },
     enableAjoutProduits: function enableAjoutProduits() {
-      if (this.commande.status_id == 3 && this.currentUser.employee) {
+      if (this.commande.status_id >= 3 && this.currentUser.employee) {
         return true;
       }
       return false;
@@ -36656,6 +36729,7 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 	methods: {
 		ajoutPanier: function ajoutPanier(produit, reference, fournisseurs) {
+			var id = produit.id;
 			var image = produit.image;
 			var nom = produit.nom;
 			var description = produit.description;
@@ -36664,10 +36738,12 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 			var remisePrix = 0;
 			var remisePourcent = 0;
 			var total = prix - remisePrix;
-			var fournisseur = fournisseurs[0];
+			var fournisseurChoisi = fournisseurs[0].nom;
+			console.log(fournisseurs);
 
 			this.panier.push({
 				image: image,
+				id: id,
 				nom: nom,
 				reference: reference,
 				description: description,
@@ -36677,15 +36753,17 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 				remisePrix: remisePrix,
 				remisePourcent: remisePourcent,
 				total: total,
-				fournisseur: fournisseur,
+				fournisseurChoisi: fournisseurChoisi,
 				fournisseurs: fournisseurs
-				//fournisseurs []
+
 			});
 		},
 		ajoutPanierProduitEnregistrer: function ajoutPanierProduitEnregistrer(produits_recuperes) {
 			console.log(produits_recuperes);
 			for (var i = 0; i < produits_recuperes.length; i++) {
 				var image = produits_recuperes[i].image;
+				var reference = produits_recuperes[i].reference;
+				var id = produits_recuperes[i].id;
 				var nom = produits_recuperes[i].nom;
 				var description = produits_recuperes[i].pivot.description;
 
@@ -36696,26 +36774,53 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 				var remisePrix = produits_recuperes[i].pivot.remisePrix;
 				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
 				var total = produits_recuperes[i].pivot.total;
-				//var fournisseur = fournisseurs[0];
-
-				console.log("quantite" + quantite);
-				console.log("prix" + prix);
-
-				this.panierEnregistres.push({
-					image: image,
-					nom: nom,
-					//reference,
-					description: description,
-					prix: prix,
-					quantite: quantite,
-					remiseBoolean: remiseBoolean,
-					remisePrix: remisePrix,
-					remisePourcent: remisePourcent,
-					total: total
-					//fournisseur,
-					//fournisseurs
-					//fournisseurs []
-				});
+				var fournisseurChoisi = produits_recuperes[i].pivot.fournisseur;
+				if (this.panierEnregistres.length == 0) {
+					console.log("panier vide");
+					this.panierEnregistres.push({
+						image: image,
+						id: id,
+						nom: nom,
+						reference: reference,
+						description: description,
+						prix: prix,
+						quantite: quantite,
+						remiseBoolean: remiseBoolean,
+						remisePrix: remisePrix,
+						remisePourcent: remisePourcent,
+						total: total,
+						fournisseurChoisi: fournisseurChoisi
+						//fournisseurs
+						//fournisseurs []
+					});
+				} else {
+					console.log("pas vide");
+					var count = 0;
+					for (var k = 0; k < this.panierEnregistres.length; k++) {
+						console.log(this.panierEnregistres[k]);
+						if (this.panierEnregistres[k].id != id) {
+							count = count + 1;
+						}
+					}
+					if (count == this.panierEnregistres.length) {
+						this.panierEnregistres.push({
+							image: image,
+							id: id,
+							nom: nom,
+							reference: reference,
+							description: description,
+							prix: prix,
+							quantite: quantite,
+							remiseBoolean: remiseBoolean,
+							remisePrix: remisePrix,
+							remisePourcent: remisePourcent,
+							total: total,
+							fournisseurChoisi: fournisseurChoisi
+							//fournisseurs
+							//fournisseurs []
+						});
+					}
+				}
 			}
 		},
 		supprimerPanier: function supprimerPanier(id) {
@@ -36806,6 +36911,68 @@ var render = function() {
                   [
                     _vm._v(
                       "Offre - En cours N°" + _vm._s(this.commande.num_offre)
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h1",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.commande.status_id == 4,
+                        expression: "commande.status_id == 4"
+                      }
+                    ],
+                    staticClass: "title"
+                  },
+                  [
+                    _vm._v(
+                      "Offre - Envoyé fournisseur N°" +
+                        _vm._s(this.commande.num_offre)
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h1",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.commande.status_id == 5,
+                        expression: "commande.status_id == 5"
+                      }
+                    ],
+                    staticClass: "title"
+                  },
+                  [
+                    _vm._v(
+                      "Offre - Envoyé client N°" +
+                        _vm._s(this.commande.num_offre)
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h1",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.commande.status_id == 6,
+                        expression: "commande.status_id == 6"
+                      }
+                    ],
+                    staticClass: "title"
+                  },
+                  [
+                    _vm._v(
+                      "Commande - En cours N°" + _vm._s(this.commande.num_offre)
                     )
                   ]
                 )
@@ -37038,7 +37205,8 @@ var render = function() {
                             _c("h4", [_vm._v(" Produits enregistrés : ")]),
                             _vm._v(" "),
                             _vm._l(_vm.produits_enregistres, function(
-                              produit_enregistre
+                              produit_enregistre,
+                              index
                             ) {
                               return _c("article", { staticClass: "media" }, [
                                 _c("div", { staticClass: "media-left" }, [
@@ -37076,9 +37244,9 @@ var render = function() {
                                             "is-pulled-left button is-danger",
                                           on: {
                                             click: function($event) {
-                                              _vm.diminueProduit(
+                                              _vm.diminueProduitEnregistre(
                                                 produit_enregistre.quantite,
-                                                _vm.index
+                                                index
                                               )
                                             }
                                           }
@@ -37113,9 +37281,9 @@ var render = function() {
                                             "is-pulled-left button is-success",
                                           on: {
                                             click: function($event) {
-                                              _vm.augmenteProduit(
+                                              _vm.augmenteProduitEnregistre(
                                                 produit_enregistre.quantite,
-                                                _vm.index
+                                                index
                                               )
                                             }
                                           }
@@ -37127,31 +37295,26 @@ var render = function() {
                                         "select",
                                         {
                                           staticStyle: { "margin-left": "5px" },
-                                          attrs: { name: "liste_fournisseur" }
-                                        },
-                                        _vm._l(
-                                          produit_enregistre.fournisseurs,
-                                          function(fournisseur) {
-                                            return _c("option", [
-                                              _vm._v(
-                                                " " +
-                                                  _vm._s(fournisseur.nom) +
-                                                  " "
-                                              ),
-                                              _c(
-                                                "span",
-                                                { attrs: { hidden: "" } },
-                                                [
-                                                  _vm._v(
-                                                    " " +
-                                                      _vm._s(fournisseur.id) +
-                                                      " "
-                                                  )
-                                                ]
+                                          on: {
+                                            change: function($event) {
+                                              _vm.miseAJourFournisseurEnregistre(
+                                                $event,
+                                                index
                                               )
-                                            ])
+                                            }
                                           }
-                                        )
+                                        },
+                                        [
+                                          _c("option", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  produit_enregistre.fournisseurChoisi
+                                                ) +
+                                                " "
+                                            )
+                                          ])
+                                        ]
                                       )
                                     ]),
                                     _c("div", [
@@ -37166,9 +37329,9 @@ var render = function() {
                                         },
                                         on: {
                                           keyup: function($event) {
-                                            _vm.miseAJourProduitPrix(
+                                            _vm.miseAJourProduitPrixEnregistre(
                                               $event,
-                                              _vm.index
+                                              index
                                             )
                                           }
                                         }
@@ -37187,9 +37350,9 @@ var render = function() {
                                         },
                                         on: {
                                           click: function($event) {
-                                            _vm.visibiliteRemise(
+                                            _vm.visibiliteRemiseEnregistre(
                                               produit_enregistre.remiseBoolean,
-                                              _vm.index
+                                              index
                                             )
                                           }
                                         }
@@ -37221,9 +37384,9 @@ var render = function() {
                                             },
                                             on: {
                                               keyup: function($event) {
-                                                _vm.miseAJourRemise(
+                                                _vm.miseAJourRemiseEnregistre(
                                                   $event,
-                                                  _vm.index
+                                                  index
                                                 )
                                               }
                                             }
@@ -37252,13 +37415,13 @@ var render = function() {
                                           staticClass: "button is-info",
                                           on: {
                                             click: function($event) {
-                                              _vm.calculerPrix(
+                                              _vm.calculerPrixEnregistre(
                                                 produit_enregistre.remisePourcent,
                                                 produit_enregistre.quantite,
                                                 produit_enregistre.prix,
                                                 produit_enregistre.remiseBoolean,
                                                 produit_enregistre.remisePrix,
-                                                _vm.index
+                                                index
                                               )
                                             }
                                           }
@@ -37274,7 +37437,9 @@ var render = function() {
                                           "is-pulled-right button is-danger",
                                         on: {
                                           click: function($event) {
-                                            _vm.supprimerProduit(_vm.index)
+                                            _vm.supprimerProduitEnregistre(
+                                              index
+                                            )
                                           }
                                         }
                                       },
@@ -37348,7 +37513,7 @@ var render = function() {
                                             "is-pulled-left button is-danger",
                                           on: {
                                             click: function($event) {
-                                              _vm.diminueProduit(
+                                              _vm.diminueNouveauProduit(
                                                 produit.quantite,
                                                 index
                                               )
@@ -37383,7 +37548,7 @@ var render = function() {
                                             "is-pulled-left button is-success",
                                           on: {
                                             click: function($event) {
-                                              _vm.augmenteProduit(
+                                              _vm.augmenteNouveauProduit(
                                                 produit.quantite,
                                                 index
                                               )
@@ -37397,29 +37562,44 @@ var render = function() {
                                         "select",
                                         {
                                           staticStyle: { "margin-left": "5px" },
-                                          attrs: { name: "liste_fournisseur" }
+                                          on: {
+                                            change: function($event) {
+                                              _vm.miseAJourNouveauFournisseur(
+                                                $event,
+                                                index
+                                              )
+                                            }
+                                          }
                                         },
                                         _vm._l(produit.fournisseurs, function(
                                           fournisseur
                                         ) {
-                                          return _c("option", [
-                                            _vm._v(
-                                              " " +
-                                                _vm._s(fournisseur.nom) +
-                                                "\n                                       "
-                                            ),
-                                            _c(
-                                              "span",
-                                              { attrs: { hidden: "" } },
-                                              [
-                                                _vm._v(
-                                                  " " +
-                                                    _vm._s(fournisseur.id) +
-                                                    " "
-                                                )
-                                              ]
-                                            )
-                                          ])
+                                          return _c(
+                                            "option",
+                                            {
+                                              domProps: {
+                                                value: fournisseur.nom
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(fournisseur.nom) +
+                                                  "\n                                       "
+                                              ),
+                                              _c(
+                                                "span",
+                                                { attrs: { hidden: "" } },
+                                                [
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(fournisseur.id) +
+                                                      " "
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
                                         })
                                       )
                                     ]),
@@ -37432,7 +37612,7 @@ var render = function() {
                                         attrs: { type: "text" },
                                         on: {
                                           keyup: function($event) {
-                                            _vm.miseAJourProduitPrix(
+                                            _vm.miseAJourNouveauProduitPrix(
                                               $event,
                                               index
                                             )
@@ -37449,7 +37629,7 @@ var render = function() {
                                         },
                                         on: {
                                           click: function($event) {
-                                            _vm.visibiliteRemise(
+                                            _vm.visibiliteNouveauRemise(
                                               produit.remiseBoolean,
                                               index
                                             )
@@ -37478,7 +37658,7 @@ var render = function() {
                                             attrs: { type: "text" },
                                             on: {
                                               keyup: function($event) {
-                                                _vm.miseAJourRemise(
+                                                _vm.miseAJourNouveauRemise(
                                                   $event,
                                                   index
                                                 )
@@ -37507,7 +37687,7 @@ var render = function() {
                                           staticClass: "button is-info",
                                           on: {
                                             click: function($event) {
-                                              _vm.calculerPrix(
+                                              _vm.calculerNouveauPrix(
                                                 produit.remisePourcent,
                                                 produit.quantite,
                                                 produit.prix,
@@ -37529,7 +37709,7 @@ var render = function() {
                                           "is-pulled-right button is-danger",
                                         on: {
                                           click: function($event) {
-                                            _vm.supprimerProduit(index)
+                                            _vm.supprimerNouveauProduit(index)
                                           }
                                         }
                                       },
@@ -37652,58 +37832,6 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.enabledBtnPasserEncours,
-                            expression: "enabledBtnPasserEncours"
-                          }
-                        ],
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.passerEtapeSuivante($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Valider commande")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.enabledBtnEnvoyer,
-                            expression: "enabledBtnEnvoyer"
-                          }
-                        ],
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.passerEtapeSuivante($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Valider Offre")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
                             value: _vm.enabledBtnEnvoyer,
                             expression: "enabledBtnEnvoyer"
                           }
@@ -37742,11 +37870,64 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.envoyerClient($event)
+                            _vm.envoieClient($event)
                           }
                         }
                       },
                       [_vm._v("Envoyer au Client")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnEnvoyer,
+                            expression: "enabledBtnEnvoyer"
+                          }
+                        ],
+                        staticClass: "button is-success",
+                        staticStyle: {
+                          "margin-left": "2px",
+                          "margin-right": "2px"
+                        },
+                        attrs: { disabled: this.commande.status_id != 5 },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.passerEtapeSuivante($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Valider Offre")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnPasserEncours,
+                            expression: "enabledBtnPasserEncours"
+                          }
+                        ],
+                        staticClass: "button is-success",
+                        staticStyle: {
+                          "margin-left": "2px",
+                          "margin-right": "2px"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.passerEtapeSuivante($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Valider commande")]
                     ),
                     _vm._v(" "),
                     _c(
