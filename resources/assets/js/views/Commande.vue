@@ -96,11 +96,12 @@
 
               <div class="field" v-if="!visibiliteActioncommandeEnvoye">
                 <div class="field">
-                <input type="file" id="files" ref="files" multiple v-on:change="handleFileUploads()"/>
+                  <input type="file" id="files" ref="files" multiple @change="processFile()">
+                </div>
+                <div v-for="file in this.files">
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a>
+                </div>
               </div>
-              </div>
-
-
             </form>
 
             <!-- TRAVAILLE KEVIN/FRANK // Pour tester-->
@@ -131,80 +132,80 @@
                               <p>
                                 <strong> {{produit_enregistre.nom}} </strong>
                                 <br/>
-                                    <button class="is-pulled-left button is-danger" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
-                                    <button class="is-pulled-left button is-success" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-success" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
 
-                                    <select style="margin-left:5px" v-on:change="miseAJourFournisseurEnregistre($event, index)">
+                                    <select v-if="enabledOffre" style="margin-left:5px" v-on:change="miseAJourFournisseurEnregistre($event, index)">
                                          <option> {{produit_enregistre.fournisseurChoisi}} </option>
                                     </select>
 
                                     <div>
-                                      Prix <input :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
-                                      <input id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
+                                      Prix <input :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
+                                      <input :disabled='!enabledOffre' id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
                                       <a v-show="produit_enregistre.remiseBoolean">
-                                        <input type="text" style="width:30px" v-on:keyup="miseAJourRemiseEnregistre($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
+                                        <input :disabled='!enabledOffre' type="text" style="width:30px" v-on:keyup="miseAJourRemiseEnregistre($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
                                         Rabais : {{produit_enregistre.remisePrix}}.-
                                       </a>
                                       <br/>
                                       Total : {{produit_enregistre.total}}.-
-                                      <button class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
+                                      <button v-if="enabledOffre" class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
                                     </div>
-                                <button @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                <button v-if="enabledOffre" @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
                             </div>
                             <button class="modal-close" @click="$emit('close')"></button>
                           </div>
                         </article>
-
-                        <hr/>
-
-                        <!-- Liste produits choisis -->
-                        <h4> Nouveaux produits : </h4>
-                        <article class="media"  v-for="(produit, index) in produits_choisis"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
-                          <div class="media-left">
-                            <figure class="image is-64x64">
-                              <img :src="produit.image" alt="Image">
-                            </figure>
-                          </div>
-                          <div class="media-content">
-                            <div class="content">
-                              <p>
-                                <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                                <br/>
-                                    <button class="is-pulled-left button is-danger" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
-                                    <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
-                                    <button class="is-pulled-left button is-success" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
-
-                                    <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
-                                         <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
-                                           <span hidden> {{fournisseur.id}} </span>
-                                         </option>
-                                    </select>
-                                    <div>
-                                      Prix <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
-                                      <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)"> Remise
-                                      <a v-show="produit.remiseBoolean">
-                                        <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
-                                        Rabais : {{produit.remisePrix}}.-
-                                      </a>
-                                      <br/>
-                                      Total : {{produit.total}}.-
-                                      <button class="button is-info" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
-                                    </div>
-                                <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
-                              </p>
+                        
+                        <div v-if="enabledOffre">
+                          <hr/>
+                          <!-- Liste produits choisis -->
+                          <h4> Nouveaux produits : </h4>
+                          <article class="media"  v-for="(produit, index) in produits_choisis"> <!--  :key="produit.reference" Utile pour voir si deja dans liste -->
+                            <div class="media-left">
+                              <figure class="image is-64x64">
+                                <img :src="produit.image" alt="Image">
+                              </figure>
                             </div>
-                            <button class="modal-close" @click="$emit('close')"></button>
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
+                                  <br/>
+                                      <button class="is-pulled-left button is-danger" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
+                                      <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
+                                      <button class="is-pulled-left button is-success" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
+
+                                      <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
+                                          <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
+                                            <span hidden> {{fournisseur.id}} </span>
+                                          </option>
+                                      </select>
+                                      <div>
+                                        Prix <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
+                                        <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)"> Remise
+                                        <a v-show="produit.remiseBoolean">
+                                          <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
+                                          Rabais : {{produit.remisePrix}}.-
+                                        </a>
+                                        <br/>
+                                        Total : {{produit.total}}.-
+                                        <button class="button is-info" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                      </div>
+                                  <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                </p>
+                              </div>
+                              <button class="modal-close" @click="$emit('close')"></button>
+                            </div>
+                          </article>
+
+                            <!-- Bouton + | Selection de produit -->
+                          <div class="buttons has-addons is-left" id="boutonAjout">
+                              <modal v-show="showModal" @close="showModal = false"></modal>
+                              <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px"> + </button>
                           </div>
-                        </article>
-
-                          <!-- Bouton + | Selection de produit -->
-                        <div class="buttons has-addons is-left" id="boutonAjout">
-                            <modal v-show="showModal" @close="showModal = false"></modal>
-                            <button @click="showModal = true" class="button is-primary modal-button" style="margin-right:2px"> + </button>
-                        </div>
-
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -220,15 +221,15 @@
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
-                <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer" >Envoyer au fournisseur</button>
-                <button @click.prevent="envoieClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyer">Envoyer au Client</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" :disabled="this.commande.status_id !=5" v-show="enabledBtnEnvoyer" >Valider Offre</button>
+                <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre" >Envoyer au fournisseur</button>
+                <button @click.prevent="envoieClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre">Envoyer au Client</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledCommande">Commande reçu</button>
+
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
-            {{ enabledBtnEnvoyercommande }}
-            {{ this.commande.status_id == "" }}
           </div>
         </div>
     </div>
@@ -255,7 +256,9 @@
                 showModal: false,
                 produits_choisis: Store.$data.panier,
                 produits_enregistres: Store.$data.panierEnregistres,
-                produits_recuperes: ""
+                produits_recuperes: "",
+                filesAdd: '',
+                files: ''
             }
         },
 
@@ -300,10 +303,35 @@
                     this.produits_recuperes = response.data;
                     Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
               });
+
+              //Files
+              axios.get('/files/'+this.$route.params.commande)
+                  .then(({data}) => this.files = data);
           }
         },
 
         methods:{
+          storeFile() {
+            let formData = new FormData();
+            for( var i = 0; i < this.filesAdd.length; i++ ){
+              let file = this.filesAdd[i];
+
+              formData.append('files[' + i + ']', file);
+            }
+            axios.post( '/storeFile/'+this.commande.id,
+              formData,
+              {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(function(){
+              console.log('SUCCESS!!');
+            })
+            .catch(function(){
+              console.log('FAILURE!!');
+            });
+          },
           //enregistrer modif commande
           enregistrer() {
             var id = this.customer.id;
@@ -314,6 +342,7 @@
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
+              this.storeFile();
             } else {
               //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
@@ -327,7 +356,7 @@
                       location.reload();
                       window.location.href='/#/commande/'+id+'/'+commandId;
                     });
-                    
+              this.storeFile();
                     
             }
           },
@@ -469,6 +498,7 @@
           },
 
           demandePrixFournisseur(){
+            this.enregistrer();
             axios.post('/fournisseurMailDemandePrix/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
@@ -481,6 +511,7 @@
           },
 
           envoieClient(){
+            this.enregistrer();
             axios.post('/clientMailOffre/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
@@ -490,6 +521,29 @@
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
             });
+          },
+
+          processFile(event) {
+            this.filesAdd = this.$refs.files.files;
+            //this.storeFile();
+            /*axios.post('/storeFile',{someData: event.target.files[0]})
+            .then(function(response){
+                console.log(someData);
+            });*/
+          },
+
+          downloadFile(file) {
+            console.log(file);
+            axios.get('/downloadFile/'+file.id)
+                  .then((response) => {
+                    console.log(response);
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', file.name);
+                    document.body.appendChild(link);
+                    link.click();
+                  });
           }
 
         },
@@ -509,8 +563,15 @@
             return false;
           },
 
-          enabledBtnEnvoyer(){
-            if (this.commande.status_id >= 3||this.commande.status_id <= 5){
+          enabledOffre(){
+            if (this.commande.status_id >= 3 && this.commande.status_id <= 5){
+              return true;
+            }
+            return false;
+          },
+
+          enabledCommande(){
+            if (this.commande.status_id >5){
               return true;
             }
             return false;

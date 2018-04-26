@@ -76,8 +76,6 @@ class CommandeController extends Controller
     {
       if ($request->typeSubmit === 'Enregistrer'){
         $this->enregistrerCommande($request, 0);
-      } elseif ($request->typeSubmit === 'Update') {
-        $this->updateCommande($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->enregistrerCommande($request, 1);
         $user = User::where('employee', true)->get();
@@ -114,13 +112,6 @@ class CommandeController extends Controller
       $customerDevis = Commande::find($request->commande['id'])->where([
                           ['id',$request->commande['id']]
                           ])->get()->first();
-      $customerDevis->concerne = $request->commande['concerne'];
-      $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
-      $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
-      $customerDevis->save();
-      $x = $customerDevis->products()->get(); //tous les produits
-      //dd($x);
-      
       foreach($request->products as $product) {
           $customerDevis->products()->updateExistingPivot($product['id'] , ([
                                                     'commande_id' => $request->commande['id'],

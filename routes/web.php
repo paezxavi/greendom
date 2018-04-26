@@ -41,6 +41,8 @@ Route::get('/providers', 'ProductController@providers');
 
 Route::get('/', 'CommandeController@index')->name('home');
 /* Call PDF */
+Route::get('/files/{commande}', 'FileController@index');
+Route::get('/downloadFile/{file}', 'FileController@download');
 Route::get('/demandeList', 'CommandeController@demandeList');
 Route::get('/offreList', 'CommandeController@offreList');
 Route::get('/commandeList', 'CommandeController@commandeList');
@@ -59,13 +61,15 @@ Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/validerClient/{commande}', 'CommandeController@validerClient');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
-Route::post('/updateDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
+Route::post('/updateDemande/{user}/{commande}', 'CommandeController@updateCommande')->name('storeDevis');
 Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDevis');
 
 Route::post('/fournisseurMailDemandePrix/{commande}','CommandeController@mailFournisseurDemandePrix');
 Route::post('/clientMailOffre/{commande}','CommandeController@mailClientOffre');
 
 Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supprimerProduit');
+
+Route::post('/storeFile/{commande}','FileController@storeFile');
 
 
 
