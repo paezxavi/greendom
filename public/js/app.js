@@ -32643,7 +32643,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
@@ -36622,22 +36622,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.post('/fournisseurMailDemandePrix/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
-      /*
       var id = this.customer.id;
-      axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
-        .then(function(response){
-          window.location.href='/#/listOrder/'+id;
-      });*/
+      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
+      });
     },
     envoieClient: function envoieClient() {
       axios.post('/clientMailOffre/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
-      /*var id = this.customer.id;
-      axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
-        .then(function(response){
-          window.location.href='/#/listOrder/'+id;
-      });*/
+      var id = this.customer.id;
+      axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
+      });
     }
   },
 
@@ -36778,23 +36775,52 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
 				var total = produits_recuperes[i].pivot.total;
 				var fournisseurChoisi = produits_recuperes[i].pivot.fournisseur;
-
-				this.panierEnregistres.push({
-					image: image,
-					id: id,
-					nom: nom,
-					reference: reference,
-					description: description,
-					prix: prix,
-					quantite: quantite,
-					remiseBoolean: remiseBoolean,
-					remisePrix: remisePrix,
-					remisePourcent: remisePourcent,
-					total: total,
-					fournisseurChoisi: fournisseurChoisi
-					//fournisseurs
-					//fournisseurs []
-				});
+				if (this.panierEnregistres.length == 0) {
+					console.log("panier vide");
+					this.panierEnregistres.push({
+						image: image,
+						id: id,
+						nom: nom,
+						reference: reference,
+						description: description,
+						prix: prix,
+						quantite: quantite,
+						remiseBoolean: remiseBoolean,
+						remisePrix: remisePrix,
+						remisePourcent: remisePourcent,
+						total: total,
+						fournisseurChoisi: fournisseurChoisi
+						//fournisseurs
+						//fournisseurs []
+					});
+				} else {
+					console.log("pas vide");
+					var count = 0;
+					for (var k = 0; k < this.panierEnregistres.length; k++) {
+						console.log(this.panierEnregistres[k]);
+						if (this.panierEnregistres[k].id != id) {
+							count = count + 1;
+						}
+					}
+					if (count == this.panierEnregistres.length) {
+						this.panierEnregistres.push({
+							image: image,
+							id: id,
+							nom: nom,
+							reference: reference,
+							description: description,
+							prix: prix,
+							quantite: quantite,
+							remiseBoolean: remiseBoolean,
+							remisePrix: remisePrix,
+							remisePourcent: remisePourcent,
+							total: total,
+							fournisseurChoisi: fournisseurChoisi
+							//fournisseurs
+							//fournisseurs []
+						});
+					}
+				}
 			}
 		},
 		supprimerPanier: function supprimerPanier(id) {

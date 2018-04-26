@@ -58,23 +58,53 @@ export const Store = new Vue({
 				var remisePourcent = produits_recuperes[i].pivot.remisePourcent;
 				var total = produits_recuperes[i].pivot.total;
 				var fournisseurChoisi = produits_recuperes[i].pivot.fournisseur;
-
-				this.panierEnregistres.push({
-					image,
-					id,
-					nom,
-					reference,
-					description,
-					prix,
-					quantite,
-					remiseBoolean,
-					remisePrix,
-					remisePourcent,
-					total,
-					fournisseurChoisi
-					//fournisseurs
-						//fournisseurs []
-	    		})
+				if(this.panierEnregistres.length == 0){
+					console.log("panier vide");
+						this.panierEnregistres.push({
+							image,
+							id,
+							nom,
+							reference,
+							description,
+							prix,
+							quantite,
+							remiseBoolean,
+							remisePrix,
+							remisePourcent,
+							total,
+							fournisseurChoisi
+							//fournisseurs
+								//fournisseurs []
+						})
+				} else {
+					console.log("pas vide");
+					var count = 0;
+					for(var k = 0; k < this.panierEnregistres.length; k++){
+						console.log(this.panierEnregistres[k]);
+						if(this.panierEnregistres[k].id != id){
+							count = count + 1;
+						}
+					}
+					if(count == this.panierEnregistres.length){
+						this.panierEnregistres.push({
+							image,
+							id,
+							nom,
+							reference,
+							description,
+							prix,
+							quantite,
+							remiseBoolean,
+							remisePrix,
+							remisePourcent,
+							total,
+							fournisseurChoisi
+							//fournisseurs
+								//fournisseurs []
+						})
+					}
+				}
+				
 			}
 		},
 
