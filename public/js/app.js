@@ -36677,8 +36677,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     downloadFile: function downloadFile(file) {
       console.log(file);
-      axios.get('/downloadFile/' + file.id).then(function (response) {
-        console.log(response);
+      axios({
+        url: '/downloadFile/' + file.id,
+        method: 'GET',
+        responseType: 'blob' // important
+      }).then(function (response) {
         var url = window.URL.createObjectURL(new Blob([response.data]));
         var link = document.createElement('a');
         link.href = url;
@@ -36686,6 +36689,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         document.body.appendChild(link);
         link.click();
       });
+      /*axios.get('/downloadFile/'+file.id)
+            .then((response) => {
+              console.log(response);
+              const url = window.URL.createObjectURL(new Blob([response.data]));
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', file.name);
+              document.body.appendChild(link);
+              link.click();
+            });*/
     }
   },
 
