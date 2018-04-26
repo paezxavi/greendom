@@ -32815,7 +32815,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
         axios.post('/saveUser', { name: username.value, forename: forename.value, address: address.value, phone: phone.value, skype: contact.value, email: email.value, company: company.value, pwd: pwd.value }).then(function (response) {
           //console.log('saved successfully' + " name : " +  username.value + " pre: " + forename.value + " phone: " + phone.value + " Skype: " + contact.value + " address: " + address.value +" email: " + email.value + " pwd: " + pwd.value);
-          console.log(response);
+          //console.log(response);
           window.alert("Votre compte a bien été créé !");
           _this.$router.push('login');
         }).catch(function (error) {
