@@ -30863,7 +30863,7 @@ var app = new Vue({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_buefy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_buefy__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_buefy_lib_buefy_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__ = __webpack_require__(163);
 
 
 
@@ -30874,7 +30874,7 @@ var app = new Vue({
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_buefy___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_grep_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_5__home_vagrant_greendom_resources_assets_js_views_LoggedMixin_js__["a" /* default */]);
 
 window.axios = __WEBPACK_IMPORTED_MODULE_2_axios___default.a;
 window.axios.defaults.headers.common = {
@@ -32815,7 +32815,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
         axios.post('/saveUser', { name: username.value, forename: forename.value, address: address.value, phone: phone.value, skype: contact.value, email: email.value, company: company.value, pwd: pwd.value }).then(function (response) {
           //console.log('saved successfully' + " name : " +  username.value + " pre: " + forename.value + " phone: " + phone.value + " Skype: " + contact.value + " address: " + address.value +" email: " + email.value + " pwd: " + pwd.value);
-          console.log(response);
+          //console.log(response);
           window.alert("Votre compte a bien été créé !");
           _this.$router.push('login');
         }).catch(function (error) {

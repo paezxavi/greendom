@@ -35,6 +35,17 @@ class SignUpController extends Controller
      */
     public function create(Request $request)
     {
+      $newUser = new User();
+      $newUser->name = $request->name;
+      $newUser->forename = $request->forename;
+      $newUser->address = $request->address;
+      $newUser->phone = $request->phone;
+      $newUser->contact = $request->skype;
+      $newUser->email = $request->email;
+      $newUser->password = Hash::make($request->pwd);
+      $newUser->employee = false;
+      $newUser->company_id = null;
+      $newUser->save();
     }
 
     /**

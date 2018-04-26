@@ -27,7 +27,7 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-        <h1> Bon de commande </h1>
+        <h1> Commande </h1>
       </div>
         Chemin du Pré-Fleuri 5 <br/>
         1228 Plan-Les-Ouates <br/>
