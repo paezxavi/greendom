@@ -99,7 +99,7 @@
                   <input type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
                 <div v-for="(file, key) in this.files">
-                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span class="icon" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
                 </div>
               </div>
             </form>

@@ -37252,7 +37252,7 @@ var render = function() {
                           _c(
                             "span",
                             {
-                              staticClass: "icon",
+                              staticClass: "deleteFile",
                               on: {
                                 click: function($event) {
                                   _vm.removeFile(file, key)
