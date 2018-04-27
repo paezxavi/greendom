@@ -68,6 +68,7 @@ Route::post('/fournisseurMailDemandePrix/{commande}','CommandeController@mailFou
 Route::post('/clientMailOffre/{commande}','CommandeController@mailClientOffre');
 
 Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supprimerProduit');
+Route::delete('/removeFile/{file}', 'FileController@remove');
 
 Route::post('/storeFile/{commande}','FileController@storeFile');
 

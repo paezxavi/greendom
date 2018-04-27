@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Commande;
 use App\File;
+use Storage;
 
 class FileController extends Controller
 {
@@ -113,12 +114,8 @@ class FileController extends Controller
         return response()->download(storage_path("app/files/{$file->path}"), $file->name);
     }
 
-    public function remove($path) {
-        $file = App\File::where('path', $path)->firstOrFail();
-
-        if ($file->report()->with('status')->first()->status->name !== config('prod.status_ferme')) {
-            $file->delete();
-            Storage::delete(storage_path("app/files/{$path}"));
-        }
+    public function remove(File $file) {
+        $file->delete();
+        Storage::delete(storage_path("app/files/{$file->path}"));
     }
 }

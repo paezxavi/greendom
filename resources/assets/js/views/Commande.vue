@@ -98,8 +98,8 @@
                 <div class="field">
                   <input type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
-                <div v-for="file in this.files">
-                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a>
+                <div v-for="(file, key) in this.files">
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span class="icon" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
                 </div>
               </div>
             </form>
@@ -525,11 +525,6 @@
 
           processFile(event) {
             this.filesAdd = this.$refs.files.files;
-            //this.storeFile();
-            /*axios.post('/storeFile',{someData: event.target.files[0]})
-            .then(function(response){
-                console.log(someData);
-            });*/
           },
 
           downloadFile(file) {
@@ -546,17 +541,13 @@
               document.body.appendChild(link);
               link.click();
             });
-            /*axios.get('/downloadFile/'+file.id)
-                  .then((response) => {
-                    console.log(response);
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', file.name);
-                    document.body.appendChild(link);
-                    link.click();
-                  });*/
+          },
+
+          removeFile(file,key) {
+            axios.delete('/removeFile/'+file.id)
+              .then(this.files.splice(key, 1 ));
           }
+
 
         },
 

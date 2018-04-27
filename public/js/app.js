@@ -32643,7 +32643,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-     mode:'history',*/
+      mode:'history',*/
 
     routes: routes,
 
@@ -36669,11 +36669,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     processFile: function processFile(event) {
       this.filesAdd = this.$refs.files.files;
-      //this.storeFile();
-      /*axios.post('/storeFile',{someData: event.target.files[0]})
-      .then(function(response){
-          console.log(someData);
-      });*/
     },
     downloadFile: function downloadFile(file) {
       console.log(file);
@@ -36689,16 +36684,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         document.body.appendChild(link);
         link.click();
       });
-      /*axios.get('/downloadFile/'+file.id)
-            .then((response) => {
-              console.log(response);
-              const url = window.URL.createObjectURL(new Blob([response.data]));
-              const link = document.createElement('a');
-              link.href = url;
-              link.setAttribute('download', file.name);
-              document.body.appendChild(link);
-              link.click();
-            });*/
+    },
+    removeFile: function removeFile(file, key) {
+      axios.delete('/removeFile/' + file.id).then(this.files.splice(key, 1));
     }
   },
 
@@ -37247,7 +37235,7 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _vm._l(this.files, function(file) {
+                      _vm._l(this.files, function(file, key) {
                         return _c("div", [
                           _c(
                             "a",
@@ -37260,6 +37248,18 @@ var render = function() {
                               }
                             },
                             [_vm._v(_vm._s(file.name))]
+                          ),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "icon",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeFile(file, key)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-times-circle" })]
                           )
                         ])
                       })

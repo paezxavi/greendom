@@ -13449,3 +13449,11 @@ a.navbar-item {
   font-size:10vw;*/
   font-family:Avantgarde, "TeX Gyre Adventor", "URW Gothic L", sans-serif;
 }
+
+.icon {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 5px;
+  left: 5px;
+  color: red;
+}
