@@ -33657,7 +33657,6 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass: "level-item has-text-centered",
-                                    staticStyle: { width: "30%" },
                                     attrs: { "data-v-1244b4c1": "" }
                                   },
                                   [
@@ -33681,7 +33680,6 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass: "level-item has-text-centered",
-                                    staticStyle: { width: "90%" },
                                     attrs: { "data-v-1244b4c1": "" }
                                   },
                                   [

@@ -7,18 +7,18 @@
                         <a data-v-1244b4c1="" target="_blank"> <!--Il faudra mettre un href sur un produit-->
                             <article data-v-1244b4c1="" class="message" :class="color[Math.floor(Math.random() * color.length)]">
                                 <div data-v-1244b4c1="" class="message-header has-text-centered">
-                                <h1 data-v-1244b4c1="" class="is-3 title has-text-centered">{{produit.nom}}</h1>
-                                <img data-v-1244b4c1="" v-bind:src="produit.image" class="is-circle">
+                                    <h1 data-v-1244b4c1="" class="is-3 title has-text-centered">{{produit.nom}}</h1>
+                                    <img data-v-1244b4c1="" v-bind:src="produit.image" class="is-circle">
                                 </div>
                                 <div data-v-1244b4c1="" class="message-body">
-                                <nav data-v-1244b4c1="" style="width:100%;" class="level">
-                                    <div data-v-1244b4c1="" class="level-item has-text-centered" style="width:30%">
-                                        <p data-v-1244b4c1="" class="title"><i class="fas fa-dollar-sign"></i> {{produit.prixVente}}</p>
-                                    </div>
-                                    <div data-v-1244b4c1="" class="level-item has-text-centered" style="width:90%">
-                                        <p data-v-1244b4c1="" class="title"><i class="fas fa-bolt"></i> {{produit.reference}}</p>
-                                    </div>
-                                </nav>
+                                    <nav data-v-1244b4c1="" style="width:100%;" class="level">
+                                        <div data-v-1244b4c1="" class="level-item has-text-centered">
+                                            <p data-v-1244b4c1="" class="title"><i class="fas fa-dollar-sign"></i> {{produit.prixVente}}</p>
+                                        </div>
+                                        <div data-v-1244b4c1="" class="level-item has-text-centered">
+                                            <p data-v-1244b4c1="" class="title"><i class="fas fa-bolt"></i> {{produit.reference}}</p>
+                                        </div>
+                                    </nav>
                                 </div>
                             </article>
                         </a>
