@@ -33555,58 +33555,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            active: false
+            active: false,
+            produits: "",
+            color: ['is-primary', 'is-link', 'is-info', 'is-success', 'is-warning', 'is-danger']
 
         };
     },
-    created: function created() {}
+    created: function created() {
+        var _this = this;
+
+        axios.get('/produitsOffre').then(function (_ref) {
+            var data = _ref.data;
+            return _this.produits = data;
+        });
+    }
 });
 
 /***/ }),
@@ -33618,420 +33584,137 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h2", [_vm._v("Accueil")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("transition", { attrs: { name: "slide-fade" } }, [
-          _vm.active
-            ? _c(
-                "p",
-                {
-                  staticClass: "test",
-                  staticStyle: {
-                    display: "block",
-                    "margin-left": "auto",
-                    "margin-right": "34%",
-                    width: "40%"
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                    Je suis un test 1\n                "
-                  )
-                ]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
+    _c("div", { staticClass: "page-inner" }, [
+      _c("div", { staticClass: "inner-content" }, [
         _c(
           "div",
           {
-            staticStyle: {
-              display: "block",
-              "margin-left": "auto",
-              "margin-right": "auto"
-            },
-            on: {
-              mouseover: function($event) {
-                _vm.active = !_vm.active
-              }
-            }
+            staticClass: "columns is-multiline",
+            attrs: { "data-v-1244b4c1": "" }
           },
-          [
-            _c("transition", { attrs: { name: "slide-fade" } }, [
-              _vm.active ? _c("span", [_vm._v("Je suis un test 2")]) : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("img", {
-              staticStyle: {
-                "margin-left": "auto",
-                "margin-right": "auto",
-                width: "40%",
-                "vertical-align": "middle"
-              },
-              attrs: {
-                src:
-                  "http://www.led-lons-le-saunier.com/wp-content/uploads/2013/10/AMPOULE-Fotolia_48013150_XS.jpg"
-              },
-              on: {
-                mouseover: function($event) {
-                  _vm.active = !_vm.active
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("transition", { attrs: { name: "slide-fade" } }, [
-              _vm.active ? _c("span", [_vm._v("Je suis un test 3")]) : _vm._e()
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("transition", { attrs: { name: "slide-fade" } }, [
-          _vm.active
-            ? _c(
-                "p",
-                {
-                  staticClass: "test",
-                  staticStyle: {
-                    display: "block",
-                    "margin-left": "auto",
-                    "margin-right": "34%",
-                    width: "40%"
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                    Je suis un test 4\n                "
-                  )
-                ]
-              )
-            : _vm._e()
-        ])
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(0)
+          _vm._l(this.produits, function(produit) {
+            return _c(
+              "div",
+              { staticClass: "column is-4", attrs: { "data-v-1244b4c1": "" } },
+              [
+                _c(
+                  "a",
+                  { attrs: { "data-v-1244b4c1": "", target: "_blank" } },
+                  [
+                    _c(
+                      "article",
+                      {
+                        staticClass: "message",
+                        class:
+                          _vm.color[
+                            Math.floor(Math.random() * _vm.color.length)
+                          ],
+                        attrs: { "data-v-1244b4c1": "" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "message-header has-text-centered",
+                            attrs: { "data-v-1244b4c1": "" }
+                          },
+                          [
+                            _c(
+                              "h1",
+                              {
+                                staticClass: "is-3 title has-text-centered",
+                                attrs: { "data-v-1244b4c1": "" }
+                              },
+                              [_vm._v(_vm._s(produit.nom))]
+                            ),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "is-circle",
+                              attrs: {
+                                "data-v-1244b4c1": "",
+                                src: produit.image
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "message-body",
+                            attrs: { "data-v-1244b4c1": "" }
+                          },
+                          [
+                            _c(
+                              "nav",
+                              {
+                                staticClass: "level",
+                                staticStyle: { width: "100%" },
+                                attrs: { "data-v-1244b4c1": "" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "level-item has-text-centered",
+                                    staticStyle: { width: "30%" },
+                                    attrs: { "data-v-1244b4c1": "" }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "title",
+                                        attrs: { "data-v-1244b4c1": "" }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-dollar-sign"
+                                        }),
+                                        _vm._v(" " + _vm._s(produit.prixVente))
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "level-item has-text-centered",
+                                    staticStyle: { width: "90%" },
+                                    attrs: { "data-v-1244b4c1": "" }
+                                  },
+                                  [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "title",
+                                        attrs: { "data-v-1244b4c1": "" }
+                                      },
+                                      [
+                                        _c("i", { staticClass: "fas fa-bolt" }),
+                                        _vm._v(" " + _vm._s(produit.reference))
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          })
+        )
+      ])
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("img", {
-        staticStyle: { width: "100%" },
-        attrs: {
-          src:
-            "http://www.aviatourstunisia.com/agence-voyage-tunisie/images/beautiful_new_zealand_desktop_16_wallpaper_hd.jpg"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticStyle: {
-            width: "100%",
-            position: "absolute",
-            bottom: "60px",
-            left: "0",
-            "z-index": "2"
-          }
-        },
-        [
-          _c(
-            "div",
-            {
-              staticStyle: {
-                "background-color": "#FFFFFF",
-                display: "flex",
-                "-webkit-flex-wrap": "wrap",
-                "-ms-flex-wrap": "wrap",
-                "flex-wrap": "wrap",
-                "-webkit-box-pack": "center",
-                "-webkit-justify-content": "center",
-                "-ms-flex-pack": "center",
-                "justify-content": "center",
-                width: "90%",
-                margin: "0 auto",
-                padding: "12px 0"
-              }
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href: "/particuliers/vos-demarches/emmenagement"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt: "pictogramme d&#039;un carton ouvert ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("Déménager")
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href:
-                          "/particuliers/vos-demarches/facturation/payer-votre-facture"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt: "pictogramme de 2 factures ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("Régler ma facture ")
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href:
-                          "/particuliers/nos-offres/electricite/offres-electricite"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt: "pictogramme d&#039;un vue dans un cercle ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("Choisir mon électricité")
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href:
-                          "/particuliers/consommer-mieux/reduire-vos-consommations/bonus-economies-energie"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt: "pictogramme d&#039;une tirelire cochon ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("économiser ")
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href:
-                          "https://prive.sig-ge.ch/services/utilities/dispatcher"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt:
-                            "pictogramme d&#039;un personnage avec un cadenas ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("Accéder à mon espace client ")
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticStyle: {
-                    "text-align": "center",
-                    "-webkit-box-flex": "1",
-                    "-webkit-flex": "1",
-                    "-ms-flex": "1",
-                    flex: "1",
-                    "-moz-box-sizing": "border-box",
-                    "-webkit-box-sizing": "border-box",
-                    "box-sizing": "border-box",
-                    padding: "0 10px"
-                  }
-                },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "item-link",
-                      attrs: {
-                        href: "/particuliers/nos-offres/mobilite/electricite"
-                      }
-                    },
-                    [
-                      _c("img", {
-                        staticClass: "item-img",
-                        attrs: {
-                          src:
-                            "http://www.freeiconspng.com/uploads/no-image-icon-13.png",
-                          alt: "pictogramme d&#039;une voiture électrique ",
-                          title: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h3", { staticClass: "item-title" }, [
-                        _vm._v("Opter pour la mobilité électrique ")
-                      ])
-                    ]
-                  )
-                ]
-              )
-            ]
-          )
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

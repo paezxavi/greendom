@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="/css/app.css">
-        <link rel="stylesheet" href="/css/bulma.css">
+        <link rel="stylesheet" href="/css/home.css">
+        <link rel="stylesheet" href="/css/fontAwesome.css">
+        <link rel="stylesheet" href="/css/bulmaAdmin.css">
         <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
 
         <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
