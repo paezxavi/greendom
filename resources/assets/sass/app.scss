@@ -1,0 +1,71 @@
+/*# sourceMappingURL=bulma.min.css.map */
+.greendom-navbar {
+  border-bottom: 1px solid #E6EAEE;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(0, 170, 0);
+}
+
+.level-item {
+    display: block!important;
+  }
+
+.message-header {
+    display: block!important;
+    background-color:#00d1b2!important;
+}
+
+.message.is-primary .message-body {
+    border-color: #00d1b2!important;
+    color: grey!important;
+}
+
+.navbar.is-primary a:hover {
+    background-color: white!important;
+    color: black!important;
+}
+
+.navbar.is-primary {
+    background-color: #00d1b2!important;
+    color: white!important;
+}
+
+.greendom-background {
+  background-color: #e6ffe6 !important;
+}
+
+/*a.navbar-item router-link-exact-active a.is-active*/
+a.navbar-item {
+  background-color: transparents !important;
+}
+
+
+/*# sourceMappingURL=bulma-docs.css.map */
+
+.slide-fade-enter-active {
+  transition: all 2.0s ease;
+}
+.slide-fade-leave-active {
+  transition: all 2.0s;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.test {
+  display: flex;
+  /*justify-content: center;
+  align-items: center;
+  font-size:10vw;*/
+  font-family:Avantgarde, "TeX Gyre Adventor", "URW Gothic L", sans-serif;
+}
+
+.deleteFile {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 5px;
+  left: 5px;
+  color: red;
+}

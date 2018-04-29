@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="padding-top:40px" class="columns is-mobile">
+        <div class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
             <form method="POST">
 
@@ -11,11 +11,9 @@
                 <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyé fournisseur N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyé client N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_offre }}</h1>
-
-
               </div>
 
-              <div class="card" style="margin-bottom:15px">
+              <div class="card" style="margin-bottom:15px; width:100%">
                 <header class="card-header">
                   <p class="card-header-title">
                     Données personnelles
@@ -72,7 +70,6 @@
                   </header>
                   <div class="card-content">
                     <div class="content">
-
                           <label class="label">Société : {{ company.nom }}</label>
 
                           <label class="label">Adresse : {{ company.adresse }}</label>
@@ -109,7 +106,7 @@
             <!-- Ajout d'articles -->
 
 
-            <div class="card" style="margin-bottom:15px" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
+            <div class="card" style="margin-bottom:15px; width:100%" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
               <header class="card-header">
                   <h2 class="card-header-title"> Articles </h2>
               </header>
@@ -154,7 +151,6 @@
                                 <button v-if="enabledOffre" @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                               </p>
                             </div>
-                            <button class="modal-close" @click="$emit('close')"></button>
                           </div>
                         </article>
                         
@@ -196,7 +192,6 @@
                                   <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
                                 </p>
                               </div>
-                              <button class="modal-close" @click="$emit('close')"></button>
                             </div>
                           </article>
 
@@ -604,34 +599,40 @@
     Vue.component('modal', {
     template:
     `
-     <div id="modal" class="modal is-active">
+    <div id="modal-ter" class="modal is-active">
       <div class="modal-background"></div>
       <div class="modal-card">
-        <div class="box">
-          <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
-            <div class="media-left">
-              <figure class="image is-64x64">
-                <img :src="produit.image" alt="Image">
-              </figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                  <br>
-                  {{produit.description}}
-                <div class="is-pulled-right">
-                  <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
-                </div>
-                </p>
+        <header class="modal-card-head">
+          <p class="modal-card-title">Produits</p>
+          <button class="delete" aria-label="close" @click="$emit('close')"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="box">
+            <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img :src="produit.image" alt="Image">
+                </figure>
               </div>
-            </div>
-          </article>
-          <button class="modal-close" @click="$emit('close')"></button>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
+                    <br>
+                    {{produit.description}}
+                  <div class="is-pulled-right">
+                    <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
+                  </div>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
           <button class="button is-danger" @click="$emit('close')"> Fermer </button>
-        </div>
+        </footer>
       </div>
-
     </div>
     `,
 
