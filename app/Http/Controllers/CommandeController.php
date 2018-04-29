@@ -67,7 +67,7 @@ class CommandeController extends Controller
     }
 
     public function getLastCommande(){
-      return Commande::all()->last()->id;
+      return (Commande::all()->last()->id) + 1;
     }
 
     /**
