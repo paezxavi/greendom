@@ -43,7 +43,6 @@ Route::get('/', 'CommandeController@index')->name('home');
 /* Call PDF */
 Route::get('/files/{commande}', 'FileController@index');
 Route::get('/downloadFile/{file}', 'FileController@download');
-Route::get('/lastCommande', 'CommandeController@getLastCommande');
 Route::get('/demandeList', 'CommandeController@demandeList');
 Route::get('/offreList', 'CommandeController@offreList');
 Route::get('/commandeList', 'CommandeController@commandeList');

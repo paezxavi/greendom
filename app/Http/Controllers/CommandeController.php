@@ -42,14 +42,15 @@ class CommandeController extends Controller
      */
     public function create(Request $request)
     {
+      $idReturn;
       if ($request->typeSubmit === 'Enregistrer'){
-        $this->insertNewDevis($request, 0);
+        $idReturn = $this->insertNewDevis($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {
-        $this->insertNewDevis($request, 1);
+        $idReturn = $this->insertNewDevis($request, 1);
         $user = User::where('employee', true)->get();
         Mail::to($user)->send(new DemandeEnvoye($request));
       }
-
+      return $idReturn;
     }
 
     public function insertNewDevis(Request $request, $typeSubmit)
@@ -64,10 +65,7 @@ class CommandeController extends Controller
       $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = 1 + $typeSubmit;
       $customerDevis->save();
-    }
-
-    public function getLastCommande(){
-      return (Commande::all()->last()->id) + 1;
+      return $customerDevis->id;
     }
 
     /**

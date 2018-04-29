@@ -36120,8 +36120,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         descriptionCommande: "",
         status_id: ""
       },
-      commandeIdCreate: "",
       company: "",
+      idCreated: "",
       active: false,
       currentUser: "",
       showModal: false,
@@ -36196,7 +36196,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
-    storeFile: function storeFile(idCreated) {
+    storeFile: function storeFile() {
       var formData = new FormData();
       for (var i = 0; i < this.filesAdd.length; i++) {
         var file = this.filesAdd[i];
@@ -36204,16 +36204,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         formData.append('files[' + i + ']', file);
       }
       if (!this.commande.id) {
-        axios.get('/lastCommande').then(function (response) {
-          axios.post('/storeFile/' + response.data, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }).then(function () {
-            console.log('SUCCESS!!');
-          }).catch(function () {
-            console.log('FAILURE!!');
-          });
+        console.log(this.idCreated);
+        axios.post('/storeFile/' + this.idCreated, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function () {
+          console.log('SUCCESS!!');
+        }).catch(function () {
+          console.log('FAILURE!!');
         });
       } else {
         axios.post('/storeFile/' + this.commande.id, formData, {
@@ -36232,12 +36231,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     enregistrer: function enregistrer() {
       var id = this.customer.id;
       var commandId = this.commande.id;
+      var self = this;
       //IF offre SINON fournisseur
       if (!this.commande.id) {
-        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios({
+          method: 'post',
+          url: '/insertDemande/' + this.customer.id,
+          timeout: 8000, // Let's say you want to wait at least 8 seconds
+          data: {
+            typeSubmit: "Enregistrer",
+            commande: this.commande,
+            company: this.company,
+            customer: this.customer
+          }
+        }).then(function (response) {
+          console.log(response);
+          self.idCreated = response.data;
+          self.storeFile();
+          location.reload();
           window.location.href = '/#/listOrder/' + id;
+        }).catch(function (error) {
+          console.log(error);
         });
-        this.storeFile();
       } else {
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
@@ -36249,7 +36264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
-        this.storeFile();
+        self.storeFile();
       }
     },
 
@@ -36358,14 +36373,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     envoyer: function envoyer() {
       var id = this.customer.id;
+      var self = this;
       if (!this.commande.id) {
-        axios.post('/insertDemande/' + this.customer.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
+        axios({
+          method: 'post',
+          url: '/insertDemande/' + this.customer.id,
+          timeout: 8000, // Let's say you want to wait at least 8 seconds
+          data: {
+            typeSubmit: "Envoyer",
+            commande: this.commande,
+            company: this.company,
+            customer: this.customer
+          }
+        }).then(function (response) {
+          console.log(response);
+          self.idCreated = response.data;
+          self.storeFile();
+          location.reload();
           window.location.href = '/#/listOrder/' + id;
+        }).catch(function (error) {
+          console.log(error);
         });
       } else {
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Envoyer", commande: this.commande, company: this.company, customer: this.customer }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
+        self.storeFile();
       }
     },
     passerEtapeSuivante: function passerEtapeSuivante() {
