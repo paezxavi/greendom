@@ -13,11 +13,11 @@
 
 .message-header {
   display: block !important;
-  background-color: #00d1b2 !important;
+  background-color: #92fdae !important;
 }
 
 .message.is-primary .message-body {
-  border-color: #00d1b2 !important;
+  border-color: #92fdae !important;
   color: grey !important;
 }
 
@@ -26,8 +26,20 @@
   color: black !important;
 }
 
+a.navbar-item.is-active,
+a.navbar-link.is-active {
+  background-color: white !important;
+  border: 1px solid #D3D3D3 !important;
+}
+
+.bd-example,
+.bd-structure,
+.bd-snippet {
+  border: 1px solid #D3D3D3 !important;
+}
+
 .navbar.is-primary {
-  background-color: #00d1b2 !important;
+  background-color: #f5f5f5 !important;
   color: white !important;
 }
 
