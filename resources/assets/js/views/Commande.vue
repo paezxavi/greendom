@@ -245,6 +245,7 @@
                   descriptionCommande: "",
                   status_id: ""
                 },
+                commandeIdCreate: "",
                 company: "",
                 active : false,
                 currentUser: "",
@@ -306,26 +307,46 @@
         },
 
         methods:{
-          storeFile() {
+          storeFile(idCreated) {
             let formData = new FormData();
             for( var i = 0; i < this.filesAdd.length; i++ ){
               let file = this.filesAdd[i];
 
               formData.append('files[' + i + ']', file);
             }
-            axios.post( '/storeFile/'+this.commande.id,
-              formData,
-              {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-              }
-            ).then(function(){
-              console.log('SUCCESS!!');
-            })
-            .catch(function(){
-              console.log('FAILURE!!');
-            });
+            if(!this.commande.id){
+              axios.get('/lastCommande')
+                .then(function (response) {
+                      axios.post( '/storeFile/'+response.data,
+                        formData,
+                        {
+                          headers: {
+                              'Content-Type': 'multipart/form-data'
+                          }
+                        }
+                      ).then(function(){
+                        console.log('SUCCESS!!');
+                      })
+                      .catch(function(){
+                        console.log('FAILURE!!');
+                      });
+                });
+            } else {
+                axios.post( '/storeFile/'+this.commande.id,
+                  formData,
+                  {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                  }
+                ).then(function(){
+                  console.log('SUCCESS!!');
+                })
+                .catch(function(){
+                  console.log('FAILURE!!');
+                });
+            }
+            
           },
           //enregistrer modif commande
           enregistrer() {

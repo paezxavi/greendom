@@ -36120,6 +36120,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         descriptionCommande: "",
         status_id: ""
       },
+      commandeIdCreate: "",
       company: "",
       active: false,
       currentUser: "",
@@ -36195,22 +36196,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
-    storeFile: function storeFile() {
+    storeFile: function storeFile(idCreated) {
       var formData = new FormData();
       for (var i = 0; i < this.filesAdd.length; i++) {
         var file = this.filesAdd[i];
 
         formData.append('files[' + i + ']', file);
       }
-      axios.post('/storeFile/' + this.commande.id, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function () {
-        console.log('SUCCESS!!');
-      }).catch(function () {
-        console.log('FAILURE!!');
-      });
+      if (!this.commande.id) {
+        axios.get('/lastCommande').then(function (response) {
+          axios.post('/storeFile/' + response.data, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function () {
+            console.log('SUCCESS!!');
+          }).catch(function () {
+            console.log('FAILURE!!');
+          });
+        });
+      } else {
+        axios.post('/storeFile/' + this.commande.id, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function () {
+          console.log('SUCCESS!!');
+        }).catch(function () {
+          console.log('FAILURE!!');
+        });
+      }
     },
 
     //enregistrer modif commande

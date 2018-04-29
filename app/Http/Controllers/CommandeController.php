@@ -66,6 +66,10 @@ class CommandeController extends Controller
       $customerDevis->save();
     }
 
+    public function getLastCommande(){
+      return Commande::all()->last()->id;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
