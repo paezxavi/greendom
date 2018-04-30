@@ -33825,26 +33825,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -33854,22 +33834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             customers: []
         };
     },
-    created: function created() {
-        var _this = this;
-
-        axios.get('/commandes').then(function (_ref) {
-            var data = _ref.data;
-            return _this.commandes = data;
-        });
-        axios.get('/providers').then(function (_ref2) {
-            var data = _ref2.data;
-            return _this.providers = data;
-        });
-        axios.get('/customers').then(function (_ref3) {
-            var data = _ref3.data;
-            return _this.customers = data;
-        });
-    }
+    created: function created() {}
 });
 
 /***/ }),
@@ -33880,82 +33845,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-        _c(
-          "div",
-          { staticClass: "panel panel-default" },
-          [
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+          _c("div", { staticClass: "panel panel-default" }, [
             _c("div", { staticClass: "panel-heading" }, [
               _vm._v("A propos de nous")
             ]),
-            _vm._v(" "),
-            _vm._l(_vm.commandes, function(commande) {
-              return _c("div", [
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(commande.desc) +
-                        " " +
-                        _vm._s(commande.statut) +
-                        " " +
-                        _vm._s(commande.product_id) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.providers, function(provider) {
-              return _c("div", [
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(provider.nom) +
-                        " " +
-                        _vm._s(provider.adresse) +
-                        " " +
-                        _vm._s(provider.iban) +
-                        " " +
-                        _vm._s(provider.skype) +
-                        " " +
-                        _vm._s(provider.email) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              ])
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.customers, function(customer) {
-              return _c("div", [
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("div", [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(customer.name) +
-                        " " +
-                        _vm._s(customer.email) +
-                        " " +
-                        _vm._s(customer.contact) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              ])
-            })
-          ],
-          2
-        )
+            _vm._v("\n\n                BlabLblablabla\n            ")
+          ])
+        ])
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -34034,125 +33944,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      customer: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    axios.get('/1').then(function (_ref) {
-      var data = _ref.data;
-      return _this.customer = data;
-    });
-  },
+    data: function data() {
+        return {
+            customer: []
+        };
+    },
+    created: function created() {},
 
 
-  computed: {
-    contactString: function contactString() {
-      return '' + this.customer.contact;
-    },
-    emailString: function emailString() {
-      return '' + this.customer.email;
-    },
-    nomString: function nomString() {
-      return '' + this.customer.name;
-    },
-    prenomString: function prenomString() {
-      return '' + this.customer.forename;
-    }
-  }
+    computed: {}
 });
 
 /***/ }),
@@ -34164,224 +33966,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass: "columns is-mobile",
-        staticStyle: { "padding-top": "40px" }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "column is-three-fifths is-offset-one-fifth" },
-          [
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Nom")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      staticClass: "input",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: _vm.nomString }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Prénom")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
-                      _c("input", {
-                        staticClass: "input is-success",
-                        attrs: { type: "text", placeholder: "" },
-                        domProps: { value: _vm.prenomString }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _vm._m(1)
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "help is-success" }, [
-                    _vm._v("Ce nom d'utilisateur est valide")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c("div", { staticClass: "field" }, [
-              _c("div", { staticClass: "columns is-mobile" }, [
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Email")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "control has-icons-left has-icons-right" },
-                    [
-                      _c("input", {
-                        staticClass: "input is-danger",
-                        attrs: { type: "email", placeholder: "" },
-                        domProps: { value: _vm.emailString }
-                      }),
-                      _vm._v(" "),
-                      _vm._m(3),
-                      _vm._v(" "),
-                      _vm._m(4)
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "help is-danger" }, [
-                    _vm._v("Cet email est invalide")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "column" }, [
-                  _c("label", { staticClass: "label" }, [_vm._v("Contact")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "control" }, [
-                    _c("input", {
-                      staticClass: "input",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: _vm.contactString }
-                    })
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(5),
-            _vm._v(" "),
-            _vm._m(6),
-            _vm._v(" "),
-            _vm._m(7),
-            _vm._v(" "),
-            _vm._m(8)
-          ]
-        )
-      ]
+    _vm._v(
+      "\n    Adresse\n    Greendom S.A.\n\n    6, Rue de Genève\n\n    1225  Chêne-Bourg\n\n    Contact\n    Email: info@greendom.eu Twitter: @Greendom \n    Tél: +41 (0) 22 556 0259 Fax: +41 (0) 22 556 0258\n"
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-user" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-right" }, [
-      _c("i", { staticClass: "fas fa-check" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Adresse")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", { staticClass: "input", attrs: { type: "text" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-left" }, [
-      _c("i", { staticClass: "fas fa-envelope" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon is-small is-right" }, [
-      _c("i", { staticClass: "fas fa-exclamation-triangle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control" }, [
-        _c("label", { staticClass: "checkbox" }, [
-          _c("input", { attrs: { type: "checkbox" } }),
-          _vm._v(
-            "\n              Concerne la société pour laquelle je travaille\n            "
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "file" }, [
-        _c("label", { staticClass: "file-label" }, [
-          _c("input", {
-            staticClass: "file-input",
-            attrs: { type: "file", name: "resume" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "file-cta" }, [
-            _c("span", { staticClass: "file-icon" }, [
-              _c("i", { staticClass: "fas fa-upload" })
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "file-label" }, [
-              _vm._v(
-                "\n                  Choisir un fichier…\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Message")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("textarea", { staticClass: "textarea" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "buttons has-addons is-centered" }, [
-        _c("a", { staticClass: "button is-success" }, [_vm._v("Soumettre")]),
-        _vm._v(" "),
-        _c("a", { staticClass: "button is-danger" }, [_vm._v("Annuler")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
