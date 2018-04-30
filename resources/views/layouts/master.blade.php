@@ -44,9 +44,11 @@
                       <router-link class="navbar-item" tag="a" to="/about">
                           A propos de nous
                       </router-link>
-                      <router-link class="navbar-item" tag="a" to="/signUp">
-                          S'inscrire
-                      </router-link>
+                      @if (!Auth::check())
+                        <router-link class="navbar-item" tag="a" to="/signUp">
+                            S'inscrire
+                        </router-link>
+                      @endif
                       <router-link class="navbar-item" tag="a" to="/contact">
                           Contact
                       </router-link>

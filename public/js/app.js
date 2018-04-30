@@ -32643,7 +32643,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
@@ -34526,6 +34526,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
@@ -35000,6 +35004,27 @@ var render = function() {
                         "\n                " +
                           _vm._s(props.row.status.nom) +
                           "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-table-column",
+                    { attrs: { label: "Lien", sortable: "" } },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "button",
+                          attrs: {
+                            href:
+                              "http://192.168.10.10/#/commande/" +
+                              _vm.user.id +
+                              "/" +
+                              props.row.id
+                          }
+                        },
+                        [_vm._v("Ouvrir")]
                       )
                     ]
                   )

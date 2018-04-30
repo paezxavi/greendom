@@ -55,6 +55,10 @@
                 <b-table-column field="status.nom" label="Statut" sortable>
                     {{ props.row.status.nom }}
                 </b-table-column>
+
+                <b-table-column label="Lien" sortable>
+                    <a class="button" v-bind:href="'http://192.168.10.10/#/commande/'+user.id+'/'+props.row.id">Ouvrir</a>
+                </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
             <article class="media">

@@ -24,11 +24,6 @@ Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
 
 Route::post('/login/{user}', 'Auth\LoginController@login');
 //-------------------------------------------------------------
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth');
-Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
-
-Route::post('/login/{user}', 'Auth\LoginController@login');
-//-------------------------------------------------------------
 
 //SignUpController
 Route::post('/saveUser', 'SignUpController@store');
