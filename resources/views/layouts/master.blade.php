@@ -25,7 +25,7 @@
             <div class="bd-example is-paddingless">
               <nav class="navbar is-primary">
                 <div class="navbar-brand">
-                  <a class="navbar-item" href="{{ route('home') }}">
+                  <a class="navbar-item" href="#/home">
                     <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
                   </a>
                   <div class="navbar-burger burger" data-target="navMenuColorprimary-example">

@@ -34608,10 +34608,7 @@ var render = function() {
                           staticClass: "button",
                           attrs: {
                             href:
-                              "http://192.168.10.10/#/commande/" +
-                              _vm.user.id +
-                              "/" +
-                              props.row.id
+                              "#/commande/" + _vm.user.id + "/" + props.row.id
                           }
                         },
                         [_vm._v("Ouvrir")]
