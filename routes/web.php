@@ -11,8 +11,6 @@
 |
 */
 
-//Auth::routes();
-
 Route::get('/sessionStatus', function() {
     return ['user' => Auth::user() ? Auth::user() : null];
 });
@@ -28,11 +26,6 @@ Route::post('/login/{user}', 'Auth\LoginController@login');
 //SignUpController
 Route::post('/saveUser', 'SignUpController@store');
 //-------------------------------------------------------------
-
-//A supprimer plus tard. Sert d'exemple
-Route::get('/customers', 'ProductController@clients');
-Route::get('/commandes', 'ProductController@commandes');
-Route::get('/providers', 'ProductController@providers');
 
 Route::get('/', 'CommandeController@index')->name('home');
 /* Call PDF */
@@ -66,16 +59,3 @@ Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supp
 Route::delete('/removeFile/{file}', 'FileController@remove');
 
 Route::post('/storeFile/{commande}','FileController@storeFile');
-
-
-
-//Faire un chemin /devis pour pouvoir faire les devis vide et faire des post depuis la!
-
-
-//Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');
-//Route::get('/commande/pdf', 'CommandeController@commandePdf')->name('commande.pdf');
-
-/*Route::any('{all}', function () {
-    return view('welcome');
-})
-->where(['all' => '.*']);*/
