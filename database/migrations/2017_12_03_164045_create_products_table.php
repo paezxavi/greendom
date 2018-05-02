@@ -19,12 +19,12 @@ class CreateProductsTable extends Migration
             $table->string('nom')->nullable();
             $table->string('categorie')->nullable();
             $table->string('description')->nullable();
-            $table->string('prixVente')->nullable();
+            $table->integer('prixVente')->nullable();
             $table->string('reference')->nullable();
             $table->string('refSupplier')->nullable(); // ID_PROVIDER
-            $table->string('prixAchat')->nullable();
+            $table->integer('prixAchat')->nullable();
             $table->string('private')->default(false);
-            $table->string('feature')->nullable();
+            $table->integer('feature')->nullable();
             //Si produit privé ou pas
         });
     }

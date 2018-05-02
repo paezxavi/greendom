@@ -23,6 +23,7 @@
         "buefy": "^0.6.3",
         "moment": "^2.20.1",
         "vue-router": "^3.0.1",
+        "vue-slider-component": "^2.6.2",
         "vue-stepper": "^1.0.11"
     }
 }
