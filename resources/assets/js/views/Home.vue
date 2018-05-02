@@ -6,10 +6,10 @@
                     <div class="column is-4" style="border:1.5px solid #D3D3D3!important;border-radius:16px">
                         <h1 class="title" style="text-align:center">Filtres</h1>
                         <h3 class="subtitle is-3">Prix max</h3>
-                        <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="showDataPrix(valuePrix)"></vue-slider>
+                        <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
                         <a class="button is-light" @click="reinitPrix()">Réinitialiser</a>
                         <h3 class="subtitle is-3">Watts max</h3>
-                        <vue-slider v-model="valueWatts" v-bind="optionsWatts" @click.native="showDataWatts(valueWatts)"></vue-slider>
+                        <vue-slider v-model="valueWatts" v-bind="optionsWatts" @click.native="applyFilter()"></vue-slider>
                         <a class="button is-light" @click="reinitWatts()">Réinitialiser</a>
                         <br/>
                         <br/>
@@ -95,7 +95,7 @@
                     disabled: false,
                     piecewise: true,
                     piecewiseLabel: true,
-                    interval: 100,
+                    interval: 50,
                     piecewiseStyle: {
                     "backgroundColor": "#ccc",
                     "visibility": "visible",
@@ -126,7 +126,6 @@
                     self.produitsTrie = response.data;
                     self.getPrixMax();
                     self.getWattsMax();
-                    self.pri
               })
               .catch(function (error) {
                   console.log(error);
@@ -134,23 +133,13 @@
         },
 
         methods: {
-            showDataPrix(v) {
-                //if(this.produits.length == this.produitsTrie.length) {
-                    this.produitsTrie = [];
-                    //console.log(this.produits);
-                    this.produits.map( (p) => {
-                        if(p.prixVente <= v){
-                            //console.log(p.prixVente);
-                            this.produitsTrie.push(p);
-                        }
-                    })
-                /*} else {
-                    this.produitsTrie.map( (p, index) => {
-                        if(p.prixVente > v){
-                            this.produitsTrie.splice(index, 1);
-                        }
-                    })
-                }*/
+            applyFilter() {
+                this.produitsTrie = [];
+                this.produits.map( (p) => {
+                    if((p.prixVente <= this.valuePrix) & (p.feature <= this.valueWatts)){
+                        this.produitsTrie.push(p);
+                    }
+                })
             },
 
             getPrixMax() {
@@ -162,29 +151,12 @@
                 })
                 this.maxPrixCat = maxP;
                 this.optionsPrix.max = maxP;
+                this.valuePrix = maxP;
             },
 
             reinitPrix() {
-                this.valuePrix = 0;
-                this.showDataPrix(this.maxPrixCat);
-            },
-
-            showDataWatts(v) {
-                //if(this.produits.length == this.produitsTrie.length) {
-                    this.produitsTrie = [];
-                    this.produits.map( (p) => {
-                        if(p.feature <= v){
-                            //console.log(p.prixVente);
-                            this.produitsTrie.push(p);
-                        }
-                    })
-                /*} else {
-                    this.produitsTrie.map( (p, index) => {
-                        if(p.feature > v){
-                            this.produitsTrie.splice(index, 1);
-                        }
-                    })
-                }*/
+                this.valuePrix = this.maxPrixCat;
+                this.applyFilter();
             },
 
             getWattsMax() {
@@ -196,20 +168,21 @@
                 })
                 this.maxWattsCat = maxW;
                 this.optionsWatts.max = maxW;
+                this.valueWatts = maxW;
             },
 
             reinitWatts() {
-                this.valueWatts = 0;
-                this.showDataWatts(this.maxWattsCat);
+                this.valueWatts = this.maxWattsCat;
+                this.applyFilter();
             },
 
             prixCroissant() {
                 function compare(a, b) {
-                if (a.prixVente < b.prixVente)
-                    return -1;
-                if (a.prixVente > b.prixVente)
-                    return 1;
-                return 0;
+                    if (a.prixVente < b.prixVente)
+                        return -1;
+                    if (a.prixVente > b.prixVente)
+                        return 1;
+                    return 0;
                 }
 
                 return this.produitsTrie.sort(compare);
@@ -217,17 +190,18 @@
 
             prixDecroissant() {
                 function compare(a, b) {
-                if (a.prixVente > b.prixVente)
-                    return -1;
-                if (a.prixVente < b.prixVente)
-                    return 1;
-                return 0;
+                    if (a.prixVente > b.prixVente)
+                        return -1;
+                    if (a.prixVente < b.prixVente)
+                        return 1;
+                    return 0;
                 }
 
                 return this.produitsTrie.sort(compare);
             },
 
             reinitProduit(){
+                this.produitsTrie = this.produits;
                 function compare(a, b) {
                 if (a.nom < b.nom)
                     return -1;

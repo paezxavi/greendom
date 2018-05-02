@@ -33623,7 +33623,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 disabled: false,
                 piecewise: true,
                 piecewiseLabel: true,
-                interval: 100,
+                interval: 50,
                 piecewiseStyle: {
                     "backgroundColor": "#ccc",
                     "visibility": "visible",
@@ -33652,7 +33652,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.produitsTrie = response.data;
             self.getPrixMax();
             self.getWattsMax();
-            self.pri;
         }).catch(function (error) {
             console.log(error);
         });
@@ -33660,25 +33659,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        showDataPrix: function showDataPrix(v) {
+        applyFilter: function applyFilter() {
             var _this = this;
 
-            //if(this.produits.length == this.produitsTrie.length) {
             this.produitsTrie = [];
-            //console.log(this.produits);
             this.produits.map(function (p) {
-                if (p.prixVente <= v) {
-                    //console.log(p.prixVente);
+                if (p.prixVente <= _this.valuePrix & p.feature <= _this.valueWatts) {
                     _this.produitsTrie.push(p);
                 }
             });
-            /*} else {
-                this.produitsTrie.map( (p, index) => {
-                    if(p.prixVente > v){
-                        this.produitsTrie.splice(index, 1);
-                    }
-                })
-            }*/
         },
         getPrixMax: function getPrixMax() {
             var maxP = 0;
@@ -33689,29 +33678,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.maxPrixCat = maxP;
             this.optionsPrix.max = maxP;
+            this.valuePrix = maxP;
         },
         reinitPrix: function reinitPrix() {
-            this.valuePrix = 0;
-            this.showDataPrix(this.maxPrixCat);
-        },
-        showDataWatts: function showDataWatts(v) {
-            var _this2 = this;
-
-            //if(this.produits.length == this.produitsTrie.length) {
-            this.produitsTrie = [];
-            this.produits.map(function (p) {
-                if (p.feature <= v) {
-                    //console.log(p.prixVente);
-                    _this2.produitsTrie.push(p);
-                }
-            });
-            /*} else {
-                this.produitsTrie.map( (p, index) => {
-                    if(p.feature > v){
-                        this.produitsTrie.splice(index, 1);
-                    }
-                })
-            }*/
+            this.valuePrix = this.maxPrixCat;
+            this.applyFilter();
         },
         getWattsMax: function getWattsMax() {
             var maxW = 0;
@@ -33722,10 +33693,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.maxWattsCat = maxW;
             this.optionsWatts.max = maxW;
+            this.valueWatts = maxW;
         },
         reinitWatts: function reinitWatts() {
-            this.valueWatts = 0;
-            this.showDataWatts(this.maxWattsCat);
+            this.valueWatts = this.maxWattsCat;
+            this.applyFilter();
         },
         prixCroissant: function prixCroissant() {
             function compare(a, b) {
@@ -33746,6 +33718,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.produitsTrie.sort(compare);
         },
         reinitProduit: function reinitProduit() {
+            this.produitsTrie = this.produits;
             function compare(a, b) {
                 if (a.nom < b.nom) return -1;
                 if (a.nom > b.nom) return 1;
@@ -33801,7 +33774,7 @@ var render = function() {
                     {
                       nativeOn: {
                         click: function($event) {
-                          _vm.showDataPrix(_vm.valuePrix)
+                          _vm.applyFilter()
                         }
                       },
                       model: {
@@ -33841,7 +33814,7 @@ var render = function() {
                     {
                       nativeOn: {
                         click: function($event) {
-                          _vm.showDataWatts(_vm.valueWatts)
+                          _vm.applyFilter()
                         }
                       },
                       model: {
