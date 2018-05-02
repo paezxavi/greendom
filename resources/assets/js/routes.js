@@ -54,11 +54,10 @@ let routes = [
         component: require('./views/Commande')
 
     },
-    //Page de welcome.. pas nécessaire mais ca tue le temps
     {
 
-        path:'/bonjour/:user',
-        component: require('./views/Bonjour')
+        path:'/panier',
+        component: require('./views/Panier')
 
     },
 ];

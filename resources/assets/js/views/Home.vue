@@ -20,8 +20,9 @@
                     </div>
                     <div class="column is-8" style="overflow-y: auto;height:600px">
                         <div class="columns is-multiline">
-                            <div data-v-1244b4c1="" class="column is-4"  v-for="produit in this.produitsTrie">
-                                <a data-v-1244b4c1="" target="_blank" class="opacityCatalogue"> <!--Il faudra mettre un href sur un produit-->
+                            <div data-v-1244b4c1="" class="column is-4"  v-for="(produit, index) in this.produitsTrie">
+                                <modalProduit v-show="showModal" @close="showModal = false"></modalProduit>
+                                <a @click="afficherProduit(index);showModal = true" data-v-1244b4c1="" target="_blank" class="opacityCatalogue">
                                     <article data-v-1244b4c1="" class="message" :class="color[0]"> <!-- :class="color[Math.floor(Math.random() * color.length)]">-->
                                         <div data-v-1244b4c1="" class="message-header has-text-centered">
                                             <h1 data-v-1244b4c1="" class="is-3 title has-text-centered">{{produit.nom}}</h1>
@@ -43,6 +44,9 @@
                                         </div>
                                     </article>
                                 </a>
+                                <div data-v-1244b4c1="" class="message-footer has-text-centered" :class="color[0]">
+                                    <button class="button is-success is-centered" @click="ajoutPanier(produit, index)">Ajouter au panier</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -54,6 +58,7 @@
 
 <script>
     import vueSlider from 'vue-slider-component';
+    import {StoreCatalogue} from './storeCatalogue'
 
     export default {
         components: {
@@ -61,6 +66,9 @@
         },
         data() {
             return {
+                showModal: false,
+                currentUser: false,
+                user: '',
                 valuePrix:0,
                 produits: [],
                 produitsTrie: [],
@@ -116,6 +124,13 @@
 
         created() {
             let self = this;
+            this.checkIfLogged()
+            .then(response => {
+                    console.log(this.user);
+                    this.user = response ? this.currentUser=true : this.currentUser = false;
+                    ;
+                })
+            .catch(error => console.log(error));
             axios({
                 method: 'get',
                 url: '/produitsOffre',
@@ -133,6 +148,26 @@
         },
 
         methods: {
+            ajoutPanier(produit, index) {
+                if (this.currentUser) {
+                    StoreCatalogue.ajoutPanierCatalogue(produit);
+                } else {
+                    window.location = '/#/login';
+                }
+            },
+
+            pasConnecte() {
+                if (this.currentUser==false) {
+                    return false;
+                }
+                return true;
+            },
+
+            afficherProduit(index) {
+                var produit = this.produits[index];
+                StoreCatalogue.produitAffiche(produit);
+            },
+
             applyFilter() {
                 this.produitsTrie = [];
                 this.produits.map( (p) => {
@@ -215,4 +250,69 @@
 
         },
     }
+    
+    /*Fenêtre composant
+    Vue.component('modal', {
+      template: '#modal-template'
+    })
+    */
+    Vue.component('modalProduit', {
+    template:
+    `
+    <div id="modal-ter" class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Produit</p>
+          <button class="delete" aria-label="close" @click="$emit('close')"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="box">
+            <article class="media"  v-for="(produit, index) in produits">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img :src="produit.image" alt="Image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
+                    <br>
+                    {{produit.description}}
+                  <div class="is-pulled-right">
+                    <button class="button is-info" @click="ajoutPanier(produit, index)"> Ajouter au panier </button>
+                  </div>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-danger" @click="$emit('close')"> Fermer </button>
+        </footer>
+      </div>
+    </div>
+    `,
+
+    data() {
+      return {
+        produits: StoreCatalogue.$data.produitCourant,
+      }
+    },
+
+    created() {
+        console.log(this.produitSelectionne);
+    },
+
+    methods: {
+        ajoutPanier(produit, index) {
+            console.log(produit);
+            var produit = this.produits[index];
+            StoreCatalogue.ajoutPanierCatalogue(produit);
+        },
+    }
+
+  })
 </script>
