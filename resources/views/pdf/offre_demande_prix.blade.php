@@ -26,11 +26,8 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-<<<<<<< HEAD:resources/views/pdf/commande_pdf.blade.php
-        <h1> Bon de commande </h1>
-=======
+
         <h1> Demande de prix </h1>
->>>>>>> 7c80b6f14cede0b148000dce386d2963703b3c66:resources/views/pdf/offre_demande_prix.blade.php
       </div>
         Chemin du Pré-Fleuri 5 <br/>
         1228 Plan-Les-Ouates <br/>
@@ -38,28 +35,17 @@ table#t01 th {
         Télécopie (+41) 22 556 02 58 <br/>
         TVA: CHE-237.588.037
         <p/>
-        <b>
-        DATE : </b> 9 décembre 2017 <br/>
-        <b>N° OFFRE : </b> 12131231312
-        </b>
+
         <br/>
         <br/>
         <br/>
 
-        <center> <b> À l"'"attention de </b> </center>
         <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
+            <b> À l'attention de </b><br/>
+            {{$customer->name}} {{$customer->forename}}<br/>
+            {{$customer->address}} <br/>
         </p>
         <br/>
-
-        <center> <b> Expédier à : </b> </center>
-        <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
-        </p>
 
         <br/>
         <table class="table table-hover table-condensed">

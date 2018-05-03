@@ -36377,7 +36377,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           console.log(response);
           self.idCreated = response.data;
           self.storeFile();
-          location.reload();
+          //location.reload();
           window.location.href = '/#/listOrder/' + id;
         }).catch(function (error) {
           console.log(error);
@@ -36385,12 +36385,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
-          location.reload();
+          //location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         //Produits enregistres
         axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
-          location.reload();
+          //location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         self.storeFile();
@@ -36540,8 +36540,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.enregistrer();
       axios.post('/fournisseurMailDemandePrix/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
+        __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
-      var id = this.customer.id;
+      var id = this.currentUser.id;
       axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
         window.location.href = '/#/listOrder/' + id;
       });
@@ -36551,7 +36552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.post('/clientMailOffre/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
-      var id = this.customer.id;
+      var id = this.currentUser.id;
       axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
         window.location.href = '/#/listOrder/' + id;
       });
@@ -36774,7 +36775,7 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 			return 0;
 		},
 		viderPanier: function viderPanier() {
-			this.panier = [];
+			this.panier.length = 0;
 		}
 	}
 });
@@ -38116,18 +38117,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        /*
-        this.checkIfLogged()
-        .then(response => {
-                this.user = response ? response : console.log('');
-            })                    
-        .catch(error => console.log(error));
-         //Company de l'utilisateur
-        axios.get('/company/'+this.$route.params.user)
-              .then(({data}) => this.company = data);
-        */
+        var _this = this;
+
+        this.checkIfLogged().then(function (response) {
+            _this.user = response ? response : "window.location = '/#/login'";
+            console.log(_this.user);
+        });
     },
-    mounted: function mounted() {},
 
 
     methods: {
@@ -38153,33 +38149,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.panier = [];
         },
         validerPanier: function validerPanier() {
-            /*
-                axios({
-                    method: 'post',
-                    url: '/insertDemande/'+this.user.id,
-                    timeout: 8000, // Let's say you want to wait at least 8 seconds
-                    data: {
-                        typeSubmit: "Enregistrer",
-                        commande: this.commande,
-                        company: this.company,
-                        customer: this.user
-                    }
-                })
-                .then(function (response) {
-                        console.log(response);
-                        self.idCreated = response.data;
-                        self.storeFile();
-                        location.reload();
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-                 //Nouveaux produits
-                axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.user, products:this.panier})
-                    .then(function (response) {
-                });
-                */
-
+            axios({
+                method: 'post',
+                url: '/emailPanier/' + this.user.id,
+                data: {
+                    panier: this.panier,
+                    user: this.user
+                }
+            }).then(function (response) {
+                console.log(response);
+            });
         }
     }
 });

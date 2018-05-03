@@ -69,21 +69,11 @@
         },   
 
         created() {
-            /*
-            this.checkIfLogged()
+           this.checkIfLogged()
             .then(response => {
-                    this.user = response ? response : console.log('');
-                })                    
-            .catch(error => console.log(error));
-
-            //Company de l'utilisateur
-            axios.get('/company/'+this.$route.params.user)
-                  .then(({data}) => this.company = data);
-            */
-        },
-
-        mounted() {
-            
+                    this.user = response ? response : "window.location = '/#/login'";
+                    console.log(this.user);
+                })
         },
 
         methods: {
@@ -113,34 +103,17 @@
             },
 
             validerPanier() {
-                /*
-                    axios({
-                        method: 'post',
-                        url: '/insertDemande/'+this.user.id,
-                        timeout: 8000, // Let's say you want to wait at least 8 seconds
-                        data: {
-                            typeSubmit: "Enregistrer",
-                            commande: this.commande,
-                            company: this.company,
-                            customer: this.user
-                        }
-                    })
-                    .then(function (response) {
-                            console.log(response);
-                            self.idCreated = response.data;
-                            self.storeFile();
-                            location.reload();
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-                    //Nouveaux produits
-                    axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.user, products:this.panier})
-                        .then(function (response) {
-                    });
-                    */
-
+                axios({
+                method: 'post',
+                url: '/emailPanier/' + this.user.id,
+                data: {
+                  panier: this.panier,
+                  user: this.user,
+                }
+              })
+              .then(function (response) {
+                    console.log(response);
+              })
             }
         }
     }

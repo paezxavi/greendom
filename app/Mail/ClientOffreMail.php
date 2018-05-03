@@ -2,26 +2,26 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PanierMail extends Mailable
+class ClientOffreMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $user;
+    private $title;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct($request)
     {
-        $this->user=$user;
+        $this->title=$request;
     }
 
     /**
@@ -31,11 +31,11 @@ class PanierMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.panierMail')
-                    ->subject('Votre commande')
+        return $this->view('mails.fournisseurMail')
+                    ->subject('Offre')
                     ->attach(storage_path('app/public/pdf/Test.pdf'))
                     ->with([
-                      'user' => $this->user,
+                      'title' => $this->title,
                     ]);
     }
 }

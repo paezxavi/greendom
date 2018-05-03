@@ -113,7 +113,7 @@ export const Store = new Vue({
 		},
 
 		viderPanier() {
-			this.panier = []
+			this.panier.length = 0;
 		}
 	}
 });

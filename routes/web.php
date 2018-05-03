@@ -45,7 +45,8 @@ Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis
 Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
-
+//post panier email
+Route::post('/emailPanier/{user}', 'CommandeController@emailPanier');
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/validerClient/{commande}', 'CommandeController@validerClient');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');

@@ -15,6 +15,8 @@ use App\Product;
 use Carbon\Carbon;
 use App\Mail\DemandeEnvoye;
 use App\Mail\FournisseurMail;
+use App\Mail\PanierMail;
+use App\Mail\ClientOffreMail;
 use Illuminate\Auth\AuthenticationException;
 
 class CommandeController extends Controller
@@ -328,7 +330,7 @@ class CommandeController extends Controller
       
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products))
+      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
@@ -343,13 +345,32 @@ class CommandeController extends Controller
       
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products))
+      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new FournisseurMail('Commande'));
+      Mail::to($users)->send(new ClientOffreMail('Offre'));
       return 'mail envoyé depuis le controleur';
+    }
+
+    public function emailPanier(Request $request)
+    {
+      $users = User::where('employee',true)->get();
+      $productsArray = $request->all()["panier"];
+      $userConnected = User::find($request->all()["user"]["id"]);
+      $panierArray = [];
+      foreach($productsArray as $products){
+        array_push($panierArray, $products);
+      }
+      $pdf = PDF::loadView('pdf/achat_catalogue_pdf', array('productArray' => $panierArray,'user' => $userConnected))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/pdf/Test.pdf');
+      $pdf->save($path);
+
+      $userConnected = User::find($request->all()["user"]["id"]);
+      Mail::to($users)->send(new PanierMail($userConnected));
+      
     }
 
 }

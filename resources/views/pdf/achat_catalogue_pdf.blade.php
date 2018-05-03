@@ -26,7 +26,7 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-        <h1> Offre </h1>
+        <h1> Achat Catalogue </h1>
       </div>
         Chemin du Pré-Fleuri 5 <br/>
         1228 Plan-Les-Ouates <br/>
@@ -34,16 +34,14 @@ table#t01 th {
         Télécopie (+41) 22 556 02 58 <br/>
         TVA: CHE-237.588.037
         <p/>
-        <b>
-        </b>
         <br/>
         <br/>
         <br/>
 
         <p align="right">
-            <b> À l'attention de </b><br/>
-            {{$customer->name}} {{$customer->forename}}<br/>
-            {{$customer->address}} <br/>
+            À l'attention de<br/>
+            <b> {{$user->forename}} {{$user->name}}</b><br/>
+            {{$user->address}}
         </p>
         <br/>
 
@@ -52,18 +50,21 @@ table#t01 th {
             <thead>
                 <tr>
                     <th style="width:25%">Produit</th>
+                    <th style="width:25%">Description</th>
                     <th style="width:25%">Prix</th>
                     <th style="width:25%">Quantité</th>
                     <th style="width:25%">Total</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($productArray as $products)
                     <tr>
-                        <td>{{$product->nom}}</td>
-                        <td>CHF {{$product->pivot->prix}}.-</td>
-                        <td>{{$product->pivot->quantity}}</td>
-                        <td>CHF {{$product->pivot->total}}.-</td>
+                        <td>{{$products["nom"]}}</td>
+                        <td>{{$products["description"]}}</td>
+                        <td>{{$products["prix"]}}</td>
+                        <td>{{$products["quantite"]}}</td>
+                        <td>{{intval($products["prix"]) * intval($products["quantite"])}}</td>
                     </tr>
                 @endforeach
             </tbody>

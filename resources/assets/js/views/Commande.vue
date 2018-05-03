@@ -368,7 +368,7 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    location.reload();
+                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {
@@ -378,13 +378,13 @@
               //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
-                        location.reload();
+                        //location.reload();
                         window.location.href='/#/commande/'+id+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
-                      location.reload();
+                      //location.reload();
                       window.location.href='/#/commande/'+id+'/'+commandId;
                     });
               self.storeFile();         
@@ -552,8 +552,9 @@
             axios.post('/fournisseurMailDemandePrix/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
+              Store.viderPanier();
             });
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
@@ -566,7 +567,7 @@
             .then(function(response){
               console.log('mail Envoyé');
             });
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
