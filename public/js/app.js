@@ -36518,7 +36518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           console.log(response);
           self.idCreated = response.data;
           self.storeFile();
-          location.reload();
+          //location.reload();
           window.location.href = '/#/listOrder/' + id;
         }).catch(function (error) {
           console.log(error);

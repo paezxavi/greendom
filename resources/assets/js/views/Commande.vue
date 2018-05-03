@@ -524,7 +524,7 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    location.reload();
+                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {
