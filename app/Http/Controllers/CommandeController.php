@@ -94,7 +94,8 @@ class CommandeController extends Controller
       $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
-      foreach($request->products as $product){
+      if($request->products) {
+        foreach($request->products as $product){
           $customerDevis->products()->attach(1 , ([
                                                     'commande_id' => $request->commande['id'],
                                                     'product_id' => $product['id'],
@@ -106,7 +107,8 @@ class CommandeController extends Controller
                                                     'total' => $product['total'],
                                                     'fournisseur' => $product['fournisseurChoisi']
                                                   ]));
-         echo "insert";
+          echo "insert";
+        }
       }
     }
 
