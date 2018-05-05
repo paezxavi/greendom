@@ -7,15 +7,14 @@
                         <h1 class="title" style="text-align:center">Filtres</h1>
                         <h3 class="subtitle is-3">Prix max</h3>
                         <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
-                        <a class="button is-light" @click="reinitPrix()">Réinitialiser</a>
+                        <a class="button is-light marginCatalog" @click="reinitPrix()">Réinitialiser</a>
                         <h3 class="subtitle is-3">Watts max</h3>
                         <vue-slider v-model="valueWatts" v-bind="optionsWatts" @click.native="applyFilter()"></vue-slider>
-                        <a class="button is-light" @click="reinitWatts()">Réinitialiser</a>
+                        <a class="button is-light marginCatalog" @click="reinitWatts()">Réinitialiser</a>
                         <br/>
-                        <br/>
-                        <a class="button is-light" @click="prixCroissant()">Trier par prix croissant</a>
-                        <a class="button is-light" @click="prixDecroissant()">Trier par prix décroissant</a>
-                        <a class="button is-light" @click="reinitProduit()">Réinitialiser liste</a>
+                        <a class="button is-light marginCatalog" @click="prixCroissant()">Trier par prix croissant</a>
+                        <a class="button is-light marginCatalog" @click="prixDecroissant()">Trier par prix décroissant</a>
+                        <a class="button is-light marginCatalog" @click="reinitProduit()">Réinitialiser liste</a>
 
                     </div>
                     <div class="column is-9 catalogSize">
@@ -50,7 +49,7 @@
                                     </article>
                                 </a>
                                 <div data-v-1244b4c1="" class="message-footer has-text-centered" :class="color[0]">
-                                    <button class="button is-success is-centered" @click="ajoutPanier(produit, index)">Ajouter au panier</button>
+                                    <button class="button is-success is-centered" style="width:-webkit-fill-available" @click="ajoutPanier(produit, index)">Ajouter au panier</button>
                                 </div>
                             </div>
                         </div>
