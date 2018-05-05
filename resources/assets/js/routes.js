@@ -19,12 +19,12 @@ let routes = [
         component: require('./views/Home')
 
     },
-    {
+    /*{
 
         path:'/about',
         component: require('./views/About')
 
-    },
+    },*/
     {
 
         path:'/contact',
@@ -37,11 +37,11 @@ let routes = [
         component: require('./views/ListeCommandes')
 
     },
-    {
+    /*{
 
         path:'/tableauDeBord/:user',
         component: require('./views/TableauDeBord')
-    },
+    },*/
     {
 
         path:'/commande/:user/:commande',

@@ -41,9 +41,9 @@
                       <router-link class="navbar-item" tag="a" to="/home">
                           Accueil
                       </router-link>
-                      <router-link class="navbar-item" tag="a" to="/about">
+                      <!--<router-link class="navbar-item" tag="a" to="/about">
                           A propos de nous
-                      </router-link>
+                      </router-link>-->
                       @if (!Auth::check())
                         <router-link class="navbar-item" tag="a" to="/signUp">
                             S'inscrire
@@ -57,11 +57,11 @@
                         <router-link class="navbar-item" tag="a" to="/listOrder/{{ Auth::id() }}">
                             Liste des commandes
                         </router-link>
-                        @if (Auth::user()->employee)
+                        <!--@if (Auth::user()->employee)
                           <router-link class="navbar-item" tag="a" to="/tableauDeBord/{{ Auth::id() }}">
                               Tableau de bord
                           </router-link>
-                        @endif
+                        @endif-->
                       @endif
                     </div>
                   </div>
@@ -93,7 +93,7 @@
             </div>
 
 
-            <section class="section">
+            <section class="section" style="position:absolute;width:100%">
                 <div class="container">
                     <router-view></router-view>
                 </div>

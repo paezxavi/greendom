@@ -34,7 +34,6 @@
             detailed
             detail-key="id"
             @details-open="(row, index) => $toast.open(`Expanded ${row.users.name}`)">
-
             <template slot-scope="props">
                 <b-table-column field="dateDebut" label="Date début" sortable>
                     {{ new Date(props.row.dateDebut).toLocaleDateString() }}
@@ -76,6 +75,11 @@
             </article>
         </template>
         </b-table>
+        <div class="spinner" v-if="showSpinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
       </section>
       <a @click="nouvelleDemande" class="button is-primary">Nouvelle demande</a>
     </div>
@@ -89,6 +93,7 @@
     export default {
         data() {
             return {
+                showSpinner:true,
                 arrayCommande: [],
                 isPaginated: true,
                 isPaginationSimple: false,
@@ -105,6 +110,7 @@
 
 
         created() {
+            let self = this;
             this.checkIfLogged()
             .then(response => {
                     this.user = response ? response : window.location = '/#/login';
@@ -113,8 +119,19 @@
             .catch(error => console.log(error));
             axios.get('/'+this.$route.params.user)
                 .then(({data}) => this.currentUser = data);
-            axios.get('/commandeList/'+this.$route.params.user)
-                .then(({data}) => this.arrayCommande = data);
+            /*axios.get('/commandeList/'+this.$route.params.user)
+                .then(({data}) => this.arrayCommande = data);*/
+            axios({
+                method: 'get',
+                url: '/commandeList/'+this.$route.params.user,
+              })
+              .then(function (response) {
+                    self.showSpinner = false;
+                    self.arrayCommande = response.data;
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
         },
 
 

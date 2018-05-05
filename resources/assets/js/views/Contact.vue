@@ -1,16 +1,113 @@
 <template>
     <div>
-        Adresse
-        Greendom S.A.
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Votre nom</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <p class="control is-expanded has-icons-left">
+                    <input class="input" type="text" placeholder="Nom">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                    </span>
+                </p>
+                </div>
+                <div class="field">
+                <p class="control is-expanded has-icons-left has-icons-right">
+                    <input class="input is-success" type="email" placeholder="Email">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                    </span>
+                    <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                    </span>
+                </p>
+                </div>
+            </div>
+            </div>
 
-        6, Rue de Genève
+            <div class="field is-horizontal">
+            <div class="field-label"></div>
+            <div class="field-body">
+                <div class="field is-expanded">
+                <div class="field has-addons">
+                    <p class="control">
+                    <a class="button is-static">
+                        +41
+                    </a>
+                    </p>
+                    <p class="control is-expanded">
+                    <input class="input" type="tel" placeholder="Votre numéro de téléphone">
+                    </p>
+                </div>
+                <p class="help">N'entrez pas le premier zéro</p>
+                </div>
+            </div>
+            </div>
 
-        1225  Chêne-Bourg
+            <div class="field is-horizontal">
+            <div class="field-label">
+                <label class="label">Déjà membre?</label>
+            </div>
+            <div class="field-body">
+                <div class="field is-narrow">
+                <div class="control">
+                    <label class="radio">
+                    <input type="radio" name="member">
+                    Oui
+                    </label>
+                    <label class="radio">
+                    <input type="radio" name="member">
+                    Non
+                    </label>
+                </div>
+                </div>
+            </div>
+            </div>
 
-        Contact
-        Email: info@greendom.eu Twitter: @Greendom 
-        Tél: +41 (0) 22 556 0259 Fax: +41 (0) 22 556 0258
+            <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Concerne</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Objet">
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Question</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <div class="control">
+                    <textarea class="textarea" placeholder="Expliquez nous comment vous aider"></textarea>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="field is-horizontal">
+            <div class="field-label">
+                <!-- Left empty for spacing -->
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <div class="control">
+                    <button class="button is-primary">
+                        Envoyer
+                    </button>
+                </div>
+                </div>
+            </div>
+            </div>
     </div>
+    
 </template>
 
 

@@ -32682,12 +32682,12 @@ var routes = [{
     path: '/home',
     component: __webpack_require__(172)
 
-}, {
-
-    path: '/about',
-    component: __webpack_require__(176)
-
-}, {
+},
+/*{
+      path:'/about',
+    component: require('./views/About')
+  },*/
+{
 
     path: '/contact',
     component: __webpack_require__(179)
@@ -32697,11 +32697,12 @@ var routes = [{
     path: '/listOrder/:user',
     component: __webpack_require__(182)
 
-}, {
-
-    path: '/tableauDeBord/:user',
-    component: __webpack_require__(187)
-}, {
+},
+/*{
+      path:'/tableauDeBord/:user',
+    component: require('./views/TableauDeBord')
+},*/
+{
 
     path: '/commande/:user/:commande',
     component: __webpack_require__(134)
@@ -32721,7 +32722,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-     mode:'history',*/
+      mode:'history',*/
 
     routes: routes,
 
@@ -33663,6 +33664,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -33673,6 +33679,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
+            showSpinner: true,
             showModal: false,
             currentUser: false,
             user: '',
@@ -33744,6 +33751,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             url: '/produitsOffre',
             timeout: 8000 // Let's say you want to wait at least 8 seconds
         }).then(function (response) {
+            self.showSpinner = false;
+            self.loader = "";
             self.produits = response.data;
             self.produitsTrie = response.data;
             self.getPrixMax();
@@ -33893,13 +33902,7 @@ var render = function() {
           [
             _c(
               "div",
-              {
-                staticClass: "column is-4",
-                staticStyle: {
-                  border: "1.5px solid #D3D3D3!important",
-                  "border-radius": "16px"
-                }
-              },
+              { staticClass: "column is-3 filter" },
               [
                 _c(
                   "h1",
@@ -34036,200 +34039,199 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "column is-8",
-                staticStyle: { "overflow-y": "auto", height: "600px" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "columns is-multiline" },
-                  _vm._l(this.produitsTrie, function(produit, index) {
-                    return _c(
-                      "div",
-                      {
-                        staticClass: "column is-4",
-                        attrs: { "data-v-1244b4c1": "" }
-                      },
-                      [
-                        _c("modalProduit", {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.showModal,
-                              expression: "showModal"
-                            }
-                          ],
+            _c("div", { staticClass: "column is-9 catalogSize" }, [
+              _vm.showSpinner
+                ? _c("div", { staticClass: "spinner" }, [
+                    _c("div", { staticClass: "bounce1" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "bounce2" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "bounce3" })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "columns is-multiline" },
+                _vm._l(this.produitsTrie, function(produit, index) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "column is-4",
+                      staticStyle: { width: "20%" },
+                      attrs: { "data-v-1244b4c1": "" }
+                    },
+                    [
+                      _c("modalProduit", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.showModal,
+                            expression: "showModal"
+                          }
+                        ],
+                        on: {
+                          close: function($event) {
+                            _vm.showModal = false
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "opacityCatalogue",
+                          attrs: { "data-v-1244b4c1": "", target: "_blank" },
                           on: {
-                            close: function($event) {
-                              _vm.showModal = false
+                            click: function($event) {
+                              _vm.afficherProduit(index)
+                              _vm.showModal = true
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "opacityCatalogue",
-                            attrs: { "data-v-1244b4c1": "", target: "_blank" },
-                            on: {
-                              click: function($event) {
-                                _vm.afficherProduit(index)
-                                _vm.showModal = true
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "article",
-                              {
-                                staticClass: "message",
-                                class: _vm.color[0],
-                                attrs: { "data-v-1244b4c1": "" }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "message-header has-text-centered",
-                                    attrs: { "data-v-1244b4c1": "" }
-                                  },
-                                  [
-                                    _c(
-                                      "h1",
-                                      {
-                                        staticClass:
-                                          "is-3 title has-text-centered",
-                                        attrs: { "data-v-1244b4c1": "" }
-                                      },
-                                      [_vm._v(_vm._s(produit.nom))]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", [
-                                      _c("img", {
-                                        staticClass: "is-circle",
-                                        attrs: {
-                                          "data-v-1244b4c1": "",
-                                          src: produit.image
-                                        }
-                                      })
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "message-body",
-                                    attrs: { "data-v-1244b4c1": "" }
-                                  },
-                                  [
-                                    _c(
-                                      "nav",
-                                      {
-                                        staticClass: "level",
-                                        staticStyle: { width: "100%" },
-                                        attrs: { "data-v-1244b4c1": "" }
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "level-item has-text-centered",
-                                            attrs: { "data-v-1244b4c1": "" }
-                                          },
-                                          [
-                                            _vm._m(0, true),
-                                            _vm._v(" "),
-                                            _c(
-                                              "p",
-                                              {
-                                                staticClass: "title",
-                                                staticStyle: {
-                                                  "font-size": "20px"
-                                                },
-                                                attrs: { "data-v-1244b4c1": "" }
+                        },
+                        [
+                          _c(
+                            "article",
+                            {
+                              staticClass: "message",
+                              class: _vm.color[0],
+                              attrs: { "data-v-1244b4c1": "" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "message-header has-text-centered",
+                                  attrs: { "data-v-1244b4c1": "" }
+                                },
+                                [
+                                  _c(
+                                    "h1",
+                                    {
+                                      staticClass:
+                                        "is-3 title has-text-centered",
+                                      attrs: { "data-v-1244b4c1": "" }
+                                    },
+                                    [_vm._v(_vm._s(produit.nom))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c("img", {
+                                      staticClass: "is-circle",
+                                      attrs: {
+                                        "data-v-1244b4c1": "",
+                                        src: produit.image
+                                      }
+                                    })
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "message-body",
+                                  attrs: { "data-v-1244b4c1": "" }
+                                },
+                                [
+                                  _c(
+                                    "nav",
+                                    {
+                                      staticClass: "level",
+                                      staticStyle: { width: "100%" },
+                                      attrs: { "data-v-1244b4c1": "" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "level-item has-text-centered",
+                                          attrs: { "data-v-1244b4c1": "" }
+                                        },
+                                        [
+                                          _vm._m(0, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass: "title",
+                                              staticStyle: {
+                                                "font-size": "20px"
                                               },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(produit.prixVente)
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "level-item has-text-centered",
-                                            attrs: { "data-v-1244b4c1": "" }
-                                          },
-                                          [
-                                            _vm._m(1, true),
-                                            _vm._v(" "),
-                                            _c(
-                                              "p",
-                                              {
-                                                staticClass: "title",
-                                                staticStyle: {
-                                                  "font-size": "20px"
-                                                },
-                                                attrs: { "data-v-1244b4c1": "" }
+                                              attrs: { "data-v-1244b4c1": "" }
+                                            },
+                                            [_vm._v(_vm._s(produit.prixVente))]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "level-item has-text-centered",
+                                          attrs: { "data-v-1244b4c1": "" }
+                                        },
+                                        [
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass: "title",
+                                              staticStyle: {
+                                                "font-size": "20px"
                                               },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(produit.feature) +
-                                                    " Ws"
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "message-footer has-text-centered",
-                            class: _vm.color[0],
-                            attrs: { "data-v-1244b4c1": "" }
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "button is-success is-centered",
-                                on: {
-                                  click: function($event) {
-                                    _vm.ajoutPanier(produit, index)
-                                  }
+                                              attrs: { "data-v-1244b4c1": "" }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(produit.feature) + " Ws"
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "message-footer has-text-centered",
+                          class: _vm.color[0],
+                          attrs: { "data-v-1244b4c1": "" }
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "button is-success is-centered",
+                              on: {
+                                click: function($event) {
+                                  _vm.ajoutPanier(produit, index)
                                 }
-                              },
-                              [_vm._v("Ajouter au panier")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  })
-                )
-              ]
-            )
+                              }
+                            },
+                            [_vm._v("Ajouter au panier")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                })
+              )
+            ])
           ]
         )
       ])
@@ -34276,123 +34278,9 @@ if (false) {
 }
 
 /***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(177)
-/* template */
-var __vue_template__ = __webpack_require__(178)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/About.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49c1ab4a", Component.options)
-  } else {
-    hotAPI.reload("data-v-49c1ab4a", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 177 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            commandes: [],
-            providers: [],
-            customers: []
-        };
-    },
-    created: function created() {}
-});
-
-/***/ }),
-/* 178 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-          _c("div", { staticClass: "panel panel-default" }, [
-            _c("div", { staticClass: "panel-heading" }, [
-              _vm._v("A propos de nous")
-            ]),
-            _vm._v("\n\n                BlabLblablabla\n            ")
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-49c1ab4a", module.exports)
-  }
-}
-
-/***/ }),
+/* 176 */,
+/* 177 */,
+/* 178 */,
 /* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34461,6 +34349,103 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -34482,13 +34467,161 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._v(
-      "\n    Adresse\n    Greendom S.A.\n\n    6, Rue de Genève\n\n    1225  Chêne-Bourg\n\n    Contact\n    Email: info@greendom.eu Twitter: @Greendom \n    Tél: +41 (0) 22 556 0259 Fax: +41 (0) 22 556 0258\n"
-    )
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label is-normal" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Votre nom")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("p", { staticClass: "control is-expanded has-icons-left" }, [
+              _c("input", {
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Nom" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "icon is-small is-left" }, [
+                _c("i", { staticClass: "fas fa-user" })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "control is-expanded has-icons-left has-icons-right"
+              },
+              [
+                _c("input", {
+                  staticClass: "input is-success",
+                  attrs: { type: "email", placeholder: "Email" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "icon is-small is-left" }, [
+                  _c("i", { staticClass: "fas fa-envelope" })
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "icon is-small is-right" }, [
+                  _c("i", { staticClass: "fas fa-check" })
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field is-expanded" }, [
+            _c("div", { staticClass: "field has-addons" }, [
+              _c("p", { staticClass: "control" }, [
+                _c("a", { staticClass: "button is-static" }, [
+                  _vm._v("\n                    +41\n                ")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "control is-expanded" }, [
+                _c("input", {
+                  staticClass: "input",
+                  attrs: {
+                    type: "tel",
+                    placeholder: "Votre numéro de téléphone"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "help" }, [
+              _vm._v("N'entrez pas le premier zéro")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Déjà membre?")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field is-narrow" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("label", { staticClass: "radio" }, [
+                _c("input", { attrs: { type: "radio", name: "member" } }),
+                _vm._v("\n                Oui\n                ")
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "radio" }, [
+                _c("input", { attrs: { type: "radio", name: "member" } }),
+                _vm._v("\n                Non\n                ")
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label is-normal" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Concerne")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Objet" }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label is-normal" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Question")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("textarea", {
+                staticClass: "textarea",
+                attrs: { placeholder: "Expliquez nous comment vous aider" }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
+        _c("div", { staticClass: "field-label" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "field-body" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("button", { staticClass: "button is-primary" }, [
+                _vm._v("\n                    Envoyer\n                ")
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -34637,6 +34770,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 //import LoggedMixin from '/home/vagrant/greendom/resources/assets/js/views/LoggedMixin.js';
@@ -34644,6 +34781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            showSpinner: true,
             arrayCommande: [],
             isPaginated: true,
             isPaginationSimple: false,
@@ -34663,6 +34801,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
+        var self = this;
         this.checkIfLogged().then(function (response) {
             _this.user = response ? response : window.location = '/#/login';
             console.log(_this.user);
@@ -34673,9 +34812,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = _ref.data;
             return _this.currentUser = data;
         });
-        axios.get('/commandeList/' + this.$route.params.user).then(function (_ref2) {
-            var data = _ref2.data;
-            return _this.arrayCommande = data;
+        /*axios.get('/commandeList/'+this.$route.params.user)
+            .then(({data}) => this.arrayCommande = data);*/
+        axios({
+            method: 'get',
+            url: '/commandeList/' + this.$route.params.user
+        }).then(function (response) {
+            self.showSpinner = false;
+            self.arrayCommande = response.data;
+        }).catch(function (error) {
+            console.log(error);
         });
     },
 
@@ -35171,7 +35317,17 @@ var render = function() {
               }
             }
           ])
-        })
+        }),
+        _vm._v(" "),
+        _vm.showSpinner
+          ? _c("div", { staticClass: "spinner" }, [
+              _c("div", { staticClass: "bounce1" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "bounce2" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "bounce3" })
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -35194,809 +35350,9 @@ if (false) {
 }
 
 /***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(188)
-/* template */
-var __vue_template__ = __webpack_require__(189)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/views/TableauDeBord.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-46e69a82", Component.options)
-  } else {
-    hotAPI.reload("data-v-46e69a82", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 188 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            arrayDemande: [],
-            arrayOffre: [],
-            arrayCommande: [],
-            isPaginated: true,
-            isPaginationSimple: false,
-            defaultSortDirection: 'asc',
-            currentPage: 1,
-            perPage: 5,
-            //defaultOpenedDetails: [1],
-            currentUser: "",
-            user: false
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        this.checkIfLogged().then(function (response) {
-            _this.user = response ? response : _this.$router.push('/login');
-            if (!_this.user.employee) {
-                _this.$router.push('/home');
-            }
-        }).catch(function (error) {
-            return console.log(error);
-        });
-
-        axios.get('/' + this.$route.params.user).then(function (_ref) {
-            var data = _ref.data;
-            return _this.currentUser = data;
-        });
-        axios.get('/demandeList').then(function (_ref2) {
-            var data = _ref2.data;
-            return _this.arrayDemande = data;
-        });
-        axios.get('/offreList').then(function (_ref3) {
-            var data = _ref3.data;
-            return _this.arrayOffre = data;
-        });
-        axios.get('/commandeList').then(function (_ref4) {
-            var data = _ref4.data;
-            return _this.arrayCommande = data;
-        });
-    },
-
-
-    methods: {
-        dateDebutDevis: function dateDebutDevis(devis) {
-            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(devis.dateDebut).format('DD/MM/YYYY');
-        }
-    }
-});
-
-/***/ }),
-/* 189 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h2", { staticClass: "title is-2 has-text-centered" }, [
-      _vm._v("Tableau de bord")
-    ]),
-    _vm._v(" "),
-    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des demandes")]),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c("b-table", {
-          attrs: {
-            data: _vm.arrayDemande,
-            paginated: _vm.isPaginated,
-            "per-page": _vm.perPage,
-            "current-page": _vm.currentPage,
-            "pagination-simple": _vm.isPaginationSimple,
-            "default-sort-direction": _vm.defaultSortDirection,
-            "default-sort": "dateDebut",
-            detailed: "",
-            "detail-key": "id"
-          },
-          on: {
-            "update:currentPage": function($event) {
-              _vm.currentPage = $event
-            },
-            "details-open": function(row, index) {
-              return _vm.$toast.open("Expanded " + row.users.name)
-            }
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(props) {
-                return [
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "dateDebut",
-                        label: "Date début",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(
-                            new Date(props.row.dateDebut).toLocaleDateString()
-                          ) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "update_at",
-                        label: "Dernière modification",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.update_at) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.currentUser.employee
-                    ? _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "nomClient",
-                            label: "Nom du client",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.users.name) +
-                              " " +
-                              _vm._s(props.row.users.forename) +
-                              "\n                "
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "concerne",
-                        label: "Concerne",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.concerne) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "status.nom",
-                        label: "Statut",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.status.nom) +
-                          "\n                "
-                      )
-                    ]
-                  )
-                ]
-              }
-            },
-            {
-              key: "detail",
-              fn: function(props) {
-                return [
-                  _c("article", { staticClass: "media" }, [
-                    _c("div", { staticClass: "media-content" }, [
-                      _c("div", { staticClass: "content" }, [
-                        _c("p", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(props.row.users.name) +
-                                " " +
-                                _vm._s(props.row.users.forename)
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(props.row.descriptionCommande) +
-                              "\n                        "
-                          )
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              }
-            }
-          ])
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des offres")]),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c("b-table", {
-          attrs: {
-            data: _vm.arrayOffre,
-            paginated: _vm.isPaginated,
-            "per-page": _vm.perPage,
-            "current-page": _vm.currentPage,
-            "pagination-simple": _vm.isPaginationSimple,
-            "default-sort-direction": _vm.defaultSortDirection,
-            "default-sort": "dateDebut",
-            detailed: "",
-            "detail-key": "id"
-          },
-          on: {
-            "update:currentPage": function($event) {
-              _vm.currentPage = $event
-            },
-            "details-open": function(row, index) {
-              return _vm.$toast.open("Expanded " + row.users.name)
-            }
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(props) {
-                return [
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "dateDebut",
-                        label: "Date début",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(
-                            new Date(props.row.dateDebut).toLocaleDateString()
-                          ) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "update_at",
-                        label: "Dernière modification",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.update_at) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.currentUser.employee
-                    ? _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "nomClient",
-                            label: "Nom du client",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.users.name) +
-                              " " +
-                              _vm._s(props.row.users.forename) +
-                              "\n                "
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "concerne",
-                        label: "Concerne",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.concerne) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "status.nom",
-                        label: "Statut",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.status.nom) +
-                          "\n                "
-                      )
-                    ]
-                  )
-                ]
-              }
-            },
-            {
-              key: "detail",
-              fn: function(props) {
-                return [
-                  _c("article", { staticClass: "media" }, [
-                    _c("div", { staticClass: "media-content" }, [
-                      _c("div", { staticClass: "content" }, [
-                        _c("p", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(props.row.users.name) +
-                                " " +
-                                _vm._s(props.row.users.forename)
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(props.row.descriptionCommande) +
-                              "\n                        "
-                          )
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              }
-            }
-          ])
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("h4", { staticClass: "title is-4" }, [_vm._v("Liste des commandes")]),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c("b-table", {
-          attrs: {
-            data: _vm.arrayCommande,
-            paginated: _vm.isPaginated,
-            "per-page": _vm.perPage,
-            "current-page": _vm.currentPage,
-            "pagination-simple": _vm.isPaginationSimple,
-            "default-sort-direction": _vm.defaultSortDirection,
-            "default-sort": "dateDebut",
-            detailed: "",
-            "detail-key": "id"
-          },
-          on: {
-            "update:currentPage": function($event) {
-              _vm.currentPage = $event
-            },
-            "details-open": function(row, index) {
-              return _vm.$toast.open("Expanded " + row.users.name)
-            }
-          },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(props) {
-                return [
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "dateDebut",
-                        label: "Date début",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(
-                            new Date(props.row.dateDebut).toLocaleDateString()
-                          ) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "update_at",
-                        label: "Dernière modification",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.update_at) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.currentUser.employee
-                    ? _c(
-                        "b-table-column",
-                        {
-                          attrs: {
-                            field: "nomClient",
-                            label: "Nom du client",
-                            sortable: ""
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(props.row.users.name) +
-                              " " +
-                              _vm._s(props.row.users.forename) +
-                              "\n                "
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "concerne",
-                        label: "Concerne",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.concerne) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-table-column",
-                    {
-                      attrs: {
-                        field: "status.nom",
-                        label: "Statut",
-                        sortable: ""
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(props.row.status.nom) +
-                          "\n                "
-                      )
-                    ]
-                  )
-                ]
-              }
-            },
-            {
-              key: "detail",
-              fn: function(props) {
-                return [
-                  _c("article", { staticClass: "media" }, [
-                    _c("div", { staticClass: "media-content" }, [
-                      _c("div", { staticClass: "content" }, [
-                        _c("p", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(props.row.users.name) +
-                                " " +
-                                _vm._s(props.row.users.forename)
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v("@Concerne: " + _vm._s(props.row.concerne))
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(props.row.descriptionCommande) +
-                              "\n                        "
-                          )
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              }
-            }
-          ])
-        })
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-46e69a82", module.exports)
-  }
-}
-
-/***/ }),
+/* 187 */,
+/* 188 */,
+/* 189 */,
 /* 190 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36911,58 +36267,51 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "card",
-              staticStyle: { "margin-bottom": "15px", width: "100%" }
-            },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-content" }, [
-                _c("div", { staticClass: "content" }, [
-                  _c("div", { staticClass: "field" }, [
-                    _c("div", { staticClass: "columns is-mobile" }, [
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Nom : " + _vm._s(_vm.customer.name))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Prenom : " + _vm._s(_vm.customer.forename))
-                        ])
+          _c("div", { staticClass: "card donneesPers" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-content" }, [
+              _c("div", { staticClass: "content" }, [
+                _c("div", { staticClass: "field" }, [
+                  _c("div", { staticClass: "columns is-mobile" }, [
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Nom : " + _vm._s(_vm.customer.name))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Prenom : " + _vm._s(_vm.customer.forename))
                       ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "field" }, [
-                    _c("label", { staticClass: "label" }, [
-                      _vm._v("Adresse : " + _vm._s(_vm.customer.adresse))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "field" }, [
-                    _c("div", { staticClass: "columns is-mobile" }, [
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Email : " + _vm._s(_vm.customer.email))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "column" }, [
-                        _c("label", { staticClass: "label" }, [
-                          _vm._v("Contact : " + _vm._s(_vm.customer.contact))
-                        ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("label", { staticClass: "label" }, [
+                    _vm._v("Adresse : " + _vm._s(_vm.customer.adresse))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "field" }, [
+                  _c("div", { staticClass: "columns is-mobile" }, [
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Email : " + _vm._s(_vm.customer.email))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "column" }, [
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v("Contact : " + _vm._s(_vm.customer.contact))
                       ])
                     ])
                   ])
                 ])
               ])
-            ]
-          ),
+            ])
+          ]),
           _vm._v(" "),
           _vm.customer.company_id != null
             ? _c("div", { staticClass: "field" }, [
@@ -37149,8 +36498,7 @@ var render = function() {
                 expression: "enableAjoutProduits"
               }
             ],
-            staticClass: "card",
-            staticStyle: { "margin-bottom": "15px", width: "100%" }
+            staticClass: "card articleBox"
           },
           [
             _vm._m(2),
@@ -37817,11 +37165,7 @@ var render = function() {
                         expression: "enabledBtnEnvoyercommande"
                       }
                     ],
-                    staticClass: "button is-success",
-                    staticStyle: {
-                      "margin-left": "2px",
-                      "margin-right": "2px"
-                    },
+                    staticClass: "button is-success buttonCommande",
                     on: {
                       click: function($event) {
                         $event.preventDefault()
@@ -37836,11 +37180,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
+                        staticClass: "button is-success buttonCommande",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -37856,11 +37196,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
+                        staticClass: "button is-success buttonCommande",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -37876,11 +37212,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
+                        staticClass: "button is-success buttonCommande",
                         attrs: { disabled: this.commande.status_id != 5 },
                         on: {
                           click: function($event) {
@@ -37904,11 +37236,7 @@ var render = function() {
                         expression: "enabledBtnPasserEncours"
                       }
                     ],
-                    staticClass: "button is-success",
-                    staticStyle: {
-                      "margin-left": "2px",
-                      "margin-right": "2px"
-                    },
+                    staticClass: "button is-success buttonCommande",
                     on: {
                       click: function($event) {
                         $event.preventDefault()
@@ -37923,11 +37251,7 @@ var render = function() {
                   ? _c(
                       "button",
                       {
-                        staticClass: "button is-success",
-                        staticStyle: {
-                          "margin-left": "2px",
-                          "margin-right": "2px"
-                        },
+                        staticClass: "button is-success buttonCommande",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -38180,18 +37504,21 @@ var render = function() {
       ? _c("div", [
           _c(
             "table",
-            { staticClass: "panier", attrs: { width: "400px" } },
+            { staticClass: "table is-narrow", attrs: { width: "400px" } },
             [
               _vm._m(0),
               _vm._v(" "),
               _vm._l(_vm.panier, function(produit, index) {
                 return _c("tr", { key: produit.id }, [
                   _c("td", { staticClass: "panier" }, [
-                    _c("img", { attrs: { src: produit.image, alt: "Image" } })
+                    _c("img", {
+                      staticClass: "imagePanier",
+                      attrs: { src: produit.image, alt: "Image" }
+                    })
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "panier" }, [
-                    _vm._v(_vm._s(produit.nom) + "s")
+                    _vm._v(_vm._s(produit.nom))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "panier" }, [
@@ -38247,9 +37574,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", { staticClass: "panier" }, [
                     _c(
-                      "button",
+                      "a",
                       {
-                        staticClass: "button is-danger",
+                        staticClass: "delete",
                         on: {
                           click: function($event) {
                             _vm.supprimerNouveauProduit(index)

@@ -3,7 +3,7 @@
         <div class="page-inner">
             <div class="inner-content"> 
                 <div data-v-1244b4c1="" class="columns">
-                    <div class="column is-4" style="border:1.5px solid #D3D3D3!important;border-radius:16px">
+                    <div class="column is-3 filter">
                         <h1 class="title" style="text-align:center">Filtres</h1>
                         <h3 class="subtitle is-3">Prix max</h3>
                         <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
@@ -18,9 +18,14 @@
                         <a class="button is-light" @click="reinitProduit()">Réinitialiser liste</a>
 
                     </div>
-                    <div class="column is-8" style="overflow-y: auto;height:600px">
+                    <div class="column is-9 catalogSize">
+                        <div class="spinner" v-if="showSpinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
                         <div class="columns is-multiline">
-                            <div data-v-1244b4c1="" class="column is-4"  v-for="(produit, index) in this.produitsTrie">
+                            <div data-v-1244b4c1="" class="column is-4" v-for="(produit, index) in this.produitsTrie" style="width:20%">
                                 <modalProduit v-show="showModal" @close="showModal = false"></modalProduit>
                                 <a @click="afficherProduit(index);showModal = true" data-v-1244b4c1="" target="_blank" class="opacityCatalogue">
                                     <article data-v-1244b4c1="" class="message" :class="color[0]"> <!-- :class="color[Math.floor(Math.random() * color.length)]">-->
@@ -66,6 +71,7 @@
         },
         data() {
             return {
+                showSpinner:true,
                 showModal: false,
                 currentUser: false,
                 user: '',
@@ -137,6 +143,8 @@
                 timeout: 8000, // Let's say you want to wait at least 8 seconds
               })
               .then(function (response) {
+                    self.showSpinner = false;
+                    self.loader = "";
                     self.produits = response.data;
                     self.produitsTrie = response.data;
                     self.getPrixMax();

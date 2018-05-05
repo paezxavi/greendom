@@ -13,7 +13,7 @@
                 <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_offre }}</h1>
               </div>
 
-              <div class="card" style="margin-bottom:15px; width:100%">
+              <div class="card donneesPers">
                 <header class="card-header">
                   <p class="card-header-title">
                     Données personnelles
@@ -106,7 +106,7 @@
             <!-- Ajout d'articles -->
 
 
-            <div class="card" style="margin-bottom:15px; width:100%" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
+            <div class="card articleBox" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
               <header class="card-header">
                   <h2 class="card-header-title"> Articles </h2>
               </header>
@@ -215,12 +215,12 @@
             <div class="field">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
-                <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre" >Envoyer au fournisseur</button>
-                <button @click.prevent="envoieClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre">Envoyer au Client</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledCommande">Commande reçu</button>
+                <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
+                <button @click.prevent="demandePrixFournisseur" class="button is-success buttonCommande" v-if="enabledOffre" >Envoyer au fournisseur</button>
+                <button @click.prevent="envoieClient" class="button is-success buttonCommande" v-if="enabledOffre">Envoyer au Client</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-if="enabledCommande">Commande reçu</button>
 
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>

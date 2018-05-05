@@ -2,7 +2,7 @@
     <div class="container">
         <h2 class="title is-2 has-text-centered">Panier</h2>
         <div v-if="panier.length > 0">
-            <table class="panier" width="400px">
+            <table class="table is-narrow" width="400px">
                 <tr>
                     <th class="panier" width="50px"> Image </th>
                     <th class="panier" width="50px"> Produit </th>
@@ -13,8 +13,8 @@
                     <th class="panier" width="10px"> </th>
                 </tr>
                 <tr v-for="(produit, index) in panier" :key="produit.id">
-                    <td class="panier" ><img :src="produit.image" alt="Image"></td>
-                    <td class="panier" >{{produit.nom}}s</td>
+                    <td class="panier" ><img class="imagePanier" :src="produit.image" alt="Image"></td>
+                    <td class="panier" >{{produit.nom}}</td>
                     <td class="panier" >{{produit.description}}</td>
                     <td class="panier" >CHF {{produit.prix}}.-</td>
                     <td class="panier" >
@@ -23,7 +23,7 @@
                         <button class="button is-info is-small" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button></td>
                     <td class="panier" >{{ produit.quantite*produit.prix }}.- </td>
                     <td class="panier" >
-                        <button class="button is-danger" @click="supprimerNouveauProduit(index)"> X </button>
+                        <a class="delete" @click="supprimerNouveauProduit(index)"> X </a>
                     </td>
                 </tr>
             </table>

@@ -178,7 +178,7 @@ class ProductsTableSeeder extends Seeder
                 'feature' => 40
             ],
             [
-                'image' => 'https://www.france-xenon.com/812-1762-large_default/tube-neon-led-t8-120cm-verre-opaque-haut-de-gamme.jpg',
+                'image' => 'https://newcontent.westmarine.com/content/images/catalog/full/15949985_FUL.jpeg',
                 'nom' => "T16 compatibles",
                 'categorie' => 'T8',
                 'description' => 'Ceci est une description pour décrire des ampoules',
