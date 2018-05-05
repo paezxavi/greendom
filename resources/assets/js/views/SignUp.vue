@@ -1,6 +1,6 @@
 <template>
       <div class="container">
-        <div style="padding-top:40px" class="columns is-mobile">
+        <div class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
             <div class="has-text-centered">
               <h3 class="title has-text-grey">Créer votre espace client</h3>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="contactStyle">
         <div class="field is-horizontal">
             <div class="field-label is-normal">
                 <label class="label">Votre nom</label>
