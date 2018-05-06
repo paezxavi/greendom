@@ -218,7 +218,7 @@
                 <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
                 <button @click.prevent="demandePrixFournisseur" class="button is-success buttonCommande" v-if="enabledOffre" >Envoyer au fournisseur</button>
                 <button @click.prevent="envoieClient" class="button is-success buttonCommande" v-if="enabledOffre">Envoyer au Client</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
+                <button @click.prevent="mailCommande" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-if="enabledCommande">Commande reçu</button>
 
@@ -561,11 +561,25 @@
             });
           },
 
+          mailCommande(){
+            this.enregistrer();
+            axios.post('/mailCommande/'+this.commande.id)
+            .then(function(response){
+              console.log('mail Envoyé');
+            });
+            var id = this.currentUser.id;
+            axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+              .then(function(response){
+                window.location.href='/#/listOrder/'+id;
+            });
+          },
+
           envoieClient(){
             this.enregistrer();
             axios.post('/clientMailOffre/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
+              Store.viderPanier();
             });
             var id = this.currentUser.id;
             axios.post('/validerClient/'+this.commande.id,{commande:this.commande})

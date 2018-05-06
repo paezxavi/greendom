@@ -35862,10 +35862,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         window.location.href = '/#/listOrder/' + id;
       });
     },
+    mailCommande: function mailCommande() {
+      this.enregistrer();
+      axios.post('/mailCommande/' + this.commande.id).then(function (response) {
+        console.log('mail Envoyé');
+      });
+      var id = this.currentUser.id;
+      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
+        window.location.href = '/#/listOrder/' + id;
+      });
+    },
     envoieClient: function envoieClient() {
       this.enregistrer();
       axios.post('/clientMailOffre/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
+        __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
       var id = this.currentUser.id;
       axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
@@ -37176,7 +37187,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.passerEtapeSuivante($event)
+                            _vm.mailCommande($event)
                           }
                         }
                       },
@@ -37463,7 +37474,7 @@ var render = function() {
       ? _c("div", [
           _c(
             "table",
-            { staticClass: "table is-narrow", attrs: { width: "400px" } },
+            { staticClass: "table is-narrow" },
             [
               _vm._m(0),
               _vm._v(" "),
@@ -37610,31 +37621,19 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", { staticClass: "panier", attrs: { width: "50px" } }, [
-        _vm._v(" Image ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Image ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "50px" } }, [
-        _vm._v(" Produit ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Produit ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "100px" } }, [
-        _vm._v(" Description ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Description ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "50px" } }, [
-        _vm._v(" Prix ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Prix ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "100px" } }, [
-        _vm._v(" Quantité ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Quantité ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "50px" } }, [
-        _vm._v(" Total ")
-      ]),
+      _c("th", { staticClass: "panier" }, [_vm._v(" Total ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "panier", attrs: { width: "10px" } })
+      _c("th", { staticClass: "panier" })
     ])
   }
 ]

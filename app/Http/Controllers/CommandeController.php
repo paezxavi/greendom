@@ -330,12 +330,12 @@ class CommandeController extends Controller
       
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer))
+      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer, 'title' => "Bon de commande"))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new FournisseurMail('Commande'));
+      Mail::to($users)->send(new FournisseurMail('Demande de prix'));
       return 'mail envoyé depuis le controleur';
     }
 
@@ -371,6 +371,19 @@ class CommandeController extends Controller
       $userConnected = User::find($request->all()["user"]["id"]);
       Mail::to($users)->send(new PanierMail($userConnected));
       
+    }
+
+    public function mailCommande(Commande $commande)
+    {
+      $products = Commande::find($commande->id)->products()->get();
+      $customer = User::findOrFail(1);
+      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer, 'title' => "Bon de commande"))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/pdf/Test.pdf');
+      $pdf->save($path);
+      $users = User::where('employee',true)->get();
+      Mail::to($users)->send(new FournisseurMail('Bon de commande'));
+      return 'mail envoyé depuis le controleur';
     }
 
 }

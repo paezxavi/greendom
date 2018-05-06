@@ -2,15 +2,15 @@
     <div class="container">
         <h2 class="title is-2 has-text-centered">Panier</h2>
         <div v-if="panier.length > 0">
-            <table class="table is-narrow" width="400px">
+            <table class="table is-narrow" >
                 <tr>
-                    <th class="panier" width="50px"> Image </th>
-                    <th class="panier" width="50px"> Produit </th>
-                    <th class="panier" width="100px"> Description </th>
-                    <th class="panier" width="50px"> Prix </th>
-                    <th class="panier" width="100px"> Quantité </th>
-                    <th class="panier" width="50px"> Total </th>
-                    <th class="panier" width="10px"> </th>
+                    <th class="panier"> Image </th>
+                    <th class="panier"> Produit </th>
+                    <th class="panier"> Description </th>
+                    <th class="panier"> Prix </th>
+                    <th class="panier"> Quantité </th>
+                    <th class="panier"> Total </th>
+                    <th class="panier"> </th>
                 </tr>
                 <tr v-for="(produit, index) in panier" :key="produit.id">
                     <td class="panier" ><img class="imagePanier" :src="produit.image" alt="Image"></td>

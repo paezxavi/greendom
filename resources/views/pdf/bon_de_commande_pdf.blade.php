@@ -22,22 +22,22 @@ table#t01 th {
     color: white;
 }
 </style>
-<h1>{{$customer->name}}</h1>
 <body>
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-        <h1> Commande </h1>
-      </div>
-        Chemin du Pré-Fleuri 5 <br/>
-        1228 Plan-Les-Ouates <br/>
-        Téléphone (+41) 22 556-02 59 <br/>
-        Télécopie (+41) 22 556 02 58 <br/>
+
+        <h1> {{$title}} </h1>
+       </div>
+        Rue de Genève 6 <br/>
+        1225 Chêne-Bourg <br/>
+        Téléphone +41 (0)22 556 02 59 <br/>
+        Télécopie +41 (0)22 556 02 58 <br/>
         TVA: CHE-237.588.037
         <p/>
         <b>
-        DATE : </b> 9 décembre 2017 <br/>
-        <b>N° OFFRE : </b> 12131231312
+        DATE : </b> 28 avril 2018 <br/>
+        <b>N° de commande : </b> 12131231312
         </b>
         <br/>
         <br/>
@@ -45,41 +45,43 @@ table#t01 th {
 
         <center> <b> À l'attention de </b> </center>
         <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
+          <b> Fournisseur xxx </b> <br/>
           Chemin François-Chavaz 123 <br/>
           1213 Onex
         </p>
         <br/>
 
-        <center> <b> Expédier à : </b> </center>
+
         <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
+            <b> À l'attention de </b><br/>
+            {{$customer->name}} {{$customer->forename}}<br/>
+            {{$customer->address}} <br/>
         </p>
+        <br/>
 
         <br/>
         <table class="table table-hover table-condensed">
-       <thead>
-        <tr>
-         <th style="width:50%">Produit</th>
-         <th style="width:10%">Prix</th>
-         <th style="width:8%">Quantité</th>
-         <th style="width:22%">Total</th>
-         <th style="width:10%"></th>
-        </tr>
-       </thead>
-
-      </table>
-        <h4> Total : XXXXX </h4>
+            <thead>
+                <tr>
+                    <th style="width:20%">Produit</th>
+                    <th style="width:60%">Description</th>
+                    <th style="width:20%">Quantité</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($products as $product)
+                    <tr>
+                        <td>{{$product->nom}}</td>
+                        <td>{{$product->description}}</td>
+                        <td>{{$product->pivot->quantity}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         <br/> <br/>
 
-        <center> Merci d'effectuer le versement de votre acompte à: <br/>
-        <b> GREENDOM SA - UBS - IBAN: CH36 0024 0240 1976 1401 T </b> <br/>
-        Conditions de paiements: 50% à la commande, le solde à la livraison
-        <br/><br/><b> MERCI POUR VOTRE CONFIANCE ! </b> </center>
-        <br/><br/>
-        <center> Pour toute question concernant cette facture, veuillez nous contacter au 022 556 02 59, ou à info@greendom.eu </center>
+        
+        <center> Pour toute question concernant cette commande, veuillez nous contacter au +41 (0)22 556 02 59, ou à info@greendom.eu </center>
         <br/><br/>
 
         <p style="text-align:left;">
