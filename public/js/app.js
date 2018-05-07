@@ -32684,9 +32684,9 @@ var routes = [{
 
 },
 /*{
-      path:'/about',
+     path:'/about',
     component: require('./views/About')
-  },*/
+ },*/
 {
 
     path: '/contact',
@@ -32699,7 +32699,7 @@ var routes = [{
 
 },
 /*{
-      path:'/tableauDeBord/:user',
+     path:'/tableauDeBord/:user',
     component: require('./views/TableauDeBord')
 },*/
 {
@@ -32722,7 +32722,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
