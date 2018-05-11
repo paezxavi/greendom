@@ -35551,6 +35551,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -35857,10 +35860,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('mail Envoyé');
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
-      var id = this.currentUser.id;
-      axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
-        window.location.href = '/#/listOrder/' + id;
-      });
+      if (this.commande.status_id < 4) {
+        var id = this.currentUser.id;
+        axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
+      window.location.href = '/#/listOrder/' + id;
     },
     mailCommande: function mailCommande() {
       this.enregistrer();
@@ -35872,6 +35878,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         window.location.href = '/#/listOrder/' + id;
       });
     },
+    mailCommandeRecue: function mailCommandeRecue() {
+      axios.post('/mailCommandeRecue/' + this.customer.id + '/' + this.commande.id).then(function (response) {
+        console.log('mail Envoyé');
+      });
+      if (this.commande.status_id < 7) {
+        var id = this.currentUser.id;
+        axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
+    },
     envoieClient: function envoieClient() {
       this.enregistrer();
       axios.post('/clientMailOffre/' + this.commande.id).then(function (response) {
@@ -35879,9 +35896,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
       var id = this.currentUser.id;
-      axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
-        window.location.href = '/#/listOrder/' + id;
-      });
+      if (this.commande.status_id < 5) {
+        axios.post('/validerClient/' + this.commande.id, { commande: this.commande }).then(function (response) {
+          window.location.href = '/#/listOrder/' + id;
+        });
+      }
+      window.location.href = '/#/listOrder/' + id;
     },
     processFile: function processFile(event) {
       this.filesAdd = this.$refs.files.files;
@@ -36231,7 +36251,47 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "Commande - En cours N°" + _vm._s(this.commande.num_offre)
+                  "Commande - En cours N°" + _vm._s(this.commande.num_commande)
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "h1",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.commande.status_id == 7,
+                    expression: "commande.status_id == 7"
+                  }
+                ],
+                staticClass: "title"
+              },
+              [
+                _vm._v(
+                  "Commande - Reçue N°" + _vm._s(this.commande.num_commande)
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "h1",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.commande.status_id == 8,
+                    expression: "commande.status_id == 8"
+                  }
+                ],
+                staticClass: "title"
+              },
+              [
+                _vm._v(
+                  "Commande - Terminée N°" + _vm._s(this.commande.num_commande)
                 )
               ]
             )
@@ -37106,121 +37166,107 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "field" }, [
-          !_vm.visibiliteActioncommandeEnvoye
-            ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "button is-info",
-                    staticStyle: { "margin-right": "2px" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.enregistrer($event)
-                      }
-                    }
-                  },
-                  [_vm._v("Enregistrer")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.enabledBtnEnvoyercommande,
-                        expression: "enabledBtnEnvoyercommande"
-                      }
-                    ],
-                    staticClass: "button is-success buttonCommande",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.envoyer($event)
-                      }
-                    }
-                  },
-                  [_vm._v("Envoyer")]
-                ),
-                _vm._v(" "),
-                _vm.enabledOffre
-                  ? _c(
+        this.commande.status_id != 8
+          ? _c("div", { staticClass: "field" }, [
+              !_vm.visibiliteActioncommandeEnvoye
+                ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
+                    _c(
                       "button",
                       {
+                        staticClass: "button is-info",
+                        staticStyle: { "margin-right": "2px" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.enregistrer($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Enregistrer")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnEnvoyercommande,
+                            expression: "enabledBtnEnvoyercommande"
+                          }
+                        ],
                         staticClass: "button is-success buttonCommande",
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            _vm.demandePrixFournisseur($event)
+                            _vm.envoyer($event)
                           }
                         }
                       },
-                      [_vm._v("Envoyer au fournisseur")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.enabledOffre
-                  ? _c(
+                      [_vm._v("Envoyer")]
+                    ),
+                    _vm._v(" "),
+                    _vm.enabledOffre
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-success buttonCommande",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.demandePrixFournisseur($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Envoyer au fournisseur")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.enabledOffre
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-success buttonCommande",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.envoieClient($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Envoyer au Client")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.enabledOffre
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-success buttonCommande",
+                            attrs: { disabled: this.commande.status_id != 5 },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.mailCommande($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Valider Offre")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
                       "button",
                       {
-                        staticClass: "button is-success buttonCommande",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.envoieClient($event)
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.enabledBtnPasserEncours,
+                            expression: "enabledBtnPasserEncours"
                           }
-                        }
-                      },
-                      [_vm._v("Envoyer au Client")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.enabledOffre
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "button is-success buttonCommande",
-                        attrs: { disabled: this.commande.status_id != 5 },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.mailCommande($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Valider Offre")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.enabledBtnPasserEncours,
-                        expression: "enabledBtnPasserEncours"
-                      }
-                    ],
-                    staticClass: "button is-success buttonCommande",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.passerEtapeSuivante($event)
-                      }
-                    }
-                  },
-                  [_vm._v("Valider commande")]
-                ),
-                _vm._v(" "),
-                _vm.enabledCommande
-                  ? _c(
-                      "button",
-                      {
+                        ],
                         staticClass: "button is-success buttonCommande",
                         on: {
                           click: function($event) {
@@ -37229,21 +37275,54 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Commande reçu")]
+                      [_vm._v("Valider commande")]
+                    ),
+                    _vm._v(" "),
+                    _vm.enabledCommande
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-success buttonCommande",
+                            attrs: { disabled: this.commande.status_id == 7 },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.mailCommandeRecue($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Commande reçue")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.enabledCommande
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-success buttonCommande",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.passerEtapeSuivante($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Commande terminée")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-danger",
+                        staticStyle: { "margin-left": "2px" }
+                      },
+                      [_vm._v("Annuler")]
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "button is-danger",
-                    staticStyle: { "margin-left": "2px" }
-                  },
-                  [_vm._v("Annuler")]
-                )
-              ])
-            : _vm._e()
-        ])
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e()
       ])
     ])
   ])
