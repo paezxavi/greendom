@@ -35227,17 +35227,22 @@ var render = function() {
                     "b-table-column",
                     { attrs: { label: "Lien", sortable: "" } },
                     [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "button",
-                          attrs: {
-                            href:
-                              "#/commande/" + _vm.user.id + "/" + props.row.id
-                          }
-                        },
-                        [_vm._v("Ouvrir")]
-                      )
+                      props.row.status_id != 8
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "button",
+                              attrs: {
+                                href:
+                                  "#/commande/" +
+                                  _vm.user.id +
+                                  "/" +
+                                  props.row.id
+                              }
+                            },
+                            [_vm._v("Ouvrir")]
+                          )
+                        : _vm._e()
                     ]
                   )
                 ]

@@ -56,7 +56,7 @@
                 </b-table-column>
 
                 <b-table-column label="Lien" sortable>
-                    <a class="button" v-bind:href="'#/commande/'+user.id+'/'+props.row.id">Ouvrir</a>
+                    <a class="button" v-if="props.row.status_id != 8" v-bind:href="'#/commande/'+user.id+'/'+props.row.id">Ouvrir</a>
                 </b-table-column>
             </template>
             <template slot="detail" slot-scope="props">
