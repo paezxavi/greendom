@@ -538,7 +538,7 @@
           },
 
           passerEtapeSuivante(){
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
