@@ -297,7 +297,6 @@
 
               //Produits enregistrés dans la commande
               axios.get('/produitsCommande/'+this.$route.params.commande)
-                  //.then(({data}) => this.produits_enregistres = data);
                   .then(response => {
                     this.produits_recuperes = response.data;
                     Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
@@ -371,7 +370,6 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {
@@ -381,13 +379,11 @@
               //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
-                        //location.reload();
                         window.location.href='/#/commande/'+id+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
-                      //location.reload();
                       window.location.href='/#/commande/'+id+'/'+commandId;
                     });
               self.storeFile();         
@@ -527,7 +523,6 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {

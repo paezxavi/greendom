@@ -35631,9 +35631,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
 
       //Produits enregistrés dans la commande
-      axios.get('/produitsCommande/' + this.$route.params.commande)
-      //.then(({data}) => this.produits_enregistres = data);
-      .then(function (response) {
+      axios.get('/produitsCommande/' + this.$route.params.commande).then(function (response) {
         _this.produits_recuperes = response.data;
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].ajoutPanierProduitEnregistrer(_this.produits_recuperes);
       });
@@ -35700,7 +35698,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           console.log(response);
           self.idCreated = response.data;
           self.storeFile();
-          //location.reload();
           window.location.href = '/#/listOrder/' + id;
         }).catch(function (error) {
           console.log(error);
@@ -35708,12 +35705,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
-          //location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         //Produits enregistres
         axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
-          //location.reload();
           window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         self.storeFile();
@@ -35841,7 +35836,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           console.log(response);
           self.idCreated = response.data;
           self.storeFile();
-          //location.reload();
           window.location.href = '/#/listOrder/' + id;
         }).catch(function (error) {
           console.log(error);
