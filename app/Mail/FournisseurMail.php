@@ -32,7 +32,7 @@ class FournisseurMail extends Mailable
     public function build()
     {
         return $this->view('mails.fournisseurMail')
-                    ->subject('Demande de prix Fournisseur')
+                    ->subject($this->title)
                     ->attach(storage_path('app/public/pdf/Test.pdf'))
                     ->with([
                       'title' => $this->title,

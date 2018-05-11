@@ -35859,8 +35859,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log('mail Envoyé');
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
+      var id = this.currentUser.id;
       if (this.commande.status_id < 4) {
-        var id = this.currentUser.id;
         axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
@@ -35881,8 +35881,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.post('/mailCommandeRecue/' + this.customer.id + '/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
+      var id = this.currentUser.id;
       if (this.commande.status_id < 7) {
-        var id = this.currentUser.id;
         axios.post('/validerStatut/' + this.commande.id, { commande: this.commande }).then(function (response) {
           window.location.href = '/#/listOrder/' + id;
         });
@@ -37299,6 +37299,7 @@ var render = function() {
                           "button",
                           {
                             staticClass: "button is-success buttonCommande",
+                            attrs: { disabled: this.commande.status_id != 7 },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()

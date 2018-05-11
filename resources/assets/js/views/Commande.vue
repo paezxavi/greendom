@@ -223,7 +223,7 @@
                 <button @click.prevent="mailCommande" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button @click.prevent="mailCommandeRecue" class="button is-success buttonCommande" :disabled="this.commande.status_id == 7" v-if="enabledCommande">Commande reçue</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-if="enabledCommande">Commande terminée</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id != 7" v-if="enabledCommande">Commande terminée</button>
 
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
@@ -552,8 +552,8 @@
               console.log('mail Envoyé');
               Store.viderPanier();
             });
+            var id = this.currentUser.id;
             if(this.commande.status_id < 4) {
-              var id = this.currentUser.id;
               axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
                 .then(function(response){
                   window.location.href='/#/listOrder/'+id;
@@ -580,8 +580,8 @@
             .then(function(response){
               console.log('mail Envoyé');
             });
+            var id = this.currentUser.id;
             if(this.commande.status_id < 7) {
-              var id = this.currentUser.id;
               axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
                 .then(function(response){
                   window.location.href='/#/listOrder/'+id;
