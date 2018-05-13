@@ -18,12 +18,6 @@ Route::get('/sessionStatus', function() {
 });
 
 //Auth
-//-------------------------------------------------------------
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth');
-Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
-
-Route::post('/login/{user}', 'Auth\LoginController@login');
-//-------------------------------------------------------------
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout')->middleware('auth');
 Route::get('/login', 'Auth\LoginController@notLogged')->name('login');
 
@@ -31,7 +25,12 @@ Route::post('/login/{user}', 'Auth\LoginController@login');
 //-------------------------------------------------------------
 
 //SignUpController
-Route::post('/saveUser', 'SignUpController@store');
+Route::post('/createUser', 'SignUpController@store');
+//-------------------------------------------------------------
+
+//CompanyController
+Route::get('/findCompanyId', 'CompanyController@findId');
+Route::post('/createCompany', 'CompanyController@store');
 //-------------------------------------------------------------
 
 //A supprimer plus tard. Sert d'exemple
