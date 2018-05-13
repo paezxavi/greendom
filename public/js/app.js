@@ -35730,11 +35730,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
-          window.location.href = '/#/commande/' + id + '/' + commandId;
+          location.reload();
+          //window.location.href='/#/commande/'+id+'/'+commandId;
         });
         //Produits enregistres
         axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
-          window.location.href = '/#/commande/' + id + '/' + commandId;
+          location.reload();
+          //window.location.href='/#/commande/'+id+'/'+commandId;
         });
         self.storeFile();
       }
