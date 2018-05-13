@@ -24,6 +24,7 @@ class CreateCommandesProductsPivotTable extends Migration
             $table->double('remisePourcent')->nullable();
             $table->double('total')->nullable();
             $table->string('fournisseur')->nullable();
+            $table->string('description')->nullable();
 
             $table->foreign('commande_id')->references('id')->on("commandes")->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('product_id')->references('id')->on("products")->onDelete('cascade')->onUpdate('cascade');

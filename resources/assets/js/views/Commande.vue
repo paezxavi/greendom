@@ -128,28 +128,38 @@
                             <div class="content">
                               <p>
                                 <strong> {{produit_enregistre.nom}} </strong>
-                                <br/>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
+                                <div>
+                                  <div>
+                                    <label class="is-pulled-left"> Quantité : </label>
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger is-small" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-success" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
-
-                                    <select v-if="enabledOffre" style="margin-left:5px" v-on:change="miseAJourFournisseurEnregistre($event, index)">
-                                         <option> {{produit_enregistre.fournisseurChoisi}} </option>
-                                    </select>
-
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-success is-small" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
+                                    <span class="is-pulled-right">
+                                        <label v-if="enabledOffre" style="margin-left:5px"> Fournisseur : {{produit_enregistre.fournisseurChoisi}}</label>
+                                    </span>
+                                    <br/>
+                                </div>
+                                <br/>
                                     <div>
-                                      Prix <input :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
-                                      <input :disabled='!enabledOffre' id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
-                                      <a v-show="produit_enregistre.remiseBoolean">
+                                      <label class="is-pulled-left"> Prix : </label>
+                                      <input class="is-pulled-left" :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
+                                      <span>
+                                        <input :disabled='!enabledOffre' id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean">
+                                        <label> Remise </label>
+                                      </span>
+                                      <span v-show="produit_enregistre.remiseBoolean">
                                         <input :disabled='!enabledOffre' type="text" style="width:30px" v-on:keyup="miseAJourRemiseEnregistre($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
-                                        Rabais : {{produit_enregistre.remisePrix}}.-
-                                      </a>
+                                        <small> Rabais : {{produit_enregistre.remisePrix}}.- </small>
+                                      </span>
                                       <br/>
-                                      Total : {{produit_enregistre.total}}.-
-                                      <button v-if="enabledOffre" class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
-                                    </div>
-                                <button v-if="enabledOffre" @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
-                              </p>
+                                      <strong> Total : {{produit_enregistre.total}}.- </strong>
+                                      <div>
+                                        <button v-if="enabledOffre" class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
+                                        <button v-if="enabledOffre" @click="supprimerProduitEnregistre(produit_enregistre, index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                      </div>
+                                  </p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </article>
@@ -168,29 +178,44 @@
                               <div class="content">
                                 <p>
                                   <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                                  <br/>
-                                      <button class="is-pulled-left button is-danger" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
-                                      <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
-                                      <button class="is-pulled-left button is-success" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
-
-                                      <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
-                                          <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
-                                            <span hidden> {{fournisseur.id}} </span>
-                                          </option>
-                                      </select>
-                                      <div>
-                                        Prix <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
-                                        <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)"> Remise
-                                        <a v-show="produit.remiseBoolean">
-                                          <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
-                                          Rabais : {{produit.remisePrix}}.-
-                                        </a>
+                                  <div>
+                                    <div>
+                                        <label class="is-pulled-left"> Quantité : </label>
+                                        <button class="is-pulled-left button is-danger is-small" style="margin-left:3px" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
+                                        <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
+                                        <button class="is-pulled-left button is-success  is-small" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
+                                        <span class="is-pulled-right">
+                                          <label> Fournisseur : </label>
+                                          <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
+                                              <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
+                                                <span hidden> {{fournisseur.id}} </span>
+                                              </option>
+                                          </select>
+                                        </span>
                                         <br/>
-                                        Total : {{produit.total}}.-
-                                        <button class="button is-info" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                      <label class="is-pulled-left"> Prix : </label>
+                                      <input  class="is-pulled-left" type="text" style="width:50px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
+                                      <span>
+                                        <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)">
+                                        <label> Remise </label>
+                                      </span>
+                                      <span v-show="produit.remiseBoolean">
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
+                                        <small> Rabais : {{produit.remisePrix}}.- </small>
+                                      </span>
+
+                                      <br/>
+                                      <strong> Total : {{produit.total}}.- </strong>
+                                      <div>
+                                        <button class="button is-info is-pulled-left" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                        <button @click="supprimerNouveauProduit(index, produit)" class="is-pulled-right button is-danger"> Supprimer </button>
                                       </div>
-                                  <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
-                                </p>
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </article>
@@ -406,14 +431,14 @@
             }
           },
 
-          supprimerNouveauProduit(index) {
+          supprimerNouveauProduit(index, produit) {
             this.produits_choisis.splice(index, 1);
+            Store.ajoutProduitSupprime(produit);
           },
 
           miseAJourNouveauFournisseur(e, index) {
             var fournisseur = e.target.value;
             this.produits_choisis[index].fournisseurChoisi = fournisseur; //id,nom
-            console.log("Fournisseur : "+fournisseur);
           },
 
           visibiliteNouveauRemise(remise, index) {
@@ -427,19 +452,17 @@
           },
 
           miseAJourNouveauProduitPrix(e, index) {
-            console.log("CHF"+e.target.value);
             this.produits_choisis[index].prix = e.target.value;
           },
 
           miseAJourNouveauRemise(e, index) {
-            console.log("%"+e.target.value);
             this.produits_choisis[index].remisePourcent = e.target.value;
           },
 
           calculerNouveauPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
-            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            //console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
             var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
-            console.log(remiseCalcul);
+            //console.log(remiseCalcul);
             var prixTotal = prix * quantite;
             this.produits_choisis[index].remisePourcent = txtRemisePourcent;
             this.produits_choisis[index].remisePrix = remiseCalcul;
@@ -459,7 +482,7 @@
             }
           },
 
-          supprimerProduitEnregistre(index) {
+          supprimerProduitEnregistre(produit, index) {
             var idProduit = this.produits_enregistres[index].id;
             console.log(idProduit);
             axios.delete('/supprimerProduit/'+idProduit+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
@@ -468,11 +491,11 @@
                 //window.location.href='/#/commande/'+id+'/'+commandId;
             });
             this.produits_enregistres.splice(index, 1);
+            Store.ajoutProduitEnregistreSupprime(produit);
           },
 
           miseAJourFournisseurEnregistre(e, index) {
-            //this.produits_enregistres[index].fournisseurChoisi = e.target.value;
-            console.log("Fournisseur : "+e.target.value);
+            this.produits_enregistres[index].fournisseurChoisi = e.target.value;
           },
 
           visibiliteRemiseEnregistre(remise, index) {
@@ -486,17 +509,17 @@
           },
 
           miseAJourProduitPrixEnregistre(e, index) {
-            console.log("CHF"+e.target.value);
+            //console.log("CHF"+e.target.value);
             this.produits_enregistres[index].prix = e.target.value;
           },
 
           miseAJourRemiseEnregistre(e, index) {
-            console.log("%"+e.target.value);
+            //console.log("%"+e.target.value);
             this.produits_enregistres[index].remisePourcent = e.target.value;
           },
 
           calculerPrixEnregistre(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
-            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            //console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
             var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
             var prixTotal = prix * quantite;
             this.produits_enregistres[index].remisePourcent = txtRemisePourcent;
@@ -716,7 +739,7 @@
     created() {
         //Liste des listeProduits
         axios.get('/produitsOffre')
-          .then(({data}) => this.produits = data);
+          .then(response => {this.produits = response.data; Store.listeProduits(this.produits)});
     },
 
     methods:{

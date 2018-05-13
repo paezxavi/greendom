@@ -107,7 +107,8 @@ class CommandeController extends Controller
                                                     'remisePrix' => $product['remisePrix'],
                                                     'remisePourcent' => $product['remisePourcent'],
                                                     'total' => $product['total'],
-                                                    'fournisseur' => $product['fournisseurChoisi']
+                                                    'fournisseur' => $product['fournisseurChoisi'],
+                                                    'description' => $product['description']
                                                   ]));
           echo "insert";
         }
