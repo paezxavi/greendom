@@ -28,6 +28,7 @@ Route::post('/saveUser', 'SignUpController@store');
 //-------------------------------------------------------------
 
 Route::get('/', 'CommandeController@index')->name('home');
+
 /* Call PDF */
 Route::get('/files/{commande}', 'FileController@index');
 Route::get('/downloadFile/{file}', 'FileController@download');
@@ -46,6 +47,7 @@ Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
 //post panier email
+Route::post('/mailCommandeRecue/{user}/{commande}','CommandeController@mailCommandeRecue');
 Route::post('/mailCommande/{commande}','CommandeController@mailCommande');
 Route::post('/emailPanier/{user}', 'CommandeController@emailPanier');
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');

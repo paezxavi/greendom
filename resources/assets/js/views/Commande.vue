@@ -10,7 +10,9 @@
                 <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyé fournisseur N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyé client N°{{ this.commande.num_offre }}</h1>
-                <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_commande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 7">Commande - Reçue N°{{ this.commande.num_commande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 8">Commande - Terminée N°{{ this.commande.num_commande }}</h1>
               </div>
 
               <div class="card donneesPers">
@@ -237,7 +239,7 @@
             </div>
             <!--{{this.commande.status_id}}
             <div>Hello</div>-->
-            <div class="field">
+            <div class="field" v-if="this.commande.status_id != 8">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
@@ -245,7 +247,8 @@
                 <button @click.prevent="envoieClient" class="button is-success buttonCommande" v-if="enabledOffre">Envoyer au Client</button>
                 <button @click.prevent="mailCommande" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-if="enabledCommande">Commande reçu</button>
+                <button @click.prevent="mailCommandeRecue" class="button is-success buttonCommande" :disabled="this.commande.status_id == 7" v-if="enabledCommande">Commande reçue</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id != 7" v-if="enabledCommande">Commande terminée</button>
 
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
@@ -279,7 +282,7 @@
                 produits_enregistres: Store.$data.panierEnregistres,
                 produits_recuperes: "",
                 filesAdd: '',
-                files: ''
+                files: '',
             }
         },
 
@@ -319,7 +322,6 @@
 
               //Produits enregistrés dans la commande
               axios.get('/produitsCommande/'+this.$route.params.commande)
-                  //.then(({data}) => this.produits_enregistres = data);
                   .then(response => {
                     this.produits_recuperes = response.data;
                     Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
@@ -393,7 +395,6 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {
@@ -403,13 +404,11 @@
               //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
-                        //location.reload();
                         window.location.href='/#/commande/'+id+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
-                      //location.reload();
                       window.location.href='/#/commande/'+id+'/'+commandId;
                     });
               self.storeFile();         
@@ -547,7 +546,6 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    //location.reload();
                     window.location.href='/#/listOrder/'+id;
               })
               .catch(function (error) {
@@ -563,7 +561,7 @@
           },
 
           passerEtapeSuivante(){
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
@@ -578,10 +576,13 @@
               Store.viderPanier();
             });
             var id = this.currentUser.id;
-            axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
-              .then(function(response){
-                window.location.href='/#/listOrder/'+id;
-            });
+            if(this.commande.status_id < 4) {
+              axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
+            window.location.href='/#/listOrder/'+id;
           },
 
           mailCommande(){
@@ -597,6 +598,20 @@
             });
           },
 
+          mailCommandeRecue(){
+            axios.post('/mailCommandeRecue/'+this.customer.id+'/'+this.commande.id)
+            .then(function(response){
+              console.log('mail Envoyé');
+            });
+            var id = this.currentUser.id;
+            if(this.commande.status_id < 7) {
+              axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
+          },
+
           envoieClient(){
             this.enregistrer();
             axios.post('/clientMailOffre/'+this.commande.id)
@@ -605,10 +620,13 @@
               Store.viderPanier();
             });
             var id = this.currentUser.id;
-            axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
-              .then(function(response){
-                window.location.href='/#/listOrder/'+id;
-            });
+            if(this.commande.status_id < 5) {
+              axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
+            window.location.href='/#/listOrder/'+id;
           },
 
           processFile(event) {

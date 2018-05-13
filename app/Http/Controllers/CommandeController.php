@@ -17,6 +17,7 @@ use App\Mail\DemandeEnvoye;
 use App\Mail\FournisseurMail;
 use App\Mail\PanierMail;
 use App\Mail\ClientOffreMail;
+use App\Mail\CommandeRecueMail;
 use Illuminate\Auth\AuthenticationException;
 
 class CommandeController extends Controller
@@ -341,9 +342,7 @@ class CommandeController extends Controller
     }
 
     public function mailClientOffre(Commande $commande)
-    {
-      //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur
-      
+    {      
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
       $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
@@ -384,6 +383,12 @@ class CommandeController extends Controller
       $pdf->save($path);
       $users = User::where('employee',true)->get();
       Mail::to($users)->send(new FournisseurMail('Bon de commande'));
+      return 'mail envoyé depuis le controleur';
+    }
+
+    public function mailCommandeRecue(User $user, Commande $commande)
+    {
+      Mail::to($user)->send(new CommandeRecueMail('Commande Reçue'));
       return 'mail envoyé depuis le controleur';
     }
 
