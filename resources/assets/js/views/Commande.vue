@@ -85,11 +85,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="this.commande.status_id > 1 && !this.currentUser.employee">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="this.commande.status_id > 1 && !this.currentUser.employee"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5"></textarea>
                 </div>
               </div>
 
@@ -98,7 +98,7 @@
                   <input type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
                 <div v-for="(file, key) in this.files">
-                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="this.commande.status_id >= 8" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
                 </div>
               </div>
             </form>
@@ -241,7 +241,7 @@
             <div>Hello</div>-->
             <div class="field" v-if="this.commande.status_id != 8">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
-                <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
+                <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px" v-if="this.commande.status_id <= 5">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
                 <button @click.prevent="demandePrixFournisseur" class="button is-success buttonCommande" v-if="enabledOffre" >Envoyer au fournisseur</button>
                 <button @click.prevent="envoieClient" class="button is-success buttonCommande" v-if="enabledOffre">Envoyer au Client</button>
@@ -530,7 +530,7 @@
           //FIN METHODES POUR OFFRE
 
           envoyer() {
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             let self = this;
             if (!this.commande.id){
               axios({

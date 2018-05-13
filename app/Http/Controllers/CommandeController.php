@@ -84,7 +84,8 @@ class CommandeController extends Controller
       } elseif ($request->typeSubmit === 'Envoyer') {
         $this->enregistrerCommande($request, 1);
         $user = User::where('employee', true)->get();
-        Mail::to($user)->send(new DemandeEnvoye($request));
+        $comm = Commande::where('id',$request->commande)->get()->first();
+        Mail::to($user)->send(new DemandeEnvoye($comm));
       }
 
     }
