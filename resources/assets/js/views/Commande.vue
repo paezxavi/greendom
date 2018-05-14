@@ -98,7 +98,7 @@
                   <input type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
                 <div v-for="(file, key) in this.files">
-                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="this.commande.status_id >= 8" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="!checkId()" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
                 </div>
               </div>
             </form>
@@ -334,6 +334,10 @@
         },
 
         methods:{
+          checkId() {
+            return this.commande.status_id === 6 || this.commande.status_id === 7 || this.commande.status_id === 8;
+          },
+
           storeFile() {
             let formData = new FormData();
             for( var i = 0; i < this.filesAdd.length; i++ ){

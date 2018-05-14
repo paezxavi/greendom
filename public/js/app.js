@@ -32684,9 +32684,9 @@ var routes = [{
 
 },
 /*{
-      path:'/about',
+     path:'/about',
     component: require('./views/About')
-  },*/
+ },*/
 {
 
     path: '/contact',
@@ -32699,7 +32699,7 @@ var routes = [{
 
 },
 /*{
-      path:'/tableauDeBord/:user',
+     path:'/tableauDeBord/:user',
     component: require('./views/TableauDeBord')
 },*/
 {
@@ -32722,7 +32722,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
@@ -35671,6 +35671,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    checkId: function checkId() {
+      return this.commande.status_id === 6 || this.commande.status_id === 7 || this.commande.status_id === 8;
+    },
     storeFile: function storeFile() {
       var formData = new FormData();
       for (var i = 0; i < this.filesAdd.length; i++) {
@@ -36637,7 +36640,7 @@ var render = function() {
                         },
                         [_vm._v(_vm._s(file.name))]
                       ),
-                      this.commande.status_id >= 8
+                      !_vm.checkId()
                         ? _c(
                             "span",
                             {
