@@ -1,104 +1,113 @@
 <template>
-    <div>
-        <div style="padding-top:40px" class="columns is-mobile">
-          <div class="column is-three-fifths is-offset-one-fifth">
-            <div class="field">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <label class="label">Nom</label>
-                  <div class="control">
-                    <input class="input" type="text" placeholder="" :value="nomString">
-                  </div>
-                </div>
-                <div class="column">
-                  <label class="label">Prénom</label>
-                  <div class="control has-icons-left has-icons-right">
-                    <input class="input is-success" type="text" placeholder="" :value="prenomString">
+    <div class="contactStyle">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Votre nom</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <p class="control is-expanded has-icons-left">
+                    <input class="input" type="text" placeholder="Nom">
                     <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
+                    <i class="fas fa-user"></i>
+                    </span>
+                </p>
+                </div>
+                <div class="field">
+                <p class="control is-expanded has-icons-left has-icons-right">
+                    <input class="input is-success" type="email" placeholder="Email">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
                     </span>
                     <span class="icon is-small is-right">
-                      <i class="fas fa-check"></i>
+                    <i class="fas fa-check"></i>
                     </span>
-                  </div>
-                  <p class="help is-success">Ce nom d'utilisateur est valide</p>
+                </p>
                 </div>
-              </div>
+            </div>
             </div>
 
-            <div class="field">
-              <label class="label">Adresse</label>
-              <div class="control">
-                <input class="input" type="text">
-              </div>
-            </div>
-
-
-            <div class="field">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <label class="label">Email</label>
-                  <div class="control has-icons-left has-icons-right">
-                    <input class="input is-danger" type="email" placeholder="" :value="emailString">
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-envelope"></i>
-                    </span>
-                    <span class="icon is-small is-right">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </span>
-                  </div>
-                  <p class="help is-danger">Cet email est invalide</p>
+            <div class="field is-horizontal">
+            <div class="field-label"></div>
+            <div class="field-body">
+                <div class="field is-expanded">
+                <div class="field has-addons">
+                    <p class="control">
+                    <a class="button is-static">
+                        +41
+                    </a>
+                    </p>
+                    <p class="control is-expanded">
+                    <input class="input" type="tel" placeholder="Votre numéro de téléphone">
+                    </p>
                 </div>
-                <div class="column">
-                  <label class="label">Contact</label>
-                  <div class="control">
-                    <input class="input" type="text" placeholder="" :value="contactString">
-                  </div>
+                <p class="help">N'entrez pas le premier zéro</p>
                 </div>
-              </div>
+            </div>
             </div>
 
-            <div class="field">
-              <div class="control">
-                <label class="checkbox">
-                  <input type="checkbox">
-                  Concerne la société pour laquelle je travaille
-                </label>
-              </div>
+            <div class="field is-horizontal">
+            <div class="field-label">
+                <label class="label">Déjà membre?</label>
+            </div>
+            <div class="field-body">
+                <div class="field is-narrow">
+                <div class="control">
+                    <label class="radio">
+                    <input type="radio" name="member">
+                    Oui
+                    </label>
+                    <label class="radio">
+                    <input type="radio" name="member">
+                    Non
+                    </label>
+                </div>
+                </div>
+            </div>
             </div>
 
-            <div class="field">
-              <div class="file">
-                <label class="file-label">
-                  <input class="file-input" type="file" name="resume">
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                    </span>
-                    <span class="file-label">
-                      Choisir un fichier…
-                    </span>
-                  </span>
-                </label>
-              </div>
+            <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Concerne</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Objet">
+                    </div>
+                </div>
+            </div>
             </div>
 
-            <div class="field">
-              <label class="label">Message</label>
-              <div class="control">
-                <textarea class="textarea"></textarea>
-              </div>
+            <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Question</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <div class="control">
+                    <textarea class="textarea" placeholder="Expliquez nous comment vous aider"></textarea>
+                </div>
+                </div>
+            </div>
             </div>
 
-            <div class="field">
-              <div class="buttons has-addons is-centered">
-                  <a class="button is-success">Soumettre</a>
-                  <a class="button is-danger">Annuler</a>
-              </div>
+            <div class="field is-horizontal">
+            <div class="field-label">
+                <!-- Left empty for spacing -->
             </div>
-          </div>
-        </div>
+            <div class="field-body">
+                <div class="field">
+                <div class="control">
+                    <button class="button is-primary">
+                        Envoyer
+                    </button>
+                </div>
+                </div>
+            </div>
+            </div>
     </div>
+    
 </template>
 
 
@@ -112,26 +121,9 @@
         },
 
         created() {
-            axios.get('/1')
-                .then(({data}) => this.customer = data);
         },
 
         computed:{
-          contactString(){
-            return `${this.customer.contact}`
-          },
-
-          emailString(){
-            return `${this.customer.email}`
-          },
-
-          nomString(){
-            return `${this.customer.name}`
-          },
-
-          prenomString(){
-            return `${this.customer.forename}`
-          },
 
         }
     }

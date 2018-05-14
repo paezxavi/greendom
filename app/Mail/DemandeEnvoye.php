@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\User;
+use App\Commande;
 use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -13,16 +14,16 @@ class DemandeEnvoye extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $var;
+    private $commande;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct(Commande $commande)
     {
-        $this->var = $request;
+        $this->commande = $commande;
     }
 
     /**
@@ -35,7 +36,7 @@ class DemandeEnvoye extends Mailable
       return $this->view('mails.demandeEnvoye')
                   ->subject('Demande envoyé')
                   ->with([
-                      'var' => $this->var,
+                      'commande' => $this->commande,
                   ]);
     }
 }

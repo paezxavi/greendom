@@ -1,0 +1,184 @@
+
+
+.greendom-navbar {
+  border-bottom: 1px solid #E6EAEE;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #00aa00;
+}
+
+.level-item {
+  display: block !important;
+}
+
+.message-header {
+  display: block !important;
+  background-color: #92fdae !important;
+}
+
+.message.is-primary .message-body {
+  border-color: #92fdae !important;
+  color: grey !important;
+}
+
+.navbar.is-primary a:hover {
+  background-color: white !important;
+  color: black !important;
+}
+
+a.navbar-item.is-active,
+a.navbar-link.is-active {
+  background-color: white !important;
+  border: 1px solid #D3D3D3 !important;
+}
+
+.bd-example,
+.bd-structure,
+.bd-snippet {
+  border: 1px solid #D3D3D3 !important;
+}
+
+.navbar.is-primary {
+  background-color: #f5f5f5 !important;
+  color: white !important;
+}
+
+.greendom-background {
+  background-color: #e6ffe6 !important;
+}
+
+/*a.navbar-item router-link-exact-active a.is-active*/
+
+a.navbar-item {
+  background-color: transparents !important;
+}
+
+
+
+.slide-fade-enter-active {
+  -webkit-transition: all 2.0s ease;
+  transition: all 2.0s ease;
+}
+
+.slide-fade-leave-active {
+  -webkit-transition: all 2.0s;
+  transition: all 2.0s;
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+  opacity: 0;
+}
+
+.test {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /*justify-content: center;
+  align-items: center;
+  font-size:10vw;*/
+  font-family: Avantgarde, "TeX Gyre Adventor", "URW Gothic L", sans-serif;
+}
+
+.deleteFile {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 5px;
+  left: 5px;
+  color: red;
+}
+
+.spinner {
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.filter {
+  border: 1.5px solid #D3D3D3 !important;
+  border-radius: 16px !important;
+}
+
+.catalogSize {
+  overflow-y: auto !important;
+  height: 700px !important;
+  width: 80% !important;
+}
+
+.articleBox {
+  margin-bottom: 15px !important;
+  width: 100% !important;
+}
+
+.buttonCommande {
+  margin-left: 2px !important;
+  margin-right: 2px !important;
+}
+
+.donneesPers {
+  margin-bottom: 15px !important;
+  width: 100% !important;
+}
+
+.imagePanier {
+  height: 100px !important;
+  width: 100px !important;
+}
+
+.panier {
+  vertical-align: middle !important;
+}
+
+.contactStyle {
+  width: 60% !important;
+  position: fixed !important;
+}
+
+.marginCatalog {
+  margin-top: 3% !important;
+}
+

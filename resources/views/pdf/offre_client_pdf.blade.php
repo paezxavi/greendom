@@ -35,27 +35,17 @@ table#t01 th {
         TVA: CHE-237.588.037
         <p/>
         <b>
-        DATE : </b> 9 décembre 2017 <br/>
-        <b>N° OFFRE : </b> 12131231312
         </b>
         <br/>
         <br/>
         <br/>
 
-        <center> <b> À l"'"attention de </b> </center>
         <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
+            <b> À l'attention de </b><br/>
+            {{$customer->name}} {{$customer->forename}}<br/>
+            {{$customer->address}} <br/>
         </p>
         <br/>
-
-        <center> <b> Expédier à : </b> </center>
-        <p align="right">
-          <b> Cacciapaglia Kevin </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
-        </p>
 
         <br/>
         <table class="table table-hover table-condensed">

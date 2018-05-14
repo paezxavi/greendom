@@ -6,13 +6,13 @@
     	<link href="../public/css/bulma.css" rel="stylesheet">
     </head>
     <body>
-        <h2>Demande Spéciale</h2>
+        <h2>Achat</h2>
         <div>
             Madame, Monsieur
             </br>
-            <p>Création d'une demande pour une commande spéciale du client {{$commande->users->name}} {{$commande->users->forename}}.</p>
+            <p>Le client {{$user->name}} {{$user->forename}} a passé commande depuis le catalogue.</p>
             </br>
-            <p>Accéder à la demande : <a href="http://192.168.10.10/#/commande/7/{{$commande->id}}">lien</a></p>
+            <p>Les articles sélectionnés sont ci-joint à ce mail</p>
             <hr>
             Merci de ne pas répondre à ce message. Les réponses au mail envoyé à cette adresse ne sont pas acceptées.
         </div>

@@ -15,6 +15,9 @@ use App\Product;
 use Carbon\Carbon;
 use App\Mail\DemandeEnvoye;
 use App\Mail\FournisseurMail;
+use App\Mail\PanierMail;
+use App\Mail\ClientOffreMail;
+use App\Mail\CommandeRecueMail;
 use Illuminate\Auth\AuthenticationException;
 
 class CommandeController extends Controller
@@ -22,7 +25,7 @@ class CommandeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index','produits']);
     }
     /**
      * Display a listing of the resource.
@@ -42,14 +45,15 @@ class CommandeController extends Controller
      */
     public function create(Request $request)
     {
+      $idReturn;
       if ($request->typeSubmit === 'Enregistrer'){
-        $this->insertNewDevis($request, 0);
+        $newCommande = $this->insertNewDevis($request, 0);
       } elseif ($request->typeSubmit === 'Envoyer') {
-        $this->insertNewDevis($request, 1);
+        $newCommande = $this->insertNewDevis($request, 1);
         $user = User::where('employee', true)->get();
-        Mail::to($user)->send(new DemandeEnvoye($request));
+        Mail::to($user)->send(new DemandeEnvoye($newCommande));
       }
-
+      return $newCommande->id;
     }
 
     public function insertNewDevis(Request $request, $typeSubmit)
@@ -64,6 +68,7 @@ class CommandeController extends Controller
       $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = 1 + $typeSubmit;
       $customerDevis->save();
+      return $customerDevis;
     }
 
     /**
@@ -92,7 +97,8 @@ class CommandeController extends Controller
       $customerDevis->descriptionCommande = $request->commande['descriptionCommande'];
       $customerDevis->status_id = $request->commande['status_id'] + $typeSubmit;
       $customerDevis->save();
-      foreach($request->products as $product){
+      if($request->products) {
+        foreach($request->products as $product){
           $customerDevis->products()->attach(1 , ([
                                                     'commande_id' => $request->commande['id'],
                                                     'product_id' => $product['id'],
@@ -102,9 +108,11 @@ class CommandeController extends Controller
                                                     'remisePrix' => $product['remisePrix'],
                                                     'remisePourcent' => $product['remisePourcent'],
                                                     'total' => $product['total'],
-                                                    'fournisseur' => $product['fournisseurChoisi']
+                                                    'fournisseur' => $product['fournisseurChoisi'],
+                                                    'description' => $product['description']
                                                   ]));
-         echo "insert";
+          echo "insert";
+        }
       }
     }
 
@@ -324,27 +332,63 @@ class CommandeController extends Controller
       
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products))
+      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer, 'title' => "Bon de commande"))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new FournisseurMail('Commande'));
+      Mail::to($users)->send(new FournisseurMail('Demande de prix'));
       return 'mail envoyé depuis le controleur';
     }
 
     public function mailClientOffre(Commande $commande)
-    {
-      //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur
-      
+    {      
       $products = Commande::find($commande->id)->products()->get();
       $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products))
+      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Test.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new FournisseurMail('Commande'));
+      Mail::to($users)->send(new ClientOffreMail('Offre'));
+      return 'mail envoyé depuis le controleur';
+    }
+
+    public function emailPanier(Request $request)
+    {
+      $users = User::where('employee',true)->get();
+      $productsArray = $request->all()["panier"];
+      $userConnected = User::find($request->all()["user"]["id"]);
+      $panierArray = [];
+      foreach($productsArray as $products){
+        array_push($panierArray, $products);
+      }
+      $pdf = PDF::loadView('pdf/achat_catalogue_pdf', array('productArray' => $panierArray,'user' => $userConnected))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/pdf/Test.pdf');
+      $pdf->save($path);
+
+      $userConnected = User::find($request->all()["user"]["id"]);
+      Mail::to($users)->send(new PanierMail($userConnected));
+      
+    }
+
+    public function mailCommande(Commande $commande)
+    {
+      $products = Commande::find($commande->id)->products()->get();
+      $customer = User::findOrFail(1);
+      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer, 'title' => "Bon de commande"))
+                  ->setPaper('a3', 'portrait');
+      $path = storage_path('/app/public/pdf/Test.pdf');
+      $pdf->save($path);
+      $users = User::where('employee',true)->get();
+      Mail::to($users)->send(new FournisseurMail('Bon de commande'));
+      return 'mail envoyé depuis le controleur';
+    }
+
+    public function mailCommandeRecue(User $user, Commande $commande)
+    {
+      Mail::to($user)->send(new CommandeRecueMail('Commande Reçue'));
       return 'mail envoyé depuis le controleur';
     }
 

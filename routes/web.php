@@ -11,8 +11,6 @@
 |
 */
 
-//Auth::routes();
-
 Route::get('/sessionStatus', function() {
     return ['user' => Auth::user() ? Auth::user() : null];
 });
@@ -33,12 +31,8 @@ Route::get('/findCompanyId', 'CompanyController@findId');
 Route::post('/createCompany', 'CompanyController@store');
 //-------------------------------------------------------------
 
-//A supprimer plus tard. Sert d'exemple
-Route::get('/customers', 'ProductController@clients');
-Route::get('/commandes', 'ProductController@commandes');
-Route::get('/providers', 'ProductController@providers');
-
 Route::get('/', 'CommandeController@index')->name('home');
+
 /* Call PDF */
 Route::get('/files/{commande}', 'FileController@index');
 Route::get('/downloadFile/{file}', 'FileController@download');
@@ -56,7 +50,10 @@ Route::get('/company/{user}/{commande}', 'CommandeController@companieClientDevis
 Route::get('/{user}', 'CommandeController@infoClient');
 Route::get('/{user}/{commande}', 'CommandeController@infoClient');
 
-
+//post panier email
+Route::post('/mailCommandeRecue/{user}/{commande}','CommandeController@mailCommandeRecue');
+Route::post('/mailCommande/{commande}','CommandeController@mailCommande');
+Route::post('/emailPanier/{user}', 'CommandeController@emailPanier');
 Route::post('/validerStatut/{commande}', 'CommandeController@validerStatut');
 Route::post('/validerClient/{commande}', 'CommandeController@validerClient');
 Route::post('/storeDemande/{user}/{commande}', 'CommandeController@store')->name('storeDevis');
@@ -70,16 +67,3 @@ Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supp
 Route::delete('/removeFile/{file}', 'FileController@remove');
 
 Route::post('/storeFile/{commande}','FileController@storeFile');
-
-
-
-//Faire un chemin /devis pour pouvoir faire les devis vide et faire des post depuis la!
-
-
-//Route::get('/offre/pdf', 'OffreController@offrePdf')->name('offre.pdf');
-//Route::get('/commande/pdf', 'CommandeController@commandePdf')->name('commande.pdf');
-
-/*Route::any('{all}', function () {
-    return view('welcome');
-})
-->where(['all' => '.*']);*/

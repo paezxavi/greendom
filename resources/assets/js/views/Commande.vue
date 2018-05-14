@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="padding-top:40px" class="columns is-mobile">
+        <div class="columns is-mobile">
           <div class="column is-three-fifths is-offset-one-fifth">
             <form method="POST">
 
@@ -10,12 +10,12 @@
                 <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyé fournisseur N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyé client N°{{ this.commande.num_offre }}</h1>
-                <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_offre }}</h1>
-
-
+                <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_commande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 7">Commande - Reçue N°{{ this.commande.num_commande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 8">Commande - Terminée N°{{ this.commande.num_commande }}</h1>
               </div>
 
-              <div class="card" style="margin-bottom:15px">
+              <div class="card donneesPers">
                 <header class="card-header">
                   <p class="card-header-title">
                     Données personnelles
@@ -72,7 +72,6 @@
                   </header>
                   <div class="card-content">
                     <div class="content">
-
                           <label class="label">Société : {{ company.nom }}</label>
 
                           <label class="label">Adresse : {{ company.adresse }}</label>
@@ -109,7 +108,7 @@
             <!-- Ajout d'articles -->
 
 
-            <div class="card" style="margin-bottom:15px" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
+            <div class="card articleBox" v-show="enableAjoutProduits"> <!-- Si la commande est une offre (3) on montre -->
               <header class="card-header">
                   <h2 class="card-header-title"> Articles </h2>
               </header>
@@ -131,30 +130,39 @@
                             <div class="content">
                               <p>
                                 <strong> {{produit_enregistre.nom}} </strong>
-                                <br/>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
+                                <div>
+                                  <div>
+                                    <label class="is-pulled-left"> Quantité : </label>
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger is-small" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-success" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
-
-                                    <select v-if="enabledOffre" style="margin-left:5px" v-on:change="miseAJourFournisseurEnregistre($event, index)">
-                                         <option> {{produit_enregistre.fournisseurChoisi}} </option>
-                                    </select>
-
+                                    <button v-if="enabledOffre" class="is-pulled-left button is-success is-small" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
+                                    <span class="is-pulled-right">
+                                        <label v-if="enabledOffre" style="margin-left:5px"> Fournisseur : {{produit_enregistre.fournisseurChoisi}}</label>
+                                    </span>
+                                    <br/>
+                                </div>
+                                <br/>
                                     <div>
-                                      Prix <input :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
-                                      <input :disabled='!enabledOffre' id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean"> Remise
-                                      <a v-show="produit_enregistre.remiseBoolean">
+                                      <label class="is-pulled-left"> Prix : </label>
+                                      <input class="is-pulled-left" :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
+                                      <span>
+                                        <input :disabled='!enabledOffre' id="chkRemise" type="checkbox" @click="visibiliteRemiseEnregistre(produit_enregistre.remiseBoolean, index)" :checked="produit_enregistre.remiseBoolean">
+                                        <label> Remise </label>
+                                      </span>
+                                      <span v-show="produit_enregistre.remiseBoolean">
                                         <input :disabled='!enabledOffre' type="text" style="width:30px" v-on:keyup="miseAJourRemiseEnregistre($event, index)" :value="produit_enregistre.remisePourcent"> % <br/>
-                                        Rabais : {{produit_enregistre.remisePrix}}.-
-                                      </a>
+                                        <small> Rabais : {{produit_enregistre.remisePrix}}.- </small>
+                                      </span>
                                       <br/>
-                                      Total : {{produit_enregistre.total}}.-
-                                      <button v-if="enabledOffre" class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
-                                    </div>
-                                <button v-if="enabledOffre" @click="supprimerProduitEnregistre(index)" class="is-pulled-right button is-danger"> Supprimer </button>
-                              </p>
+                                      <strong> Total : {{produit_enregistre.total}}.- </strong>
+                                      <div>
+                                        <button v-if="enabledOffre" class="button is-info" @click="calculerPrixEnregistre(produit_enregistre.remisePourcent, produit_enregistre.quantite,  produit_enregistre.prix, produit_enregistre.remiseBoolean, produit_enregistre.remisePrix, index)"> Calculer </button>
+                                        <button v-if="enabledOffre" @click="supprimerProduitEnregistre(produit_enregistre, index)" class="is-pulled-right button is-danger"> Supprimer </button>
+                                      </div>
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                            <button class="modal-close" @click="$emit('close')"></button>
                           </div>
                         </article>
                         
@@ -172,31 +180,45 @@
                               <div class="content">
                                 <p>
                                   <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                                  <br/>
-                                      <button class="is-pulled-left button is-danger" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
-                                      <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
-                                      <button class="is-pulled-left button is-success" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
-
-                                      <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
-                                          <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
-                                            <span hidden> {{fournisseur.id}} </span>
-                                          </option>
-                                      </select>
-                                      <div>
-                                        Prix <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
-                                        <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)"> Remise
-                                        <a v-show="produit.remiseBoolean">
-                                          <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
-                                          Rabais : {{produit.remisePrix}}.-
-                                        </a>
+                                  <div>
+                                    <div>
+                                        <label class="is-pulled-left"> Quantité : </label>
+                                        <button class="is-pulled-left button is-danger is-small" style="margin-left:3px" @click="diminueNouveauProduit(produit.quantite, index)"> - </button>
+                                        <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit.quantite}}  </label>
+                                        <button class="is-pulled-left button is-success  is-small" @click="augmenteNouveauProduit(produit.quantite, index)"> + </button>
+                                        <span class="is-pulled-right">
+                                          <label> Fournisseur : </label>
+                                          <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
+                                              <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
+                                                <span hidden> {{fournisseur.id}} </span>
+                                              </option>
+                                          </select>
+                                        </span>
                                         <br/>
-                                        Total : {{produit.total}}.-
-                                        <button class="button is-info" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                      <label class="is-pulled-left"> Prix : </label>
+                                      <input  class="is-pulled-left" type="text" style="width:50px" v-on:keyup="miseAJourNouveauProduitPrix($event, index)"> .- <br/>
+                                      <span>
+                                        <input id="chkRemise" type="checkbox" @click="visibiliteNouveauRemise(produit.remiseBoolean, index)">
+                                        <label> Remise </label>
+                                      </span>
+                                      <span v-show="produit.remiseBoolean">
+                                        <input type="text" style="width:30px" v-on:keyup="miseAJourNouveauRemise($event, index)"> % <br/>
+                                        <small> Rabais : {{produit.remisePrix}}.- </small>
+                                      </span>
+
+                                      <br/>
+                                      <strong> Total : {{produit.total}}.- </strong>
+                                      <div>
+                                        <button class="button is-info is-pulled-left" @click="calculerNouveauPrix(produit.remisePourcent, produit.quantite,  produit.prix, produit.remiseBoolean, produit.remisePrix, index)"> Calculer </button>
+                                        <button @click="supprimerNouveauProduit(index, produit)" class="is-pulled-right button is-danger"> Supprimer </button>
                                       </div>
-                                  <button @click="supprimerNouveauProduit(index)" class="is-pulled-right button is-danger"> Supprimer </button>
-                                </p>
+                                    </p>
+                                  </div>
+                                </div>
                               </div>
-                              <button class="modal-close" @click="$emit('close')"></button>
                             </div>
                           </article>
 
@@ -217,15 +239,16 @@
             </div>
             <!--{{this.commande.status_id}}
             <div>Hello</div>-->
-            <div class="field">
+            <div class="field" v-if="this.commande.status_id != 8">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px">Enregistrer</button>
-                <button @click.prevent="envoyer" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnEnvoyercommande">Envoyer</button>
-                <button @click.prevent="demandePrixFournisseur" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre" >Envoyer au fournisseur</button>
-                <button @click.prevent="envoieClient" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledOffre">Envoyer au Client</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-show="enabledBtnPasserEncours">Valider commande</button>
-                <button @click.prevent="passerEtapeSuivante" class="button is-success" style="margin-left:2px;margin-right:2px" v-if="enabledCommande">Commande reçu</button>
+                <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
+                <button @click.prevent="demandePrixFournisseur" class="button is-success buttonCommande" v-if="enabledOffre" >Envoyer au fournisseur</button>
+                <button @click.prevent="envoieClient" class="button is-success buttonCommande" v-if="enabledOffre">Envoyer au Client</button>
+                <button @click.prevent="mailCommande" class="button is-success buttonCommande" :disabled="this.commande.status_id !=5" v-if="enabledOffre" >Valider Offre</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
+                <button @click.prevent="mailCommandeRecue" class="button is-success buttonCommande" :disabled="this.commande.status_id == 7" v-if="enabledCommande">Commande reçue</button>
+                <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id != 7" v-if="enabledCommande">Commande terminée</button>
 
                 <button class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
@@ -251,6 +274,7 @@
                   status_id: ""
                 },
                 company: "",
+                idCreated: "",
                 active : false,
                 currentUser: "",
                 showModal: false,
@@ -258,7 +282,7 @@
                 produits_enregistres: Store.$data.panierEnregistres,
                 produits_recuperes: "",
                 filesAdd: '',
-                files: ''
+                files: '',
             }
         },
 
@@ -298,7 +322,6 @@
 
               //Produits enregistrés dans la commande
               axios.get('/produitsCommande/'+this.$route.params.commande)
-                  //.then(({data}) => this.produits_enregistres = data);
                   .then(response => {
                     this.produits_recuperes = response.data;
                     Store.ajoutPanierProduitEnregistrer(this.produits_recuperes)
@@ -318,47 +341,81 @@
 
               formData.append('files[' + i + ']', file);
             }
-            axios.post( '/storeFile/'+this.commande.id,
-              formData,
-              {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-              }
-            ).then(function(){
-              console.log('SUCCESS!!');
-            })
-            .catch(function(){
-              console.log('FAILURE!!');
-            });
+            if(!this.commande.id){
+                console.log(this.idCreated);
+                axios.post( '/storeFile/'+this.idCreated,
+                  formData,
+                  {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                  }
+                ).then(function(){
+                  console.log('SUCCESS!!');
+                })
+                .catch(function(){
+                  console.log('FAILURE!!');
+                });
+            } else {
+                axios.post( '/storeFile/'+this.commande.id,
+                  formData,
+                  {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                  }
+                ).then(function(){
+                  console.log('SUCCESS!!');
+                })
+                .catch(function(){
+                  console.log('FAILURE!!');
+                });
+            }
+            
           },
           //enregistrer modif commande
           enregistrer() {
             var id = this.customer.id;
             var commandId = this.commande.id;
+            let self = this;
             //IF offre SINON fournisseur
             if (!this.commande.id){
-              axios.post('/insertDemande/'+this.customer.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer})
-                      .then(function (response) {
-                        window.location.href='/#/listOrder/'+id;
-                      });
-              this.storeFile();
+              axios({
+                method: 'post',
+                url: '/insertDemande/'+this.customer.id,
+                timeout: 8000, // Let's say you want to wait at least 8 seconds
+                data: {
+                  typeSubmit: "Enregistrer",
+                  commande: this.commande,
+                  company:this.company,
+                  customer:this.customer
+                }
+              })
+              .then(function (response) {
+                    console.log(response);
+                    self.idCreated = response.data;
+                    self.storeFile();
+                    window.location.href='/#/listOrder/'+id;
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
             } else {
               //Nouveaux produits
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
                         location.reload();
-                        window.location.href='/#/commande/'+id+'/'+commandId;
+                        //window.location.href='/#/commande/'+id+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
                       location.reload();
-                      window.location.href='/#/commande/'+id+'/'+commandId;
+                      //window.location.href='/#/commande/'+id+'/'+commandId;
                     });
-              this.storeFile();
-                    
+              self.storeFile();         
             }
+
           },
 
           //METHODES POUR L'OFFRE
@@ -375,14 +432,14 @@
             }
           },
 
-          supprimerNouveauProduit(index) {
+          supprimerNouveauProduit(index, produit) {
             this.produits_choisis.splice(index, 1);
+            Store.ajoutProduitSupprime(produit);
           },
 
           miseAJourNouveauFournisseur(e, index) {
             var fournisseur = e.target.value;
             this.produits_choisis[index].fournisseurChoisi = fournisseur; //id,nom
-            console.log("Fournisseur : "+fournisseur);
           },
 
           visibiliteNouveauRemise(remise, index) {
@@ -396,19 +453,17 @@
           },
 
           miseAJourNouveauProduitPrix(e, index) {
-            console.log("CHF"+e.target.value);
             this.produits_choisis[index].prix = e.target.value;
           },
 
           miseAJourNouveauRemise(e, index) {
-            console.log("%"+e.target.value);
             this.produits_choisis[index].remisePourcent = e.target.value;
           },
 
           calculerNouveauPrix(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
-            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            //console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
             var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
-            console.log(remiseCalcul);
+            //console.log(remiseCalcul);
             var prixTotal = prix * quantite;
             this.produits_choisis[index].remisePourcent = txtRemisePourcent;
             this.produits_choisis[index].remisePrix = remiseCalcul;
@@ -428,7 +483,7 @@
             }
           },
 
-          supprimerProduitEnregistre(index) {
+          supprimerProduitEnregistre(produit, index) {
             var idProduit = this.produits_enregistres[index].id;
             console.log(idProduit);
             axios.delete('/supprimerProduit/'+idProduit+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
@@ -437,11 +492,11 @@
                 //window.location.href='/#/commande/'+id+'/'+commandId;
             });
             this.produits_enregistres.splice(index, 1);
+            Store.ajoutProduitEnregistreSupprime(produit);
           },
 
           miseAJourFournisseurEnregistre(e, index) {
-            //this.produits_enregistres[index].fournisseurChoisi = e.target.value;
-            console.log("Fournisseur : "+e.target.value);
+            this.produits_enregistres[index].fournisseurChoisi = e.target.value;
           },
 
           visibiliteRemiseEnregistre(remise, index) {
@@ -455,17 +510,17 @@
           },
 
           miseAJourProduitPrixEnregistre(e, index) {
-            console.log("CHF"+e.target.value);
+            //console.log("CHF"+e.target.value);
             this.produits_enregistres[index].prix = e.target.value;
           },
 
           miseAJourRemiseEnregistre(e, index) {
-            console.log("%"+e.target.value);
+            //console.log("%"+e.target.value);
             this.produits_enregistres[index].remisePourcent = e.target.value;
           },
 
           calculerPrixEnregistre(txtRemisePourcent, quantite, prix, remise, remisePrix, index) { //checker si remise, prix, remise, gain, total
-            console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
+            //console.log("remisePourcent"+ txtRemisePourcent+" quantité "+quantite+" prix "+prix +" remise "+remise+" remisePrix "+remisePrix);
             var remiseCalcul = ((quantite*prix) * txtRemisePourcent)/100;
             var prixTotal = prix * quantite;
             this.produits_enregistres[index].remisePourcent = txtRemisePourcent;
@@ -476,21 +531,39 @@
 
           envoyer() {
             var id = this.customer.id;
+            let self = this;
             if (!this.commande.id){
-              axios.post('/insertDemande/'+this.customer.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
-                      .then(function (response) {
-                        window.location.href='/#/listOrder/'+id;
-                      });
+              axios({
+                method: 'post',
+                url: '/insertDemande/'+this.customer.id,
+                timeout: 8000, // Let's say you want to wait at least 8 seconds
+                data: {
+                  typeSubmit: "Envoyer",
+                  commande: this.commande,
+                  company:this.company,
+                  customer:this.customer
+                }
+              })
+              .then(function (response) {
+                    console.log(response);
+                    self.idCreated = response.data;
+                    self.storeFile();
+                    window.location.href='/#/listOrder/'+id;
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
             } else {
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Envoyer",commande: this.commande, company:this.company, customer:this.customer})
                       .then(function (response) {
                         window.location.href='/#/listOrder/'+id;
                       });
+              self.storeFile();
             }
           },
 
           passerEtapeSuivante(){
-            var id = this.customer.id;
+            var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
@@ -502,12 +575,43 @@
             axios.post('/fournisseurMailDemandePrix/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
+              Store.viderPanier();
             });
-            var id = this.customer.id;
+            var id = this.currentUser.id;
+            if(this.commande.status_id < 4) {
+              axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
+            window.location.href='/#/listOrder/'+id;
+          },
+
+          mailCommande(){
+            this.enregistrer();
+            axios.post('/mailCommande/'+this.commande.id)
+            .then(function(response){
+              console.log('mail Envoyé');
+            });
+            var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
                 window.location.href='/#/listOrder/'+id;
             });
+          },
+
+          mailCommandeRecue(){
+            axios.post('/mailCommandeRecue/'+this.customer.id+'/'+this.commande.id)
+            .then(function(response){
+              console.log('mail Envoyé');
+            });
+            var id = this.currentUser.id;
+            if(this.commande.status_id < 7) {
+              axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
           },
 
           envoieClient(){
@@ -515,12 +619,16 @@
             axios.post('/clientMailOffre/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
+              Store.viderPanier();
             });
-            var id = this.customer.id;
-            axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
-              .then(function(response){
-                window.location.href='/#/listOrder/'+id;
-            });
+            var id = this.currentUser.id;
+            if(this.commande.status_id < 5) {
+              axios.post('/validerClient/'+this.commande.id,{commande:this.commande})
+                .then(function(response){
+                  window.location.href='/#/listOrder/'+id;
+              });
+            }
+            window.location.href='/#/listOrder/'+id;
           },
 
           processFile(event) {
@@ -604,34 +712,40 @@
     Vue.component('modal', {
     template:
     `
-     <div id="modal" class="modal is-active">
+    <div id="modal-ter" class="modal is-active">
       <div class="modal-background"></div>
       <div class="modal-card">
-        <div class="box">
-          <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
-            <div class="media-left">
-              <figure class="image is-64x64">
-                <img :src="produit.image" alt="Image">
-              </figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
-                  <br>
-                  {{produit.description}}
-                <div class="is-pulled-right">
-                  <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
-                </div>
-                </p>
+        <header class="modal-card-head">
+          <p class="modal-card-title">Produits</p>
+          <button class="delete" aria-label="close" @click="$emit('close')"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="box">
+            <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
+              <div class="media-left">
+                <figure class="image is-64x64">
+                  <img :src="produit.image" alt="Image">
+                </figure>
               </div>
-            </div>
-          </article>
-          <button class="modal-close" @click="$emit('close')"></button>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong> {{produit.nom}} </strong> <small class="is-pulled-right"> Réf : {{produit.reference}} </small>
+                    <br>
+                    {{produit.description}}
+                  <div class="is-pulled-right">
+                    <button class="button is-info" @click="ajoutProduit(produit, produit.reference)"> Seléctionner </button>
+                  </div>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
           <button class="button is-danger" @click="$emit('close')"> Fermer </button>
-        </div>
+        </footer>
       </div>
-
     </div>
     `,
 
@@ -645,7 +759,7 @@
     created() {
         //Liste des listeProduits
         axios.get('/produitsOffre')
-          .then(({data}) => this.produits = data);
+          .then(response => {this.produits = response.data; Store.listeProduits(this.produits)});
     },
 
     methods:{
