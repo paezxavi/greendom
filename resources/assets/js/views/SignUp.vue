@@ -108,17 +108,18 @@
               Le user est créé dans la bdd avec employé = false, raison de sécurité, l'administrateur peut promouvoir un user en employé avec une ligne de commande
           */
           createUser() {
+            const self = this;
             companyId.value = "";
             if (username.value.trim() =="" || forename.value.trim() =="" || address.value.trim() =="" || phone.value.trim() =="" || email.value.trim() =="" || pwd.value.trim() ==""){
               alert("Merci de remplir tous les champs obligatoires (*) !");
             }else{
-              if (company.value.trim().length > 0){this.findCompanyId();}
+              if (company.value.trim().length > 0){self.findCompanyId();}
               setTimeout(function () {
                 axios.post('/createUser', {name: username.value.trim(), forename: forename.value.trim(), address: address.value.trim(), phone: phone.value.trim(), skype: contact.value.trim(), email: email.value.trim(), companyId: companyId.value, pwd: pwd.value.trim()})
                   .then(response=>{
                     if (response.status == 200){
                       alert("Votre compte a bien été créé !");
-                      this.$router.push('login');
+                      self.$router.push('login');
                     }else{alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.")}
                   })
                   .catch(function (error) {

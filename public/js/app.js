@@ -32893,20 +32893,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Le user est créé dans la bdd avec employé = false, raison de sécurité, l'administrateur peut promouvoir un user en employé avec une ligne de commande
     */
     createUser: function createUser() {
+      var self = this;
       companyId.value = "";
       if (username.value.trim() == "" || forename.value.trim() == "" || address.value.trim() == "" || phone.value.trim() == "" || email.value.trim() == "" || pwd.value.trim() == "") {
         alert("Merci de remplir tous les champs obligatoires (*) !");
       } else {
         if (company.value.trim().length > 0) {
-          this.findCompanyId();
+          self.findCompanyId();
         }
         setTimeout(function () {
-          var _this = this;
-
           axios.post('/createUser', { name: username.value.trim(), forename: forename.value.trim(), address: address.value.trim(), phone: phone.value.trim(), skype: contact.value.trim(), email: email.value.trim(), companyId: companyId.value, pwd: pwd.value.trim() }).then(function (response) {
             if (response.status == 200) {
               alert("Votre compte a bien été créé !");
-              _this.$router.push('login');
+              self.$router.push('login');
             } else {
               alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.");
             }
@@ -32923,14 +32922,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Sinon appelle createCompany()
     */
     findCompanyId: function findCompanyId() {
-      var _this2 = this;
+      var _this = this;
 
       company.value = company.value.trim();
       axios.get('/findCompanyId/', { params: { name: this.company } }).then(function (response) {
         if (response.data.length > 0) {
           companyId.value = response.data[0].id;
         } else {
-          _this2.createCompany();
+          _this.createCompany();
         }
       }).catch(function (error) {
         console.log(error);
