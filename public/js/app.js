@@ -32913,7 +32913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(error);
             alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.");
           });
-        }, 1000);
+        }, 2000);
       }
     },
 

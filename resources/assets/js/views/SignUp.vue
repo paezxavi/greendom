@@ -126,7 +126,7 @@
                     console.log(error);
                     alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.");
                   });
-                }, 1000);
+                }, 2000);
             }
           },
           /** Trouve l'id de la compagnie qui a pour nom "company.value"
