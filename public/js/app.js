@@ -32684,9 +32684,9 @@ var routes = [{
 
 },
 /*{
-      path:'/about',
+     path:'/about',
     component: require('./views/About')
-  },*/
+ },*/
 {
 
     path: '/contact',
@@ -32699,7 +32699,7 @@ var routes = [{
 
 },
 /*{
-      path:'/tableauDeBord/:user',
+     path:'/tableauDeBord/:user',
     component: require('./views/TableauDeBord')
 },*/
 {
@@ -32722,7 +32722,7 @@ var routes = [{
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-      mode:'history',*/
+     mode:'history',*/
 
     routes: routes,
 
@@ -35728,6 +35728,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    checkId: function checkId() {
+      return this.commande.status_id === 6 || this.commande.status_id === 7 || this.commande.status_id === 8;
+    },
     storeFile: function storeFile() {
       var formData = new FormData();
       for (var i = 0; i < this.filesAdd.length; i++) {
@@ -35901,7 +35904,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //FIN METHODES POUR OFFRE
 
     envoyer: function envoyer() {
-      var id = this.customer.id;
+      var id = this.currentUser.id;
       var self = this;
       if (!this.commande.id) {
         axios({
@@ -36610,7 +36613,9 @@ var render = function() {
                   type: "text",
                   placeholder: "Objet",
                   disabled:
-                    this.commande.status_id > 1 && !this.currentUser.employee
+                    (this.commande.status_id > 1 &&
+                      !this.currentUser.employee) ||
+                    this.commande.status_id >= 5
                 },
                 domProps: { value: _vm.commande.concerne },
                 on: {
@@ -36640,7 +36645,9 @@ var render = function() {
                 attrs: {
                   placeholder: "Décrivez ici votre cas ...",
                   disabled:
-                    this.commande.status_id > 1 && !this.currentUser.employee
+                    (this.commande.status_id > 1 &&
+                      !this.currentUser.employee) ||
+                    this.commande.status_id >= 5
                 },
                 domProps: { value: _vm.commande.descriptionCommande },
                 on: {
@@ -36690,18 +36697,20 @@ var render = function() {
                         },
                         [_vm._v(_vm._s(file.name))]
                       ),
-                      _c(
-                        "span",
-                        {
-                          staticClass: "deleteFile",
-                          on: {
-                            click: function($event) {
-                              _vm.removeFile(file, key)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-times-circle" })]
-                      )
+                      !_vm.checkId()
+                        ? _c(
+                            "span",
+                            {
+                              staticClass: "deleteFile",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeFile(file, key)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-times-circle" })]
+                          )
+                        : _vm._e()
                     ])
                   })
                 ],
@@ -37460,20 +37469,22 @@ var render = function() {
           ? _c("div", { staticClass: "field" }, [
               !_vm.visibiliteActioncommandeEnvoye
                 ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-info",
-                        staticStyle: { "margin-right": "2px" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.enregistrer($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Enregistrer")]
-                    ),
+                    this.commande.status_id <= 5
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-info",
+                            staticStyle: { "margin-right": "2px" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.enregistrer($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Enregistrer")]
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "button",
