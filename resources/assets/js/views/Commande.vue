@@ -85,11 +85,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id > 5">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id > 5"></textarea>
                 </div>
               </div>
 

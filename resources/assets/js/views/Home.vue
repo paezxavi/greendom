@@ -24,7 +24,7 @@
                             <div class="bounce3"></div>
                         </div>
                         <div class="columns is-multiline">
-                            <div data-v-1244b4c1="" class="column is-4" v-for="(produit, index) in this.produitsTrie" style="width:20%">
+                            <div data-v-1244b4c1="" class="column is-4" v-for="(produit, index) in this.produitsTrie" style="width:25%">
                                 <modalProduit v-show="showModal" @close="showModal = false"></modalProduit>
                                 <a @click="afficherProduit(index);showModal = true" data-v-1244b4c1="" target="_blank" class="opacityCatalogue">
                                     <article data-v-1244b4c1="" class="message" :class="color[0]"> <!-- :class="color[Math.floor(Math.random() * color.length)]">-->

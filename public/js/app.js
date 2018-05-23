@@ -34022,7 +34022,7 @@ var render = function() {
                     "div",
                     {
                       staticClass: "column is-4",
-                      staticStyle: { width: "20%" },
+                      staticStyle: { width: "25%" },
                       attrs: { "data-v-1244b4c1": "" }
                     },
                     [
@@ -36558,7 +36558,7 @@ var render = function() {
                   disabled:
                     (this.commande.status_id > 1 &&
                       !this.currentUser.employee) ||
-                    this.commande.status_id >= 5
+                    this.commande.status_id > 5
                 },
                 domProps: { value: _vm.commande.concerne },
                 on: {
@@ -36590,7 +36590,7 @@ var render = function() {
                   disabled:
                     (this.commande.status_id > 1 &&
                       !this.currentUser.employee) ||
-                    this.commande.status_id >= 5
+                    this.commande.status_id > 5
                 },
                 domProps: { value: _vm.commande.descriptionCommande },
                 on: {
