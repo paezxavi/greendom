@@ -26,8 +26,8 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-
-        <h1> {{$title}} </h1>
+        
+        <h1> {{$demandePrix}} </h1>
       </div>
         Chemin du Pré-Fleuri 5 <br/>
         1228 Plan-Les-Ouates <br/>
@@ -41,9 +41,9 @@ table#t01 th {
         <br/>
 
         <p align="right">
-            <b> À l'attention de </b><br/>
-            {{$customer->name}} {{$customer->forename}}<br/>
-            {{$customer->address}} <br/>
+            <b>À l'attention de</b><br/>
+            {{$prov->nom}}<br/>
+            {{$prov->adresse}}<br/>
         </p>
         <br/>
 
@@ -57,11 +57,11 @@ table#t01 th {
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($arrPr as $prod)
                     <tr>
-                        <td>{{$product->nom}}</td>
-                        <td>{{$product->description}}</td>
-                        <td>{{$product->pivot->quantity}}</td>
+                        <td>{{$prod['nom']}}</td>
+                        <td>{{$prod['description']}}</td>
+                        <td>{{$prod[0]['quantity']}}</td>
                     </tr>
                 @endforeach
             </tbody>

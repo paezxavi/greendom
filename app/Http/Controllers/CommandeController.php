@@ -330,15 +330,36 @@ class CommandeController extends Controller
     public function mailFournisseurDemandePrix(Commande $commande)
     {
       //Faudra fournir la liste de fournisseur a contacter + produits de la commande et fournisseur
-      
       $products = Commande::find($commande->id)->products()->get();
-      $customer = User::findOrFail(1);
-      $pdf = PDF::loadView('pdf/offre_demande_prix', array('products' => $products, 'customer' => $customer, 'title' => "Bon de commande"))
-                  ->setPaper('a3', 'portrait');
-      $path = storage_path('/app/public/pdf/Test.pdf');
-      $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new FournisseurMail('Demande de prix'));
+      $demandePrix = 'Demande de prix';
+      $produitsFournisseurs;
+      //dd($products);
+      foreach($products as $produit) {
+        //dd($produit->pivot->quantity);
+        $var = $produit->pivot->quantity;
+        $arr = $produit->getAttributes();
+        $arr[] = ['quantity' => $var];
+        $produitsFournisseurs[$produit->pivot->fournisseur][] = $arr;
+      }
+      //dd($produitsFournisseurs);
+      foreach($produitsFournisseurs as $keyFourn => $valueFourn) {
+        //dd($valueFourn);
+        $prov = Provider::where('nom',$keyFourn)->get()->first();
+        $arrProd = [];
+        $arrProd[] = $valueFourn;
+        /*foreach($valueFourn as $prod) {
+          echo $prod['description'];
+          
+        }*/
+        //dd($arrProd[0]);
+        $arrPr = $arrProd[0];
+        $pdf = PDF::loadView('pdf/offre_demande_prix', compact('arrPr', 'prov', 'demandePrix'))
+                    ->setPaper('a3', 'portrait');
+        $path = storage_path('/app/public/pdf/Test.pdf');
+        $pdf->save($path);
+        Mail::to($users)->send(new FournisseurMail('Demande de prix'));
+      }
       return 'mail envoyé depuis le controleur';
     }
 
