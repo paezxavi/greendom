@@ -30,7 +30,7 @@ class SignUpController extends Controller
      *
      * @return \Illuminate\Http\Response
 
-       *créer dans la base de données d'un nouvel utilisateur
+       *création dans la base de données d'un nouvel utilisateur
        *pour le moment l'utilisateur est créé dans la bdd avec employé=>false + compnany_id => null
      */
     public function create(Request $request)
@@ -44,7 +44,7 @@ class SignUpController extends Controller
       $newUser->email = $request->email;
       $newUser->password = Hash::make($request->pwd);
       $newUser->employee = false;
-      $newUser->company_id = null;
+      $newUser->company_id = $request->companyId;
       $newUser->save();
     }
 
@@ -65,7 +65,7 @@ class SignUpController extends Controller
       $newUser->email = $request->email;
       $newUser->password = Hash::make($request->pwd);
       $newUser->employee = false;
-      $newUser->company_id = null;
+      $newUser->company_id = $request->companyId;;
       $newUser->save();
     }
 
