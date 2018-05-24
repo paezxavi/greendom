@@ -18844,6 +18844,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'my-component',
@@ -18910,6 +18913,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     getClient: function getClient(rowObj) {
       return rowObj.users.forename + " " + rowObj.users.name;
+    },
+    nouvelleDemande: function nouvelleDemande() {
+      this.$router.push('/commande/' + this.$route.params.user);
     }
   }
 });
@@ -18968,7 +18974,18 @@ var render = function() {
           styleClass: "vgt-table striped bordered"
         },
         on: { "on-row-click": _vm.onRowClick }
-      })
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "button is-primary",
+          on: { click: _vm.nouvelleDemande }
+        },
+        [_vm._v("Nouvelle demande")]
+      )
     ],
     1
   )
@@ -19282,44 +19299,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     this.checkIfLogged().then(function (response) {
       _this.user = response ? response : window.location = '/#/login';
-      console.log(_this.user);
+      //console.log(this.user);
     }).catch(function (error) {
       return console.log(error);
     });
     if (!this.$route.params.commande) {
+      //utilisateur courant
+      axios.get('/' + this.$route.params.user).then(function (_ref) {
+        var data = _ref.data;
+        return _this.currentUser = data;
+      });
       //commande inexistante
       self.commande = "";
       //user
-      axios.get('/' + this.$route.params.user).then(function (_ref) {
-        var data = _ref.data;
+      axios.get('/' + this.$route.params.user).then(function (_ref2) {
+        var data = _ref2.data;
         return _this.customer = data;
       });
       //company
-      axios.get('/company/' + this.$route.params.user).then(function (_ref2) {
-        var data = _ref2.data;
+      axios.get('/company/' + this.$route.params.user).then(function (_ref3) {
+        var data = _ref3.data;
         return _this.company = data;
       });
     } else {
       //utilisateur courant
-      axios.get('/' + this.$route.params.user).then(function (_ref3) {
-        var data = _ref3.data;
+      axios.get('/' + this.$route.params.user).then(function (_ref4) {
+        var data = _ref4.data;
         return _this.currentUser = data;
       });
       //user
-      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref4) {
-        var data = _ref4.data;
+      axios.get('/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref5) {
+        var data = _ref5.data;
         return _this.customer = data;
       });
       //commande
-      axios.get('/infoCommande/' + this.$route.params.commande).then(function (_ref5) {
-        var data = _ref5.data;
+      axios.get('/infoCommande/' + this.$route.params.commande).then(function (_ref6) {
+        var data = _ref6.data;
         return _this.commande = data;
       }).catch(function (error) {
         console.log(error.response);
       });
       //company
-      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref6) {
-        var data = _ref6.data;
+      axios.get('/company/' + this.$route.params.user + '/' + this.$route.params.commande).then(function (_ref7) {
+        var data = _ref7.data;
         return _this.company = data;
       });
 
@@ -19330,8 +19352,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
 
       //Files
-      axios.get('/files/' + this.$route.params.commande).then(function (_ref7) {
-        var data = _ref7.data;
+      axios.get('/files/' + this.$route.params.commande).then(function (_ref8) {
+        var data = _ref8.data;
         return _this.files = data;
       });
     }
@@ -19545,10 +19567,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             customer: this.customer
           }
         }).then(function (response) {
-          console.log(response);
+          //console.log(response);
           self.idCreated = response.data;
           self.storeFile();
-          window.location.href = '/#/listOrder/' + id;
+          window.location.href = '/#/listOrder/' + self.currentUser.id;
         }).catch(function (error) {
           console.log(error);
         });

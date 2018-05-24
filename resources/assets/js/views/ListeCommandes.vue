@@ -12,6 +12,9 @@
       }"
       @on-row-click="onRowClick"
       styleClass="vgt-table striped bordered"/>
+    <br/>
+    <a @click="nouvelleDemande" class="button is-primary">Nouvelle demande</a>
+
   </div>
 </template>
 
@@ -85,6 +88,10 @@ export default {
 
         getClient(rowObj) {
             return rowObj.users.forename + " " + rowObj.users.name;
+        },
+        nouvelleDemande(){
+                    this.$router.push('/commande/'+ this.$route.params.user);
+
         },
     }
 };

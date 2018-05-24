@@ -291,10 +291,13 @@
             this.checkIfLogged()
             .then(response => {
                     this.user = response ? response : window.location = '/#/login';
-                    console.log(this.user);
+                    //console.log(this.user);
                 })
             .catch(error => console.log(error));
             if (!this.$route.params.commande){
+              //utilisateur courant
+              axios.get('/'+this.$route.params.user)
+                  .then(({data}) => this.currentUser = data);
               //commande inexistante
               self.commande = "";
               //user
@@ -570,10 +573,10 @@
                 }
               })
               .then(function (response) {
-                    console.log(response);
+                    //console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    window.location.href='/#/listOrder/'+id;
+                    window.location.href='/#/listOrder/'+self.currentUser.id;
               })
               .catch(function (error) {
                   console.log(error);

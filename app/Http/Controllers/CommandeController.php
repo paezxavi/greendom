@@ -357,7 +357,7 @@ class CommandeController extends Controller
         $arrPr = $arrProd[0];
         $pdf = PDF::loadView('pdf/offre_demande_prix', compact('arrPr', 'prov', 'demandePrix'))
                     ->setPaper('a3', 'portrait');
-        $path = storage_path('/app/public/pdf/Test.pdf');
+        $path = storage_path('/app/public/pdf/Commande.pdf');
         $pdf->save($path);
         Mail::to($prov)->send(new FournisseurMail('Demande de prix'));
       }
@@ -370,7 +370,7 @@ class CommandeController extends Controller
       $customer = User::findOrFail(1);
       $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
                   ->setPaper('a3', 'portrait');
-      $path = storage_path('/app/public/pdf/Test.pdf');
+      $path = storage_path('/app/public/pdf/Offre.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
       Mail::to($users)->send(new ClientOffreMail('Offre'));
@@ -388,7 +388,7 @@ class CommandeController extends Controller
       }
       $pdf = PDF::loadView('pdf/achat_catalogue_pdf', array('productArray' => $panierArray,'user' => $userConnected))
                   ->setPaper('a3', 'portrait');
-      $path = storage_path('/app/public/pdf/Test.pdf');
+      $path = storage_path('/app/public/pdf/VotreCommande.pdf');
       $pdf->save($path);
 
       $userConnected = User::find($request->all()["user"]["id"]);
@@ -424,7 +424,7 @@ class CommandeController extends Controller
         $arrPr = $arrProd[0];
         $pdf = PDF::loadView('pdf/offre_demande_prix', compact('arrPr', 'prov', 'bonCommande'))
                     ->setPaper('a3', 'portrait');
-        $path = storage_path('/app/public/pdf/Test.pdf');
+        $path = storage_path('/app/public/pdf/Commande.pdf');
         $pdf->save($path);
         Mail::to($prov)->send(new FournisseurMail('Bon de commande'));
       }
