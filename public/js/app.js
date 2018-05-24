@@ -18846,72 +18846,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'my-component',
-  data: function data() {
-    return {
-      columns: [{
-        label: 'Date de début',
-        field: 'dateDebut',
-        type: 'date',
-        dateInputFormat: 'YYYY-MM-DD',
-        dateOutputFormat: 'DD-MM-YYYY'
-      }, {
-        label: 'Dernière modification',
-        field: 'update_at',
-        type: 'date',
-        dateInputFormat: 'YYYY-MM-DD',
-        dateOutputFormat: 'DD-MM-YYYY'
-      }, {
-        label: 'Client',
-        field: this.getClient
-      }, {
-        label: 'Concerne',
-        field: 'concerne'
-      }, {
-        label: 'Statut',
-        field: 'status.nom'
-      }],
-      arrayCommande: [],
-      //defaultOpenedDetails: [1],
-      currentUser: "",
-      user: false
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    var self = this;
-    this.checkIfLogged().then(function (response) {
-      _this.user = response ? response : window.location = '/#/login';
-      console.log(_this.user);
-    }).catch(function (error) {
-      return console.log(error);
-    });
-    axios.get('/' + this.$route.params.user).then(function (_ref) {
-      var data = _ref.data;
-      return _this.currentUser = data;
-    });
-    /*axios.get('/commandeList/'+this.$route.params.user)
-        .then(({data}) => this.arrayCommande = data);*/
-    axios({
-      method: 'get',
-      url: '/commandeList/' + this.$route.params.user
-    }).then(function (response) {
-      self.arrayCommande = response.data;
-    }).catch(function (error) {
-      console.log(error);
-    });
-  },
-
-
-  methods: {
-    onRowClick: function onRowClick(params) {
-      window.location.href = "/#/commande/" + this.user.id + "/" + params.row.id;
+    name: 'my-component',
+    data: function data() {
+        return {
+            columns: [{
+                label: 'Date de début',
+                field: 'dateDebut',
+                type: 'date',
+                dateInputFormat: 'YYYY-MM-DD',
+                dateOutputFormat: 'DD-MM-YYYY'
+            }, {
+                label: 'Dernière modification',
+                field: 'update_at',
+                type: 'date',
+                dateInputFormat: 'YYYY-MM-DD',
+                dateOutputFormat: 'DD-MM-YYYY'
+            }, {
+                label: 'Client',
+                field: this.getClient
+            }, {
+                label: 'Concerne',
+                field: 'concerne'
+            }, {
+                label: 'Statut',
+                field: 'status.nom'
+            }],
+            arrayCommande: [],
+            //defaultOpenedDetails: [1],
+            currentUser: "",
+            user: false
+        };
     },
-    getClient: function getClient(rowObj) {
-      return rowObj.users.forename + " " + rowObj.users.name;
+    created: function created() {
+        var _this = this;
+
+        var self = this;
+        this.checkIfLogged().then(function (response) {
+            _this.user = response ? response : window.location = '/#/login';
+            console.log(_this.user);
+        }).catch(function (error) {
+            return console.log(error);
+        });
+        axios.get('/' + this.$route.params.user).then(function (_ref) {
+            var data = _ref.data;
+            return _this.currentUser = data;
+        });
+        /*axios.get('/commandeList/'+this.$route.params.user)
+            .then(({data}) => this.arrayCommande = data);*/
+        axios({
+            method: 'get',
+            url: '/commandeList/' + this.$route.params.user
+        }).then(function (response) {
+            self.arrayCommande = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },
+
+
+    methods: {
+        onRowClick: function onRowClick(params) {
+            if (params.row.status.nom !== "Abandonnée" && params.row.status.nom !== "Commande - Terminée") {
+                window.location.href = "/#/commande/" + this.user.id + "/" + params.row.id;
+            }
+        },
+        getClient: function getClient(rowObj) {
+            return rowObj.users.forename + " " + rowObj.users.name;
+        }
     }
-  }
 });
 
 /***/ }),
@@ -18990,6 +18992,7 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(185);
+//
 //
 //
 //
@@ -19410,6 +19413,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         self.storeFile();
       }
+    },
+    backTo: function backTo() {
+      var id = this.currentUser.id;
+      window.location.href = '/#/listOrder/' + id;
+    },
+    abandonnerCommande: function abandonnerCommande() {
+      axios({
+        method: 'put',
+        url: '/abandonner/' + this.commande.id
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      });
+      var id = this.currentUser.id;
+      window.location.href = '/#/listOrder/' + id;
     },
 
 
@@ -20008,7 +20027,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "Demande - Envoyé N°" + _vm._s(this.commande.num_demande)
+                  "Demande - Envoyée N°" + _vm._s(this.commande.num_demande)
                 )
               ]
             ),
@@ -20044,7 +20063,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "Offre - Envoyé fournisseur N°" +
+                  "Offre - Envoyée fournisseur N°" +
                     _vm._s(this.commande.num_offre)
                 )
               ]
@@ -20065,7 +20084,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "Offre - Envoyé client N°" + _vm._s(this.commande.num_offre)
+                  "Offre - Envoyée client N°" + _vm._s(this.commande.num_offre)
                 )
               ]
             ),
@@ -20128,6 +20147,22 @@ var render = function() {
                   "Commande - Terminée N°" + _vm._s(this.commande.num_commande)
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "h1",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.commande.status_id == 9,
+                    expression: "commande.status_id == 9"
+                  }
+                ],
+                staticClass: "title"
+              },
+              [_vm._v("Abandonnée")]
             )
           ]),
           _vm._v(" "),
@@ -21103,7 +21138,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        this.commande.status_id != 8
+        this.commande.status_id != 8 || this.commande.status_id != 9
           ? _c("div", { staticClass: "field" }, [
               !_vm.visibiliteActioncommandeEnvoye
                 ? _c("div", { staticClass: "buttons has-addons is-centered" }, [
@@ -21254,8 +21289,29 @@ var render = function() {
                     _c(
                       "button",
                       {
+                        staticClass: "button is-danger buttonCommande",
+                        staticStyle: { "margin-left": "2px" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.abandonnerCommande($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Abandonner")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
                         staticClass: "button is-danger",
-                        staticStyle: { "margin-left": "2px" }
+                        staticStyle: { "margin-left": "2px" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.backTo($event)
+                          }
+                        }
                       },
                       [_vm._v("Annuler")]
                     )

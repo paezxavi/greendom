@@ -6,13 +6,14 @@
 
               <div>
                 <h1 class="title" v-show="commande.status_id == 1">Demande - En cours N°{{ this.commande.num_demande }}</h1>
-                <h1 class="title" v-show="commande.status_id == 2">Demande - Envoyé N°{{ this.commande.num_demande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 2">Demande - Envoyée N°{{ this.commande.num_demande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 3">Offre - En cours N°{{ this.commande.num_offre }}</h1>
-                <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyé fournisseur N°{{ this.commande.num_offre }}</h1>
-                <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyé client N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 4">Offre - Envoyée fournisseur N°{{ this.commande.num_offre }}</h1>
+                <h1 class="title" v-show="commande.status_id == 5">Offre - Envoyée client N°{{ this.commande.num_offre }}</h1>
                 <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_commande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 7">Commande - Reçue N°{{ this.commande.num_commande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 8">Commande - Terminée N°{{ this.commande.num_commande }}</h1>
+                <h1 class="title" v-show="commande.status_id == 9">Abandonnée</h1>
               </div>
 
               <div class="card donneesPers">
@@ -239,7 +240,7 @@
             </div>
             <!--{{this.commande.status_id}}
             <div>Hello</div>-->
-            <div class="field" v-if="this.commande.status_id != 8">
+            <div class="field" v-if="this.commande.status_id != 8 || this.commande.status_id != 9">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px" v-if="this.commande.status_id <= 5">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
@@ -249,8 +250,8 @@
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button @click.prevent="mailCommandeRecue" class="button is-success buttonCommande" :disabled="this.commande.status_id == 7" v-if="enabledCommande">Commande reçue</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id != 7" v-if="enabledCommande">Commande terminée</button>
-
-                <button class="button is-danger" style="margin-left:2px">Annuler</button>
+                <button @click.prevent="abandonnerCommande" class="button is-danger buttonCommande" style="margin-left:2px">Abandonner</button>
+                <button @click.prevent="backTo" class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
           </div>
@@ -420,6 +421,26 @@
               self.storeFile();         
             }
 
+          },
+
+          backTo() {
+            var id = this.currentUser.id;
+            window.location.href='/#/listOrder/'+id;
+          },
+
+          abandonnerCommande() { 
+            axios({
+              method: 'put',
+              url: '/abandonner/'+this.commande.id,
+            })
+            .then(function (response) {
+                  console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+            var id = this.currentUser.id;
+            window.location.href='/#/listOrder/'+id;
           },
 
           //METHODES POUR L'OFFRE

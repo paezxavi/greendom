@@ -461,8 +461,14 @@ class CommandeController extends Controller
             'email' => $request->email,
           ]
         );
-      }
-      
+      } 
+    }
+
+    public function abandonnerCommande(Commande $commande)
+    {
+      $comm = Commande::find($commande->id)->first();
+      $comm->status_id = 9;
+      $comm->save();
     }
 
 }
