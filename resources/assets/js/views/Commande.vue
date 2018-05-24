@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="field">
-                      <label class="label">Adresse : {{ customer.adresse }}</label>
+                      <label class="label">Adresse : {{ customer.address }}</label>
                     </div>
 
                     <div class="field">

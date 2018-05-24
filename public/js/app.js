@@ -20187,7 +20187,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "field" }, [
                   _c("label", { staticClass: "label" }, [
-                    _vm._v("Adresse : " + _vm._s(_vm.customer.adresse))
+                    _vm._v("Adresse : " + _vm._s(_vm.customer.address))
                   ])
                 ]),
                 _vm._v(" "),
