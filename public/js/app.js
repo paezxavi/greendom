@@ -38476,6 +38476,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
                 alert('Vos données ont été mises à jour.');
                 location.reload();
+                window.location.href = '/#/compte';
             } else {
                 this.showError = true;
             }

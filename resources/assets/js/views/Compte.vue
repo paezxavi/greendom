@@ -165,6 +165,7 @@
                     });
                     alert('Vos données ont été mises à jour.');
                     location.reload();
+                    window.location.href='/#/compte';
                 } else {
                     this.showError = true;
                 }
