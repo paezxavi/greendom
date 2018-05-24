@@ -30,7 +30,7 @@ class ProvidersTableSeeder extends Seeder
          [
           'name' => 'Kevin SA',
           'address' => 'rue Kevin',
-          'email' => 'Ampoule@hotmail.com',
+          'email' => 'kevin@hotmail.com',
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'
          ],

@@ -31,6 +31,11 @@ Route::get('/findCompanyId', 'CompanyController@findId');
 Route::post('/createCompany', 'CompanyController@store');
 //-------------------------------------------------------------
 
+//ProviderController
+Route::get('/providersList', 'ProviderController@getProviders');
+Route::delete('/deleteProvider/{id}', 'ProviderController@destroy');
+//-------------------------------------------------------------
+
 Route::get('/', 'CommandeController@index')->name('home');
 
 /* Call PDF */

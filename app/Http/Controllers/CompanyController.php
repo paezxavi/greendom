@@ -8,20 +8,6 @@ use App\Company;
 
 class CompanyController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('guest');
-  }
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-    return view('home');
-  }
-
   /**
    * Show the form for creating a new resource.
    *
@@ -36,6 +22,7 @@ class CompanyController extends Controller
     $newCompany->name = $request->name;
     $newCompany->address = null;
     $newCompany->email = null;
+    $newCompany->save();
   }
 
   /**

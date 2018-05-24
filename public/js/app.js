@@ -30908,7 +30908,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(136);
-module.exports = __webpack_require__(190);
+module.exports = __webpack_require__(195);
 
 
 /***/ }),
@@ -32716,6 +32716,16 @@ var routes = [{
 
     path: '/panier',
     component: __webpack_require__(187)
+
+}, {
+
+    path: '/listProviders',
+    component: __webpack_require__(190)
+
+}, {
+
+    path: '/ProviderInfo',
+    component: __webpack_require__(193)
 
 }];
 
@@ -38029,6 +38039,238 @@ if (false) {
 
 /***/ }),
 /* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(191)
+/* template */
+var __vue_template__ = __webpack_require__(192)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/ListeFournisseurs.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-36d1e156", Component.options)
+  } else {
+    hotAPI.reload("data-v-36d1e156", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 191 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      providers: []
+    };
+  },
+  created: function created() {
+    var self = this;
+    axios.get('/providersList/').then(function (response) {
+      self.providers = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
+
+  methods: {
+    /**
+     * Récupère l'id du bouton "supprimer" qui a été cliqué qui correspond à l'id du fournisseur concerné
+     * Envoie une requête pour supprimer le fournisseur de la BDD Provider qui a l'id passé en paramètre de la requête
+     */
+    deleteProvider: function deleteProvider(event) {
+      var targetId = event.currentTarget.id;
+      console.log(targetId);
+      axios.delete('/deleteProvider/' + targetId.value).then(function (response) {
+        console.log(response.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    /**
+     * Récupère l'id du bouton "modifier" qui a été cliqué qui correspond à l'id du fournisseur concerné
+     * Redirige sur la page InfoFournisseur => doit passer l'id du fournisseur
+     */
+    modifyProvider: function modifyProvider() {
+      var self = this;
+      self.$router.push('ProviderInfo');
+    }
+  }
+});
+
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    _vm._l(_vm.providers, function(provider) {
+      return _c("div", [
+        _c("h4", [_vm._v(" " + _vm._s(provider.name) + " ")]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(provider.address))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(provider.email))]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { id: provider.id },
+            on: {
+              click: function($event) {
+                _vm.modifyProvider()
+              }
+            }
+          },
+          [_vm._v("Modifier")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { id: provider.id },
+            on: {
+              click: function($event) {
+                _vm.deleteProvider($event)
+              }
+            }
+          },
+          [_vm._v("Supprimer")]
+        )
+      ])
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-36d1e156", module.exports)
+  }
+}
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(194)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/views/InfoFournisseur.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a606c0e0", Component.options)
+  } else {
+    hotAPI.reload("data-v-a606c0e0", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("Hello")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a606c0e0", module.exports)
+  }
+}
+
+/***/ }),
+/* 195 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

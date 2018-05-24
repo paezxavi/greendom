@@ -60,6 +60,18 @@ let routes = [
         component: require('./views/Panier')
 
     },
+    {
+
+        path:'/listProviders',
+        component: require('./views/ListeFournisseurs')
+
+    },
+    {
+
+        path:'/ProviderInfo',
+        component: require('./views/InfoFournisseur')
+
+    },
 ];
 
 export default new VueRouter({

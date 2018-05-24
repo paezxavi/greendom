@@ -63,6 +63,9 @@
                           </router-link>
                         @endif-->
                       @endif
+                        <router-link class="navbar-item" tag="a" to="/listProviders">
+                            Liste des fournisseurs
+                        </router-link>
                     </div>
                   </div>
 
