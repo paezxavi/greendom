@@ -72,6 +72,10 @@ let routes = [
         component: require('./views/InfoFournisseur')
 
     },
+    {
+      path:'/compte',
+      component: require('./views/Compte')
+    },
 ];
 
 export default new VueRouter({

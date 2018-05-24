@@ -85,11 +85,11 @@
               <div class="field">
                 <label class="label">Concerne</label>
                 <div class="control">
-                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5">
+                  <input class="input" type="text" placeholder="Objet" v-model="commande.concerne" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id > 5">
                 </div>
                 <label class="label">Message</label>
                 <div class="control">
-                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id >= 5"></textarea>
+                  <textarea class="textarea" placeholder="Décrivez ici votre cas ..." v-model="commande.descriptionCommande" :disabled="(this.commande.status_id > 1 && !this.currentUser.employee) || this.commande.status_id > 5"></textarea>
                 </div>
               </div>
 
@@ -724,6 +724,12 @@
           <button class="delete" aria-label="close" @click="$emit('close')"></button>
         </header>
         <section class="modal-card-body">
+        <div>
+          <h3 class="subtitle is-3">Rechercher :</h3>
+          <input id="textFiltre" type="text" v-on:keyup="miseAJourFiltre($event)">
+          <button class="is-light marginCatalog" @click="reinit()">Réinitialiser</button>
+        </div>
+          <hr/>
           <div class="box">
             <article class="media"  v-for="(produit, index) in produits" :key="produit.reference">
               <div class="media-left">
@@ -756,23 +762,62 @@
     data() {
       return {
         test: 'test',
-        produits: ''
+        produits: '',
+        produitsFixe: ''
       }
     },
 
     created() {
         //Liste des listeProduits
         axios.get('/produitsOffre')
-          .then(response => {this.produits = response.data; Store.listeProduits(this.produits)});
+          .then(response => {
+            this.produits = response.data;
+            this.produitsFixe = response.data; //Liste complète des produits
+            Store.listeProduits(this.produits)
+          });
     },
 
-    methods:{
+    methods: {
       ajoutProduit(produit, reference) {
         axios.get('/fournisseurList/'+produit.id)
-              .then(response => {this.fournisseurs = response.data; console.log(this.fournisseurs); Store.ajoutPanier(produit, reference, this.fournisseurs)});
+          .then(response => {
+            this.fournisseurs = response.data;
+            Store.ajoutPanier(produit, reference, this.fournisseurs)
+          });
       },
-    }
 
+      reinit() {
+          $("#textFiltre").val(""); 
+          this.produits = this.produitsFixe;
+          Store.listeProduits(this.produits);
+          console.log(this.produits);
+      },
+
+      miseAJourFiltre(e) {
+        var filtre2 = e.target.value;
+        var filtre = filtre2.toLowerCase();
+        var listeTempo = this.produits.filter(function(item) {
+          var nom = item.nom.toLowerCase();
+          var reference = item.reference.toLowerCase();
+          var categorie = item.categorie.toLowerCase();
+          var description = item.description.toLowerCase();
+          var refSupplier = item.refSupplier.toLowerCase();
+            if (nom.match(filtre)) {
+              return true;
+            } else if (reference.match(filtre)) {
+              return true;
+            } else if (categorie.match(filtre)) {
+              return true;
+            } else if (description.match(filtre)) {
+              return true;
+            } else if (refSupplier.match(filtre)) {
+              return true; 
+            } 
+        });
+        this.produits = listeTempo;
+      }
+
+    }
   })
 
 </script>
