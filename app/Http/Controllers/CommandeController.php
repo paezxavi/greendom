@@ -438,17 +438,31 @@ class CommandeController extends Controller
     }
 
     public function updateUser(Request $request, User $user) {
-      $test = User::where('id', $user->id)
-        ->update([
-          'name' => $request->username,
-          'forename' => $request->forename,
-          'address'=> $request->address,
-          'phone' => $request->phone,
-          'contact' => $request->contact,
-          'email' => $request->email,
-          'password' => Hash::make($request->password)
-        ]
-      ); 
+      if($request->password != ""){
+        $test = User::where('id', $user->id)
+          ->update([
+            'name' => $request->username,
+            'forename' => $request->forename,
+            'address'=> $request->address,
+            'phone' => $request->phone,
+            'contact' => $request->contact,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+          ]
+        ); 
+      } else {
+        $test = User::where('id', $user->id)
+          ->update([
+            'name' => $request->username,
+            'forename' => $request->forename,
+            'address'=> $request->address,
+            'phone' => $request->phone,
+            'contact' => $request->contact,
+            'email' => $request->email,
+          ]
+        );
+      }
+      
     }
 
 }
