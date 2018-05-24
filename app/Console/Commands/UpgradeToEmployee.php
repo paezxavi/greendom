@@ -19,7 +19,7 @@ class UpgradeToEmployee extends Command
      *
      * @var string
      */
-    protected $description = 'Permet de transformer un utilisateur en employé';
+    protected $description = 'Permet de upgrade un utilisateur en employé';
 
 
     /**
