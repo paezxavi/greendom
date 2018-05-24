@@ -18846,74 +18846,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: 'my-component',
-    data: function data() {
-        return {
-            columns: [{
-                label: 'Date de début',
-                field: 'dateDebut',
-                type: 'date',
-                dateInputFormat: 'YYYY-MM-DD',
-                dateOutputFormat: 'DD-MM-YYYY'
-            }, {
-                label: 'Dernière modification',
-                field: 'update_at',
-                type: 'date',
-                dateInputFormat: 'YYYY-MM-DD',
-                dateOutputFormat: 'DD-MM-YYYY'
-            }, {
-                label: 'Client',
-                field: this.getClient
-            }, {
-                label: 'Concerne',
-                field: 'concerne'
-            }, {
-                label: 'Statut',
-                field: 'status.nom'
-            }],
-            arrayCommande: [],
-            //defaultOpenedDetails: [1],
-            currentUser: "",
-            user: false
-        };
+  name: 'my-component',
+  data: function data() {
+    return {
+      columns: [{
+        label: 'Date de début',
+        field: 'dateDebut',
+        type: 'date',
+        dateInputFormat: 'YYYY-MM-DD',
+        dateOutputFormat: 'DD-MM-YYYY'
+      }, {
+        label: 'Dernière modification',
+        field: 'update_at',
+        type: 'date',
+        dateInputFormat: 'YYYY-MM-DD',
+        dateOutputFormat: 'DD-MM-YYYY'
+      }, {
+        label: 'Client',
+        field: this.getClient
+      }, {
+        label: 'Concerne',
+        field: 'concerne'
+      }, {
+        label: 'Statut',
+        field: 'status.nom'
+      }],
+      arrayCommande: [],
+      //defaultOpenedDetails: [1],
+      currentUser: "",
+      user: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var self = this;
+    this.checkIfLogged().then(function (response) {
+      _this.user = response ? response : window.location = '/#/login';
+      console.log(_this.user);
+    }).catch(function (error) {
+      return console.log(error);
+    });
+    axios.get('/' + this.$route.params.user).then(function (_ref) {
+      var data = _ref.data;
+      return _this.currentUser = data;
+    });
+    /*axios.get('/commandeList/'+this.$route.params.user)
+        .then(({data}) => this.arrayCommande = data);*/
+    axios({
+      method: 'get',
+      url: '/commandeList/' + this.$route.params.user
+    }).then(function (response) {
+      self.arrayCommande = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
+
+
+  methods: {
+    onRowClick: function onRowClick(params) {
+      window.location.href = "/#/commande/" + this.user.id + "/" + params.row.id;
     },
-    created: function created() {
-        var _this = this;
-
-        var self = this;
-        this.checkIfLogged().then(function (response) {
-            _this.user = response ? response : window.location = '/#/login';
-            console.log(_this.user);
-        }).catch(function (error) {
-            return console.log(error);
-        });
-        axios.get('/' + this.$route.params.user).then(function (_ref) {
-            var data = _ref.data;
-            return _this.currentUser = data;
-        });
-        /*axios.get('/commandeList/'+this.$route.params.user)
-            .then(({data}) => this.arrayCommande = data);*/
-        axios({
-            method: 'get',
-            url: '/commandeList/' + this.$route.params.user
-        }).then(function (response) {
-            self.arrayCommande = response.data;
-        }).catch(function (error) {
-            console.log(error);
-        });
-    },
-
-
-    methods: {
-        onRowClick: function onRowClick(params) {
-            if (params.row.status.nom !== "Abandonnée" && params.row.status.nom !== "Commande - Terminée") {
-                window.location.href = "/#/commande/" + this.user.id + "/" + params.row.id;
-            }
-        },
-        getClient: function getClient(rowObj) {
-            return rowObj.users.forename + " " + rowObj.users.name;
-        }
+    getClient: function getClient(rowObj) {
+      return rowObj.users.forename + " " + rowObj.users.name;
     }
+  }
 });
 
 /***/ }),
@@ -21138,7 +21136,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        this.commande.status_id != 8 || this.commande.status_id != 9
+        this.commande.status_id != 8 && this.commande.status_id != 9
           ? _c("div", { staticClass: "field" }, [
               !_vm.visibiliteActioncommandeEnvoye
                 ? _c("div", { staticClass: "buttons has-addons is-centered" }, [

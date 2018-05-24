@@ -80,9 +80,7 @@ export default {
 
     methods: {
         onRowClick(params) {
-            if(params.row.status.nom !== "Abandonnée" && params.row.status.nom !== "Commande - Terminée") {
-                window.location.href="/#/commande/"+this.user.id+"/"+params.row.id;
-            }
+            window.location.href="/#/commande/"+this.user.id+"/"+params.row.id;
         },
 
         getClient(rowObj) {

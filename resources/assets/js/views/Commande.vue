@@ -240,7 +240,7 @@
             </div>
             <!--{{this.commande.status_id}}
             <div>Hello</div>-->
-            <div class="field" v-if="this.commande.status_id != 8 || this.commande.status_id != 9">
+            <div class="field" v-if="this.commande.status_id != 8 && this.commande.status_id != 9">
               <div class="buttons has-addons is-centered" v-if="!visibiliteActioncommandeEnvoye">
                 <button @click.prevent="enregistrer" class="button is-info" style="margin-right:2px" v-if="this.commande.status_id <= 5">Enregistrer</button>
                 <button @click.prevent="envoyer" class="button is-success buttonCommande" v-show="enabledBtnEnvoyercommande">Envoyer</button>
