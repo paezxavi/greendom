@@ -114,6 +114,10 @@
               .then(function (response) {
                     console.log(response);
               })
+              StoreCatalogue.viderPanier();
+              this.panier = [];
+              alert('Votre commande a été enregistrée. Nous vous remerçions d\'avoir passé commande chez nous et vous tiendrons informé de l\'état de la commande.');
+              window.location = '/#/home';
             }
         }
     }

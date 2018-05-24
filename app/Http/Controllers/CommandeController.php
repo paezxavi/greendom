@@ -19,6 +19,7 @@ use App\Mail\PanierMail;
 use App\Mail\ClientOffreMail;
 use App\Mail\CommandeRecueMail;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Hash;
 
 class CommandeController extends Controller
 {
@@ -391,6 +392,20 @@ class CommandeController extends Controller
     {
       Mail::to($user)->send(new CommandeRecueMail('Commande Reçue'));
       return 'mail envoyé depuis le controleur';
+    }
+
+    public function updateUser(Request $request, User $user) {
+      $test = User::where('id', $user->id)
+        ->update([
+          'name' => $request->username,
+          'forename' => $request->forename,
+          'address'=> $request->address,
+          'phone' => $request->phone,
+          'contact' => $request->contact,
+          'email' => $request->email,
+          'password' => Hash::make($request->password)
+        ]
+      ); 
     }
 
 }

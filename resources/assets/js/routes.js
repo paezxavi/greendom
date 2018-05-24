@@ -60,6 +60,12 @@ let routes = [
         component: require('./views/Panier')
 
     },
+    {
+
+        path:'/compte',
+        component: require('./views/Compte')
+
+    },
 ];
 
 export default new VueRouter({

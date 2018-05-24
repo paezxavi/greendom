@@ -13,21 +13,28 @@ export const Store = new Vue({
 	methods: {
 		
 		listeProduits(produits) {
-			this.liste.length = 0;
+			//this.liste.length = 0;
 			this.liste = produits;
 			
+			//Supprimer produits enregistrées de la liste
 			for (var g =0; g < this.panierEnregistres.length; g++) {
 				var id = this.panierEnregistres[g].id;
-				//console.log("id "+id);
 				for (var j=0; j < this.liste.length; j++) {
-					//console.log("J - id " + this.liste[j].id);
 					if (id == this.liste[j].id) {
-						//console.log("Suppr");
 						this.liste.splice(j, 1);
 					}
 				}
 			}
-			
+
+			//Supprimer produits enregistrées de la liste
+			for (var i =0; i < this.panier.length; i++) {
+				var id = this.panier[i].id;
+				for (var k=0; k < this.liste.length; k++) {
+					if (id == this.liste[k].id) {
+						this.liste.splice(k, 1);
+					}
+				}
+			}
 		},
 		
 		ajoutPanier(produit, reference, fournisseurs) {
@@ -70,7 +77,7 @@ export const Store = new Vue({
 					fournisseurs
 				})
 			}
-
+			
 			//Supprimer de la liste des produit à choisir
 			for (var j=0; j < this.liste.length; j++) {
 				if (id == this.liste[j].id) {
@@ -150,7 +157,7 @@ export const Store = new Vue({
 			this.panier.length = 0;
 		},
 
-		//Ajoute au début le produit choisis
+		//Ajoute au début le produit choisis qui a été supprimé
 		ajoutProduitSupprime(produit) {
 			var id = produit.id;
 			var image = produit.image;
@@ -166,35 +173,25 @@ export const Store = new Vue({
 			var fournisseurChoisi = fournisseurs[0].nom;
 			var quantite = 1;
 
-			/*
-			for (var i=0; i < this.liste.length; i++) {
-				if (this.liste[i].id == id) {
-					i++;
-		    */
-					this.liste.unshift ({
-						image,
-						id,
-						nom,
-						reference,
-						description,
-						quantite,
-						prix,
-						remiseBoolean,
-						remisePrix,
-						remisePourcent,
-						total,
-						fournisseurChoisi,
-						fournisseurs				
-					})
-					//break;
-				//}
-			//}
-			
+			this.liste.unshift ({
+				image,
+				id,
+				nom,
+				reference,
+				description,
+				quantite,
+				prix,
+				remiseBoolean,
+				remisePrix,
+				remisePourcent,
+				total,
+				fournisseurChoisi,
+				fournisseurs				
+			})		
 		},
 
+		//Ajoute au début de la liste le produit enregistré qui a été supprimé
 		ajoutProduitEnregistreSupprime(produit) {
-			console.log("produit enregistré");
-			console.log(produit);
 			var id = produit.id;
 			var image = produit.image;
 			var nom = produit.nom;
@@ -208,28 +205,24 @@ export const Store = new Vue({
 			var fournisseurChoisi = produit.fournisseurChoisi;
 			var quantite = 1;
 
-			/*
-			for (var i=0; i < this.liste.length; i++) {
-				if (this.liste[i].id == id) {
-					i++;
-		    */
-					this.liste.unshift ({
-						image,
-						id,
-						nom,
-						reference,
-						description,
-						quantite,
-						prix,
-						remiseBoolean,
-						remisePrix,
-						remisePourcent,
-						total,
-						fournisseurChoisi			
-					})
+			this.liste.unshift ({
+				image,
+				id,
+				nom,
+				reference,
+				description,
+				quantite,
+				prix,
+				remiseBoolean,
+				remisePrix,
+				remisePourcent,
+				total,
+				fournisseurChoisi			
+			})
 					//break;
 				//}
 			//}
 		}
+
 	}
 });

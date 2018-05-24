@@ -74,6 +74,9 @@
                             <router-link class="button is-success is-centered" tag="button" to="/panier">
                               <?php echo "Panier" ?>
                             </router-link>
+                            <router-link class="button is-success is-centered" tag="button" to="/compte">
+                              <?php echo "Mon compte" ?>
+                            </router-link>
                             <a class="button" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> {{Auth::user()->forename}} {{Auth::user()->name}}</a>
                             <!--/*<router-link class="button is-info" tag="button" to="/commande/{{ Auth::id() }}">
                                 Demande
