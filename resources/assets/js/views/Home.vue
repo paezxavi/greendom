@@ -1,21 +1,34 @@
 <template>
     <div class="container">
+
+        <div id="popUp" style="display: none; font-size:20px;"  class="popup">
+            <div id="textPopup" class="textPopup">
+                Produit ajouté au panier
+            </div>
+        </div>
+
         <div class="page-inner">
             <div class="inner-content"> 
                 <div data-v-1244b4c1="" class="columns">
                     <div class="column is-3 filter">
                         <h1 class="title" style="text-align:center">Filtres</h1>
+                        <br/>
+                        <h3 class="subtitle is-3">Rechercher :</h3>
+                        <input id="textFiltre" type="text" v-on:keyup="miseAJourFiltre($event)">
+                        <hr/>
                         <h3 class="subtitle is-3">Prix max</h3>
                         <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
                         <a class="button is-light marginCatalog" @click="reinitPrix()">Réinitialiser</a>
+                        <hr/>
                         <h3 class="subtitle is-3">Watts max</h3>
                         <vue-slider v-model="valueWatts" v-bind="optionsWatts" @click.native="applyFilter()"></vue-slider>
                         <a class="button is-light marginCatalog" @click="reinitWatts()">Réinitialiser</a>
                         <br/>
+                        <hr/>
                         <a class="button is-light marginCatalog" @click="prixCroissant()">Trier par prix croissant</a>
                         <a class="button is-light marginCatalog" @click="prixDecroissant()">Trier par prix décroissant</a>
+                        <hr/>
                         <a class="button is-light marginCatalog" @click="reinitProduit()">Réinitialiser liste</a>
-
                     </div>
                     <div class="column is-9 catalogSize">
                         <div class="spinner" v-if="showSpinner">
@@ -70,6 +83,8 @@
         },
         data() {
             return {
+                filterText: "",
+                filterList: [],
                 showSpinner:true,
                 showModal: false,
                 currentUser: false,
@@ -158,6 +173,13 @@
             ajoutPanier(produit, index) {
                 if (this.currentUser) {
                     StoreCatalogue.ajoutPanierCatalogue(produit);
+
+                    //Popup apparaît et disparaît
+                    $("#popUp").show(); 
+                    setTimeout(function() {
+                        $("#popUp").hide();
+                    }, 500);
+
                 } else {
                     window.location = '/#/login';
                 }
@@ -177,7 +199,7 @@
 
             applyFilter() {
                 this.produitsTrie = [];
-                this.produits.map( (p) => {
+                this.filterList.map((p) => {
                     if((p.prixVente <= this.valuePrix) & (p.feature <= this.valueWatts)){
                         this.produitsTrie.push(p);
                     }
@@ -186,7 +208,7 @@
 
             getPrixMax() {
                 let maxP = 0;
-                this.produits.map( (p) => {
+                this.produits.map((p) => {
                     if(p.prixVente > maxP){
                         maxP = p.prixVente;
                     }
@@ -203,7 +225,7 @@
 
             getWattsMax() {
                 let maxW = 0;
-                this.produits.map( (p) => {
+                this.produits.map((p) => {
                     if(p.feature > maxW){
                         maxW = p.feature;
                     }
@@ -226,7 +248,6 @@
                         return 1;
                     return 0;
                 }
-
                 return this.produitsTrie.sort(compare);
             },
 
@@ -242,7 +263,7 @@
                 return this.produitsTrie.sort(compare);
             },
 
-            reinitProduit(){
+            reinitProduit() {
                 this.produitsTrie = this.produits;
                 function compare(a, b) {
                 if (a.nom < b.nom)
@@ -251,10 +272,46 @@
                     return 1;
                 return 0;
                 }
-
+                $("#textFiltre").val("");    
                 return this.produitsTrie.sort(compare);
-            }
+            },
 
+            produitAzero() {
+                this.produitsTrie = this.produits;
+                function compare(a, b) {
+                if (a.nom < b.nom)
+                    return -1;
+                if (a.nom > b.nom)
+                    return 1;
+                return 0;
+                }
+                return this.produitsTrie.sort(compare);
+            },
+
+            miseAJourFiltre(e) {
+                this.produitAzero();
+                this.filterText = e.target.value;
+                var filtre = this.filterText.toLowerCase();
+                this.filterList = this.produitsTrie.filter(function(item) {
+                var nom = item.nom.toLowerCase();
+                var reference = item.reference.toLowerCase();
+                var categorie = item.categorie.toLowerCase();
+                var description = item.description.toLowerCase();
+                var refSupplier = item.refSupplier.toLowerCase();
+                   if (nom.match(filtre)) {
+                       return true;
+                   } else if (reference.match(filtre)) {
+                       return true;
+                   } else if (categorie.match(filtre)) {
+                       return true;
+                   } else if (description.match(filtre)) {
+                       return true;
+                   } else if (refSupplier.match(filtre)) {
+                       return true; 
+                   } 
+                });
+                this.produitsTrie = this.filterList;             
+            },
         },
     }
     

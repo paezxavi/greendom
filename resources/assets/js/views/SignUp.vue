@@ -58,8 +58,15 @@
                 <div class="field">
                   <label class="label">Mot de passe*</label>
                   <div class="control">
-                    <input type="password" name="pwd" id="pwd" class="input"  value="" v-model="pwd">
+                    <input type="password" name="pwd" id="pwd" class="input"  value="" v-model="pwd" v-on:keyup="miseAJourPassword($event)">
                 </div>
+              </div>
+              <font color="red" v-show="pwdError">Les mots de passes sont différents !</font>
+              <div class="field">
+                  <label class="label">Entrez à nouveau le mot de passe*</label>
+                  <div class="control">
+                    <input type="password" name="pwd2" id="pwd2" class="input"  value="" v-model="pwd2" v-on:keyup="miseAJourPassword2($event)">
+                  </div>
               </div>
               <div id="companyId" v-model="companyId"></div>
               <div class="column">
@@ -91,6 +98,8 @@
                 email: "",
                 company: "",
                 pwd: "",
+                pwd2: "",
+                pwdError: false,
                 companyId: ""
             }
         },
@@ -107,26 +116,41 @@
               Sinon message d'erreur au user demandant de vérifier les données et refaire valider
               Le user est créé dans la bdd avec employé = false, raison de sécurité, l'administrateur peut promouvoir un user en employé avec une ligne de commande
           */
+          miseAJourPassword(e) {
+            this.pwd = e.target.value;
+          },
+
+          miseAJourPassword2(e) {
+            this.pwd2 = e.target.value;
+          },
+
           createUser() {
-            const self = this;
-            companyId.value = "";
-            if (username.value.trim() =="" || forename.value.trim() =="" || address.value.trim() =="" || phone.value.trim() =="" || email.value.trim() =="" || pwd.value.trim() ==""){
-              alert("Merci de remplir tous les champs obligatoires (*) !");
-            }else{
-              if (company.value.trim().length > 0){self.findCompanyId();}
-              setTimeout(function () {
-                axios.post('/createUser', {name: username.value.trim(), forename: forename.value.trim(), address: address.value.trim(), phone: phone.value.trim(), skype: contact.value.trim(), email: email.value.trim(), companyId: companyId.value, pwd: pwd.value.trim()})
-                  .then(response=>{
-                    if (response.status == 200){
-                      alert("Votre compte a bien été créé !");
-                      self.$router.push('login');
-                    }else{alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.")}
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                    alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.");
-                  });
-                }, 2000);
+            if (this.pwd == this.pwd2) {
+              this.pwdError = false;
+
+              const self = this;
+              companyId.value = "";
+              if (username.value.trim() =="" || forename.value.trim() =="" || address.value.trim() =="" || phone.value.trim() =="" || email.value.trim() =="" || pwd.value.trim() ==""){
+                alert("Merci de remplir tous les champs obligatoires (*) !");
+              }else{
+                if (company.value.trim().length > 0){self.findCompanyId();}
+                setTimeout(function () {
+                  axios.post('/createUser', {name: username.value.trim(), forename: forename.value.trim(), address: address.value.trim(), phone: phone.value.trim(), skype: contact.value.trim(), email: email.value.trim(), companyId: companyId.value, pwd: pwd.value.trim()})
+                    .then(response=>{
+                      if (response.status == 200){
+                        alert("Votre compte a bien été créé !");
+                        self.$router.push('login');
+                      }else{alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.")}
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                      alert("Le système n\' a pas réussi à enregistrer votre compte. \r\nMerci de vérifier vos données et de cliquer sur valider.");
+                    });
+                  }, 2000);
+              }
+
+            } else {
+              this.pwdError = true;
             }
           },
           /** Trouve l'id de la compagnie qui a pour nom "company.value"
