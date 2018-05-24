@@ -616,7 +616,7 @@
           },
 
           mailCommande(){
-            this.enregistrer();
+            //this.enregistrer();
             axios.post('/mailCommande/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');

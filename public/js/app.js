@@ -19602,7 +19602,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.location.href = '/#/listOrder/' + id;
     },
     mailCommande: function mailCommande() {
-      this.enregistrer();
+      //this.enregistrer();
       axios.post('/mailCommande/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
