@@ -438,7 +438,7 @@ class CommandeController extends Controller
     }
 
     public function updateUser(Request $request, User $user) {
-      if($request->password != ""){
+      if(trim($request->password) != ""){
         $test = User::where('id', $user->id)
           ->update([
             'name' => $request->username,
