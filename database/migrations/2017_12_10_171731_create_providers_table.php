@@ -18,8 +18,9 @@ class CreateProvidersTable extends Migration
           $table->string('name');
           $table->string('address');
           $table->string('email')->unique();
+          $table->string('phone')->nullable();
           $table->string('skype')->nullable();
-          $table->string('iban');
+          $table->string('iban')->nullable();
           $table->timestamps();
         });
     }

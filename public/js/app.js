@@ -30908,7 +30908,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(136);
-module.exports = __webpack_require__(195);
+module.exports = __webpack_require__(199);
 
 
 /***/ }),
@@ -32726,9 +32726,10 @@ var routes = [{
 
     path: '/ProviderInfo',
     component: __webpack_require__(193)
+
 }, {
     path: '/compte',
-    component: __webpack_require__(192)
+    component: __webpack_require__(196)
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -38332,6 +38333,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -38341,6 +38344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   created: function created() {
     var self = this;
+    sessionStorage.removeItem('title');
     axios.get('/providersList/').then(function (response) {
       self.providers = response.data;
     }).catch(function (error) {
@@ -38353,21 +38357,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      * Récupère l'id du bouton "supprimer" qui a été cliqué qui correspond à l'id du fournisseur concerné
      * Envoie une requête pour supprimer le fournisseur de la BDD Provider qui a l'id passé en paramètre de la requête
      */
-    deleteProvider: function deleteProvider(event) {
+    /**deleteProvider: function(event) {
       var targetId = event.currentTarget.id;
       console.log(targetId);
-      axios.delete('/deleteProvider/' + targetId.value).then(function (response) {
-        console.log(response.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
+      axios.delete('/deleteProvider/'+ targetId.value)
+      .then(response=>{console.log(response.data);})
+      .catch(function (error) {console.log(error);});
+    },*/
+
+    /**
+     *
+     */
+    createProvider: function createProvider() {
+      var self = this;
+      sessionStorage.setItem('title', 'Nouveau fournisseur');
+      self.$router.push('ProviderInfo');
     },
+
+
     /**
      * Récupère l'id du bouton "modifier" qui a été cliqué qui correspond à l'id du fournisseur concerné
-     * Redirige sur la page InfoFournisseur => doit passer l'id du fournisseur
+     * Enregistre dans le sessionStorage l'id du fournisseur
+     * Redirige sur la page InfoFournisseur
      */
-    modifyProvider: function modifyProvider() {
+    modifyProvider: function modifyProvider(event) {
       var self = this;
+      var targetId = event.currentTarget.id;
+      sessionStorage.setItem('idProv', targetId);
+      sessionStorage.setItem('title', 'Modification fournisseur');
       self.$router.push('ProviderInfo');
     }
   }
@@ -38381,46 +38398,47 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.providers, function(provider) {
-      return _c("div", [
-        _c("h4", [_vm._v(" " + _vm._s(provider.name) + " ")]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(provider.address))]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(provider.email))]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success",
-            attrs: { id: provider.id },
-            on: {
-              click: function($event) {
-                _vm.modifyProvider()
+  return _c("div", { staticClass: "column" }, [
+    _c(
+      "button",
+      {
+        staticClass: "button is-block is-info is-large",
+        on: {
+          click: function($event) {
+            _vm.createProvider()
+          }
+        }
+      },
+      [_vm._v("Nouveau fournisseur")]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      _vm._l(_vm.providers, function(provider) {
+        return _c("div", [
+          _c("h4", [_vm._v(" " + _vm._s(provider.name) + " ")]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(provider.address))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(provider.email))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              attrs: { id: provider.id },
+              on: {
+                click: function($event) {
+                  _vm.modifyProvider($event)
+                }
               }
-            }
-          },
-          [_vm._v("Modifier")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success",
-            attrs: { id: provider.id },
-            on: {
-              click: function($event) {
-                _vm.deleteProvider($event)
-              }
-            }
-          },
-          [_vm._v("Supprimer")]
-        )
-      ])
-    })
-  )
+            },
+            [_vm._v("Modifier")]
+          )
+        ])
+      })
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38439,9 +38457,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(194)
 /* template */
-var __vue_template__ = __webpack_require__(194)
+var __vue_template__ = __webpack_require__(195)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38481,15 +38499,474 @@ module.exports = Component.exports
 
 /***/ }),
 /* 194 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      title: sessionStorage.getItem('title'),
+      provider: {
+        id: "",
+        name: "",
+        address: "",
+        phone: "",
+        skype: "",
+        email: "",
+        iban: ""
+      }
+    };
+  },
+
+  /**
+   * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProv')
+   * Charge la page avec les informations récupérées
+   * Efface la variable 'idPov' de sessionStorage
+   */
+  created: function created() {
+    var self = this;
+    self.title = sessionStorage.getItem('title');
+    if (self.title == 'Modification fournisseur') {
+      self.provider.id = sessionStorage.getItem('idProv');
+      axios.get('/provider/', { params: { id: self.provider.id } }).then(function (response) {
+        self.provider = response.data;
+      }).catch(function (error) {
+        console.log(error);
+      });
+      sessionStorage.removeItem('idProv');
+    }
+  },
+
+  /**
+   *
+   */
+  methods: {
+    updateProvider: function updateProvider() {
+      var self = this;
+      if (self.provider.email.trim() != "" || self.provider.name.trim() != "" || self.provider.address.trim() != "") {
+        if (self.provider.phone == null) {
+          self.provider.phone = "";
+        }
+        if (self.provider.skype == null) {
+          self.provider.skype = "";
+        }
+        if (self.provider.iban == null) {
+          self.provider.iban = "";
+        }
+        axios.put('/provider/', { id: self.provider.id, name: self.provider.name.trim(), address: self.provider.address.trim(),
+          phone: self.provider.phone.trim(), skype: self.provider.skype.trim(), email: self.provider.email.trim(),
+          iban: self.provider.iban.trim() }).then(function (response) {
+          if (response.status == 200) {
+            alert("Le fournisseur a bien été modifié !");
+            self.$router.push('listProviders');
+          } else {
+            alert("Le système n\' a pas réussi à enregistrer les modifications.");
+          }
+        }).catch(function (error) {
+          console.log(error);
+          {
+            alert("Le système n\' a pas réussi à enregistrer les modifications.");
+          }
+        });
+      } else {
+        alert("Merci de remplir tous les champs obligatoires (*) !");
+      }
+    },
+
+
+    /**
+     *
+     */
+    createProvider: function createProvider() {
+      var self = this;
+      if (self.provider.name.trim() == "" || self.provider.address.trim() == "" || self.provider.email.trim() == "") {
+        alert("Merci de remplir tous les champs obligatoires (*) !");
+      } else {
+        axios.post('/provider', { name: self.provider.name.trim(), address: self.provider.address.trim(), phone: self.provider.phone.trim(),
+          skype: self.provider.skype.trim(), email: self.provider.email.trim(), iban: self.provider.iban.trim() }).then(function (response) {
+          if (response.status == 200) {
+            alert("Le fournisseur a bien été créé !");
+            self.$router.push('listProviders');
+          } else {
+            alert("Le système n\' a pas réussi à enregistrer le fournisseur. \r\nMerci de vérifier vos données et de cliquer sur valider.");
+          }
+        }).catch(function (error) {
+          console.log(error);
+          alert("Le système n\' a pas réussi à enregistrer le fournisseur. \r\nMerci de vérifier vos données et de cliquer sur valider.");
+        });
+      }
+    },
+
+
+    /**
+     * Redirige sur la page Liste fournisseur
+     */
+    cancel: function cancel() {
+      var self = this;
+      self.$router.push('listProviders');
+    }
+  }
+});
+
+/***/ }),
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("Hello")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "columns is-mobile" }, [
+      _c("div", { staticClass: "column is-three-fifths is-offset-one-fifth" }, [
+        _c("div", { staticClass: "has-text-centered" }, [
+          _c("h3", { staticClass: "title has-text-grey" }, [
+            _vm._v(_vm._s(_vm.title))
+          ]),
+          _vm._v(" "),
+          _c("br")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "columns is-mobile" }, [
+              _c("div", { staticClass: "column" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Nom*")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.provider.name,
+                        expression: "provider.name"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      id: "name",
+                      value: ""
+                    },
+                    domProps: { value: _vm.provider.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.provider, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Adresse*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.address,
+                    expression: "provider.address"
+                  }
+                ],
+                staticClass: "input",
+                attrs: {
+                  type: "text",
+                  name: "address",
+                  id: "address",
+                  value: ""
+                },
+                domProps: { value: _vm.provider.address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.provider, "address", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "columns is-mobile" }, [
+              _c("div", { staticClass: "column" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Téléphone")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.provider.phone,
+                      expression: "provider.phone"
+                    }
+                  ],
+                  staticClass: "input",
+                  attrs: { type: "tel", name: "phone", id: "phone", value: "" },
+                  domProps: { value: _vm.provider.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.provider, "phone", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "column" }, [
+                _c("label", { staticClass: "label" }, [_vm._v("Compte Skype")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.provider.skype,
+                        expression: "provider.skype"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      type: "text",
+                      name: "skype",
+                      id: "skype",
+                      value: ""
+                    },
+                    domProps: { value: _vm.provider.skype },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.provider, "skype", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Email*")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.email,
+                    expression: "provider.email"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { type: "email", name: "email", id: "email", value: "" },
+                domProps: { value: _vm.provider.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.provider, "email", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("IBAN")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.provider.iban,
+                    expression: "provider.iban"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { type: "text", name: "iban", id: "iban", value: "" },
+                domProps: { value: _vm.provider.iban },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.provider, "iban", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "columns is-mobile" }, [
+            _c("div", { staticClass: "column" }, [
+              _vm.title == "Modification fournisseur"
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "button is-block is-success is-large is-fullwidth",
+                      on: {
+                        click: function($event) {
+                          _vm.updateProvider()
+                        }
+                      }
+                    },
+                    [_vm._v("Valider")]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass:
+                        "button is-block is-success is-large is-fullwidth",
+                      on: {
+                        click: function($event) {
+                          _vm.createProvider()
+                        }
+                      }
+                    },
+                    [_vm._v("Créer")]
+                  )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "button is-block is-danger is-large is-fullwidth",
+                  on: {
+                    click: function($event) {
+                      _vm.cancel()
+                    }
+                  }
+                },
+                [_vm._v("Annuler")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", {
+            attrs: { id: "provider" },
+            model: {
+              value: _vm.provider,
+              callback: function($$v) {
+                _vm.provider = $$v
+              },
+              expression: "provider"
+            }
+          })
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "column" }, [
+      _c("p", { staticClass: "has-text-grey" }, [
+        _vm._v("* champs obligatoires")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -38500,22 +38977,15 @@ if (false) {
 }
 
 /***/ }),
-/* 195 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 191 */,
-/* 192 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(193)
+var __vue_script__ = __webpack_require__(197)
 /* template */
-var __vue_template__ = __webpack_require__(194)
+var __vue_template__ = __webpack_require__(198)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38554,7 +39024,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 193 */
+/* 197 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38724,7 +39194,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 194 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -39121,6 +39591,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-edb5cd5a", module.exports)
   }
 }
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

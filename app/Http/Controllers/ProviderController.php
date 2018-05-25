@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use App\Provider;
 
 class ProviderController extends Controller
@@ -14,6 +16,37 @@ class ProviderController extends Controller
   {
     $result = Provider::all();
     return $result;
+  }
+
+  /**
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   *
+   * Retourne le fournisseur qui a l'id passé en paramètre
+   */
+  public function getProvider(Request $request)
+  {
+    $provider = DB::table('providers')->where('id', $request->id)->first();
+    return response()->json($provider);
+  }
+
+  /**
+   * @param  \Illuminate\Http\Request  $request
+   *
+   * Modifie le fournisseur qui a l'id passé en paramètre avec les informations passées en paramètre
+   */
+  public function updateProvider(Request $request)
+  {
+    $update = Provider::where('id', $request->id)
+      ->update([
+        'name' => $request->name,
+        'address'=> $request->address,
+        'phone' => $request->phone,
+        'skype' => $request->skype,
+        'email' => $request->email,
+        'iban' => $request->iban,
+      ]
+    );
   }
 
   /**
@@ -29,13 +62,15 @@ class ProviderController extends Controller
     $newProv->name = $request->name;
     $newProv->address = $request->address;
     $newProv->email = $request->email;
+    $newProv->phone = $request->phone;
     $newProv->skype = $request->skype;
     $newProv->iban = $request->iban;
     $newProv->save();
   }
 
   /**
-   * Store a newly created resource in storage.
+   * Enregistrement dans la BDD d'une nouvelle entrée dans la table Provider
+   * Retourne l'id de l'entrée créée.
    *
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
@@ -46,9 +81,11 @@ class ProviderController extends Controller
     $newProv->name = $request->name;
     $newProv->address = $request->address;
     $newProv->email = $request->email;
+    $newProv->phone = $request->phone;
     $newProv->skype = $request->skype;
     $newProv->iban = $request->iban;
-    $newUser->save();
+    $newProv->save();
+    return $newProv->id;
   }
 
   /**
@@ -60,40 +97,5 @@ class ProviderController extends Controller
   public function show($id)
   {
       //
-  }
-
-  /**
-   * Show the form for editing the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function edit($id)
-  {
-      //
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-      //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy($id)
-  {
-    $console.log("je vais deleted");
-    $console.log($id);
   }
 }

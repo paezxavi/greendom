@@ -33,7 +33,9 @@ Route::post('/createCompany', 'CompanyController@store');
 
 //ProviderController
 Route::get('/providersList', 'ProviderController@getProviders');
-Route::delete('/deleteProvider/{id}', 'ProviderController@destroy');
+Route::get('/provider', 'ProviderController@getProvider');
+Route::post('/provider', 'ProviderController@store');
+Route::put('/provider', 'ProviderController@updateProvider');
 //-------------------------------------------------------------
 
 Route::get('/', 'CommandeController@index')->name('home');
