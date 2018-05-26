@@ -66,6 +66,9 @@
                         <router-link class="navbar-item" tag="a" to="/listProviders">
                             Liste des fournisseurs
                         </router-link>
+                        <router-link class="navbar-item" tag="a" to="/listProducts">
+                            Liste des produits
+                        </router-link>
                     </div>
                   </div>
 

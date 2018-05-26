@@ -61,6 +61,10 @@ let routes = [
 
     },
     {
+      path:'/compte',
+      component: require('./views/Compte')
+    },
+    {
 
         path:'/listProviders',
         component: require('./views/ListeFournisseurs')
@@ -73,8 +77,10 @@ let routes = [
 
     },
     {
-      path:'/compte',
-      component: require('./views/Compte')
+
+        path:'/listProducts',
+        component: require('./views/ListeProduits')
+
     },
 ];
 
