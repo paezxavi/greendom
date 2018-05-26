@@ -71,6 +71,8 @@ Route::post('/updateUser/{user}', 'CommandeController@updateUser');
 Route::post('/fournisseurMailDemandePrix/{commande}','CommandeController@mailFournisseurDemandePrix');
 Route::post('/clientMailOffre/{commande}','CommandeController@mailClientOffre');
 
+Route::put('/abandonner/{commande}','CommandeController@abandonnerCommande');
+
 Route::delete('/supprimerProduit/{produit}/{commande}', 'CommandeController@supprimerProduit');
 Route::delete('/removeFile/{file}', 'FileController@remove');
 

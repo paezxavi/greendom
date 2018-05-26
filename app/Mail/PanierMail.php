@@ -33,7 +33,7 @@ class PanierMail extends Mailable
     {
         return $this->view('mails.panierMail')
                     ->subject('Votre commande')
-                    ->attach(storage_path('app/public/pdf/Test.pdf'))
+                    ->attach(storage_path('app/public/pdf/VotreCommande.pdf'))
                     ->with([
                       'user' => $this->user,
                     ]);

@@ -33,7 +33,7 @@ class ClientOffreMail extends Mailable
     {
         return $this->view('mails.fournisseurMail')
                     ->subject('Offre')
-                    ->attach(storage_path('app/public/pdf/Test.pdf'))
+                    ->attach(storage_path('app/public/pdf/Offre.pdf'))
                     ->with([
                       'title' => $this->title,
                     ]);
