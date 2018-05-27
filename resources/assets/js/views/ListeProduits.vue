@@ -44,7 +44,7 @@ export default {
         },
         {
           label: 'Fournisseur',
-          field: 'name',
+          field: 'nom',
         },
         {
           label: 'Prix achat',

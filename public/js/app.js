@@ -41357,10 +41357,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       columns: [{
         label: 'Nom',
-        field: 'name'
+        field: 'nom'
       }, {
         label: 'Adresse',
-        field: 'address'
+        field: 'adresse'
       }, {
         label: 'Email',
         field: 'email'
@@ -41613,8 +41613,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       title: sessionStorage.getItem('titleProv'),
       provider: {
         id: "",
-        name: "",
-        address: "",
+        nom: "",
+        adresse: "",
         phone: "",
         skype: "",
         email: "",
@@ -41652,7 +41652,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      */
     updateProvider: function updateProvider() {
       var self = this;
-      if (self.provider.email.trim() != "" || self.provider.name.trim() != "" || self.provider.address.trim() != "") {
+      if (self.provider.email.trim() != "" || self.provider.nom.trim() != "" || self.provider.adresse.trim() != "") {
         if (self.provider.phone == null) {
           self.provider.phone = "";
         }
@@ -41662,7 +41662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (self.provider.iban == null) {
           self.provider.iban = "";
         }
-        axios.put('/provider/', { id: self.provider.id, name: self.provider.name.trim(), address: self.provider.address.trim(),
+        axios.put('/provider/', { id: self.provider.id, name: self.provider.nom.trim(), address: self.provider.adresse.trim(),
           phone: self.provider.phone.trim(), skype: self.provider.skype.trim(), email: self.provider.email.trim(),
           iban: self.provider.iban.trim() }).then(function (response) {
           if (response.status == 200) {
@@ -41691,10 +41691,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      */
     createProvider: function createProvider() {
       var self = this;
-      if (self.provider.name.trim() == "" || self.provider.address.trim() == "" || self.provider.email.trim() == "") {
+      if (self.provider.nom.trim() == "" || self.provider.adresse.trim() == "" || self.provider.email.trim() == "") {
         alert("Merci de remplir tous les champs obligatoires (*) !");
       } else {
-        axios.post('/provider', { name: self.provider.name.trim(), address: self.provider.address.trim(), phone: self.provider.phone.trim(),
+        axios.post('/provider', { name: self.provider.nom.trim(), address: self.provider.adresse.trim(), phone: self.provider.phone.trim(),
           skype: self.provider.skype.trim(), email: self.provider.email.trim(), iban: self.provider.iban.trim() }).then(function (response) {
           if (response.status == 200) {
             alert("Le fournisseur a bien été créé !");
@@ -41751,8 +41751,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.provider.name,
-                        expression: "provider.name"
+                        value: _vm.provider.nom,
+                        expression: "provider.nom"
                       }
                     ],
                     staticClass: "input",
@@ -41762,13 +41762,13 @@ var render = function() {
                       id: "name",
                       value: ""
                     },
-                    domProps: { value: _vm.provider.name },
+                    domProps: { value: _vm.provider.nom },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.provider, "name", $event.target.value)
+                        _vm.$set(_vm.provider, "nom", $event.target.value)
                       }
                     }
                   })
@@ -41786,8 +41786,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.provider.address,
-                    expression: "provider.address"
+                    value: _vm.provider.adresse,
+                    expression: "provider.adresse"
                   }
                 ],
                 staticClass: "input",
@@ -41797,13 +41797,13 @@ var render = function() {
                   id: "address",
                   value: ""
                 },
-                domProps: { value: _vm.provider.address },
+                domProps: { value: _vm.provider.adresse },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.provider, "address", $event.target.value)
+                    _vm.$set(_vm.provider, "adresse", $event.target.value)
                   }
                 }
               })
@@ -42109,7 +42109,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         field: 'refSupplier'
       }, {
         label: 'Fournisseur',
-        field: 'name'
+        field: 'nom'
       }, {
         label: 'Prix achat',
         field: 'prixAchat',

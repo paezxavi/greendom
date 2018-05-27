@@ -28,11 +28,11 @@
             columns: [
               {
                 label: 'Nom',
-                field: 'name',
+                field: 'nom',
               },
               {
                 label: 'Adresse',
-                field: 'address',
+                field: 'adresse',
               },
               {
                 label: 'Email',
