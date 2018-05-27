@@ -13,13 +13,14 @@ class StatusTableSeeder extends Seeder
     {
         DB::table('status')->insert([
              ['nom' => 'Demande - En cours'],
-             ['nom' => 'Demande - Envoyé'],
+             ['nom' => 'Demande - Envoyée'],
              ['nom' => 'Offre - En cours'],
-             ['nom' => 'Offre - Envoyé fournisseur'],
-             ['nom' => 'Offre - Envoyé Client'],
+             ['nom' => 'Offre - Envoyée fournisseur'],
+             ['nom' => 'Offre - Envoyée Client'],
              ['nom' => 'Commande - En cours'],
-             ['nom' => 'Commande - Reçu'],
-             ['nom' => 'Commande - Terminé'],
+             ['nom' => 'Commande - Reçue'],
+             ['nom' => 'Commande - Terminée'],
+             ['nom' => 'Décommander'],
         ]);
     }
 }
