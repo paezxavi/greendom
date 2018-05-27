@@ -84,6 +84,7 @@ export default {
     methods: {
         onRowClick(params) {
             window.location.href="/#/commande/"+this.user.id+"/"+params.row.id;
+            location.reload();
         },
 
         getClient(rowObj) {

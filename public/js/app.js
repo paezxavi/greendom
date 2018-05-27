@@ -18832,6 +18832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         onRowClick: function onRowClick(params) {
             window.location.href = "/#/commande/" + this.user.id + "/" + params.row.id;
+            location.reload();
         },
         getClient: function getClient(rowObj) {
             return rowObj.users.forename + " " + rowObj.users.name;
@@ -19320,12 +19321,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
           location.reload();
-          //window.location.href='/#/commande/'+id+'/'+commandId;
+          window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         //Produits enregistres
         axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
           location.reload();
-          //window.location.href='/#/commande/'+id+'/'+commandId;
+          window.location.href = '/#/commande/' + id + '/' + commandId;
         });
         self.storeFile();
       }
@@ -19498,7 +19499,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       window.location.href = '/#/listOrder/' + id;
     },
     mailCommande: function mailCommande() {
-      //this.enregistrer();
+      this.enregistrer();
       axios.post('/mailCommande/' + this.commande.id).then(function (response) {
         console.log('mail Envoyé');
       });
