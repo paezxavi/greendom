@@ -19187,6 +19187,7 @@ var StoreCatalogue = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         viderPanier: function viderPanier() {
             this.panierCatalogue.length = 0;
+            //window.location = '/#/panier';
         },
         produitAffiche: function produitAffiche(produit) {
             this.produitCourant.length = 0;
@@ -30908,7 +30909,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(136);
-module.exports = __webpack_require__(190);
+module.exports = __webpack_require__(193);
 
 
 /***/ }),
@@ -32684,9 +32685,9 @@ var routes = [{
 
 },
 /*{
-     path:'/about',
+      path:'/about',
     component: require('./views/About')
- },*/
+  },*/
 {
 
     path: '/contact',
@@ -32699,7 +32700,7 @@ var routes = [{
 
 },
 /*{
-     path:'/tableauDeBord/:user',
+      path:'/tableauDeBord/:user',
     component: require('./views/TableauDeBord')
 },*/
 {
@@ -32720,14 +32721,14 @@ var routes = [{
 }, {
 
     path: '/compte',
-    component: __webpack_require__(192)
+    component: __webpack_require__(190)
 
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
     /*hashbang: false,
-     mode:'history',*/
+      mode:'history',*/
 
     routes: routes,
 
@@ -32918,7 +32919,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         var self = this;
         companyId.value = "";
-        if (username.value.trim() == "" || forename.value.trim() == "" || address.value.trim() == "" || phone.value.trim() == "" || email.value.trim() == "" || pwd.value.trim() == "") {
+        if (username.value.trim() == "" || forename.value.trim() == "" || address.value.trim() == "" || phone.value.trim() == "" || email.value.trim() == "" || pwd.value.trim() == "" || pwd2.value.trim() == "") {
           alert("Merci de remplir tous les champs obligatoires (*) !");
         } else {
           if (company.value.trim().length > 0) {
@@ -33910,7 +33911,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ajoutPanier: function ajoutPanier(produit, index) {
             if (this.currentUser) {
                 __WEBPACK_IMPORTED_MODULE_1__storeCatalogue__["a" /* StoreCatalogue */].ajoutPanierCatalogue(produit);
-
                 //Popup apparaît et disparaît
                 $("#popUp").show();
                 setTimeout(function () {
@@ -38010,6 +38010,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             panier: __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].$data.panierCatalogue,
             total: __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].totalPanier(),
+            tva: "",
             company: "",
             user: '',
             commande: {
@@ -38025,8 +38026,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.checkIfLogged().then(function (response) {
             _this.user = response ? response : "window.location = '/#/login'";
-            console.log(_this.user);
         });
+        this.tva = Math.round(this.total * 7.7 / 100);
     },
 
 
@@ -38050,22 +38051,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         vider: function vider() {
             console.log("vider");
             __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].viderPanier();
-            this.panier = [];
         },
         validerPanier: function validerPanier() {
+            console.log(this.panier);
+            var self = this;
             axios({
                 method: 'post',
                 url: '/emailPanier/' + this.user.id,
                 data: {
                     panier: this.panier,
-                    user: this.user
+                    user: this.user,
+                    total: this.total,
+                    tva: this.tva
                 }
             }).then(function (response) {
-                console.log(response);
+                self.vider();
             });
-            __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].viderPanier();
-            this.panier = [];
             alert('Votre commande a été enregistrée. Nous vous remerçions d\'avoir passé commande chez nous et vous tiendrons informé de l\'état de la commande.');
+            location.reload();
             window.location = '/#/home';
         }
     }
@@ -38182,12 +38185,14 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _c("label", [_vm._v(" TVA au taux de 8%")]),
+              _c("label", [_vm._v(" TVA au taux de 7.7%")]),
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
               _c("strong", [
-                _vm._v(" Total TVA comprise : " + _vm._s(_vm.total) + " ")
+                _vm._v(
+                  " Total TVA comprise : " + _vm._s(_vm.total + _vm.tva) + " "
+                )
               ]),
               _vm._v(" "),
               _c("div", [
@@ -38262,21 +38267,14 @@ if (false) {
 
 /***/ }),
 /* 190 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 191 */,
-/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(193)
+var __vue_script__ = __webpack_require__(191)
 /* template */
-var __vue_template__ = __webpack_require__(194)
+var __vue_template__ = __webpack_require__(192)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38315,7 +38313,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 193 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38485,7 +38483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 194 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -38882,6 +38880,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-edb5cd5a", module.exports)
   }
 }
+
+/***/ }),
+/* 193 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

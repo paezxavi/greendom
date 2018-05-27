@@ -173,7 +173,6 @@
             ajoutPanier(produit, index) {
                 if (this.currentUser) {
                     StoreCatalogue.ajoutPanierCatalogue(produit);
-
                     //Popup apparaît et disparaît
                     $("#popUp").show(); 
                     setTimeout(function() {

@@ -130,7 +130,7 @@
 
               const self = this;
               companyId.value = "";
-              if (username.value.trim() =="" || forename.value.trim() =="" || address.value.trim() =="" || phone.value.trim() =="" || email.value.trim() =="" || pwd.value.trim() ==""){
+              if (username.value.trim() =="" || forename.value.trim() =="" || address.value.trim() =="" || phone.value.trim() =="" || email.value.trim() =="" || pwd.value.trim() =="" || pwd2.value.trim() ==""){
                 alert("Merci de remplir tous les champs obligatoires (*) !");
               }else{
                 if (company.value.trim().length > 0){self.findCompanyId();}

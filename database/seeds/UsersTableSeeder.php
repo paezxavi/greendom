@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'frank_cespedes02@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => false,
+          'employee' => true,
           'company_id'=> null
         ],
         [
@@ -65,7 +65,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'paezxavie@gmail.com',
           'password' => Hash::make('41236'),
-          'employee' => true,
+          'employee' => false,
           'company_id'=> null
         ],
         [
@@ -74,9 +74,9 @@ class UsersTableSeeder extends Seeder
           'address' => 'Rue de Trois',
           'phone' => '022202020',
           'contact' => 'JeSuisSkype.com',
-          'email' => 'TestKev.bnbnb@hhgf.com',
+          'email' => 'kecacci@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => false,
+          'employee' => true,
           'company_id'=> null
         ],
         [
@@ -87,7 +87,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'a@a',
           'password' => Hash::make('123'),
-          'employee' => true,
+          'employee' => false,
           'company_id'=> null
         ],
         [
