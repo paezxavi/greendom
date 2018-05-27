@@ -96,10 +96,10 @@
 
               <div class="field">
                 <div class="field">
-                  <input v-show="disabledClient" type="file" id="files" ref="files" multiple @change="processFile()">
+                  <input v-show="!disabledInput" type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
                 <div v-for="(file, key) in this.files">
-                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="!checkId()" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
+                  <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="!checkId() && !checkUserFile()" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
                 </div>
               </div>
             </form>
@@ -339,7 +339,11 @@
 
         methods:{
           checkId() {
-            return this.commande.status_id >= 6 && this.commande.status_id <= 8 || this.currentUser.employee == false;
+            return this.commande.status_id >= 6 && this.commande.status_id <= 8;
+          },
+
+          checkUserFile(){
+            return this.commande.status_id > 1 && this.currentUser.employee == false;
           },
 
           storeFile() {
@@ -728,6 +732,14 @@
               return true;
             }
             return false;
+          },
+
+          disabledInput(){
+            if(this.commande.status_id < 2){
+              return false;
+            } else {
+              return true;
+            }
           },
 
           disabledClient(){

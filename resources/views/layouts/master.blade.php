@@ -63,6 +63,34 @@
                           </router-link>
                         @endif-->
                       @endif
+                      @if(Auth::check())
+                        @if (Auth::user()->employee == true)
+                        <router-link class="navbar-item" tag="a" to="/listeCustomers">
+                            Liste clients
+                        </router-link>
+                        @endif
+                      @endif
+                      @if(Auth::check())
+                        @if (Auth::user()->employee == true)
+                        <router-link class="navbar-item" tag="a" to="/listProviders">
+                            Liste fournisseurs
+                        </router-link>
+                        @endif
+                      @endif
+                      @if(Auth::check())
+                        @if (Auth::user()->employee == true)
+                          <router-link class="navbar-item" tag="a" to="/listProducts">
+                              Liste produits
+                          </router-link>
+                          @endif
+                        @endif
+                        @if(Auth::check())
+                          @if (Auth::user()->employee == true)
+                          <router-link class="navbar-item" tag="a" to="/listCompanies">
+                              Liste sociétés
+                          </router-link>
+                          @endif
+                       @endif
                     </div>
                   </div>
 

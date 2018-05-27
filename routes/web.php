@@ -23,13 +23,33 @@ Route::post('/login/{user}', 'Auth\LoginController@login');
 //-------------------------------------------------------------
 
 //SignUpController
+Route::get('/customersList', 'SignUpController@getCustomersAndSocName');
+Route::get('/customer', 'SignUpController@getCustomer');
 Route::post('/createUser', 'SignUpController@store');
+Route::put('/customer', 'SignUpController@updateCustomer');
 //-------------------------------------------------------------
 
 //CompanyController
 Route::get('/findCompanyId', 'CompanyController@findId');
+Route::get('/companiesList', 'CompanyController@getCompanies');
+Route::get('/company', 'CompanyController@getCompany');
 Route::post('/createCompany', 'CompanyController@store');
+Route::put('/company', 'CompanyController@updateCompany');
 //-------------------------------------------------------------
+
+//ProviderController
+Route::get('/providersList', 'ProviderController@getProviders');
+Route::get('/provider', 'ProviderController@getProvider');
+Route::post('/provider', 'ProviderController@store');
+Route::put('/provider', 'ProviderController@updateProvider');
+//-------------------------------------------------------------
+
+//ProductController
+Route::get('/productList', 'ProductController@products');
+Route::get('/productListWithProvName', 'ProductController@getProductsAndProvName');
+Route::get('/product', 'ProductController@getProduct');
+Route::put('/product', 'ProductController@updateProduct');
+//----------------------------------------------------------------------------------
 
 Route::get('/', 'CommandeController@index')->name('home');
 

@@ -12,7 +12,7 @@
             </br>
             <p>Le client {{$user->name}} {{$user->forename}} a passé commande depuis le catalogue.</p>
             </br>
-            <p>Les articles sélectionnés sont ci-joint à ce mail</p>
+            <p>Les articles sélectionnés sont ci-joint à ce mail.</p>
             <hr>
             Merci de ne pas répondre à ce message. Les réponses au mail envoyé à cette adresse ne sont pas acceptées.
         </div>

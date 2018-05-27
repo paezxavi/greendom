@@ -13,24 +13,27 @@ class ProvidersTableSeeder extends Seeder
     {
       DB::table('providers')->insert([
         [
-           'nom' => 'Lampe SA',
-           'adresse' => 'rue des lampes',
+           'name' => 'Lampe SA',
+           'address' => 'rue des lampes',
            'email' => 'lampe@hotmail.com',
+           'phone' => '0223232323',
            'skype' => 'lampe_skype',
            'iban' => '1234 4564 2313 4564 4'
         ],
 
         [
-          'nom' => 'Ampoule SA',
-          'adresse' => 'rue des Ampoule',
+          'name' => 'Ampoule SA',
+          'address' => 'rue des Ampoule',
           'email' => 'Ampoule@hotmail.com',
+          'phone' => '0223232323',
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'
          ],
          [
-          'nom' => 'Kevin SA',
-          'adresse' => 'rue Kevin',
-          'email' => 'Ampoule@hotmail.com',
+          'name' => 'Kevin SA',
+          'address' => 'rue Kevin',
+          'email' => 'kevin@hotmail.com',
+          'phone' => '0223232323',
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'
          ],

@@ -30,8 +30,8 @@
             <div>
                 <div class="is-pulled-right">
                     <label> Total hors TVA : {{total}}</label> <br/>
-                    <label> TVA au taux de 8%</label> <br/>
-                    <strong> Total TVA comprise : {{total}} </strong>
+                    <label> TVA au taux de 7.7%</label> <br/>
+                    <strong> Total TVA comprise : {{total+tva}} </strong>
                     <div>
                         <button class="button is-info" @click="validerPanier()"> Valider commande </button>
                     </div>
@@ -51,12 +51,13 @@
 
 <script>
     import {StoreCatalogue} from './storeCatalogue'
-
+    
     export default {
         data() {
             return {
                 panier: StoreCatalogue.$data.panierCatalogue,
                 total: StoreCatalogue.totalPanier(),
+                tva: "",
                 company: "",
                 user : '',
                 commande: {
@@ -66,14 +67,14 @@
                   status_id: ""
                 }
             }
-        },   
+        },
 
         created() {
            this.checkIfLogged()
             .then(response => {
                     this.user = response ? response : "window.location = '/#/login'";
-                    console.log(this.user);
-                })
+            })
+            this.tva = Math.round((this.total*7.7)/100);
         },
 
         methods: {
@@ -99,25 +100,27 @@
             vider() {
                 console.log("vider");
                 StoreCatalogue.viderPanier();
-                this.panier = [];
             },
 
             validerPanier() {
+                console.log(this.panier);
+                let self = this;
                 axios({
-                method: 'post',
-                url: '/emailPanier/' + this.user.id,
-                data: {
-                  panier: this.panier,
-                  user: this.user,
-                }
-              })
-              .then(function (response) {
-                    console.log(response);
-              })
-              StoreCatalogue.viderPanier();
-              this.panier = [];
-              alert('Votre commande a été enregistrée. Nous vous remerçions d\'avoir passé commande chez nous et vous tiendrons informé de l\'état de la commande.');
-              window.location = '/#/home';
+                    method: 'post',
+                    url: '/emailPanier/' + this.user.id,
+                    data: {
+                        panier: this.panier,
+                        user: this.user,
+                        total: this.total,
+                        tva: this.tva,
+                    }
+                })
+                .then(function (response) {
+                    self.vider();
+                })
+                alert('Votre commande a été enregistrée. Nous vous remerçions d\'avoir passé commande chez nous et vous tiendrons informé de l\'état de la commande.');
+                location.reload();
+                window.location = '/#/home';
             }
         }
     }

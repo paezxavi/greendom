@@ -14,7 +14,7 @@
                         <h1 class="title" style="text-align:center">Filtres</h1>
                         <br/>
                         <h3 class="subtitle is-3">Rechercher :</h3>
-                        <input id="textFiltre" type="text" v-on:keyup="miseAJourFiltre($event)">
+                        <input id="textFiltre" type="text" v-on:keyup="applyFilter($event)">
                         <hr/>
                         <h3 class="subtitle is-3">Prix max</h3>
                         <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
@@ -173,7 +173,6 @@
             ajoutPanier(produit, index) {
                 if (this.currentUser) {
                     StoreCatalogue.ajoutPanierCatalogue(produit);
-
                     //Popup apparaît et disparaît
                     $("#popUp").show(); 
                     setTimeout(function() {
@@ -197,9 +196,9 @@
                 StoreCatalogue.produitAffiche(produit);
             },
 
-            applyFilter() {
+            applyFilter(e) {
                 this.produitsTrie = [];
-                this.filterList.map((p) => {
+                this.produits.map( (p) => {
                     if((p.prixVente <= this.valuePrix) & (p.feature <= this.valueWatts)){
                         this.produitsTrie.push(p);
                     }
@@ -248,7 +247,6 @@
                         return 1;
                     return 0;
                 }
-                return this.produitsTrie.sort(compare);
             },
 
             prixDecroissant() {
@@ -259,8 +257,6 @@
                         return 1;
                     return 0;
                 }
-
-                return this.produitsTrie.sort(compare);
             },
 
             reinitProduit() {
@@ -272,11 +268,9 @@
                     return 1;
                 return 0;
                 }
-                $("#textFiltre").val("");    
-                return this.produitsTrie.sort(compare);
             },
 
-            produitAzero() {
+            /*produitAzero() {
                 this.produitsTrie = this.produits;
                 function compare(a, b) {
                 if (a.nom < b.nom)
@@ -311,7 +305,7 @@
                    } 
                 });
                 this.produitsTrie = this.filterList;             
-            },
+            },*/
         },
     }
     

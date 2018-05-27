@@ -9,6 +9,7 @@ use App\Commande;
 use App\Provider;
 use App\Greendom;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -55,6 +56,48 @@ class ProductController extends Controller
         }*/
 
         return Product::all();
+    }
+
+    /**
+     * Retourne la liste des produits avec le nom du fuornisseur lié au produit
+     */
+    public function getProductsAndProvName(){
+        return DB::table('products')
+          ->leftJoin('providers_products_pivot', 'products.id', '=', 'product_id')
+          ->leftJoin('providers', 'providers.id', '=', 'provider_id')
+          ->select('products.*', 'providers.name')
+          ->get();
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * Retourne le produit qui a l'id passé en paramètre
+     */
+    public function getProduct(Request $request)
+    {
+      $product = DB::table('products')->where('id', $request->id)->first();
+      return response()->json($product);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * Modifie le produit qui a l'id passé en paramètre avec les informations passées en paramètre
+     */
+    public function updateProduct(Request $request)
+    {
+      $update = Product::where('id', $request->id)
+        ->update([
+          'nom' => $request->name,
+          'categorie'=> $request->categorie,
+          'reference' => $request->reference,
+          'refSupplier' => $request->refSupplier,
+          'prixAchat' => $request->prixAchat,
+          'prixVente' => $request->prixVente,
+        ]
+      );
     }
 
     function csvToArray($filename = '', $delimiter = ';')

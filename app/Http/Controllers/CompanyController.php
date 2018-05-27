@@ -3,39 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Company;
 
 class CompanyController extends Controller
 {
-  public function __construct()
-  {
-      $this->middleware('guest');
-  }
   /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
+   * Retourne la liste des compagnies qui sont dans BDD Company
    */
-  public function index()
+  public function getCompanies()
   {
-    return view('home');
+    $result = Company::all();
+    return $result;
+  }
+
+  /**
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   *
+   * Retourne la compagnie qui a l'id passé en paramètre
+   */
+  public function getCompany(Request $request)
+  {
+    $comp = DB::table('companies')->where('id', $request->id)->first();
+    return response()->json($comp);
+  }
+
+  /**
+   * @param  \Illuminate\Http\Request  $request
+   *
+   * Modifie la compagnie qui a l'id passé en paramètre avec les informations passées en paramètre
+   */
+  public function updateCompany(Request $request)
+  {
+    $update = Company::where('id', $request->id)
+      ->update([
+        'name' => $request->name,
+        'address'=> $request->address,
+        'email' => $request->email,
+      ]
+    );
   }
 
   /**
    * Show the form for creating a new resource.
    *
    * @return \Illuminate\Http\Response
-
-     * Modèle de création dans la base de données d'une nouvelle compagnie
-     * Pour le moment address et email à null, car la seule page qui crée est "S'inscrire" => A discuter
+   *
+   * Modèle de création dans la base de données d'une nouvelle compagnie
    */
   public function create(Request $request)
   {
     $newCompany = new Company();
     $newCompany->name = $request->name;
-    $newCompany->address = null;
-    $newCompany->email = null;
+    $newCompany->address = $request->address;
+    $newCompany->email = $request->email;
+    $newCompany->save();
   }
 
   /**
@@ -49,8 +73,8 @@ class CompanyController extends Controller
   {
     $newCompany = new Company();
     $newCompany->name = $request->name;
-    $newCompany->address = null;
-    $newCompany->email = null;
+    $newCompany->address = $request->address;
+    $newCompany->email = $request->email;
     $newCompany->save();
     return $newCompany->id;
   }
