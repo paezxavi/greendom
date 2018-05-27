@@ -60,6 +60,14 @@ export default {
       arrayProduct: [],
     };
   },
+
+  /**
+   * Vérifie qu'il y a un user logué et qu'il est un employé :
+   * Si c'est ok :
+   *    Efface dans sessionStorage idProd
+   *    Charge la liste des produits avec le nom des fournisseurs dans arrayProduct[]
+   *  Sinon redirige sur la page login
+   */
   created() {
         let self = this;
         this.checkIfLogged()
@@ -80,6 +88,11 @@ export default {
                 console.log(error);
         });
     },
+
+    /**
+     * Enregistre dans le sessionStorage l'id du produit cliqué
+     * Redirige sur la page InfoProduit
+     */
     methods: {
         onRowClick(params) {
             sessionStorage.setItem('idProd',params.row.id);

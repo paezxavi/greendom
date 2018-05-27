@@ -25,17 +25,6 @@ class SignUpController extends Controller
     }
 
     /**
-     * Retourne la liste des produits avec le nom du fuornisseur lié au produit
-     */
-    public function getProductsAndProvName(){
-        return DB::table('products')
-          ->leftJoin('providers_products_pivot', 'products.id', '=', 'product_id')
-          ->leftJoin('providers', 'providers.id', '=', 'provider_id')
-          ->select('products.*', 'providers.name')
-          ->get();
-    }
-
-    /**
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      *

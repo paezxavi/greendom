@@ -41367,6 +41367,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       providers: []
     };
   },
+
+  /**
+   * Vérifie qu'il y a un user logué et qu'il est un employé :
+   * Si c'est ok :
+   *    Efface dans sessionStorage titleProv + idProv
+   *    Charge la liste des fournisseurs dans providers[]
+   *  Sinon redirige sur la page login
+   */
   created: function created() {
     var _this = this;
 
@@ -41390,7 +41398,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     /**
-     *
+     * Enregistre dans le sessionStorage le titre de la page InfoFournisseur
+     * Redirige sur la page InfoFournisseur
      */
     createProvider: function createProvider() {
       var self = this;
@@ -42098,6 +42107,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       arrayProduct: []
     };
   },
+
+
+  /**
+   * Vérifie qu'il y a un user logué et qu'il est un employé :
+   * Si c'est ok :
+   *    Efface dans sessionStorage idProd
+   *    Charge la liste des produits avec le nom des fournisseurs dans arrayProduct[]
+   *  Sinon redirige sur la page login
+   */
   created: function created() {
     var _this = this;
 
@@ -42121,6 +42139,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     });
   },
 
+
+  /**
+   * Enregistre dans le sessionStorage l'id du produit cliqué
+   * Redirige sur la page InfoProduit
+   */
   methods: {
     onRowClick: function onRowClick(params) {
       sessionStorage.setItem('idProd', params.row.id);
@@ -42790,6 +42813,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       customers: []
     };
   },
+
+
+  /**
+   * Vérifie qu'il y a un user logué et qu'il est un employé :
+   * Si c'est ok :
+   *    Efface dans sessionStorage idCu
+   *    Charge la liste des clients dans customers[]
+   *  Sinon redirige sur la page login
+   */
   created: function created() {
     var _this = this;
 
@@ -42812,7 +42844,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     /**
-     *
+     * Redirige sur la page InfoClient
      */
     createCustomer: function createCustomer() {
       var self = this;
@@ -43883,6 +43915,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       companies: []
     };
   },
+
+  /**
+   * Vérifie qu'il y a un user logué et qu'il est un employé :
+   * Si c'est ok :
+   *    Efface dans sessionStorage titleComp + idComp
+   *    Charge la liste des sociétés dans companies[]
+   *  Sinon redirige sur la page login
+   */
   created: function created() {
     var _this = this;
 
@@ -43906,7 +43946,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     /**
-     *
+     * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
+     * Redirige sur la page InfoCompagnie
      */
     createCompany: function createCompany() {
       var self = this;
@@ -43918,7 +43959,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     /**
      * Récupère l'id de l'objet cliqué qui correspond à l'id de la société concernée
      * Enregistre dans le sessionStorage l'id de la société
-     * Enregistre dans le sessionStorage le titre de la page CompanyInfo
+     * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
      * Redirige sur la page InfoFournisseur
      */
     onRowClick: function onRowClick(params) {

@@ -50,9 +50,8 @@ class CompanyController extends Controller
    * Show the form for creating a new resource.
    *
    * @return \Illuminate\Http\Response
-
-     * Modèle de création dans la base de données d'une nouvelle compagnie
-     * Pour le moment address et email à null, car la seule page qui crée est "S'inscrire" => A discuter
+   *
+   * Modèle de création dans la base de données d'une nouvelle compagnie
    */
   public function create(Request $request)
   {

@@ -42,7 +42,13 @@
             companies: [],
           }
       },
-
+      /**
+       * Vérifie qu'il y a un user logué et qu'il est un employé :
+       * Si c'est ok :
+       *    Efface dans sessionStorage titleComp + idComp
+       *    Charge la liste des sociétés dans companies[]
+       *  Sinon redirige sur la page login
+       */
       created() {
           let self = this;
           this.checkIfLogged()
@@ -58,9 +64,10 @@
             .catch(function (error) {console.log(error);});
       },
       methods: {
-         /**
-          *
-          */
+        /**
+         * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
+         * Redirige sur la page InfoCompagnie
+         */
          createCompany(){
            const self = this;
            sessionStorage.setItem('titleComp','Nouvelle société');
@@ -71,7 +78,7 @@
          /**
           * Récupère l'id de l'objet cliqué qui correspond à l'id de la société concernée
           * Enregistre dans le sessionStorage l'id de la société
-          * Enregistre dans le sessionStorage le titre de la page CompanyInfo
+          * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
           * Redirige sur la page InfoFournisseur
           */
          onRowClick(params){

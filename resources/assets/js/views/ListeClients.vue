@@ -58,6 +58,14 @@
             customers: [],
           }
       },
+
+      /**
+       * Vérifie qu'il y a un user logué et qu'il est un employé :
+       * Si c'est ok :
+       *    Efface dans sessionStorage idCu
+       *    Charge la liste des clients dans customers[]
+       *  Sinon redirige sur la page login
+       */
       created() {
           let self = this;
           this.checkIfLogged()
@@ -72,9 +80,9 @@
             .catch(function (error) {console.log(error);});
       },
       methods: {
-         /**
-          *
-          */
+        /**
+         * Redirige sur la page InfoClient
+         */
          createCustomer(){
            const self = this;
            self.$router.push('newCustomer');

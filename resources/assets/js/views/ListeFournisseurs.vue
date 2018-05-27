@@ -50,6 +50,13 @@
             providers: [],
           }
       },
+      /**
+       * Vérifie qu'il y a un user logué et qu'il est un employé :
+       * Si c'est ok :
+       *    Efface dans sessionStorage titleProv + idProv
+       *    Charge la liste des fournisseurs dans providers[]
+       *  Sinon redirige sur la page login
+       */
       created() {
           let self = this;
           this.checkIfLogged()
@@ -66,7 +73,8 @@
       },
       methods: {
          /**
-          *
+          * Enregistre dans le sessionStorage le titre de la page InfoFournisseur
+          * Redirige sur la page InfoFournisseur
           */
          createProvider(){
            const self = this;
