@@ -26,36 +26,24 @@ table#t01 th {
     <div class="container">
      <div class="row">
         <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-
-        <h1> {{$title}} </h1>
-       </div>
-        Rue de Genève 6 <br/>
-        1225 Chêne-Bourg <br/>
-        Téléphone +41 (0)22 556 02 59 <br/>
-        Télécopie +41 (0)22 556 02 58 <br/>
+        
+    <h1> {{$bonCommande}} </h1>
+      </div>
+        Chemin du Pré-Fleuri 5 <br/>
+        1228 Plan-Les-Ouates <br/>
+        Téléphone (+41) 22 556-02 59 <br/>
+        Télécopie (+41) 22 556 02 58 <br/>
         TVA: CHE-237.588.037
         <p/>
-        <b>
-        DATE : </b> 28 avril 2018 <br/>
-        <b>N° de commande : </b> 12131231312
-        </b>
-        <br/>
-        <br/>
-        <br/>
 
-        <center> <b> À l'attention de </b> </center>
-        <p align="right">
-          <b> Fournisseur xxx </b> <br/>
-          Chemin François-Chavaz 123 <br/>
-          1213 Onex
-        </p>
         <br/>
-
+        <br/>
+        <br/>
 
         <p align="right">
-            <b> À l'attention de </b><br/>
-            {{$customer->name}} {{$customer->forename}}<br/>
-            {{$customer->address}} <br/>
+            <b>À l'attention de</b><br/>
+            {{$prov->nom}}<br/>
+            {{$prov->adresse}}<br/>
         </p>
         <br/>
 
@@ -69,19 +57,23 @@ table#t01 th {
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($arrPr as $prod)
                     <tr>
-                        <td>{{$product->nom}}</td>
-                        <td>{{$product->description}}</td>
-                        <td>{{$product->pivot->quantity}}</td>
+                        <td>{{$prod['nom']}}</td>
+                        <td>{{$prod['description']}}</td>
+                        <td>{{$prod[0]['quantity']}}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         <br/> <br/>
 
-        
-        <center> Pour toute question concernant cette commande, veuillez nous contacter au +41 (0)22 556 02 59, ou à info@greendom.eu </center>
+        <center> Merci d'effectuer le versement de votre acompte à: <br/>
+        <b> GREENDOM SA - UBS - IBAN: CH36 0024 0240 1976 1401 T </b> <br/>
+        Conditions de paiements: 50% à la commande, le solde à la livraison
+        <br/><br/><b> MERCI POUR VOTRE CONFIANCE ! </b> </center>
+        <br/><br/>
+        <center> Pour toute question concernant cette facture, veuillez nous contacter au 022 556 02 59, ou à info@greendom.eu </center>
         <br/><br/>
 
         <p style="text-align:left;">

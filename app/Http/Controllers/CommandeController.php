@@ -422,7 +422,7 @@ class CommandeController extends Controller
         }*/
         //dd($arrProd[0]);
         $arrPr = $arrProd[0];
-        $pdf = PDF::loadView('pdf/offre_demande_prix', compact('arrPr', 'prov', 'bonCommande'))
+        $pdf = PDF::loadView('pdf/bon_de_commande_pdf', compact('arrPr', 'prov', 'bonCommande'))
                     ->setPaper('a3', 'portrait');
         $path = storage_path('/app/public/pdf/Commande.pdf');
         $pdf->save($path);

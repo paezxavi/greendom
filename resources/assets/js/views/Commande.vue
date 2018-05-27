@@ -94,9 +94,9 @@
                 </div>
               </div>
 
-              <div class="field" v-if="!visibiliteActioncommandeEnvoye">
+              <div class="field">
                 <div class="field">
-                  <input type="file" id="files" ref="files" multiple @change="processFile()">
+                  <input v-show="disabledClient" type="file" id="files" ref="files" multiple @change="processFile()">
                 </div>
                 <div v-for="(file, key) in this.files">
                   <a @click="downloadFile(file)" style="font-size:11px">{{file.name}}</a><span v-if="!checkId()" class="deleteFile" @click="removeFile(file,key)"><i class="fas fa-times-circle"></i></span>
@@ -134,16 +134,16 @@
                                 <div>
                                   <div>
                                     <label class="is-pulled-left"> Quantité : </label>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-danger is-small" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
+                                    <button v-if="enabledOffre" v-show="disabledClient" class="is-pulled-left button is-danger is-small" @click="diminueProduitEnregistre(produit_enregistre.quantite, index)"> - </button>
                                     <label class="is-pulled-left" style="margin-left:5px; margin-right:5px">  {{produit_enregistre.quantite}}  </label>
-                                    <button v-if="enabledOffre" class="is-pulled-left button is-success is-small" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
-                                    <span class="is-pulled-right">
+                                    <button v-if="enabledOffre" v-show="disabledClient" class="is-pulled-left button is-success is-small" @click="augmenteProduitEnregistre(produit_enregistre.quantite, index)"> + </button>
+                                    <span class="is-pulled-right" v-show="disabledClient">
                                         <label v-if="enabledOffre" style="margin-left:5px"> Fournisseur : {{produit_enregistre.fournisseurChoisi}}</label>
                                     </span>
                                     <br/>
                                 </div>
                                 <br/>
-                                    <div>
+                                    <div v-show="disabledClient">
                                       <label class="is-pulled-left"> Prix : </label>
                                       <input class="is-pulled-left" :disabled='!enabledOffre' :value="produit_enregistre.prix" type="text" style="width:30px" v-on:keyup="miseAJourProduitPrixEnregistre($event, index)"> .- <br/>
                                       <span>
@@ -167,7 +167,7 @@
                           </div>
                         </article>
                         
-                        <div v-if="enabledOffre">
+                        <div v-if="enabledOffre" v-show="disabledClient">
                           <hr/>
                           <!-- Liste produits choisis -->
                           <h4> Nouveaux produits : </h4>
@@ -339,7 +339,7 @@
 
         methods:{
           checkId() {
-            return this.commande.status_id === 6 || this.commande.status_id === 7 || this.commande.status_id === 8;
+            return this.commande.status_id >= 6 && this.commande.status_id <= 8 || this.currentUser.employee == false;
           },
 
           storeFile() {
@@ -724,11 +724,19 @@
           },
 
           enableAjoutProduits() {
-            if (this.commande.status_id >= 3 && this.currentUser.employee) {
+            if (this.commande.status_id >= 3) {
               return true;
             }
             return false;
-          }
+          },
+
+          disabledClient(){
+            if(this.currentUser.employee == false){
+              return false;
+            } else {
+              return true;
+            }
+          },
         },
     }
 
