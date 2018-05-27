@@ -47,7 +47,7 @@
        * Si c'est ok :
        *    Efface dans sessionStorage titleComp + idComp
        *    Charge la liste des sociétés dans companies[]
-       *  Sinon redirige sur la page login
+       *  Sinon redirige sur la page home
        */
       created() {
           let self = this;
@@ -79,7 +79,7 @@
           * Récupère l'id de l'objet cliqué qui correspond à l'id de la société concernée
           * Enregistre dans le sessionStorage l'id de la société
           * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
-          * Redirige sur la page InfoFournisseur
+          * Redirige sur la page InfoCompagnie
           */
          onRowClick(params){
            const self = this;

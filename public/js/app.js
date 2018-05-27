@@ -41458,7 +41458,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
    * Si c'est ok :
    *    Efface dans sessionStorage titleProv + idProv
    *    Charge la liste des fournisseurs dans providers[]
-   *  Sinon redirige sur la page login
+   *  Sinon redirige sur la page home
    */
   created: function created() {
     var _this = this;
@@ -41720,14 +41720,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
 
-  /**
-   * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
-   * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
-   * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
-   * Affiche un message différent si la requête s'est déroulée correctement ou non
-   * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseurs
-   */
   methods: {
+    /**
+     * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+     * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
+     * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
+     * Affiche un message différent si la requête s'est déroulée correctement ou non
+     * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseur
+     */
     updateProvider: function updateProvider() {
       var self = this;
       if (self.provider.email.trim() != "" || self.provider.name.trim() != "" || self.provider.address.trim() != "") {
@@ -41762,7 +41762,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     /**
-     *
+     * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+     * Lance la création du fournisseur dans la BDD avec les infos des champs
+     * Affiche un message différent si la requête s'est déroulée correctement ou non
+     * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseur
      */
     createProvider: function createProvider() {
       var self = this;
@@ -42204,7 +42207,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
    * Si c'est ok :
    *    Efface dans sessionStorage idProd
    *    Charge la liste des produits avec le nom des fournisseurs dans arrayProduct[]
-   *  Sinon redirige sur la page login
+   *  Sinon redirige sur la page home
    */
   created: function created() {
     var _this = this;
@@ -42431,7 +42434,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   /**
-   * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProv')
+   * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProd')
    * Charge la page avec les informations récupérées
    * Efface la variable 'idPov' de sessionStorage
    */
@@ -42447,10 +42450,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
 
-  /**
-   *
-   */
   methods: {
+    /**
+     * Lance la mise à jour du produit dans la BDD avec les infos des champs
+     * Affiche un message différent si la requête s'est déroulée correctement ou non
+     * Si la requête s'est déroulée correctement, redirige sur page ListeProduit
+     */
     updateProduct: function updateProduct() {
       var self = this;
       axios.put('/product/', { id: self.product.id, name: self.product.nom.trim(), categorie: self.product.categorie.trim(),
@@ -42910,7 +42915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
    * Si c'est ok :
    *    Efface dans sessionStorage idCu
    *    Charge la liste des clients dans customers[]
-   *  Sinon redirige sur la page login
+   *  Sinon redirige sur la page home
    */
   created: function created() {
     var _this = this;
@@ -42934,7 +42939,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   methods: {
     /**
-     * Redirige sur la page InfoClient
+     * Redirige sur la page SignUp
      */
     createCustomer: function createCustomer() {
       var self = this;
@@ -42943,9 +42948,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     /**
-     * Récupère l'id de l'objet cliqué qui correspond à l'id du fournisseur concerné
-     * Enregistre dans le sessionStorage l'id du user
-     * Redirige sur la page SignUp
+     * Récupère l'id de l'objet cliqué qui correspond à l'id du client concerné
+     * Enregistre dans le sessionStorage l'id du client
+     * Redirige sur la page InfoClient
      */
     onRowClick: function onRowClick(params) {
       var self = this;
@@ -43146,6 +43151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
+
   /**
    * Fait une requête pour avoir les informations du user qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idCU')
    * Charge la page avec les informations récupérées
@@ -43163,14 +43169,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
 
-  /**
-   * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
-   * Si skype = null remplace par un String vide (null est remonté de la BDD)
-   * Lance la mise à jour du client dans la BDD avec les infos des champs
-   * Affiche un message différent si la requête s'est déroulée correctement ou non
-   * Si la requête s'est déroulée correctement, redirige sur page ListeClients
-   */
   methods: {
+    /**
+     * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+     * Si skype = null remplace par un String vide (null est remonté de la BDD)
+     * Lance la mise à jour du client dans la BDD avec les infos des champs
+     * Affiche un message différent si la requête s'est déroulée correctement ou non
+     * Si la requête s'est déroulée correctement, redirige sur page ListeClients
+     */
     updateCustomer: function updateCustomer() {
       var self = this;
       if (self.customer.email.trim() != "" || self.customer.name.trim() != "" || self.customer.forename.trim() != "" || self.customer.address.trim() != "" || elf.customer.phone.trim() != "") {
@@ -44024,7 +44030,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
    * Si c'est ok :
    *    Efface dans sessionStorage titleComp + idComp
    *    Charge la liste des sociétés dans companies[]
-   *  Sinon redirige sur la page login
+   *  Sinon redirige sur la page home
    */
   created: function created() {
     var _this = this;
@@ -44063,7 +44069,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      * Récupère l'id de l'objet cliqué qui correspond à l'id de la société concernée
      * Enregistre dans le sessionStorage l'id de la société
      * Enregistre dans le sessionStorage le titre de la page InfoCompagnie
-     * Redirige sur la page InfoFournisseur
+     * Redirige sur la page InfoCompagnie
      */
     onRowClick: function onRowClick(params) {
       var self = this;

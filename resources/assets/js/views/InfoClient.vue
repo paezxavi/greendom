@@ -84,6 +84,7 @@
                 }
             }
         },
+
         /**
          * Fait une requête pour avoir les informations du user qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idCU')
          * Charge la page avec les informations récupérées
@@ -98,14 +99,14 @@
               sessionStorage.removeItem('idCu');
         },
 
-        /**
-         * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
-         * Si skype = null remplace par un String vide (null est remonté de la BDD)
-         * Lance la mise à jour du client dans la BDD avec les infos des champs
-         * Affiche un message différent si la requête s'est déroulée correctement ou non
-         * Si la requête s'est déroulée correctement, redirige sur page ListeClients
-         */
         methods: {
+          /**
+           * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+           * Si skype = null remplace par un String vide (null est remonté de la BDD)
+           * Lance la mise à jour du client dans la BDD avec les infos des champs
+           * Affiche un message différent si la requête s'est déroulée correctement ou non
+           * Si la requête s'est déroulée correctement, redirige sur page ListeClients
+           */
             updateCustomer(){
               const self = this;
               if(self.customer.email.trim() != "" || self.customer.name.trim() != "" || self.customer.forename.trim() != ""

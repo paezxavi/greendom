@@ -88,7 +88,7 @@
             }
         },
         /**
-         * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProv')
+         * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProd')
          * Charge la page avec les informations récupérées
          * Efface la variable 'idPov' de sessionStorage
          */
@@ -101,10 +101,12 @@
                 .catch(function (error) {console.log(error);});
         },
 
-        /**
-         *
-         */
         methods: {
+          /**
+           * Lance la mise à jour du produit dans la BDD avec les infos des champs
+           * Affiche un message différent si la requête s'est déroulée correctement ou non
+           * Si la requête s'est déroulée correctement, redirige sur page ListeProduit
+           */
             updateProduct(){
               const self = this;
                 axios.put('/product/', {id: self.product.id,name: self.product.nom.trim(),categorie: self.product.categorie.trim(),

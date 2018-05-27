@@ -55,7 +55,7 @@
        * Si c'est ok :
        *    Efface dans sessionStorage titleProv + idProv
        *    Charge la liste des fournisseurs dans providers[]
-       *  Sinon redirige sur la page login
+       *  Sinon redirige sur la page home
        */
       created() {
           let self = this;

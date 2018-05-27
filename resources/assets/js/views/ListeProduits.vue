@@ -66,7 +66,7 @@ export default {
    * Si c'est ok :
    *    Efface dans sessionStorage idProd
    *    Charge la liste des produits avec le nom des fournisseurs dans arrayProduct[]
-   *  Sinon redirige sur la page login
+   *  Sinon redirige sur la page home
    */
   created() {
         let self = this;

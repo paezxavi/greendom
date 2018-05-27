@@ -64,7 +64,7 @@
        * Si c'est ok :
        *    Efface dans sessionStorage idCu
        *    Charge la liste des clients dans customers[]
-       *  Sinon redirige sur la page login
+       *  Sinon redirige sur la page home
        */
       created() {
           let self = this;
@@ -81,18 +81,17 @@
       },
       methods: {
         /**
-         * Redirige sur la page InfoClient
+         * Redirige sur la page SignUp
          */
          createCustomer(){
            const self = this;
            self.$router.push('newCustomer');
-
          },
 
          /**
-          * Récupère l'id de l'objet cliqué qui correspond à l'id du fournisseur concerné
-          * Enregistre dans le sessionStorage l'id du user
-          * Redirige sur la page SignUp
+          * Récupère l'id de l'objet cliqué qui correspond à l'id du client concerné
+          * Enregistre dans le sessionStorage l'id du client
+          * Redirige sur la page InfoClient
           */
          onRowClick(params){
            const self = this;
