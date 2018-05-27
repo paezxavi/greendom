@@ -18,7 +18,7 @@
                   <div class="column">
                     <label class="label">Prénom*</label>
                     <div class="control">
-                      <input type="text" name="forename" id="address" class="forename"  value="" v-model="customer.forename">
+                      <input type="text" name="forename" id="forename" class="input"  value="" v-model="customer.forename">
                     </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                 .catch(function (error) {console.log(error);});
               sessionStorage.removeItem('idCu');
         },
-        
+
         /**
          * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
          * Si skype = null remplace par un String vide (null est remonté de la BDD)

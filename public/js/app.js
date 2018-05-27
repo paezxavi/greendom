@@ -41380,9 +41380,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     var self = this;
     this.checkIfLogged().then(function (response) {
-      _this.user = response ? response : window.location = '/#/login';
+      _this.user = response ? response : window.location = '/#/home';
       if (_this.user.employee == false) {
-        self.$router.push('login');
+        self.$router.push('home');
       }
     }).catch(function (error) {
       return console.log(error);
@@ -42126,9 +42126,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     var self = this;
     this.checkIfLogged().then(function (response) {
-      _this.user = response ? response : window.location = '/#/login';
+      _this.user = response ? response : window.location = '/#/home';
       if (_this.user.employee == false) {
-        self.$router.push('login');
+        self.$router.push('home');
       }
     }).catch(function (error) {
       return console.log(error);
@@ -42832,9 +42832,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     var self = this;
     this.checkIfLogged().then(function (response) {
-      _this.user = response ? response : window.location = '/#/login';
+      _this.user = response ? response : window.location = '/#/home';
       if (_this.user.employee == false) {
-        self.$router.push('login');
+        self.$router.push('home');
       }
     }).catch(function (error) {
       return console.log(error);
@@ -43184,11 +43184,11 @@ var render = function() {
                         expression: "customer.forename"
                       }
                     ],
-                    staticClass: "forename",
+                    staticClass: "input",
                     attrs: {
                       type: "text",
                       name: "forename",
-                      id: "address",
+                      id: "forename",
                       value: ""
                     },
                     domProps: { value: _vm.customer.forename },
@@ -43946,9 +43946,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     var self = this;
     this.checkIfLogged().then(function (response) {
-      _this.user = response ? response : window.location = '/#/login';
+      _this.user = response ? response : window.location = '/#/home';
       if (_this.user.employee == false) {
-        self.$router.push('login');
+        self.$router.push('home');
       }
     }).catch(function (error) {
       return console.log(error);

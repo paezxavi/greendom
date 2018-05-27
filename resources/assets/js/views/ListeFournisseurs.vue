@@ -61,8 +61,8 @@
           let self = this;
           this.checkIfLogged()
           .then(response => {
-              this.user = response ? response : window.location = '/#/login';
-              if(this.user.employee == false){self.$router.push('login');}
+              this.user = response ? response : window.location = '/#/home';
+              if(this.user.employee == false){self.$router.push('home');}
           })
           .catch(error => console.log(error));
           sessionStorage.removeItem('titleProv');
