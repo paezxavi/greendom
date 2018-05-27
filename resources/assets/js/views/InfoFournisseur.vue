@@ -74,7 +74,7 @@
 
         data() {
             return {
-                title: sessionStorage.getItem('title'),
+                title: sessionStorage.getItem('titleProv'),
                 provider: {
                   id:"",
                   name: "",
@@ -93,7 +93,6 @@
          */
         created() {
             let self = this;
-            self.title = sessionStorage.getItem('title');
             if(self.title == 'Modification fournisseur'){
               self.provider.id = sessionStorage.getItem('idProv');
               axios.get('/provider/', {params: {id: self.provider.id}} )

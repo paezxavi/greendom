@@ -3,26 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class SignUpController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Retourne la liste des clients qui sont dans BDD User avec le nom de la société
      */
-    public function index()
+    public function getCustomersAndSocName()
     {
-      return view('home');
+      return DB::table('users')
+        ->where('employee','=','false')
+        ->leftJoin('companies', 'company_id', '=', 'companies.id')
+        ->select('users.*', 'companies.name as company')
+        ->get();
+    }
+
+    /**
+     * Retourne la liste des produits avec le nom du fuornisseur lié au produit
+     */
+    public function getProductsAndProvName(){
+        return DB::table('products')
+          ->leftJoin('providers_products_pivot', 'products.id', '=', 'product_id')
+          ->leftJoin('providers', 'providers.id', '=', 'provider_id')
+          ->select('products.*', 'providers.name')
+          ->get();
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     *
+     * Retourne le client qui a l'id passé en paramètre
+     */
+    public function getCustomer(Request $request)
+    {
+      $customer = DB::table('users')->where('id', $request->id)->first();
+      return response()->json($customer);
+    }
+
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * Modifie le client qui a l'id passé en paramètre avec les informations passées en paramètre
+     */
+    public function updateCustomer(Request $request)
+    {
+      $update = User::where('id', $request->id)
+        ->update([
+          'name' => $request->name,
+          'forename' => $request->forename,
+          'address'=> $request->address,
+          'email' => $request->email,
+          'contact' => $request->skype,
+          'phone' => $request->phone,
+        ]
+      );
     }
 
     /**

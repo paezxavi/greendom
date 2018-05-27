@@ -2,7 +2,7 @@
   <div>
     <vue-good-table
       :columns="columns"
-      :rows="providers"
+      :rows="companies"
       :search-options="{
         enabled: true,
       }"
@@ -17,7 +17,7 @@
       @on-row-click="onRowClick"
       styleClass="vgt-table striped bordered"/>
     <br/>
-    <a @click="createProvider" class="button is-primary">Nouveau fournisseur</a>
+    <a @click="createCompany" class="button is-primary">Nouvelle société</a>
   </div>
 </template>
 
@@ -38,18 +38,11 @@
                 label: 'Email',
                 field: 'email',
               },
-              {
-                label: 'Téléphone',
-                field: 'phone',
-              },
-              {
-                label: 'Compte skype',
-                field: 'skype',
-              },
             ],
-            providers: [],
+            companies: [],
           }
       },
+
       created() {
           let self = this;
           this.checkIfLogged()
@@ -58,34 +51,35 @@
               if(this.user.employee == false){self.$router.push('login');}
           })
           .catch(error => console.log(error));
-          sessionStorage.removeItem('titleProv');
-          sessionStorage.removeItem('idProv');
-          axios.get('/providersList/')
-            .then(response=>{self.providers = response.data;})
+          sessionStorage.removeItem('titleComp');
+          sessionStorage.removeItem('idComp');
+          axios.get('/companiesList/')
+            .then(response=>{self.companies = response.data;})
             .catch(function (error) {console.log(error);});
       },
       methods: {
          /**
           *
           */
-         createProvider(){
+         createCompany(){
            const self = this;
-           sessionStorage.setItem('titleProv','Nouveau fournisseur');
-           self.$router.push('providerInfo');
+           sessionStorage.setItem('titleComp','Nouvelle société');
+           self.$router.push('companyInfo');
 
          },
 
          /**
-          * Récupère l'id de l'objet cliqué qui correspond à l'id du fournisseur concerné
-          * Enregistre dans le sessionStorage l'id du fournisseur
+          * Récupère l'id de l'objet cliqué qui correspond à l'id de la société concernée
+          * Enregistre dans le sessionStorage l'id de la société
+          * Enregistre dans le sessionStorage le titre de la page CompanyInfo
           * Redirige sur la page InfoFournisseur
           */
          onRowClick(params){
            const self = this;
            var targetId = params.row.id;
-           sessionStorage.setItem('idProv',targetId);
-           sessionStorage.setItem('titleProv','Modification fournisseur');
-           self.$router.push('providerInfo');
+           sessionStorage.setItem('idComp',targetId);
+           sessionStorage.setItem('titleComp','Modification société');
+           self.$router.push('companyInfo');
          }
       }
     }

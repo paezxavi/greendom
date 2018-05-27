@@ -2,7 +2,7 @@
   <div>
     <vue-good-table
       :columns="columns"
-      :rows="providers"
+      :rows="customers"
       :search-options="{
         enabled: true,
       }"
@@ -17,7 +17,7 @@
       @on-row-click="onRowClick"
       styleClass="vgt-table striped bordered"/>
     <br/>
-    <a @click="createProvider" class="button is-primary">Nouveau fournisseur</a>
+    <a @click="createCustomer" class="button is-primary">Nouveau client</a>
   </div>
 </template>
 
@@ -31,8 +31,16 @@
                 field: 'name',
               },
               {
+                label: 'Prénom',
+                field: 'forename',
+              },
+              {
                 label: 'Adresse',
                 field: 'address',
+              },
+              {
+                label: 'Société',
+                field: 'company',
               },
               {
                 label: 'Email',
@@ -44,10 +52,10 @@
               },
               {
                 label: 'Compte skype',
-                field: 'skype',
+                field: 'contact',
               },
             ],
-            providers: [],
+            customers: [],
           }
       },
       created() {
@@ -58,34 +66,30 @@
               if(this.user.employee == false){self.$router.push('login');}
           })
           .catch(error => console.log(error));
-          sessionStorage.removeItem('titleProv');
-          sessionStorage.removeItem('idProv');
-          axios.get('/providersList/')
-            .then(response=>{self.providers = response.data;})
+          sessionStorage.removeItem('idCu');
+          axios.get('/customersList/')
+            .then(response=>{self.customers = response.data;})
             .catch(function (error) {console.log(error);});
       },
       methods: {
          /**
           *
           */
-         createProvider(){
+         createCustomer(){
            const self = this;
-           sessionStorage.setItem('titleProv','Nouveau fournisseur');
-           self.$router.push('providerInfo');
+           self.$router.push('newCustomer');
 
          },
 
          /**
           * Récupère l'id de l'objet cliqué qui correspond à l'id du fournisseur concerné
-          * Enregistre dans le sessionStorage l'id du fournisseur
-          * Redirige sur la page InfoFournisseur
+          * Enregistre dans le sessionStorage l'id du user
+          * Redirige sur la page SignUp
           */
          onRowClick(params){
            const self = this;
-           var targetId = params.row.id;
-           sessionStorage.setItem('idProv',targetId);
-           sessionStorage.setItem('titleProv','Modification fournisseur');
-           self.$router.push('providerInfo');
+           sessionStorage.setItem('idCu',params.row.id);
+           self.$router.push('customerInfo');
          }
       }
     }
