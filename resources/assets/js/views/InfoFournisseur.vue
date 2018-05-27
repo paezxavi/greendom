@@ -102,14 +102,14 @@
             }
         },
 
-        /**
-         * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
-         * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
-         * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
-         * Affiche un message différent si la requête s'est déroulée correctement ou non
-         * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseurs
-         */
         methods: {
+          /**
+           * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+           * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
+           * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
+           * Affiche un message différent si la requête s'est déroulée correctement ou non
+           * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseur
+           */
             updateProvider(){
               const self = this;
               if(self.provider.email.trim() != "" || self.provider.name.trim() != "" || self.provider.address.trim() != ""){
@@ -133,7 +133,10 @@
             },
 
             /**
-             *
+             * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+             * Lance la création du fournisseur dans la BDD avec les infos des champs
+             * Affiche un message différent si la requête s'est déroulée correctement ou non
+             * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseur
              */
             createProvider(){
               const self = this;
