@@ -41634,8 +41634,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
 
+
   /**
-   *
+   * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+   * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
+   * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
+   * Affiche un message différent si la requête s'est déroulée correctement ou non
+   * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseurs
    */
   methods: {
     updateProvider: function updateProvider() {
@@ -43072,8 +43077,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     sessionStorage.removeItem('idCu');
   },
 
+
   /**
-   *
+   * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+   * Si skype = null remplace par un String vide (null est remonté de la BDD)
+   * Lance la mise à jour du client dans la BDD avec les infos des champs
+   * Affiche un message différent si la requête s'est déroulée correctement ou non
+   * Si la requête s'est déroulée correctement, redirige sur page ListeClients
    */
   methods: {
     updateCustomer: function updateCustomer() {
@@ -43535,9 +43545,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   /**
-   * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProv')
+   * Fait une requête pour avoir les informations de la société qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idComp')
    * Charge la page avec les informations récupérées
-   * Efface la variable 'idPov' de sessionStorage
+   * Efface la variable 'idComp' de sessionStorage
    */
   created: function created() {
     var self = this;
@@ -43552,8 +43562,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
 
+
   /**
-   *
+   * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+   * Si email et/ou address = null remplace par un String vide (null est remonté de la BDD)
+   * Lance la mise à jour de la société dans la BDD avec les infos des champs
+   * Affiche un message différent si la requête s'est déroulée correctement ou non
+   * Si la requête s'est déroulée correctement, redirige sur page ListeSociete
    */
   methods: {
     updateCompany: function updateCompany() {
@@ -43586,7 +43601,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     /**
-     *
+     * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+     * Lance la création de la société dans la BDD avec les infos des champs
+     * Affiche un message différent si la requête s'est déroulée correctement ou non
+     * Si la requête s'est déroulée correctement, redirige sur page ListeSociete
      */
     createCompany: function createCompany() {
       var self = this;
@@ -43609,7 +43627,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     /**
-     * Redirige sur la page Liste fournisseur
+     * Redirige sur la page ListeSociete
      */
     cancel: function cancel() {
       var self = this;

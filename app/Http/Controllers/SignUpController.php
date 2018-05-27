@@ -61,7 +61,7 @@ class SignUpController extends Controller
      * @return \Illuminate\Http\Response
 
        *création dans la base de données d'un nouvel utilisateur
-       *pour le moment l'utilisateur est créé dans la bdd avec employé=>false + compnany_id => null
+       *L'utilisateur est créé dans la bdd avec employé=>false, une ligne de commande permet de promouvoir un user en employé
      */
     public function create(Request $request)
     {

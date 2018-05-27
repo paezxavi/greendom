@@ -101,8 +101,13 @@
               sessionStorage.removeItem('idProv');
             }
         },
+
         /**
-         *
+         * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+         * Si skype, phone ou/et iban = null remplace par un String vide (null est remonté de la BDD)
+         * Lance la mise à jour du fournisseur dans la BDD avec les infos des champs
+         * Affiche un message différent si la requête s'est déroulée correctement ou non
+         * Si la requête s'est déroulée correctement, redirige sur page ListeFournisseurs
          */
         methods: {
             updateProvider(){

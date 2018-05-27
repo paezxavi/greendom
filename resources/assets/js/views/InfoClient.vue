@@ -97,8 +97,13 @@
                 .catch(function (error) {console.log(error);});
               sessionStorage.removeItem('idCu');
         },
+        
         /**
-         *
+         * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+         * Si skype = null remplace par un String vide (null est remonté de la BDD)
+         * Lance la mise à jour du client dans la BDD avec les infos des champs
+         * Affiche un message différent si la requête s'est déroulée correctement ou non
+         * Si la requête s'est déroulée correctement, redirige sur page ListeClients
          */
         methods: {
             updateCustomer(){

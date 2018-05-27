@@ -64,9 +64,9 @@
             }
         },
         /**
-         * Fait une requête pour avoir les informations du fournisseur qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idProv')
+         * Fait une requête pour avoir les informations de la société qui a pour id l'id passé en paramètre dans sessionStorage.getItem('idComp')
          * Charge la page avec les informations récupérées
-         * Efface la variable 'idPov' de sessionStorage
+         * Efface la variable 'idComp' de sessionStorage
          */
         created() {
             let self = this;
@@ -78,8 +78,13 @@
               sessionStorage.removeItem('idComp');
             }
         },
+
         /**
-         *
+         * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+         * Si email et/ou address = null remplace par un String vide (null est remonté de la BDD)
+         * Lance la mise à jour de la société dans la BDD avec les infos des champs
+         * Affiche un message différent si la requête s'est déroulée correctement ou non
+         * Si la requête s'est déroulée correctement, redirige sur page ListeSociete
          */
         methods: {
             updateCompany(){
@@ -103,7 +108,10 @@
             },
 
             /**
-             *
+             * Vérifie que les champs obligatoires ne soient pas vides sinon affiche un message
+             * Lance la création de la société dans la BDD avec les infos des champs
+             * Affiche un message différent si la requête s'est déroulée correctement ou non
+             * Si la requête s'est déroulée correctement, redirige sur page ListeSociete
              */
             createCompany(){
               const self = this;
@@ -125,7 +133,7 @@
             },
 
             /**
-             * Redirige sur la page Liste fournisseur
+             * Redirige sur la page ListeSociete
              */
             cancel(){
               const self = this;
