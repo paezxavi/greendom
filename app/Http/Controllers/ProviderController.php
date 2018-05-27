@@ -39,8 +39,8 @@ class ProviderController extends Controller
   {
     $update = Provider::where('id', $request->id)
       ->update([
-        'name' => $request->name,
-        'address'=> $request->address,
+        'nom' => $request->name,
+        'adresse'=> $request->address,
         'phone' => $request->phone,
         'skype' => $request->skype,
         'email' => $request->email,
@@ -59,8 +59,8 @@ class ProviderController extends Controller
   public function create(Request $request)
   {
     $newProv = new Provider();
-    $newProv->name = $request->name;
-    $newProv->address = $request->address;
+    $newProv->nom = $request->name;
+    $newProv->adresse = $request->address;
     $newProv->email = $request->email;
     $newProv->phone = $request->phone;
     $newProv->skype = $request->skype;
@@ -78,8 +78,8 @@ class ProviderController extends Controller
   public function store(Request $request)
   {
     $newProv = new Provider();
-    $newProv->name = $request->name;
-    $newProv->address = $request->address;
+    $newProv->nom = $request->name;
+    $newProv->adresse = $request->address;
     $newProv->email = $request->email;
     $newProv->phone = $request->phone;
     $newProv->skype = $request->skype;

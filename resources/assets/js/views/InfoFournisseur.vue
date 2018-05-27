@@ -12,7 +12,7 @@
                   <div class="column">
                     <label class="label">Nom*</label>
                     <div class="control">
-                      <input type="text" name="name" id="name" class="input" value="" v-model="provider.name">
+                      <input type="text" name="name" id="name" class="input" value="" v-model="provider.nom">
                     </div>
                   </div>
                 </div>
@@ -20,7 +20,7 @@
               <div class="field">
                 <label class="label">Adresse*</label>
                 <div class="control">
-                  <input type="text" name="address" id="address" class="input"  value="" v-model="provider.address">
+                  <input type="text" name="address" id="address" class="input"  value="" v-model="provider.adresse">
                 </div>
               </div>
               <div class="field">
@@ -77,8 +77,8 @@
                 title: sessionStorage.getItem('titleProv'),
                 provider: {
                   id:"",
-                  name: "",
-                  address: "",
+                  nom: "",
+                  adresse: "",
                   phone: "",
                   skype: "",
                   email: "",
@@ -112,11 +112,11 @@
            */
             updateProvider(){
               const self = this;
-              if(self.provider.email.trim() != "" || self.provider.name.trim() != "" || self.provider.address.trim() != ""){
+              if(self.provider.email.trim() != "" || self.provider.nom.trim() != "" || self.provider.adresse.trim() != ""){
                 if(self.provider.phone == null){self.provider.phone = "";}
                 if (self.provider.skype == null){self.provider.skype = "";}
                 if (self.provider.iban == null){self.provider.iban = "";}
-                axios.put('/provider/', {id: self.provider.id,name: self.provider.name.trim(),address: self.provider.address.trim(),
+                axios.put('/provider/', {id: self.provider.id,name: self.provider.nom.trim(),address: self.provider.adresse.trim(),
                                          phone: self.provider.phone.trim(),skype: self.provider.skype.trim(),email: self.provider.email.trim(),
                                          iban: self.provider.iban.trim()})
                   .then(response=>{
@@ -140,10 +140,10 @@
              */
             createProvider(){
               const self = this;
-              if (self.provider.name.trim() == "" || self.provider.address.trim() == "" || self.provider.email.trim() == ""){
+              if (self.provider.nom.trim() == "" || self.provider.adresse.trim() == "" || self.provider.email.trim() == ""){
                 alert("Merci de remplir tous les champs obligatoires (*) !");
               }else{
-                axios.post('/provider', {name: self.provider.name.trim(),address: self.provider.address.trim(),phone: self.provider.phone.trim(),
+                axios.post('/provider', {name: self.provider.nom.trim(),address: self.provider.adresse.trim(),phone: self.provider.phone.trim(),
                                          skype: self.provider.skype.trim(),email: self.provider.email.trim(),iban: self.provider.iban.trim()})
                   .then(response=>{
                     if (response.status == 200){
