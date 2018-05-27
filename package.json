@@ -22,7 +22,7 @@
     "dependencies": {
         "buefy": "^0.6.3",
         "moment": "^2.20.1",
-        "vue-good-table": "^2.5.2",
+        "vue-good-table": "^2.5.5",
         "vue-router": "^3.0.1",
         "vue-slider-component": "^2.6.2",
         "vue-stepper": "^1.0.11"
