@@ -20,7 +20,7 @@ class StatusTableSeeder extends Seeder
              ['nom' => 'Commande - En cours'],
              ['nom' => 'Commande - Reçue'],
              ['nom' => 'Commande - Terminée'],
-             ['nom' => 'Abandonnée'],
+             ['nom' => 'Décommander'],
         ]);
     }
 }
