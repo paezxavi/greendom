@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'frank_cespedes02@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => true,
+          'employee' => false,
           'company_id'=> null
         ],
         [
@@ -76,7 +76,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'kecacci@hotmail.com',
           'password' => Hash::make('41236'),
-          'employee' => true,
+          'employee' => false,
           'company_id'=> null
         ],
         [
@@ -87,7 +87,7 @@ class UsersTableSeeder extends Seeder
           'contact' => 'JeSuisSkype.com',
           'email' => 'a@a',
           'password' => Hash::make('123'),
-          'employee' => false,
+          'employee' => true,
           'company_id'=> null
         ],
         [

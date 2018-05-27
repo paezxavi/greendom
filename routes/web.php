@@ -82,7 +82,7 @@ Route::post('/insertDemande/{user}', 'CommandeController@create')->name('storeDe
 Route::post('/updateUser/{user}', 'CommandeController@updateUser');
 
 Route::post('/fournisseurMailDemandePrix/{commande}','CommandeController@mailFournisseurDemandePrix');
-Route::post('/clientMailOffre/{commande}','CommandeController@mailClientOffre');
+Route::post('/clientMailOffre/{user}/{commande}','CommandeController@mailClientOffre');
 
 Route::put('/abandonner/{commande}','CommandeController@abandonnerCommande');
 

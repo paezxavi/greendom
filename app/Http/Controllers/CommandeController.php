@@ -364,16 +364,16 @@ class CommandeController extends Controller
       return 'mail envoyé depuis le controleur';
     }
 
-    public function mailClientOffre(Commande $commande)
-    {      
+    public function mailClientOffre(User $user, Commande $commande)
+    {
       $products = Commande::find($commande->id)->products()->get();
-      $customer = User::findOrFail(1);
+      $customer = User::where('id',$user->id)->get()->first();
       $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Offre.pdf');
       $pdf->save($path);
       $users = User::where('employee',true)->get();
-      Mail::to($users)->send(new ClientOffreMail('Offre'));
+      Mail::to($customer)->send(new ClientOffreMail('Offre'));
       return 'mail envoyé depuis le controleur';
     }
 

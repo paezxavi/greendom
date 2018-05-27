@@ -73,9 +73,9 @@
                   </header>
                   <div class="card-content">
                     <div class="content">
-                          <label class="label">Société : {{ company.nom }}</label>
+                          <label class="label">Société : {{ company.name }}</label>
 
-                          <label class="label">Adresse : {{ company.adresse }}</label>
+                          <label class="label">Adresse : {{ company.address }}</label>
 
                           <label class="label">Email : {{ company.email }}</label>
                     </div>
@@ -388,6 +388,7 @@
           //enregistrer modif commande
           enregistrer() {
             var id = this.customer.id;
+            var curUs = this.currentUser.id;
             var commandId = this.commande.id;
             let self = this;
             //IF offre SINON fournisseur
@@ -407,7 +408,7 @@
                     console.log(response);
                     self.idCreated = response.data;
                     self.storeFile();
-                    window.location.href='/#/listOrder/'+id;
+                    window.location.href='/#/listOrder/'+curUs;
               })
               .catch(function (error) {
                   console.log(error);
@@ -417,13 +418,13 @@
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
                         location.reload();
-                        window.location.href='/#/commande/'+id+'/'+commandId;
+                        //window.location.href='/#/commande/'+curUs+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
                       location.reload();
-                      window.location.href='/#/commande/'+id+'/'+commandId;
+                      //window.location.href='/#/commande/'+curUs+'/'+commandId;
                     });
               self.storeFile();         
             }
@@ -617,6 +618,7 @@
               });
             }
             window.location.href='/#/listOrder/'+id;
+            console.log('/#/listOrder/'+id);
           },
 
           mailCommande(){
@@ -648,7 +650,8 @@
 
           envoieClient(){
             this.enregistrer();
-            axios.post('/clientMailOffre/'+this.commande.id)
+            console.log(this.customer);
+            axios.post('/clientMailOffre/'+this.customer.id+'/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
               Store.viderPanier();

@@ -71,8 +71,9 @@
             logger() {
                 axios.post('/login/'+this.currentLogger.email, {currentLogger:this.currentLogger})
                     .then(function (response) {
-                        location.reload();
                         window.location = response.data.redirect;
+                        location.reload();
+
                     });
             }
 
