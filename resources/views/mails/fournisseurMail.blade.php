@@ -10,7 +10,7 @@
         <div>
           Madame, Monsieur
           <br>
-          <br>Veuillez Trouver ci-joint notre commande</br>
+          <br>Veuillez trouver ci-joint notre demande d'offre pour les produits mis en annexe.</br>
         </div>
         <hr>
         Merci de ne pas répondre à ce message. Les réponses au mail envoyé à cette adresse ne sont pas acceptées.

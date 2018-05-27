@@ -380,20 +380,20 @@ class CommandeController extends Controller
     public function emailPanier(Request $request)
     {
       $users = User::where('employee',true)->get();
-      $productsArray = $request->all()["panier"];
+      $total = $request->total; //récupérer total
+      $tva = $request->tva;
+      $productsArray = $request->panier;
       $userConnected = User::find($request->all()["user"]["id"]);
       $panierArray = [];
       foreach($productsArray as $products){
         array_push($panierArray, $products);
       }
-      $pdf = PDF::loadView('pdf/achat_catalogue_pdf', array('productArray' => $panierArray,'user' => $userConnected))
+      $pdf = PDF::loadView('pdf/achat_catalogue_pdf', array('productArray' => $panierArray,'user' => $userConnected, 'total' => $total, 'tva' => $tva))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/VotreCommande.pdf');
       $pdf->save($path);
-
       $userConnected = User::find($request->all()["user"]["id"]);
       Mail::to($users)->send(new PanierMail($userConnected));
-      
     }
 
     public function mailCommande(Commande $commande)
@@ -438,7 +438,7 @@ class CommandeController extends Controller
     }
 
     public function updateUser(Request $request, User $user) {
-      if(trim($request->password) != ""){
+      if(trim($request->password) != "") {
         $test = User::where('id', $user->id)
           ->update([
             'name' => $request->username,

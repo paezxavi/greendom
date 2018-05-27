@@ -17964,6 +17964,7 @@ var StoreCatalogue = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         viderPanier: function viderPanier() {
             this.panierCatalogue.length = 0;
+            //window.location = '/#/panier';
         },
         produitAffiche: function produitAffiche(produit) {
             this.produitCourant.length = 0;
@@ -35777,7 +35778,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         var self = this;
         companyId.value = "";
-        if (username.value.trim() == "" || forename.value.trim() == "" || address.value.trim() == "" || phone.value.trim() == "" || email.value.trim() == "" || pwd.value.trim() == "") {
+        if (username.value.trim() == "" || forename.value.trim() == "" || address.value.trim() == "" || phone.value.trim() == "" || email.value.trim() == "" || pwd.value.trim() == "" || pwd2.value.trim() == "") {
           alert("Merci de remplir tous les champs obligatoires (*) !");
         } else {
           if (company.value.trim().length > 0) {
@@ -36769,7 +36770,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ajoutPanier: function ajoutPanier(produit, index) {
             if (this.currentUser) {
                 __WEBPACK_IMPORTED_MODULE_1__storeCatalogue__["a" /* StoreCatalogue */].ajoutPanierCatalogue(produit);
-
                 //Popup apparaît et disparaît
                 $("#popUp").show();
                 setTimeout(function () {
@@ -39089,7 +39089,7 @@ var render = function() {
                 ],
                 staticClass: "title"
               },
-              [_vm._v("Abandonnée")]
+              [_vm._v("Décommander")]
             )
           ]),
           _vm._v(" "),
@@ -40213,20 +40213,22 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-danger buttonCommande",
-                        staticStyle: { "margin-left": "2px" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.abandonnerCommande($event)
-                          }
-                        }
-                      },
-                      [_vm._v("Abandonner")]
-                    ),
+                    this.commande.id != ""
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button is-danger buttonCommande",
+                            staticStyle: { "margin-left": "2px" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.abandonnerCommande($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Décommander")]
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -40402,6 +40404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             panier: __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].$data.panierCatalogue,
             total: __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].totalPanier(),
+            tva: "",
             company: "",
             user: '',
             commande: {
@@ -40417,8 +40420,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.checkIfLogged().then(function (response) {
             _this.user = response ? response : "window.location = '/#/login'";
-            console.log(_this.user);
         });
+        this.tva = Math.round(this.total * 7.7 / 100);
     },
 
 
@@ -40442,22 +40445,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         vider: function vider() {
             console.log("vider");
             __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].viderPanier();
-            this.panier = [];
         },
         validerPanier: function validerPanier() {
+            console.log(this.panier);
+            var self = this;
             axios({
                 method: 'post',
                 url: '/emailPanier/' + this.user.id,
                 data: {
                     panier: this.panier,
-                    user: this.user
+                    user: this.user,
+                    total: this.total,
+                    tva: this.tva
                 }
             }).then(function (response) {
-                console.log(response);
+                self.vider();
             });
-            __WEBPACK_IMPORTED_MODULE_0__storeCatalogue__["a" /* StoreCatalogue */].viderPanier();
-            this.panier = [];
             alert('Votre commande a été enregistrée. Nous vous remerçions d\'avoir passé commande chez nous et vous tiendrons informé de l\'état de la commande.');
+            location.reload();
             window.location = '/#/home';
         }
     }
@@ -40574,12 +40579,14 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _c("label", [_vm._v(" TVA au taux de 8%")]),
+              _c("label", [_vm._v(" TVA au taux de 7.7%")]),
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
               _c("strong", [
-                _vm._v(" Total TVA comprise : " + _vm._s(_vm.total) + " ")
+                _vm._v(
+                  " Total TVA comprise : " + _vm._s(_vm.total + _vm.tva) + " "
+                )
               ]),
               _vm._v(" "),
               _c("div", [

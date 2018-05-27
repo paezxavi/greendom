@@ -13,7 +13,7 @@
                 <h1 class="title" v-show="commande.status_id == 6">Commande - En cours N°{{ this.commande.num_commande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 7">Commande - Reçue N°{{ this.commande.num_commande }}</h1>
                 <h1 class="title" v-show="commande.status_id == 8">Commande - Terminée N°{{ this.commande.num_commande }}</h1>
-                <h1 class="title" v-show="commande.status_id == 9">Abandonnée</h1>
+                <h1 class="title" v-show="commande.status_id == 9">Décommander</h1>
               </div>
 
               <div class="card donneesPers">
@@ -250,7 +250,7 @@
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" v-show="enabledBtnPasserEncours">Valider commande</button>
                 <button @click.prevent="mailCommandeRecue" class="button is-success buttonCommande" :disabled="this.commande.status_id == 7" v-if="enabledCommande">Commande reçue</button>
                 <button @click.prevent="passerEtapeSuivante" class="button is-success buttonCommande" :disabled="this.commande.status_id != 7" v-if="enabledCommande">Commande terminée</button>
-                <button @click.prevent="abandonnerCommande" class="button is-danger buttonCommande" style="margin-left:2px">Abandonner</button>
+                <button @click.prevent="abandonnerCommande" class="button is-danger buttonCommande" style="margin-left:2px" v-if="this.commande.id != '' ">Décommander</button>
                 <button @click.prevent="backTo" class="button is-danger" style="margin-left:2px">Annuler</button>
               </div>
             </div>
