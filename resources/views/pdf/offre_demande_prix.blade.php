@@ -43,7 +43,7 @@ table, th, td {
         <div style="margin: 0 auto; width: 200px;"> <center> <strong> À l'attention de : </strong> </center> </div>
         
         <br/>
-        <h3> <strong> CONCERNE : </strong> demande de prix </h3>
+        <h3> <strong> CONCERNE : </strong> {{$demandePrix}} </h3>
         <table width="100%">
             <thead>
                 <tr>

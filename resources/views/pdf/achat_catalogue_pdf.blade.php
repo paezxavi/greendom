@@ -34,8 +34,6 @@ table, th, td {
         <p/>
         <br/>
         <br/>
-        <strong> DATE : </strong> <br/>
-        <strong> N° COMMANDE : </strong>
         <br/>
         <br/>
         <div style="float: right"> {{$user->address}} </div>

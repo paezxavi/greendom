@@ -10,6 +10,10 @@
         enabled: true,
         perPage: 25,
       }"
+      :sort-options="{
+        enabled: true,
+        initialSortBy: {field: 'dateDebut', type: 'desc'}
+      }"
       @on-row-click="onRowClick"
       styleClass="vgt-table striped bordered"/>
     <br/>
@@ -27,13 +31,6 @@ export default {
         {
           label: 'Date de début',
           field: 'dateDebut',
-          type: 'date',
-          dateInputFormat: 'YYYY-MM-DD',
-          dateOutputFormat: 'DD-MM-YYYY',
-        },
-        {
-          label: 'Dernière modification',
-          field: 'update_at',
           type: 'date',
           dateInputFormat: 'YYYY-MM-DD',
           dateOutputFormat: 'DD-MM-YYYY',
