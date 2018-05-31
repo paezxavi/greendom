@@ -191,7 +191,6 @@
                                           <label> Fournisseur : </label>
                                           <select style="margin-left:5px" v-on:change="miseAJourNouveauFournisseur($event, index)">
                                               <option v-for="fournisseur in produit.fournisseurs" :value="fournisseur.nom"> {{fournisseur.nom}}
-                                                <span hidden> {{fournisseur.id}} </span>
                                               </option>
                                           </select>
                                         </span>
@@ -284,6 +283,9 @@
                 produits_recuperes: "",
                 filesAdd: '',
                 files: '',
+                tva: "",
+                total: '',
+                
             }
         },
 
@@ -387,6 +389,9 @@
           },
           //enregistrer modif commande
           enregistrer() {
+            this.total = Store.total();
+            this.tva = Math.round((this.total*7.7)/100);
+            console.log("tva"+this.tva);  
             var id = this.customer.id;
             var curUs = this.currentUser.id;
             var commandId = this.commande.id;
@@ -418,17 +423,16 @@
               axios.post('/storeDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Enregistrer",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_choisis})
                       .then(function (response) {
                         location.reload();
-                        //window.location.href='/#/commande/'+curUs+'/'+commandId;
+                        ////window.location.href='/#/commande/'+curUs+'/'+commandId;
                       });
               //Produits enregistres
               axios.post('/updateDemande/'+this.customer.id+"/"+this.commande.id, {typeSubmit: "Update",commande: this.commande, company:this.company, customer:this.customer, products:this.produits_enregistres})
                     .then(function (response) {
                       location.reload();
-                      //window.location.href='/#/commande/'+curUs+'/'+commandId;
+                      ////window.location.href='/#/commande/'+curUs+'/'+commandId;
                     });
               self.storeFile();         
             }
-
           },
 
           backTo() {
@@ -563,6 +567,8 @@
           //FIN METHODES POUR OFFRE
 
           envoyer() {
+            this.total = Store.total();
+            this.tva = Math.round((this.total*7.7)/100);
             var id = this.currentUser.id;
             let self = this;
             if (!this.commande.id){
@@ -593,9 +599,10 @@
                       });
               self.storeFile();
             }
+
           },
 
-          passerEtapeSuivante(){
+          passerEtapeSuivante() {
             var id = this.currentUser.id;
             axios.post('/validerStatut/'+this.commande.id,{commande:this.commande})
               .then(function(response){
@@ -634,7 +641,7 @@
             });
           },
 
-          mailCommandeRecue(){
+          mailCommandeRecue() {
             axios.post('/mailCommandeRecue/'+this.customer.id+'/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
@@ -651,7 +658,15 @@
           envoieClient(){
             this.enregistrer();
             console.log(this.customer);
-            axios.post('/clientMailOffre/'+this.customer.id+'/'+this.commande.id)
+            axios({
+                    method: 'post',
+                    url: '/clientMailOffre/'+this.customer.id+'/'+this.commande.id,
+                    data: {
+                        total: this.total,
+                        tva: this.tva,
+                    }
+            })
+            //post('/clientMailOffre/'+this.customer.id+'/'+this.commande.id)
             .then(function(response){
               console.log('mail Envoyé');
               Store.viderPanier();

@@ -14,7 +14,7 @@
                         <h1 class="title" style="text-align:center">Filtres</h1>
                         <br/>
                         <h3 class="subtitle is-3">Rechercher :</h3>
-                        <input id="textFiltre" type="text" v-on:keyup="applyFilter($event)">
+                        <input id="textFiltre" type="text" v-on:keyup="miseAJourFiltre($event)">
                         <hr/>
                         <h3 class="subtitle is-3">Prix max</h3>
                         <vue-slider v-model="valuePrix" v-bind="optionsPrix" @click.native="applyFilter()"></vue-slider>
@@ -196,13 +196,36 @@
                 StoreCatalogue.produitAffiche(produit);
             },
 
-            applyFilter(e) {
+            applyFilter() {
                 this.produitsTrie = [];
                 this.produits.map( (p) => {
                     if((p.prixVente <= this.valuePrix) & (p.feature <= this.valueWatts)){
                         this.produitsTrie.push(p);
                     }
                 })
+                if (this.filterText != "") {
+                    console.log(this.filterText);
+                    var filtre = this.filterText;
+                    this.filterList = this.produitsTrie.filter(function(item) {
+                        var nom = item.nom.toLowerCase();
+                        var reference = item.reference.toLowerCase();
+                        var categorie = item.categorie.toLowerCase();
+                        var description = item.description.toLowerCase();
+                        var refSupplier = item.refSupplier.toLowerCase();
+                        if (nom.match(filtre)) {
+                            return true;
+                        } else if (reference.match(filtre)) {
+                            return true;
+                        } else if (categorie.match(filtre)) {
+                            return true;
+                        } else if (description.match(filtre)) {
+                            return true;
+                        } else if (refSupplier.match(filtre)) {
+                            return true; 
+                        } 
+                    });
+                    this.produitsTrie = this.filterList;
+                }
             },
 
             getPrixMax() {
@@ -247,6 +270,7 @@
                         return 1;
                     return 0;
                 }
+                return this.produitsTrie.sort(compare);
             },
 
             prixDecroissant() {
@@ -257,55 +281,27 @@
                         return 1;
                     return 0;
                 }
+                return this.produitsTrie.sort(compare);
             },
 
             reinitProduit() {
                 this.produitsTrie = this.produits;
                 function compare(a, b) {
-                if (a.nom < b.nom)
-                    return -1;
-                if (a.nom > b.nom)
-                    return 1;
-                return 0;
+                    if (a.nom < b.nom)
+                        return -1;
+                    if (a.nom > b.nom)
+                        return 1;
+                    return 0;
                 }
+                $('#textFiltre').val("");
             },
-
-            /*produitAzero() {
-                this.produitsTrie = this.produits;
-                function compare(a, b) {
-                if (a.nom < b.nom)
-                    return -1;
-                if (a.nom > b.nom)
-                    return 1;
-                return 0;
-                }
-                return this.produitsTrie.sort(compare);
-            },
-
+            
             miseAJourFiltre(e) {
-                this.produitAzero();
-                this.filterText = e.target.value;
-                var filtre = this.filterText.toLowerCase();
-                this.filterList = this.produitsTrie.filter(function(item) {
-                var nom = item.nom.toLowerCase();
-                var reference = item.reference.toLowerCase();
-                var categorie = item.categorie.toLowerCase();
-                var description = item.description.toLowerCase();
-                var refSupplier = item.refSupplier.toLowerCase();
-                   if (nom.match(filtre)) {
-                       return true;
-                   } else if (reference.match(filtre)) {
-                       return true;
-                   } else if (categorie.match(filtre)) {
-                       return true;
-                   } else if (description.match(filtre)) {
-                       return true;
-                   } else if (refSupplier.match(filtre)) {
-                       return true; 
-                   } 
-                });
-                this.produitsTrie = this.filterList;             
-            },*/
+                var filtre = e.target.value;
+                this.filterText = filtre.toLowerCase();
+                this.applyFilter();         
+            },
+            
         },
     }
     

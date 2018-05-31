@@ -4,7 +4,7 @@ export const Store = new Vue({
 
 	data() {
 	    return {
-	    	panier: [],
+			panier: [],
 			panierEnregistres: [],
 			liste: []
 	    };
@@ -222,6 +222,25 @@ export const Store = new Vue({
 					//break;
 				//}
 			//}
+		},
+
+		total() {
+			var total = 0;
+			for (var i=0; i < this.panierEnregistres.length; i ++) {
+				if (this.panierEnregistres[i].remiseBoolean==true) {
+					total += ((this.panierEnregistres[i].prix*this.panierEnregistres[i].quantite)*this.panierEnregistres[i].remisePourcent)/100;
+				} else {
+					total += this.panierEnregistres[i].prix*this.panierEnregistres[i].quantite;
+				}
+			}
+			for (var i=0; i < this.panier.length; i ++) {
+				if (this.panier[i].remiseBoolean==true) {
+					total += ((this.panier[i].prix*this.panier[i].quantite)*this.panier[i].remisePourcent)/100;
+				} else {
+					total += this.panier[i].prix*this.panier[i].quantite;
+				}
+			}
+			return total;
 		}
 
 	}

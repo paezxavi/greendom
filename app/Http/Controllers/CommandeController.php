@@ -364,11 +364,13 @@ class CommandeController extends Controller
       return 'mail envoyé depuis le controleur';
     }
 
-    public function mailClientOffre(User $user, Commande $commande)
+    public function mailClientOffre(Request $request, User $user, Commande $commande)
     {
       $products = Commande::find($commande->id)->products()->get();
+      $total = $request->total; //récupérer total
+      $tva = $request->tva;
       $customer = User::where('id',$user->id)->get()->first();
-      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer))
+      $pdf = PDF::loadView('pdf/offre_client_pdf', array('products' => $products, 'customer' => $customer, 'tva'=>$tva, 'total'=>$total))
                   ->setPaper('a3', 'portrait');
       $path = storage_path('/app/public/pdf/Offre.pdf');
       $pdf->save($path);
