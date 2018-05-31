@@ -65,7 +65,7 @@ class ProductController extends Controller
         return DB::table('products')
           ->leftJoin('providers_products_pivot', 'products.id', '=', 'product_id')
           ->leftJoin('providers', 'providers.id', '=', 'provider_id')
-          ->select('products.*', 'providers.nom')
+          ->select('products.*', 'providers.nom as provider')
           ->get();
     }
 
