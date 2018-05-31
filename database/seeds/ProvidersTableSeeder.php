@@ -14,7 +14,7 @@ class ProvidersTableSeeder extends Seeder
       DB::table('providers')->insert([
         [
            'nom' => 'Lampe SA',
-           'adresse' => 'rue des lampes',
+           'adresse' => 'Rue des lampes 52',
            'email' => 'lampe@hotmail.com',
            'phone' => '0223232323',
            'skype' => 'lampe_skype',
@@ -23,16 +23,40 @@ class ProvidersTableSeeder extends Seeder
 
         [
           'nom' => 'Ampoule SA',
-          'adresse' => 'rue des Ampoule',
+          'adresse' => 'Rue des Ampoule 13',
           'email' => 'Ampoule@hotmail.com',
           'phone' => '0223232323',
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'
          ],
          [
-          'nom' => 'Kevin SA',
-          'adresse' => 'rue Kevin',
-          'email' => 'kevin@hotmail.com',
+          'nom' => 'SIG',
+          'adresse' => 'Rue de la tambourine 24',
+          'email' => 'sig@geneve.com',
+          'phone' => '0223232323',
+          'skype' => 'Ampoule_skype',
+          'iban' => '54654654654654645 4'
+         ],
+         [
+          'nom' => 'LumiereEclatante SA',
+          'adresse' => 'Rue des lumière 22',
+          'email' => 'lumiereeclatante@geneve.com',
+          'phone' => '0223232323',
+          'skype' => 'Ampoule_skype',
+          'iban' => '54654654654654645 4'
+         ],
+         [
+          'nom' => 'Etoile D\'à Côté',
+          'adresse' => 'Rue de la Servette 4',
+          'email' => 'etoile@hgeneve.com',
+          'phone' => '0223232323',
+          'skype' => 'Ampoule_skype',
+          'iban' => '54654654654654645 4'
+         ],
+         [
+          'nom' => 'Brillance SA',
+          'adresse' => 'Rue de Carouge 8',
+          'email' => 'brillance@geneve.com',
           'phone' => '0223232323',
           'skype' => 'Ampoule_skype',
           'iban' => '54654654654654645 4'

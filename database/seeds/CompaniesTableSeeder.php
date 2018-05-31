@@ -13,13 +13,13 @@ class CompaniesTableSeeder extends Seeder
     {
       DB::table('companies')->insert([
         [
-           'name' => 'Rodriguez',
-           'address' => 'Rue de la Jonction',
-           'email' => 'rodriguez02@hotmail.com'
+           'name' => 'SIG',
+           'address' => 'Rue de la Jonction 3',
+           'email' => 'sig@geneve.com'
        ],
        [
-           'name' => 'Bla',
-           'address' => "Rue companies",
+           'name' => 'HEG',
+           'address' => "Rue des HEG 24",
            'email' => 'comp@mail.com'
        ]
       ]);

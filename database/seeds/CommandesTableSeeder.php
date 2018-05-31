@@ -19,7 +19,7 @@ class CommandesTableSeeder extends Seeder
           'num_demande' => '201701127_D',
           'num_offre' => '201701127_O',
           'user_id' => 1,
-          'descriptionCommande' => 'Je suis du texte ... jsfjaklsdjdfkljsdjflasjfkljasdfjklasdjfhh',
+          'descriptionCommande' => 'Nous désirons mettre en lumière notre Hall principal afin de le rendre plus éblouissant. Ci-joint vous avez les photos de notre Hall avec les mensurations de la salle.',
           'status_id' => 1
         ],
         [
@@ -29,7 +29,7 @@ class CommandesTableSeeder extends Seeder
           'num_demande' => '20180211_D',
           'num_offre' => '20180211_O',
           'user_id' => 1,
-          'descriptionCommande' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et ex ut est gravida accumsan. Curabitur dictum neque risus, sed facilisis nisl rutrum in. Sed sollicitudin cursus tristique. Proin cursus non quam sit amet hendrerit. Nunc sed elit nec est bibendum consectetur vitae ut diam. Praesent metus metus, mattis eu mollis vel, aliquam viverra dui. Ut eu finibus massa. Quisque consequat nisl eget condimentum bibendum. Sed sagittis sodales lacus, vel venenatis neque iaculis quis. Maecenas metus nulla, hendrerit vel massa nec, posuere ornare sem. Morbi nec scelerisque elit. Nam volutpat arcu at bibendum aliquet. Fusce mollis mi in lorem vulputate pretium.',
+          'descriptionCommande' => 'Bonjour, Nous désirons remplacer nos lumières et voudrions avoir votre avis de professionnel afin de respecter les normes et l\'environnement.',
           'status_id' => 1
         ],
         [
@@ -39,17 +39,37 @@ class CommandesTableSeeder extends Seeder
           'num_demande' => '20180216_D',
           'num_offre' => '20180216_O',
           'user_id' => 2,
-          'descriptionCommande' => 'Test pour tableau de bord',
+          'descriptionCommande' => 'Bonjour, Nous désirons remplacer nos lumières et voudrions avoir votre avis de professionnel afin de respecter les normes et l\'environnement.',
           'status_id' => 2
         ],
         [
           'num_commande' => '20180217_C',
           'dateDebut' => '2008-01-03 01:27:24',
-          'concerne' => 'Offre',
+          'concerne' => 'CERN - Refactorisation',
           'num_demande' => '20180217_D',
           'num_offre' => '20180217_O',
           'user_id' => 2,
-          'descriptionCommande' => 'Test pour offre',
+          'descriptionCommande' => 'Bonjour, Nous désirons remplacer nos lumières et voudrions avoir votre avis de professionnel afin de respecter les normes et l\'environnement.',
+          'status_id' => 3
+        ],
+        [
+          'num_commande' => '20160217_C',
+          'dateDebut' => '2008-01-03 01:27:24',
+          'concerne' => 'SIG - Aide',
+          'num_demande' => '20160217_D',
+          'num_offre' => '20160217_O',
+          'user_id' => 2,
+          'descriptionCommande' => 'Bonjour, Nous désirons remplacer nos lumières et voudrions avoir votre avis de professionnel afin de respecter les normes et l\'environnement.',
+          'status_id' => 3
+        ],
+        [
+          'num_commande' => '20120217_C',
+          'dateDebut' => '2008-01-03 01:27:24',
+          'concerne' => 'BeauRivage',
+          'num_demande' => '20120217_D',
+          'num_offre' => '20120217_O',
+          'user_id' => 2,
+          'descriptionCommande' => 'Bonjour, Nous désirons remplacer nos lumières et voudrions avoir votre avis de professionnel afin de respecter les normes et l\'environnement.',
           'status_id' => 3
         ],
        ]);

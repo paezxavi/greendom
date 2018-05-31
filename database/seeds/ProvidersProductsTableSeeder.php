@@ -37,35 +37,35 @@ class ProvidersProductsTableSeeder extends Seeder
                 'product_id' => 5
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 5,
                 'product_id' => 6
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 4,
                 'product_id' => 7
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 6,
                 'product_id' => 8
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 4,
                 'product_id' => 9
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 6,
                 'product_id' => 10
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 5,
                 'product_id' => 11
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 3,
                 'product_id' => 12
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 1,
                 'product_id' => 13
             ],
             [
@@ -73,27 +73,27 @@ class ProvidersProductsTableSeeder extends Seeder
                 'product_id' => 14
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 4,
                 'product_id' => 15
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 5,
                 'product_id' => 16
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 6,
                 'product_id' => 17
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 6,
                 'product_id' => 18
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 5,
                 'product_id' => 19
             ],
             [
-                'provider_id' => 2,
+                'provider_id' => 4,
                 'product_id' => 20
             ],
       ]);
