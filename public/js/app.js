@@ -36789,7 +36789,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var produit = this.produits[index];
             __WEBPACK_IMPORTED_MODULE_1__storeCatalogue__["a" /* StoreCatalogue */].produitAffiche(produit);
         },
-        applyFilter: function applyFilter(e) {
+        applyFilter: function applyFilter() {
             var _this2 = this;
 
             this.produitsTrie = [];
@@ -36798,6 +36798,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.produitsTrie.push(p);
                 }
             });
+            if (this.filterText != "") {
+                console.log(this.filterText);
+                var filtre = this.filterText;
+                this.filterList = this.produitsTrie.filter(function (item) {
+                    var nom = item.nom.toLowerCase();
+                    var reference = item.reference.toLowerCase();
+                    var categorie = item.categorie.toLowerCase();
+                    var description = item.description.toLowerCase();
+                    var refSupplier = item.refSupplier.toLowerCase();
+                    if (nom.match(filtre)) {
+                        return true;
+                    } else if (reference.match(filtre)) {
+                        return true;
+                    } else if (categorie.match(filtre)) {
+                        return true;
+                    } else if (description.match(filtre)) {
+                        return true;
+                    } else if (refSupplier.match(filtre)) {
+                        return true;
+                    }
+                });
+                this.produitsTrie = this.filterList;
+            }
         },
         getPrixMax: function getPrixMax() {
             var maxP = 0;
@@ -36835,6 +36858,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (a.prixVente > b.prixVente) return 1;
                 return 0;
             }
+            return this.produitsTrie.sort(compare);
         },
         prixDecroissant: function prixDecroissant() {
             function compare(a, b) {
@@ -36842,6 +36866,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (a.prixVente < b.prixVente) return 1;
                 return 0;
             }
+            return this.produitsTrie.sort(compare);
         },
         reinitProduit: function reinitProduit() {
             this.produitsTrie = this.produits;
@@ -36850,6 +36875,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (a.nom > b.nom) return 1;
                 return 0;
             }
+            $('#textFiltre').val("");
+        },
+        miseAJourFiltre: function miseAJourFiltre(e) {
+            var filtre = e.target.value;
+            this.filterText = filtre.toLowerCase();
+            this.applyFilter();
         }
     }
 
@@ -36927,7 +36958,7 @@ var render = function() {
                   attrs: { id: "textFiltre", type: "text" },
                   on: {
                     keyup: function($event) {
-                      _vm.applyFilter($event)
+                      _vm.miseAJourFiltre($event)
                     }
                   }
                 }),
@@ -38175,7 +38206,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -38198,7 +38228,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       produits_enregistres: __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].$data.panierEnregistres,
       produits_recuperes: "",
       filesAdd: '',
-      files: ''
+      files: '',
+      tva: "",
+      total: ''
+
     };
   },
   created: function created() {
@@ -38307,6 +38340,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     //enregistrer modif commande
     enregistrer: function enregistrer() {
+      this.total = __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].total();
+      this.tva = Math.round(this.total * 7.7 / 100);
+      console.log("tva" + this.tva);
       var id = this.customer.id;
       var curUs = this.currentUser.id;
       var commandId = this.commande.id;
@@ -38335,12 +38371,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //Nouveaux produits
         axios.post('/storeDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Enregistrer", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_choisis }).then(function (response) {
           location.reload();
-          //window.location.href='/#/commande/'+curUs+'/'+commandId;
+          ////window.location.href='/#/commande/'+curUs+'/'+commandId;
         });
         //Produits enregistres
         axios.post('/updateDemande/' + this.customer.id + "/" + this.commande.id, { typeSubmit: "Update", commande: this.commande, company: this.company, customer: this.customer, products: this.produits_enregistres }).then(function (response) {
           location.reload();
-          //window.location.href='/#/commande/'+curUs+'/'+commandId;
+          ////window.location.href='/#/commande/'+curUs+'/'+commandId;
         });
         self.storeFile();
       }
@@ -38464,6 +38500,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //FIN METHODES POUR OFFRE
 
     envoyer: function envoyer() {
+      this.total = __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].total();
+      this.tva = Math.round(this.total * 7.7 / 100);
       var id = this.currentUser.id;
       var self = this;
       if (!this.commande.id) {
@@ -38537,7 +38575,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     envoieClient: function envoieClient() {
       this.enregistrer();
       console.log(this.customer);
-      axios.post('/clientMailOffre/' + this.customer.id + '/' + this.commande.id).then(function (response) {
+      axios({
+        method: 'post',
+        url: '/clientMailOffre/' + this.customer.id + '/' + this.commande.id,
+        data: {
+          total: this.total,
+          tva: this.tva
+        }
+      })
+      //post('/clientMailOffre/'+this.customer.id+'/'+this.commande.id)
+      .then(function (response) {
         console.log('mail Envoyé');
         __WEBPACK_IMPORTED_MODULE_0__store__["a" /* Store */].viderPanier();
       });
@@ -38922,6 +38969,24 @@ var Store = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 			//break;
 			//}
 			//}
+		},
+		total: function total() {
+			var total = 0;
+			for (var i = 0; i < this.panierEnregistres.length; i++) {
+				if (this.panierEnregistres[i].remiseBoolean == true) {
+					total += this.panierEnregistres[i].prix * this.panierEnregistres[i].quantite * this.panierEnregistres[i].remisePourcent / 100;
+				} else {
+					total += this.panierEnregistres[i].prix * this.panierEnregistres[i].quantite;
+				}
+			}
+			for (var i = 0; i < this.panier.length; i++) {
+				if (this.panier[i].remiseBoolean == true) {
+					total += this.panier[i].prix * this.panier[i].quantite * this.panier[i].remisePourcent / 100;
+				} else {
+					total += this.panier[i].prix * this.panier[i].quantite;
+				}
+			}
+			return total;
 		}
 	}
 });
@@ -39891,24 +39956,7 @@ var render = function() {
                                                                     _vm._s(
                                                                       fournisseur.nom
                                                                     ) +
-                                                                    "\n                                            "
-                                                                ),
-                                                                _c(
-                                                                  "span",
-                                                                  {
-                                                                    attrs: {
-                                                                      hidden: ""
-                                                                    }
-                                                                  },
-                                                                  [
-                                                                    _vm._v(
-                                                                      " " +
-                                                                        _vm._s(
-                                                                          fournisseur.id
-                                                                        ) +
-                                                                        " "
-                                                                    )
-                                                                  ]
+                                                                    "\n                                          "
                                                                 )
                                                               ]
                                                             )

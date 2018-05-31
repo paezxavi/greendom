@@ -1,86 +1,86 @@
 <link href="{{asset('css/print.css')}}" rel="stylesheet">
 <style>
-table {
-    width:100%;
-}
+
 table, th, td {
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
 }
-th, td {
-    padding: 5px;
-    text-align: left;
+
+.alignleft {
+	float: left;
 }
-table#t01 tr:nth-child(even) {
-    background-color: #eee;
+.alignright {
+	float: right;
 }
-table#t01 tr:nth-child(odd) {
-   background-color:#fff;
+
+.clearFloat {
+    clear:right;
 }
-table#t01 th {
-    background-color: black;
-    color: white;
-}
+
 </style>
 <body>
     <div class="container">
-     <div class="row">
-        <img src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
-        
-    <h1> {{$bonCommande}} </h1>
-      </div>
-        Chemin du Pré-Fleuri 5 <br/>
-        1228 Plan-Les-Ouates <br/>
+        <img class="alignleft" src="http://www.greendom.eu/wp-content/uploads/2014/01/logo-n.png"> </img>
+        <h1 class="alignright"style='color:green;'> {{$bonCommande}} </h1>
+        <div style="clear:both"> </div>
+        <br/>
+        <br/>
+        Rue de Genève 6 <br/>
+        1225 Chêne-bourg <br/>
         Téléphone (+41) 22 556-02 59 <br/>
         Télécopie (+41) 22 556 02 58 <br/>
         TVA: CHE-237.588.037
         <p/>
-
         <br/>
         <br/>
         <br/>
-
-        <p align="right">
-            <b>À l'attention de</b><br/>
-            {{$prov->nom}}<br/>
-            {{$prov->adresse}}<br/>
-        </p>
+        <div style="float: right"> {{$prov->adresse}} </div>
+        <div style="margin: 0 auto; width: 100px;"> <center> <strong> Expédier à : </strong> </center> </div>
         <br/>
-
         <br/>
-        <table class="table table-hover table-condensed">
+        <div style="float: right"> {{$prov->nom}} </div>
+        <div style="margin: 0 auto; width: 200px;"> <center> <strong> À l'attention de : </strong> </center> </div>
+        
+        <br/>
+        <h3> <strong> CONCERNE : </strong> demande de prix </h3>
+        <table width="100%">
             <thead>
                 <tr>
-                    <th style="width:20%">Produit</th>
-                    <th style="width:60%">Description</th>
-                    <th style="width:20%">Quantité</th>
+                    <th style="background-color:green;color:white;width:15%">QUANTITE</th>
+                    <th style="background-color:green;color:white;width:25%">Référence</th>
+                    <th style="background-color:green;color:white;width:60%">DESCRIPTION</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($arrPr as $prod)
                     <tr>
-                        <td>{{$prod['nom']}}</td>
-                        <td>{{$prod['description']}}</td>
                         <td>{{$prod[0]['quantity']}}</td>
+                        <td>
+                            {{$prod["reference"]}} <br/>
+                            <img src={{$prod["image"]}} height="60" width="60">
+                        </td>
+                        <td> <strong> {{$prod["nom"]}} </strong> <br/>
+                            <label> {{$prod["description"]}} </label> </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <br/> <br/>
+  
+        <div>
+            <br/><br/><br/><br/>
+        </div>
 
-        <center> Merci d'effectuer le versement de votre acompte à: <br/>
-        <b> GREENDOM SA - UBS - IBAN: CH36 0024 0240 1976 1401 T </b> <br/>
-        Conditions de paiements: 50% à la commande, le solde à la livraison
-        <br/><br/><b> MERCI POUR VOTRE CONFIANCE ! </b> </center>
-        <br/><br/>
-        <center> Pour toute question concernant cette facture, veuillez nous contacter au 022 556 02 59, ou à info@greendom.eu </center>
-        <br/><br/>
-
-        <p style="text-align:left;">
-        Signature du client
-        <span style="float:right;">Signature Greendom SA</span>
-        </p>
+        <div>
+            <p style="text-align:left;">
+                <strong> Signature du fournisseur </strong>
+                <span style="float:right;">
+                    <strong> Signature Greendom SA </strong>
+                </span>
+            </p>
+        </div>
 
       </div>
     </div>
 </body>
+ 

@@ -31,7 +31,7 @@ class ClientOffreMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.fournisseurMail')
+        return $this->view('mails.offreClient')
                     ->subject('Offre')
                     ->attach(storage_path('app/public/pdf/Offre.pdf'))
                     ->with([
